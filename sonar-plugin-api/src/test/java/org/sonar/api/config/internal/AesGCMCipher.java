@@ -22,12 +22,13 @@ package org.sonar.api.config.internal;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Base64;
 import javax.annotation.Nullable;
 import javax.crypto.spec.GCMParameterSpec;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
 final class AesGCMCipher extends AesCipher {
+
   private static final int GCM_TAG_LENGTH_IN_BITS = 128;
   private static final int GCM_IV_LENGTH_IN_BYTES = 12;
 
@@ -45,11 +46,11 @@ final class AesGCMCipher extends AesCipher {
       new SecureRandom().nextBytes(iv);
       cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, loadSecretFile(), new GCMParameterSpec(GCM_TAG_LENGTH_IN_BITS, iv));
       byte[] encryptedText = cipher.doFinal(clearText.getBytes(StandardCharsets.UTF_8.name()));
-      return Base64.encodeBase64String(
-        ByteBuffer.allocate(GCM_IV_LENGTH_IN_BYTES + encryptedText.length)
-          .put(iv)
-          .put(encryptedText)
-          .array());
+      return Base64.getEncoder().encodeToString(
+          ByteBuffer.allocate(GCM_IV_LENGTH_IN_BYTES + encryptedText.length)
+              .put(iv)
+              .put(encryptedText)
+              .array());
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
@@ -61,7 +62,7 @@ final class AesGCMCipher extends AesCipher {
   public String decrypt(String encryptedText) {
     try {
       javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CRYPTO_ALGO);
-      ByteBuffer byteBuffer = ByteBuffer.wrap(Base64.decodeBase64(StringUtils.trim(encryptedText)));
+      ByteBuffer byteBuffer = ByteBuffer.wrap(Base64.getDecoder().decode(StringUtils.trim(encryptedText)));
       byte[] iv = new byte[GCM_IV_LENGTH_IN_BYTES];
       byteBuffer.get(iv);
       byte[] cipherText = new byte[byteBuffer.remaining()];
