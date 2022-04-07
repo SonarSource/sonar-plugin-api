@@ -24,7 +24,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.sonar.api.impl.server.RulesDefinitionContext;
+import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
