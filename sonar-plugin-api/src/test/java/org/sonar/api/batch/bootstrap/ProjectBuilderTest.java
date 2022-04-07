@@ -20,14 +20,16 @@
 package org.sonar.api.batch.bootstrap;
 
 import java.io.File;
+import java.util.Optional;
 import org.junit.Test;
 import org.sonar.api.batch.bootstrap.internal.ProjectBuilderContext;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.config.internal.MapSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ProjectBuilderTest {
 
@@ -37,10 +39,9 @@ public class ProjectBuilderTest {
     final ProjectReactor projectReactor = new ProjectReactor(ProjectDefinition.create());
 
     ProjectBuilder builder = new ProjectBuilderSample();
-    final MapSettings settings = new MapSettings();
-    settings.setProperty("foo", "bar");
-    final Configuration configuration = settings.asConfig();
-    builder.build(new ProjectBuilderContext(projectReactor, configuration));
+    Configuration config = mock(Configuration.class);
+    when(config.get("foo")).thenReturn(Optional.of("bar"));
+    builder.build(new ProjectBuilderContext(projectReactor, config));
 
     assertThat(projectReactor.getProjects().size(), is(2));
     ProjectDefinition root = projectReactor.getRoot();

@@ -17,7 +17,32 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-@ParametersAreNonnullByDefault
-package org.sonar.api.config.internal;
+package org.sonar.api.config;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class MapConfiguration implements Configuration {
+  private final Map<String, String> keyValues = new HashMap<>();
+
+  public Configuration put(String key, String value) {
+    keyValues.put(key, value.trim());
+    return this;
+  }
+
+  @Override
+  public Optional<String> get(String key) {
+    return Optional.ofNullable(keyValues.get(key));
+  }
+
+  @Override
+  public boolean hasKey(String key) {
+    return get(key).isPresent();
+  }
+
+  @Override
+  public String[] getStringArray(String key) {
+    return get(key).map(x -> x.split(",")).orElse(new String[0]);
+  }
+}

@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.server.rule;
+package org.sonar.api.server.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -33,13 +33,14 @@ import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleParamType;
+import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.log.LogTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,9 +48,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.fail;
 
 @RunWith(DataProviderRunner.class)
-public class RulesDefinitionTest {
+public class RulesDefinitionContextTest {
 
-  RulesDefinition.Context context = new RulesDefinitionContext();
+  private final RulesDefinition.Context context = new RulesDefinitionContext();
 
   @Rule
   public LogTester logTester = new LogTester();
