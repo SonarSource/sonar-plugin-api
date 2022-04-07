@@ -20,7 +20,6 @@
 package org.sonar.api.server.rule.internal;
 
 import org.junit.Test;
-import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +28,7 @@ import static org.mockito.Mockito.mock;
 public class DefaultRepositoryTest {
   @Test
   public void create_simple_repo() {
-    RulesDefinitionContext ctx = mock(RulesDefinitionContext.class);
+    RulesDefinition.Context ctx = mock(RulesDefinition.Context.class);
     DefaultNewRepository newRepo = new DefaultNewRepository(ctx, "key", "lang", false);
     newRepo.createRule("rule1")
       .setName("rule1")

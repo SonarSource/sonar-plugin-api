@@ -8,7 +8,6 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
   // please keep the list grouped by configuration and ordered by name
-
   implementation 'commons-io:commons-io'
   implementation 'commons-lang:commons-lang'
   implementation 'com.google.code.gson:gson'
@@ -26,11 +25,9 @@ dependencies {
 
   testImplementation 'com.google.guava:guava'
   testImplementation 'com.tngtech.java:junit-dataprovider'
+  testImplementation 'org.apache.commons:commons-csv'
   testImplementation 'org.assertj:assertj-core'
   testImplementation 'org.mockito:mockito-core'
-  testImplementation 'org.apache.commons:commons-csv'
-  //testImplementation project(':sonar-plugin-api-impl')
-  //testImplementation project(':ut-monitoring')
 }
 
 configurations {

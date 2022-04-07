@@ -1,4 +1,5 @@
 plugins {
+  id 'com.github.hierynomus.license' version '0.15.0'
   id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
   id 'com.jfrog.artifactory' version '4.24.23'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -32,6 +33,7 @@ ext {
 }
 
 subprojects {
+  apply plugin: 'com.github.hierynomus.license'
   apply plugin: 'com.jfrog.artifactory'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
@@ -46,6 +48,20 @@ subprojects {
     reports {
       xml.enabled true
     }
+  }
+
+  license {
+    header = rootProject.file('HEADER')
+    strictCheck true
+    encoding = 'UTF-8'
+    mapping {
+      java = 'SLASHSTAR_STYLE'
+      js = 'SLASHSTAR_STYLE'
+      ts = 'SLASHSTAR_STYLE'
+      tsx = 'SLASHSTAR_STYLE'
+      css = 'SLASHSTAR_STYLE'
+    }
+    includes(['**/*.java', '**/*.js', '**/*.ts', '**/*.tsx', '**/*.css'])
   }
 
   dependencyManagement {
