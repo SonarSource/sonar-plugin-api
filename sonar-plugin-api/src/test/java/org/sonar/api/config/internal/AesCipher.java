@@ -19,22 +19,23 @@
  */
 package org.sonar.api.config.internal;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.sonar.api.CoreProperties.ENCRYPTION_SECRET_KEY_PATH;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.Key;
 import java.security.SecureRandom;
+import java.util.Base64;
 import javax.annotation.Nullable;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.sonar.api.CoreProperties.ENCRYPTION_SECRET_KEY_PATH;
-
 abstract class AesCipher implements Cipher {
+
   static final int KEY_SIZE_IN_BITS = 256;
 
   private static final String CRYPTO_KEY = "AES";
@@ -68,13 +69,14 @@ abstract class AesCipher implements Cipher {
     }
     File file = new File(path);
     if (!file.exists() || !file.isFile()) {
-      throw new IllegalStateException("The property " + ENCRYPTION_SECRET_KEY_PATH + " does not link to a valid file: " + path);
+      throw new IllegalStateException(
+          "The property " + ENCRYPTION_SECRET_KEY_PATH + " does not link to a valid file: " + path);
     }
     String s = FileUtils.readFileToString(file, UTF_8);
     if (StringUtils.isBlank(s)) {
       throw new IllegalStateException("No secret key in the file: " + path);
     }
-    return new SecretKeySpec(Base64.decodeBase64(StringUtils.trim(s)), CRYPTO_KEY);
+    return new SecretKeySpec(Base64.getDecoder().decode(StringUtils.trim(s)), CRYPTO_KEY);
   }
 
   String generateRandomSecretKey() {
@@ -82,7 +84,7 @@ abstract class AesCipher implements Cipher {
       KeyGenerator keyGen = KeyGenerator.getInstance(CRYPTO_KEY);
       keyGen.init(KEY_SIZE_IN_BITS, new SecureRandom());
       SecretKey secretKey = keyGen.generateKey();
-      return Base64.encodeBase64String(secretKey.getEncoded());
+      return Base64.getEncoder().encodeToString(secretKey.getEncoded());
 
     } catch (Exception e) {
       throw new IllegalStateException("Fail to generate secret key", e);

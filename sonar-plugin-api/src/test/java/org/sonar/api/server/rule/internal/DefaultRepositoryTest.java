@@ -20,7 +20,7 @@
 package org.sonar.api.server.rule.internal;
 
 import org.junit.Test;
-import org.sonar.api.impl.server.RulesDefinitionContext;
+import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;

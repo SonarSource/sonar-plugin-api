@@ -19,6 +19,16 @@
  */
 package org.sonar.api.server.ws;
 
+import static com.google.common.base.Strings.repeat;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.sonar.api.utils.DateUtils.parseDate;
+import static org.sonar.api.utils.DateUtils.parseDateTime;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.tngtech.java.junit.dataprovider.DataProvider;
@@ -38,20 +48,10 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sonar.api.impl.ws.PartImpl;
-import org.sonar.api.impl.ws.ValidatingRequest;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.server.ws.impl.PartImpl;
+import org.sonar.api.server.ws.impl.ValidatingRequest;
 import org.sonar.api.utils.DateUtils;
-
-import static com.google.common.base.Strings.repeat;
-import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.String.format;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.sonar.api.utils.DateUtils.parseDate;
-import static org.sonar.api.utils.DateUtils.parseDateTime;
 
 @RunWith(DataProviderRunner.class)
 public class RequestTest {
@@ -77,8 +77,8 @@ public class RequestTest {
   @Test
   public void required_param_is_missing() {
     assertThatThrownBy(() -> underTest.mandatoryParam("required_param"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'required_param' parameter is missing");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'required_param' parameter is missing");
   }
 
   @Test
@@ -111,9 +111,10 @@ public class RequestTest {
     String parameter = "maximum_length_param";
     defineParameterTestAction(newParam -> newParam.setMaximumLength(10), parameter);
 
-    assertThatThrownBy(() -> underTest.setParam(parameter, repeat("X", 11)).param(parameter))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage(format("'%s' length (11) is longer than the maximum authorized (10)", parameter));
+    Request request = underTest.setParam(parameter, repeat("X", 11));
+    assertThatThrownBy(() -> request.param(parameter))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(format("'%s' length (11) is longer than the maximum authorized (10)", parameter));
   }
 
   @Test
@@ -132,9 +133,10 @@ public class RequestTest {
     String param = "maximum_value_param";
     defineParameterTestAction(newParam -> newParam.setMaximumValue(10), param);
 
-    assertThatThrownBy(() -> underTest.setParam(param, "11").param(param))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage(format("'%s' value (11) must be less than 10", param));
+    Request request = underTest.setParam(param, "11");
+    assertThatThrownBy(() -> request.param(param))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(format("'%s' value (11) must be less than 10", param));
   }
 
   @Test
@@ -142,9 +144,10 @@ public class RequestTest {
     String param = "maximum_value_param";
     defineParameterTestAction(newParam -> newParam.setMaximumValue(10), param);
 
-    assertThatThrownBy(() -> underTest.setParam(param, "foo").paramAsInt(param))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("'maximum_value_param' value 'foo' cannot be parsed as an integer");
+    Request request = underTest.setParam(param, "foo");
+    assertThatThrownBy(() -> request.paramAsInt(param))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("'maximum_value_param' value 'foo' cannot be parsed as an integer");
   }
 
   @Test
@@ -157,8 +160,8 @@ public class RequestTest {
   @Test
   public void fail_if_no_required_param_as_strings() {
     assertThatThrownBy(() -> underTest.mandatoryParamAsStrings("a_required_string"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'a_required_string' parameter is missing");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'a_required_string' parameter is missing");
   }
 
   @Test
@@ -166,7 +169,8 @@ public class RequestTest {
     assertThat(underTest.multiParam("a_required_multi_param")).isEmpty();
 
     underTest.setMultiParam("a_required_multi_param", newArrayList("firstValue", "secondValue", "thirdValue"));
-    assertThat(underTest.multiParam("a_required_multi_param")).containsExactly("firstValue", "secondValue", "thirdValue");
+    assertThat(underTest.multiParam("a_required_multi_param")).containsExactly("firstValue", "secondValue",
+        "thirdValue");
   }
 
   @Test
@@ -174,8 +178,8 @@ public class RequestTest {
     underTest.setMultiParam("has_maximum_values", newArrayList("firstValue", "secondValue", "thirdValue"));
 
     assertThatThrownBy(() -> underTest.multiParam("has_maximum_values"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
   }
 
   @Test
@@ -190,8 +194,8 @@ public class RequestTest {
   @Test
   public void fail_when_no_multi_param() {
     assertThatThrownBy(() -> underTest.mandatoryMultiParam("a_required_multi_param"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'a_required_multi_param' parameter is missing");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'a_required_multi_param' parameter is missing");
   }
 
   @Test
@@ -210,8 +214,8 @@ public class RequestTest {
     underTest.setParam("a_string", "value\0value");
 
     assertThatThrownBy(() -> underTest.param("a_string"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Request parameters are not allowed to contain NUL character");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("Request parameters are not allowed to contain NUL character");
   }
 
   @Test
@@ -229,9 +233,11 @@ public class RequestTest {
 
   @Test
   public void fail_when_param_is_not_an_int() {
-    assertThatThrownBy(() -> underTest.setParam("a_number", "not-an-int").paramAsInt("a_number"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'a_number' parameter cannot be parsed as an integer value: not-an-int");
+
+    Request request = underTest.setParam("a_number", "not-an-int");
+    assertThatThrownBy(() -> request.paramAsInt("a_number"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'a_number' parameter cannot be parsed as an integer value: not-an-int");
   }
 
   @Test
@@ -241,9 +247,10 @@ public class RequestTest {
 
   @Test
   public void fail_when_param_is_not_a_long() {
-    assertThatThrownBy(() -> underTest.setParam("a_number", "not_a_long").paramAsLong("a_number"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'a_number' parameter cannot be parsed as a long value: not_a_long");
+    Request request = underTest.setParam("a_number", "not_a_long");
+    assertThatThrownBy(() -> request.paramAsLong("a_number"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'a_number' parameter cannot be parsed as a long value: not_a_long");
   }
 
   @Test
@@ -256,9 +263,10 @@ public class RequestTest {
 
   @Test
   public void fail_if_incorrect_param_as_boolean() {
-    assertThatThrownBy(() -> underTest.setParam("a_boolean", "oui").paramAsBoolean("a_boolean"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Property a_boolean is not a boolean value: oui");
+    Request request = underTest.setParam("a_boolean", "oui");
+    assertThatThrownBy(() -> request.paramAsBoolean("a_boolean"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("Property a_boolean is not a boolean value: oui");
   }
 
   @Test
@@ -268,7 +276,8 @@ public class RequestTest {
 
   @Test
   public void param_as_enums() {
-    assertThat(underTest.setParam("a_enum", "BETA,READY").paramAsEnums("a_enum", RuleStatus.class)).containsOnly(RuleStatus.BETA, RuleStatus.READY);
+    assertThat(underTest.setParam("a_enum", "BETA,READY").paramAsEnums("a_enum", RuleStatus.class)).containsOnly(
+        RuleStatus.BETA, RuleStatus.READY);
     assertThat(underTest.setParam("a_enum", "").paramAsEnums("a_enum", RuleStatus.class)).isEmpty();
   }
 
@@ -279,14 +288,17 @@ public class RequestTest {
 
   @Test
   public void fail_when_param_as_enums_has_more_values_than_maximum_values() {
-    assertThatThrownBy(() -> underTest.setParam("has_maximum_values", "BETA,READY,REMOVED").paramAsEnums("has_maximum_values", RuleStatus.class))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
+    Request request = underTest.setParam("has_maximum_values", "BETA,READY,REMOVED");
+    assertThatThrownBy(() -> request
+        .paramAsEnums("has_maximum_values", RuleStatus.class))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
   }
 
   @Test
   public void param_as_date() {
-    assertThat(underTest.setParam("a_date", "2014-05-27").paramAsDate("a_date")).isEqualTo(DateUtils.parseDate("2014-05-27"));
+    assertThat(underTest.setParam("a_date", "2014-05-27").paramAsDate("a_date")).isEqualTo(
+        DateUtils.parseDate("2014-05-27"));
   }
 
   @Test
@@ -503,10 +515,10 @@ public class RequestTest {
 
   @DataProvider
   public static Object[][] date_times() {
-    return new Object[][] {
-      {"2014-05-27", parseDate("2014-05-27")},
-      {"2014-05-27T15:50:45+0100", parseDateTime("2014-05-27T15:50:45+0100")},
-      {null, null}
+    return new Object[][]{
+        {"2014-05-27", parseDate("2014-05-27")},
+        {"2014-05-27T15:50:45+0100", parseDateTime("2014-05-27T15:50:45+0100")},
+        {null, null}
     };
   }
 
@@ -519,15 +531,15 @@ public class RequestTest {
   @Test
   public void fail_when_param_as_date_not_a_date() {
     assertThatThrownBy(() -> underTest.setParam("a_date", "polop").paramAsDate("a_date"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The date 'polop' does not respect format 'yyyy-MM-dd'");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The date 'polop' does not respect format 'yyyy-MM-dd'");
   }
 
   @Test
   public void fail_when_param_as_datetime_not_a_datetime() {
     assertThatThrownBy(() -> underTest.setParam("a_datetime", "polop").paramAsDateTime("a_datetime"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("'polop' cannot be parsed as either a date or date+time");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("'polop' cannot be parsed as either a date or date+time");
   }
 
   @Test
@@ -541,9 +553,10 @@ public class RequestTest {
 
   @Test
   public void fail_when_param_as_strings_has_more_values_than_maximum_values() {
-    assertThatThrownBy(() -> underTest.setParam("has_maximum_values", "foo,bar,baz").paramAsStrings("has_maximum_values"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
+    assertThatThrownBy(
+        () -> underTest.setParam("has_maximum_values", "foo,bar,baz").paramAsStrings("has_maximum_values"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("'has_maximum_values' can contains only 2 values, got 3");
   }
 
   @Test
@@ -554,15 +567,15 @@ public class RequestTest {
   @Test
   public void fail_if_param_is_not_defined() {
     assertThatThrownBy(() -> underTest.param("unknown"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("BUG - parameter 'unknown' is undefined for action 'my_action'");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("BUG - parameter 'unknown' is undefined for action 'my_action'");
   }
 
   @Test
   public void fail_if_multi_param_is_not_defined() {
     assertThatThrownBy(() -> underTest.multiParam("unknown"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Parameter 'unknown' not found for action 'my_action'");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("Parameter 'unknown' not found for action 'my_action'");
   }
 
   @Test
@@ -576,8 +589,8 @@ public class RequestTest {
     underTest.setParam("has_possible_values", "not_possible");
 
     assertThatThrownBy(() -> underTest.param("has_possible_values"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Value of parameter 'has_possible_values' (not_possible) must be one of: [foo, bar]");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("Value of parameter 'has_possible_values' (not_possible) must be one of: [foo, bar]");
   }
 
   @Test
@@ -602,8 +615,8 @@ public class RequestTest {
   @Test
   public void mandatory_param_as_part() {
     assertThatThrownBy(() -> underTest.mandatoryParamAsPart("required_param"))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("The 'required_param' parameter is missing");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("The 'required_param' parameter is missing");
   }
 
   private void defineParameterTestAction(Consumer<WebService.NewParam> newParam, String parameter) {
@@ -612,8 +625,8 @@ public class RequestTest {
     WebService.Context context = new WebService.Context();
     WebService.NewController controller = context.createController(controllerPath);
     WebService.NewAction action = controller
-      .createAction(actionPath)
-      .setHandler(mock(RequestHandler.class));
+        .createAction(actionPath)
+        .setHandler(mock(RequestHandler.class));
     WebService.NewParam param = action.createParam(parameter);
     newParam.accept(param);
     controller.done();
@@ -669,7 +682,8 @@ public class RequestTest {
     public Map<String, String[]> getParams() {
       ArrayListMultimap<String, String> result = ArrayListMultimap.create(multiParams);
       params.forEach(result::put);
-      return result.asMap().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toArray(new String[0])));
+      return result.asMap().entrySet().stream()
+          .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toArray(new String[0])));
     }
 
     @Override
@@ -706,13 +720,13 @@ public class RequestTest {
     public void define(Context context) {
       NewController controller = context.createController("my_controller");
       NewAction action = controller.createAction("my_action")
-        .setDescription("Action Description")
-        .setPost(true)
-        .setSince("5.2")
-        .setHandler(mock(RequestHandler.class));
+          .setDescription("Action Description")
+          .setPost(true)
+          .setSince("5.2")
+          .setHandler(mock(RequestHandler.class));
       action
-        .createParam("required_param")
-        .setRequired(true);
+          .createParam("required_param")
+          .setRequired(true);
 
       action.createParam("a_string");
       action.createParam("a_boolean");
@@ -736,7 +750,8 @@ public class RequestTest {
       action.createParam("has_maximum_values").setMaxValuesAllowed(2);
 
       action.createParam("new_param").setDeprecatedKey("deprecated_param", "6.3");
-      action.createParam("new_param_with_default_value").setDeprecatedKey("deprecated_new_param_with_default_value", "6.2").setDefaultValue("the_default_string");
+      action.createParam("new_param_with_default_value")
+          .setDeprecatedKey("deprecated_new_param_with_default_value", "6.2").setDefaultValue("the_default_string");
 
       controller.done();
     }

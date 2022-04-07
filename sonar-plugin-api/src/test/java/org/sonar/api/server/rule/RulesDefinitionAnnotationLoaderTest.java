@@ -19,14 +19,14 @@
  */
 package org.sonar.api.server.rule;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
-import org.sonar.api.impl.server.RulesDefinitionContext;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
+import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.server.rule.RulesDefinition.NewRule;
 import org.sonar.check.Priority;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class RulesDefinitionAnnotationLoaderTest {
 
@@ -151,39 +151,46 @@ public class RulesDefinitionAnnotationLoaderTest {
 
   @org.sonar.check.Rule(name = "foo", description = "Foo")
   static class RuleWithoutKey {
+
   }
 
   @org.sonar.check.Rule(key = "foo", name = "bar", description = "Foo Bar", priority = Priority.BLOCKER, status = "BETA")
   static class RuleWithProperty {
+
     @org.sonar.check.RuleProperty(description = "Ignore ?", defaultValue = "false")
     private String property;
   }
 
   @org.sonar.check.Rule(key = "overriding_foo", name = "Overriding Foo", description = "Desc of Overriding Foo")
   static class OverridingRule extends RuleWithProperty {
+
     @org.sonar.check.RuleProperty
     private String additionalProperty;
   }
 
   @org.sonar.check.Rule(key = "foo", name = "bar", description = "Foo Bar", priority = Priority.BLOCKER)
   static class RuleWithIntegerProperty {
+
     @org.sonar.check.RuleProperty(description = "Max", defaultValue = "12")
     private Integer property;
   }
 
   @org.sonar.check.Rule(key = "foo", name = "bar", description = "Foo Bar", priority = Priority.BLOCKER)
   static class RuleWithTextProperty {
+
     @org.sonar.check.RuleProperty(description = "text", defaultValue = "Long text", type = "TEXT")
     protected String property;
   }
 
   @org.sonar.check.Rule(key = "foo", name = "bar", description = "Foo Bar", priority = Priority.BLOCKER)
   static class RuleWithInvalidPropertyType {
+
     @org.sonar.check.RuleProperty(description = "text", defaultValue = "Long text", type = "INVALID")
     public String property;
   }
 
   @org.sonar.check.Rule(key = "foo", name = "bar", description = "Bar", tags = {"misra", "clumsy"})
   static class RuleWithTags {
+
   }
 }

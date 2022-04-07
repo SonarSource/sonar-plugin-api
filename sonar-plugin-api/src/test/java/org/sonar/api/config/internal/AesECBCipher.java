@@ -20,8 +20,8 @@
 package org.sonar.api.config.internal;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import javax.annotation.Nullable;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -42,7 +42,7 @@ final class AesECBCipher extends AesCipher {
       javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CRYPTO_ALGO);
       cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, loadSecretFile());
       byte[] cipherData = cipher.doFinal(clearText.getBytes(StandardCharsets.UTF_8.name()));
-      return Base64.encodeBase64String(cipherData);
+      return Base64.getEncoder().encodeToString(cipherData);
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
@@ -55,7 +55,7 @@ final class AesECBCipher extends AesCipher {
     try {
       javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CRYPTO_ALGO);
       cipher.init(javax.crypto.Cipher.DECRYPT_MODE, loadSecretFile());
-      byte[] cipherData = cipher.doFinal(Base64.decodeBase64(StringUtils.trim(encryptedText)));
+      byte[] cipherData = cipher.doFinal(Base64.getDecoder().decode(StringUtils.trim(encryptedText)));
       return new String(cipherData, StandardCharsets.UTF_8);
     } catch (RuntimeException e) {
       throw e;

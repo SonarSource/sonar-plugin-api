@@ -17,26 +17,28 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.issue;
+package org.sonar.api.server.ws.impl;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import org.junit.Test;
-import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
-import org.sonar.api.batch.sensor.issue.internal.DefaultNoSonarFilter;
+import java.io.InputStream;
+import org.sonar.api.server.ws.Request;
 
-import static org.assertj.core.api.Assertions.assertThat;
+public class PartImpl implements Request.Part {
 
-public class NoSonarFilterTest {
+  private final InputStream inputStream;
+  private final String fileName;
 
-  @Test
-  public void should_store_nosonar_lines_on_inputfile() {
-    DefaultInputFile f = TestInputFileBuilder.create("module1", "myfile.java").setLines(8).build();
-    new DefaultNoSonarFilter().noSonarInFile(f, new HashSet<>(Arrays.asList(1, 4)));
+  public PartImpl(InputStream inputStream, String fileName) {
+    this.inputStream = inputStream;
+    this.fileName = fileName;
+  }
 
-    assertThat(f.hasNoSonarAt(1)).isTrue();
-    assertThat(f.hasNoSonarAt(2)).isFalse();
-    assertThat(f.hasNoSonarAt(4)).isTrue();
+  @Override
+  public InputStream getInputStream() {
+    return inputStream;
+  }
+
+  @Override
+  public String getFileName() {
+    return fileName;
   }
 }

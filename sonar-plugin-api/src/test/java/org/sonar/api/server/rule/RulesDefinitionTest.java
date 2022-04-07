@@ -33,7 +33,7 @@ import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sonar.api.impl.server.RulesDefinitionContext;
+import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
