@@ -21,7 +21,6 @@ package org.sonar.api.config;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
-import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.platform.Server;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,10 +28,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class EmailSettingsTest {
-
-  private MapSettings settings = new MapSettings();
   private Server server = mock(Server.class);
-  private EmailSettings underTest = new EmailSettings(settings.asConfig(), server);
+  private EmailSettings underTest = new EmailSettings(mock(Configuration.class), server);
 
   @Test
   public void should_return_default_values() {

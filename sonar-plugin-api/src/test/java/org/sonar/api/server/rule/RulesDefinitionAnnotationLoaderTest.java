@@ -29,9 +29,7 @@ import org.sonar.api.server.rule.RulesDefinition.NewRule;
 import org.sonar.check.Priority;
 
 public class RulesDefinitionAnnotationLoaderTest {
-
-
-  RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
+  private final RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
 
   @Test
   public void rule_with_property() {
