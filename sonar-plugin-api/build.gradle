@@ -28,6 +28,7 @@ dependencies {
   testImplementation 'com.tngtech.java:junit-dataprovider'
   testImplementation 'org.assertj:assertj-core'
   testImplementation 'org.mockito:mockito-core'
+  testImplementation 'org.apache.commons:commons-csv'
   //testImplementation project(':sonar-plugin-api-impl')
   //testImplementation project(':ut-monitoring')
 }

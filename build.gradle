@@ -53,6 +53,7 @@ subprojects {
       // bundled plugin list -- keep it alphabetically ordered
       dependency 'commons-io:commons-io:2.11.0'
       dependency 'commons-lang:commons-lang:2.6'
+      dependency 'org.apache.commons:commons-csv:1.9.0'
       dependency 'com.google.code.findbugs:jsr305:3.0.2'
       dependency 'com.google.code.gson:gson:2.9.0'
       dependency('com.google.guava:guava:31.1-jre') {
