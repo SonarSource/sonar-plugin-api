@@ -44,6 +44,7 @@ public interface DefaultTransitions {
   /**
    * @deprecated since 8.1, transition has no effect
    */
+  @Deprecated
   String SET_AS_IN_REVIEW = "setinreview";
 
   /**
