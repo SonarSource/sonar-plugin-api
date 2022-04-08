@@ -25,7 +25,6 @@ dependencies {
 
   testImplementation 'com.google.guava:guava'
   testImplementation 'com.tngtech.java:junit-dataprovider'
-  testImplementation 'org.apache.commons:commons-csv'
   testImplementation 'org.assertj:assertj-core'
   testImplementation 'org.mockito:mockito-core'
 }
