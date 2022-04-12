@@ -3,7 +3,7 @@ gcp_credentials: ENCRYPTED[!e5f7207bd8d02d383733bef47e18296ac32e3b7d22eb480354e8
 
 env:
   GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-XX:+PrintFlagsFinal -XshowSettings:vm -XX:+HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom -Dfile.encoding=UTF8 -Duser.language=en -Duser.country=US"
-  # to be replaced by other credentials
+  ### Shared variables
   ARTIFACTORY_URL: ENCRYPTED[!2f8fa307d3289faa0aa6791f18b961627ae44f1ef46b136e1a1e63b0b4c86454dbb25520d49b339e2d50a1e1e5f95c88!]
   ARTIFACTORY_PRIVATE_USERNAME: repox-private-reader-e2882e
   ARTIFACTORY_PRIVATE_PASSWORD: ENCRYPTED[!815fc7526a6579b7d974d1c41b5c247cfed8c88fb2c7b41ec5d3d54244701186da777c4003476b5b9fa208c8b8f208dc!]
