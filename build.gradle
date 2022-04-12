@@ -27,38 +27,6 @@ allprojects {
       }
     }
   }
-
-
-  artifactory {
-    clientConfig.includeEnvVars = true
-    clientConfig.envVarsExcludePatterns = '*password*,*PASSWORD*,*secret*,*MAVEN_CMD_LINE_ARGS*,sun.java.command,*token*,*TOKEN*,*LOGIN*,*login*,*KEY*,*signing*'
-    contextUrl = System.getenv('ARTIFACTORY_URL')
-    publish {
-      repository {
-        repoKey = System.getenv('ARTIFACTORY_DEPLOY_REPO')
-        username = System.getenv('ARTIFACTORY_DEPLOY_USERNAME')
-        password = System.getenv('ARTIFACTORY_DEPLOY_PASSWORD')
-      }
-      defaults {
-        properties = [
-                'build.name'      : 'sonar-plugin-api',
-                'build.number'    : System.getenv('BUILD_NUMBER'),
-                'pr.branch.target': System.getenv('PULL_REQUEST_BRANCH_TARGET'),
-                'pr.number'       : System.getenv('PULL_REQUEST_NUMBER'),
-                'vcs.branch'      : System.getenv('GIT_BRANCH'),
-                'vcs.revision'    : System.getenv('GIT_COMMIT'),
-                'version'         : version
-        ]
-        publications 'pluginMaven'
-        publishPom = true // Publish generated POM files to Artifactory (true by default)
-        publishIvy = false // Publish generated Ivy descriptor files to Artifactory (true by default)
-      }
-    }
-    clientConfig.info.buildName = 'sonar-plugin-api'
-    clientConfig.info.buildNumber = System.getenv('BUILD_NUMBER')
-    // The name of this variable is important because it's used by the delivery process when extracting version from Artifactory build info.
-    clientConfig.info.addEnvironmentProperty('PROJECT_VERSION', "${version}")
-  }
 }
 
 ext {
