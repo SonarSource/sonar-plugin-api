@@ -6,5 +6,4 @@ sonarqube {
 
 dependencies {
   compileOnly 'com.google.code.findbugs:jsr305'
-
 }

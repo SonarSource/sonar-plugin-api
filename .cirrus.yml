@@ -31,7 +31,7 @@ only_sonarsource_qa: &ONLY_SONARSOURCE_QA
   only_if: $CIRRUS_USER_COLLABORATOR == 'true' && ($CIRRUS_PR != "" || $CIRRUS_BRANCH == "master" || $CIRRUS_BRANCH =~ "branch-.*" || $CIRRUS_BRANCH =~ "dogfood-on-.*")
 
 container_definition: &CONTAINER_DEFINITION
-  image: us.gcr.io/sonarqube-team/base:j11-g6-latest
+  image: us.gcr.io/sonarqube-team/base:j11-g7-latest
   cluster_name: cirrus-ci-cluster
   zone: us-central1-a
   namespace: default
