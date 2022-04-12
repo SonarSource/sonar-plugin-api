@@ -8,6 +8,8 @@ plugins {
 
 allprojects {
   apply plugin: 'com.jfrog.artifactory'
+  apply plugin: 'maven-publish'
+  
   repositories {
     maven {
       url "https://maven.google.com"
@@ -27,11 +29,42 @@ allprojects {
       }
     }
   }
+
+  artifactory {
+    clientConfig.setIncludeEnvVars(true)
+    clientConfig.setEnvVarsExcludePatterns('*password*,*PASSWORD*,*secret*,*MAVEN_CMD_LINE_ARGS*,sun.java.command,*token*,*TOKEN*,*LOGIN*,*login*,*key*,*KEY*,*signing*')
+    contextUrl = System.getenv('ARTIFACTORY_URL')
+    publish {
+      repository {
+        repoKey = System.getenv('ARTIFACTORY_DEPLOY_REPO')
+        username = System.getenv('ARTIFACTORY_DEPLOY_USERNAME') ?: project.properties.artifactoryUsername
+        password = System.getenv('ARTIFACTORY_DEPLOY_PASSWORD') ?: project.properties.artifactoryPaswword
+      }
+      defaults {
+        properties = [
+                'build.name': 'sonar-enterprise',
+                'build.number': System.getenv('BUILD_NUMBER'),
+                'pr.branch.target': System.getenv('GITHUB_BASE_BRANCH'),
+                'pr.number': System.getenv('PULL_REQUEST'),
+                'vcs.branch': System.getenv('GITHUB_BRANCH'),
+                'vcs.revision': System.getenv('GIT_SHA1'),
+                'version': version
+        ]
+        publications('mavenJava')
+        publishPom = true
+        publishIvy = false
+      }
+    }
+    clientConfig.info.setBuildName('sonar-plugin-api')
+    clientConfig.info.setBuildNumber(System.getenv('BUILD_NUMBER'))
+    // The name of this variable is important because it's used by the delivery process when extracting version from Artifactory build info.
+    clientConfig.info.addEnvironmentProperty('PROJECT_VERSION', "${version}")
+  }
 }
 
 ext {
   release = project.hasProperty('release') && project.getProperty('release')
-  ext.versionInSources = version
+  versionInSources = version
 }
 
 sonarqube {
