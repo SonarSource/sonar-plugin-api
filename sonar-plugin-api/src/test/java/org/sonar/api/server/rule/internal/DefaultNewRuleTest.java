@@ -164,7 +164,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void fail_if_null_pci_dss_array() {
-    assertThatThrownBy(() -> rule.addPciDss(PciDssVersion.V3_2, null))
+    assertThatThrownBy(() -> rule.addPciDss(PciDssVersion.V3_2, (String[]) null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("Requirements for PCI DSS standard must not be null");
   }

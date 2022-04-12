@@ -1,35 +1,86 @@
 plugins {
-  id 'com.github.hierynomus.license' version '0.15.0'
-  id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
-  id 'com.jfrog.artifactory' version '4.24.23'
+  id 'com.github.hierynomus.license' version '0.16.1'
+  id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
+  id 'com.jfrog.artifactory' version '4.28.1'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'org.sonarqube' version '3.3'
 }
 
 allprojects {
-repositories {
-  maven {
-    url "https://maven.google.com"
+  apply plugin: 'com.jfrog.artifactory'
+  apply plugin: 'maven-publish'
+
+  ext.versionInSources = version
+  ext.buildNumber = System.getProperty("buildNumber")
+  // when no buildNumber is provided, then project version must end with '-SNAPSHOT'
+  if (ext.buildNumber == null) {
+    version = "${version}-SNAPSHOT".toString()
+    ext.versionWithoutBuildNumber = version
+  } else {
+    ext.versionWithoutBuildNumber = version
+    version = (version.toString().count('.') == 1 ? "${version}.0.${ext.buildNumber}" : "${version}.${ext.buildNumber}").toString()
   }
-  def repository = project.hasProperty('qa') ? 'sonarsource-qa' : 'sonarsource'
-  maven {
-    url "https://repox.jfrog.io/repox/${repository}"
-    // The environment variables ARTIFACTORY_PRIVATE_USERNAME and ARTIFACTORY_PRIVATE_PASSWORD are used on QA env (Jenkins)
-    // On local box, please add artifactoryUsername and artifactoryPassword to ~/.gradle/gradle.properties
-    def artifactoryUsername = System.env.'ARTIFACTORY_PRIVATE_USERNAME' ?: (project.hasProperty('artifactoryUsername') ? project.getProperty('artifactoryUsername') : '')
-    def artifactoryPassword = System.env.'ARTIFACTORY_PRIVATE_PASSWORD' ?: (project.hasProperty('artifactoryPassword') ? project.getProperty('artifactoryPassword') : '')
-    if (artifactoryUsername && artifactoryPassword) {
-      credentials {
-        username = artifactoryUsername
-        password = artifactoryPassword
+
+  repositories {
+    def repository = project.hasProperty('qa') ? 'sonarsource-qa' : 'sonarsource'
+    maven {
+      url "https://repox.jfrog.io/repox/${repository}"
+      // The environment variables ARTIFACTORY_PRIVATE_USERNAME and ARTIFACTORY_PRIVATE_PASSWORD are used on QA env (Jenkins)
+      // On local box, please add artifactoryUsername and artifactoryPassword to ~/.gradle/gradle.properties
+      def artifactoryUsername = System.env.'ARTIFACTORY_PRIVATE_USERNAME' ?: (project.hasProperty('artifactoryUsername') ? project.getProperty('artifactoryUsername') : '')
+      def artifactoryPassword = System.env.'ARTIFACTORY_PRIVATE_PASSWORD' ?: (project.hasProperty('artifactoryPassword') ? project.getProperty('artifactoryPassword') : '')
+      if (artifactoryUsername && artifactoryPassword) {
+        credentials {
+          username = artifactoryUsername
+          password = artifactoryPassword
+        }
       }
     }
   }
-}
+
+  artifactory {
+    clientConfig.setIncludeEnvVars(true)
+    clientConfig.setEnvVarsExcludePatterns('*password*,*PASSWORD*,*secret*,*MAVEN_CMD_LINE_ARGS*,sun.java.command,*token*,*TOKEN*,*LOGIN*,*login*,*key*,*KEY*,*signing*')
+    contextUrl = System.getenv('ARTIFACTORY_URL')
+    publish {
+      repository {
+        repoKey = System.getenv('ARTIFACTORY_DEPLOY_REPO')
+        username = System.getenv('ARTIFACTORY_DEPLOY_USERNAME') ?: project.properties.artifactoryUsername
+        password = System.getenv('ARTIFACTORY_DEPLOY_PASSWORD') ?: project.properties.artifactoryPaswword
+      }
+      defaults {
+        properties = [
+                'build.name': 'sonar-plugin-api',
+                'build.number': System.getenv('BUILD_NUMBER'),
+                'pr.branch.target': System.getenv('GITHUB_BASE_BRANCH'),
+                'pr.number': System.getenv('PULL_REQUEST'),
+                'vcs.branch': System.getenv('GITHUB_BRANCH'),
+                'vcs.revision': System.getenv('GIT_SHA1'),
+                'version': version
+        ]
+        publications('mavenJava')
+        publishPom = true
+        publishIvy = false
+      }
+    }
+    clientConfig.info.setBuildName('sonar-plugin-api')
+    clientConfig.info.setBuildNumber(System.getenv('BUILD_NUMBER'))
+    // The name of this variable is important because it's used by the delivery process when extracting version from Artifactory build info.
+    clientConfig.info.addEnvironmentProperty('PROJECT_VERSION', "${version}")
+  }
 }
 
 ext {
   release = project.hasProperty('release') && project.getProperty('release')
+  versionInSources = version
+}
+
+sonarqube {
+  properties {
+    property 'sonar.projectName', projectTitle
+    property 'sonar.projectVersion', "${versionInSources}-SNAPSHOT"
+    property 'sonar.buildString', version
+  }
 }
 
 subprojects {
@@ -41,12 +92,14 @@ subprojects {
   apply plugin: 'maven-publish'
 
   jacoco {
-    toolVersion = "0.8.6"
+    toolVersion = "0.8.7"
   }
-  
+
   jacocoTestReport {
     reports {
-      xml.enabled true
+      xml.required = true
+      csv.required = false
+      html.required = false
     }
   }
 
@@ -63,6 +116,8 @@ subprojects {
     }
     includes(['**/*.java', '**/*.js', '**/*.ts', '**/*.tsx', '**/*.css'])
   }
+
+  rootProject.tasks["sonarqube"].dependsOn jacocoTestReport
 
   dependencyManagement {
     dependencies {
@@ -98,7 +153,6 @@ subprojects {
         entry 'slf4j-api'
       }
     }
-  }  
+  }
 }
-
 

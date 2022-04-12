@@ -57,6 +57,8 @@ shadowJar {
   relocate('org.apache.commons', 'org.sonar.api.internal.apachecommons')
 }
 
+tasks["build"].dependsOn(shadowJar)
+
 // only interested in shadowJar
 jar.enabled = false
 artifactoryPublish.skip = false
