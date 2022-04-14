@@ -72,7 +72,6 @@ allprojects {
 
 ext {
   release = project.hasProperty('release') && project.getProperty('release')
-  versionInSources = version
 }
 
 sonarqube {
