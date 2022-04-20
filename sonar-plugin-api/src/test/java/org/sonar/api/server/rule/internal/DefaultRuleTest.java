@@ -25,12 +25,18 @@ import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleDescriptionSection;
+import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class DefaultRuleTest {
+
+  private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
+  private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION_2 = new RuleDescriptionSectionBuilder().sectionKey("section_key_2").htmlContent("html desc 2").build();
+
   @Test
   public void getters() {
     DefaultRepository repo = mock(DefaultRepository.class);
@@ -39,6 +45,8 @@ public class DefaultRuleTest {
     rule.setScope(RuleScope.MAIN);
     rule.setName("   name  ");
     rule.setHtmlDescription("   html  ");
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION_2);
     rule.setTemplate(true);
     rule.setActivatedByDefault(true);
     RulesDefinition.NewParam param1 = rule.createParam("param1");
@@ -59,6 +67,7 @@ public class DefaultRuleTest {
     assertThat(defaultRule.scope()).isEqualTo(RuleScope.MAIN);
     assertThat(defaultRule.name()).isEqualTo("name");
     assertThat(defaultRule.htmlDescription()).isEqualTo("html");
+    assertThat(defaultRule.ruleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION, RULE_DESCRIPTION_SECTION_2);
     assertThat(defaultRule.template()).isTrue();
     assertThat(defaultRule.activatedByDefault()).isTrue();
     assertThat(defaultRule.params()).containsOnly(new DefaultParam(new DefaultNewParam("param1")));

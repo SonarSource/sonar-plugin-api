@@ -402,6 +402,15 @@ public interface RulesDefinition {
     public abstract NewRule setType(RuleType t);
 
     /**
+     * Add a rule description section. The sections must be added in the right order.
+     * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
+     * need to be called on top of that one.
+     *
+     * @since 9.5
+     */
+    public abstract NewRule addDescriptionSection(RuleDescriptionSection ruleDescriptionSection);
+
+    /**
      * The optional description, in HTML format, has no max length. It's exclusive with markdown description
      * (see {@link #setMarkdownDescription(String)})
      */
@@ -541,6 +550,11 @@ public interface RulesDefinition {
     public abstract RuleType type();
 
     public abstract String severity();
+
+    /**
+     * @since 9.5
+     */
+    public abstract List<RuleDescriptionSection> ruleDescriptionSections();
 
     @CheckForNull
     public abstract String htmlDescription();

@@ -25,6 +25,8 @@ import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleDescriptionSection;
+import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
@@ -36,6 +38,7 @@ import static org.mockito.Mockito.mock;
 
 public class DefaultNewRuleTest {
 
+  private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
   private final DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
 
   @Test
@@ -105,6 +108,9 @@ public class DefaultNewRuleTest {
 
     rule.setSeverity("MAJOR");
     assertThat(rule.severity()).isEqualTo("MAJOR");
+
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    assertThat(rule.getRuleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION);
   }
 
   @Test
@@ -167,5 +173,24 @@ public class DefaultNewRuleTest {
     assertThatThrownBy(() -> rule.addPciDss(PciDssVersion.V3_2, (String[]) null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("Requirements for PCI DSS standard must not be null");
+  }
+
+  @Test
+  public void fail_if_trying_to_insert_two_sections_with_same_keys() {
+    rule.addDescriptionSection(new RuleDescriptionSectionBuilder().sectionKey(RULE_DESCRIPTION_SECTION.getKey()).htmlContent("Html desc").build());
+    assertThatThrownBy(() -> rule.addDescriptionSection(RULE_DESCRIPTION_SECTION))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage("A section with key section_key already exists");
+  }
+
+  @Test
+  public void succeed_if_trying_to_insert_two_sections_with_different_keys() {
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    RuleDescriptionSection ruleDescriptionSection2 = new RuleDescriptionSectionBuilder().sectionKey("key2").htmlContent("Html desc").build();
+    rule.addDescriptionSection(ruleDescriptionSection2);
+    RuleDescriptionSection ruleDescriptionSection3 = new RuleDescriptionSectionBuilder().sectionKey("key3").htmlContent("Html desc").build();
+    rule.addDescriptionSection(ruleDescriptionSection3);
+
+    assertThat(rule.getRuleDescriptionSections()).containsOnly(RULE_DESCRIPTION_SECTION, ruleDescriptionSection2, ruleDescriptionSection3);
   }
 }

@@ -21,8 +21,11 @@ package org.sonar.api.server.rule.internal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +39,7 @@ import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
@@ -71,6 +75,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private boolean activatedByDefault;
   private RuleScope scope;
   private final Set<RuleKey> deprecatedRuleKeys = new TreeSet<>();
+  private final List<RuleDescriptionSection> ruleDescriptionSections = new ArrayList<>();
 
   DefaultNewRule(@Nullable String pluginKey, String repoKey, String key) {
     this.pluginKey = pluginKey;
@@ -125,6 +130,17 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   public DefaultNewRule setType(RuleType t) {
     this.type = t;
     return this;
+  }
+
+  @Override
+  public RulesDefinition.NewRule addDescriptionSection(RuleDescriptionSection ruleDescriptionSection) {
+    checkArgument(isSectionKeyUnique(ruleDescriptionSection.getKey()), "A section with key %s already exists", ruleDescriptionSection.getKey());
+    ruleDescriptionSections.add(ruleDescriptionSection);
+    return this;
+  }
+
+  private boolean isSectionKeyUnique(String sectionKey) {
+    return ruleDescriptionSections.stream().map(RuleDescriptionSection::getKey).noneMatch(alreadyExistingKey -> alreadyExistingKey.equals(sectionKey));
   }
 
   @Override
@@ -286,6 +302,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return this;
   }
 
+
   String pluginKey() {
     return pluginKey;
   }
@@ -300,6 +317,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   String name() {
     return name;
+  }
+
+  public List<RuleDescriptionSection> getRuleDescriptionSections() {
+    return Collections.unmodifiableList(ruleDescriptionSections);
   }
 
   String htmlDescription() {
@@ -354,7 +375,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   Set<RuleKey> deprecatedRuleKeys() {
     return deprecatedRuleKeys;
   }
-
   @Override
   public String toString() {
     return format("[repository=%s, key=%s]", repoKey, key);

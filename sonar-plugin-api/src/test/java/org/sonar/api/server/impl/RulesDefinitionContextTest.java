@@ -39,6 +39,8 @@ import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleDescriptionSection;
+import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.log.LogTester;
@@ -50,6 +52,7 @@ import static org.junit.Assert.fail;
 @RunWith(DataProviderRunner.class)
 public class RulesDefinitionContextTest {
 
+  private static final RuleDescriptionSection SECTION_DESCRIPTION_1 = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("<html></html>").build();
   private final RulesDefinition.Context context = new RulesDefinitionContext();
 
   @Rule
@@ -94,6 +97,7 @@ public class RulesDefinitionContextTest {
     newRepo.createRule("NPE")
       .setName("Detect NPE")
       .setHtmlDescription("Detect <code>java.lang.NullPointerException</code>")
+      .addDescriptionSection(SECTION_DESCRIPTION_1)
       .setSeverity(Severity.BLOCKER)
       .setInternalKey("/something")
       .setStatus(RuleStatus.BETA)
@@ -117,6 +121,7 @@ public class RulesDefinitionContextTest {
     assertThat(rule.name()).isEqualTo("Detect NPE");
     assertThat(rule.severity()).isEqualTo(Severity.BLOCKER);
     assertThat(rule.htmlDescription()).isEqualTo("Detect <code>java.lang.NullPointerException</code>");
+    assertThat(rule.ruleDescriptionSections()).containsExactly(SECTION_DESCRIPTION_1);
     assertThat(rule.markdownDescription()).isNull();
     assertThat(rule.tags()).containsOnly("one", "two", "three", "four");
     assertThat(rule.securityStandards()).containsOnly("cwe:1", "cwe:123", "cwe:2", "owaspTop10:a1", "owaspTop10:a3");
