@@ -33,6 +33,7 @@ import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagsToTypeConverter;
 import org.sonar.api.server.rule.RulesDefinition;
 
@@ -61,6 +62,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   private final boolean activatedByDefault;
   private final RuleScope scope;
   private final Set<RuleKey> deprecatedRuleKeys;
+  private final List<RuleDescriptionSection> ruleDescriptionSections;
 
   DefaultRule(DefaultRepository repository, DefaultNewRule newRule) {
     this.pluginKey = newRule.pluginKey();
@@ -89,6 +91,7 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.params = Collections.unmodifiableMap(paramsBuilder);
     this.activatedByDefault = newRule.activatedByDefault();
     this.deprecatedRuleKeys = Collections.unmodifiableSet(new TreeSet<>(newRule.deprecatedRuleKeys()));
+    this.ruleDescriptionSections = newRule.getRuleDescriptionSections();
   }
 
   @Override
@@ -125,6 +128,11 @@ public class DefaultRule extends RulesDefinition.Rule {
   @Override
   public String severity() {
     return severity;
+  }
+
+  @Override
+  public List<RuleDescriptionSection> ruleDescriptionSections() {
+    return Collections.unmodifiableList(ruleDescriptionSections);
   }
 
   @Override
