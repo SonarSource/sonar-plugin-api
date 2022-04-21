@@ -65,11 +65,34 @@ artifactoryPublish.skip = false
 publishing {
   publications {
     mavenJava(MavenPublication) {
-      artifact source: shadowJar, classifier: null
-      if (release) {
-        artifact sourcesJar
-        artifact javadocJar
+      pom {
+        name = project.name
+        description = project.description
+        url = 'http://www.sonarqube.org/'
+        organization {
+          name = 'SonarSource'
+          url = 'http://www.sonarsource.com'
+        }
+        licenses {
+          license {
+            name = 'GNU LGPL 3'
+            url = 'http://www.gnu.org/licenses/lgpl.txt'
+            distribution = 'repo'
+          }
+        }
+        scm {
+          url = 'https://github.com/SonarSource/sonar-plugin-api'
+        }
+        developers {
+          developer {
+            id = 'sonarsource-team'
+            name = 'SonarSource Team'
+          }
+        }
       }
+      artifact source: shadowJar, classifier: null
+      artifact sourcesJar
+      artifact javadocJar
     }
   }
 }
