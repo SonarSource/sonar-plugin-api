@@ -32,6 +32,8 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.FieldUtils2;
 import org.sonar.api.utils.SonarException;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.check.RuleProperty;
 
 /**
@@ -79,6 +81,8 @@ import org.sonar.check.RuleProperty;
  * @since 4.2
  */
 public class Checks<C> {
+  private static final Logger LOG = Loggers.get(Checks.class);
+
   private final ActiveRules activeRules;
   private final String repository;
   private final Map<RuleKey, C> checkByRule = new HashMap<>();
@@ -166,8 +170,7 @@ public class Checks<C> {
     for (Map.Entry<String, String> param : activeRule.params().entrySet()) {
       Field field = getField(check, param.getKey());
       if (field == null) {
-        throw new IllegalStateException(
-          String.format("The field '%s' does not exist or is not annotated with @RuleProperty in the class %s", param.getKey(), check.getClass().getName()));
+        LOG.error("The field '{}' does not exist or is not annotated with @RuleProperty in the class {}", param.getKey(), check.getClass().getName());
       }
       if (StringUtils.isNotBlank(param.getValue())) {
         configureField(check, field, param.getValue());
