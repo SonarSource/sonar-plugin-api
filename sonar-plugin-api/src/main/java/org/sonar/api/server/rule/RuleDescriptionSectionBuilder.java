@@ -46,7 +46,8 @@ public final class RuleDescriptionSectionBuilder {
   }
 
   /**
-   * The classpath URL of the resource containing the rule section content in HTML format
+   * The classpath URL of the resource containing the rule section content in HTML format.
+   * Example : {@code htmlClasspathResourceUrl(getClass().getResource("/myrepo/Rule1234_section_intro.html")}
    */
   public RuleDescriptionSectionBuilder htmlClasspathResourceUrl(URL htmlClasspathResourceUrl) {
     try {
