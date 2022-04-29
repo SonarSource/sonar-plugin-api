@@ -1,5 +1,5 @@
 /*
- * SonarQube
+ * Sonar Plugin API
  * Copyright (C) 2009-2022 SonarSource SA
  * mailto:info AT sonarsource DOT com
  *
