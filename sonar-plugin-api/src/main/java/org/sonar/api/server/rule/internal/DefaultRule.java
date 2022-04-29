@@ -143,6 +143,7 @@ public class DefaultRule extends RulesDefinition.Rule {
 
   @Override
   @CheckForNull
+  @Deprecated(since = "9.6", forRemoval = true)
   public String markdownDescription() {
     return markdownDescription;
   }
