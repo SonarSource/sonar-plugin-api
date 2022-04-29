@@ -165,6 +165,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   }
 
   @Override
+  @Deprecated(since = "9.6", forRemoval = true)
   public DefaultNewRule setMarkdownDescription(@Nullable String s) {
     checkState(htmlDescription == null, "Rule '%s' already has an HTML description", this);
     this.markdownDescription = trimToNull(s);
@@ -172,6 +173,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   }
 
   @Override
+  @Deprecated(since = "9.6", forRemoval = true)
   public DefaultNewRule setMarkdownDescription(@Nullable URL classpathUrl) {
     if (classpathUrl != null) {
       try {
@@ -327,6 +329,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return htmlDescription;
   }
 
+  @Deprecated(since = "9.6", forRemoval = true)
   String markdownDescription() {
     return markdownDescription;
   }
