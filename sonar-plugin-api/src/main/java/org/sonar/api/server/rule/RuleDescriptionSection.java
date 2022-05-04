@@ -32,8 +32,9 @@ public interface RuleDescriptionSection {
    */
   class RuleDescriptionSectionKeys {
     public static final String INTRODUCTION_SECTION_KEY = "introduction";
-    public static final String WHY_IS_THIS_AN_ISSUE_SECTION_KEY = "why_is_it_an_issue";
-    public static final String HOW_TO_FIX_IT_SECTION_KEY = "how_to_fix_it";
+    public static final String ROOT_CAUSE_SECTION_KEY = "root_cause";
+    public static final String ASSESS_THE_PROBLEM_SECTION_KEY = "assess_the_problem";
+    public static final String HOW_TO_FIX_SECTION_KEY = "how_to_fix";
     public static final String RESOURCES_SECTION_KEY = "resources";
 
     private RuleDescriptionSectionKeys() {
