@@ -46,4 +46,8 @@ public interface RuleDescriptionSection {
 
   String getHtmlContent();
 
+  static RuleDescriptionSectionBuilder builder() {
+    return new RuleDescriptionSectionBuilder();
+  }
+
 }
