@@ -106,9 +106,22 @@ public interface Plugin {
      *
      * @see #getRuntime()
      * @since 5.5
-     * @return the version of SonarQube API at runtime, not at compilation time
+     * @deprecated use {@code getApiVersion()} instead
+     * @return the version of Sonar Plugin API at runtime, not at compilation time
      */
+    @Deprecated
     public Version getSonarQubeVersion() {
+      return sonarRuntime.getApiVersion();
+    }
+
+    /**
+     * Shortcut on {@code getRuntime().getApiVersion()}.
+     *
+     * @see #getRuntime()
+     * @since 9.6.1
+     * @return the version of Sonar Plugin API at runtime, not at compilation time
+     */
+    public Version getApiVersion() {
       return sonarRuntime.getApiVersion();
     }
 

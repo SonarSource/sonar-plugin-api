@@ -19,6 +19,7 @@
  */
 package org.sonar.api;
 
+import java.util.Optional;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -161,6 +162,18 @@ public interface SonarRuntime {
    * different behaviours in SonarQube/SonarCloud and SonarLint.
    */
   SonarProduct getProduct();
+
+  /**
+   * Version of product at runtime.
+   * It can be helpful to call some API classes/methods without checking their availability at
+   * runtime by using reflection.
+   *
+   * By default, this method returns API version
+   * <br/>
+   * @since 9.6.1
+   * @return version which includes the build number in the fourth field, for example {@code "9.2.0.12345"}.
+   */
+  Optional<Version> getProductVersion();
 
   /**
    * The SonarQube/SonarCloud stack being executed at runtime.
