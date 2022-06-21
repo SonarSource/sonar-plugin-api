@@ -19,6 +19,8 @@
  */
 package org.sonar.api.server.rule;
 
+import java.util.Set;
+
 /**
  * Represents a sub-section of a rule description (What's the risk, Assess the risk, etc.)
  *
@@ -46,8 +48,29 @@ public interface RuleDescriptionSection {
 
   String getHtmlContent();
 
+  default Set<Context> getContexts() {
+    return Set.of();
+  }
+
   static RuleDescriptionSectionBuilder builder() {
     return new RuleDescriptionSectionBuilder();
   }
 
+  class Context {
+    private final String displayName;
+    private final String key;
+
+    public Context(String displayName, String key) {
+      this.displayName = displayName;
+      this.key = key;
+    }
+
+    public String getDisplayName() {
+      return displayName;
+    }
+
+    public String getKey() {
+      return key;
+    }
+  }
 }

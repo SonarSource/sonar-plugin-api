@@ -21,6 +21,7 @@ package org.sonar.api.server.rule;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
 import org.apache.commons.io.IOUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -28,6 +29,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public final class RuleDescriptionSectionBuilder {
   private String sectionKey;
   private String htmlContent;
+  private Set<RuleDescriptionSection.Context> contexts;
 
   /**
    * Identifier of the section, must be unique across sections of a given rule
@@ -45,6 +47,11 @@ public final class RuleDescriptionSectionBuilder {
     return this;
   }
 
+  public RuleDescriptionSectionBuilder contexts(Set<RuleDescriptionSection.Context> contexts) {
+    this.contexts = contexts;
+    return this;
+  }
+
   /**
    * The classpath URL of the resource containing the rule section content in HTML format.
    * Example : {@code htmlClasspathResourceUrl(getClass().getResource("/myrepo/Rule1234_section_intro.html")}
@@ -59,6 +66,9 @@ public final class RuleDescriptionSectionBuilder {
   }
 
   public RuleDescriptionSection build() {
+    if (contexts != null && contexts.size() > 0) {
+      return new ContextsAwareRuleDescriptionSection(sectionKey, htmlContent, contexts);
+    }
     return new DefaultRuleDescriptionSection(sectionKey, htmlContent);
   }
 }
