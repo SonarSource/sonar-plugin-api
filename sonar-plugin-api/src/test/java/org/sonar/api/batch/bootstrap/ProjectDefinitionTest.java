@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 import org.sonar.api.CoreProperties;
-import org.sonar.api.server.rule.RuleDescriptionSection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +33,6 @@ public class ProjectDefinitionTest {
     ProjectDefinition def = ProjectDefinition.create();
     def.setKey("mykey");
     assertThat(def.getKey()).isEqualTo("mykey");
-    String s = RuleDescriptionSection.RuleDescriptionSectionKeys.RESOURCES_SECTION_KEY;
   }
 
   @Test

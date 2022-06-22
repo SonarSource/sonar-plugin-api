@@ -25,6 +25,7 @@ import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -32,13 +33,21 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
+import static org.sonar.api.server.rule.internal.DefaultNewRule.CONTEXT_KEY_NOT_UNIQUE;
+import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT;
+import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_KEY_NOT_UNIQUE;
 
 public class DefaultNewRuleTest {
 
   private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
+  private static final Context CONTEXT_WITH_KEY_1 = new Context("ctx1", "DISPLAY_1");
+  private static final Context CONTEXT_WITH_KEY_2 = new Context("ctx2", "DISPLAY_2");
+  private static final RuleDescriptionSection CONTEXT_AWARE_RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey(
+    RULE_DESCRIPTION_SECTION.getKey()).htmlContent("Html desc").context(CONTEXT_WITH_KEY_1).build();
   private final DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
 
   @Test
@@ -180,7 +189,7 @@ public class DefaultNewRuleTest {
     rule.addDescriptionSection(new RuleDescriptionSectionBuilder().sectionKey(RULE_DESCRIPTION_SECTION.getKey()).htmlContent("Html desc").build());
     assertThatThrownBy(() -> rule.addDescriptionSection(RULE_DESCRIPTION_SECTION))
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("A section with key section_key already exists");
+      .hasMessage(format(SECTION_KEY_NOT_UNIQUE, RULE_DESCRIPTION_SECTION.getKey()));
   }
 
   @Test
@@ -192,5 +201,64 @@ public class DefaultNewRuleTest {
     rule.addDescriptionSection(ruleDescriptionSection3);
 
     assertThat(rule.getRuleDescriptionSections()).containsOnly(RULE_DESCRIPTION_SECTION, ruleDescriptionSection2, ruleDescriptionSection3);
+  }
+
+  @Test
+  public void succeed_if_trying_to_insert_two_contexts_for_same_section_with_different_keys() {
+    rule.addDescriptionSection(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION);
+    RuleDescriptionSection ruleDescriptionSection2 = new RuleDescriptionSectionBuilder()
+      .sectionKey(RULE_DESCRIPTION_SECTION.getKey())
+      .htmlContent("Html desc 2")
+      .context(CONTEXT_WITH_KEY_2)
+      .build();
+    rule.addDescriptionSection(ruleDescriptionSection2);
+
+    assertThat(rule.getRuleDescriptionSections()).containsOnly(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION, ruleDescriptionSection2);
+  }
+
+  @Test
+  public void succeed_if_trying_to_insert_two_contexts_for_two_sections_with_same_keys() {
+    rule.addDescriptionSection(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION);
+    RuleDescriptionSection ruleDescriptionSection2 = new RuleDescriptionSectionBuilder()
+      .sectionKey("key2")
+      .htmlContent("Html desc 2")
+      .context(CONTEXT_WITH_KEY_2)
+      .build();
+    rule.addDescriptionSection(ruleDescriptionSection2);
+
+    assertThat(rule.getRuleDescriptionSections()).containsOnly(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION, ruleDescriptionSection2);
+  }
+
+  @Test
+  public void fail_if_trying_to_insert_two_contexts_for_same_section_with_same_keys() {
+    String contextKey = CONTEXT_AWARE_RULE_DESCRIPTION_SECTION.getContext().orElseThrow().getKey();
+    rule.addDescriptionSection(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION);
+    RuleDescriptionSection ruleDescriptionSection2 = new RuleDescriptionSectionBuilder()
+      .sectionKey(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION.getKey())
+      .htmlContent("Html desc 2")
+      .context(new Context(contextKey, "bla"))
+      .build();
+
+    assertThatThrownBy(() -> rule.addDescriptionSection(ruleDescriptionSection2))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage(format(CONTEXT_KEY_NOT_UNIQUE, contextKey, RULE_DESCRIPTION_SECTION.getKey()));
+  }
+
+  @Test
+  public void fail_if_trying_to_insert_non_context_aware_section_and_then_context_aware_section_for_same_section_key() {
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+
+    assertThatThrownBy(() -> rule.addDescriptionSection(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage(format(SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT, RULE_DESCRIPTION_SECTION.getKey()));
+  }
+
+  @Test
+  public void fail_if_trying_to_insert_context_aware_section_and_then_non_context_aware_section_for_same_section_key() {
+    rule.addDescriptionSection(CONTEXT_AWARE_RULE_DESCRIPTION_SECTION);
+
+    assertThatThrownBy(() -> rule.addDescriptionSection(RULE_DESCRIPTION_SECTION))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage(format(SECTION_KEY_NOT_UNIQUE, RULE_DESCRIPTION_SECTION.getKey()));
   }
 }
