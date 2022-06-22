@@ -222,6 +222,15 @@ public interface SensorContext {
   void markForPublishing(InputFile inputFile);
 
   /**
+   * Marks a file as not having any data changed since the last analysis, including issues.
+   * The platform might perform optimizations based on this flag.
+   * The sensor is still expected to report all data for the file.
+   * @since 9.9
+   */
+  @Beta
+  void markAsUnchanged(InputFile inputFile);
+
+  /**
    * Access object to write cache that will be stored and made available in a future analysis.
    * If cache is disabled, the methods in the returned object will have no effect.
    * This API is experimental and can be changed or dropped at any time.
