@@ -21,6 +21,7 @@ package org.sonar.api.server.rule;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,11 +32,34 @@ public class RuleDescriptionSectionBuilderTest {
   private static final String TEST_HTML_DESCRIPTION = "test HTML description";
   private static final String TEST_SECTION_KEY = "Test";
   private static final String RULE_DESCRIPTION_FILE = "RuleDescriptionSectionBuilderTest.html";
+
+  private static final String TEST_CONTEXT_DISPLAY_NAME = "TEST_CONTEXT_DISPLAY_NAME";
+  private static final String TEST_CONTEXT_KEY = "CONTEXT_KEY";
+  private static final Context TEST_CONTEXT = new Context(TEST_CONTEXT_KEY, TEST_CONTEXT_DISPLAY_NAME);
+
   private final URL RULE_DESCRIPTION_FILE_URL = Objects.requireNonNull(getClass().getResource(RULE_DESCRIPTION_FILE));
+
+  @Test
+  public void build_sets_all_fields() {
+    RuleDescriptionSection descriptionSection = new RuleDescriptionSectionBuilder()
+      .sectionKey(TEST_SECTION_KEY)
+      .htmlContent(TEST_HTML_DESCRIPTION)
+      .context(TEST_CONTEXT)
+      .build();
+
+    assertThat(descriptionSection).isInstanceOf(ContextAwareRuleDescriptionSection.class);
+    assertThat(descriptionSection.getKey()).isEqualTo(TEST_SECTION_KEY);
+    assertThat(descriptionSection.getHtmlContent()).isEqualTo(TEST_HTML_DESCRIPTION);
+    Optional<Context> context = descriptionSection.getContext();
+    assertThat(context).isPresent();
+    assertThat(context.get().getKey()).isEqualTo(TEST_CONTEXT_KEY);
+    assertThat(context.get().getDisplayName()).isEqualTo(TEST_CONTEXT_DISPLAY_NAME);
+  }
 
   @Test
   public void build_withSectionKeyAndHtmlDescription() {
     RuleDescriptionSection descriptionSection = new RuleDescriptionSectionBuilder().sectionKey(TEST_SECTION_KEY).htmlContent(TEST_HTML_DESCRIPTION).build();
+    assertThat(descriptionSection).isInstanceOf(RuleDescriptionSection.class);
     assertThat(descriptionSection.getKey()).isEqualTo(TEST_SECTION_KEY);
     assertThat(descriptionSection.getHtmlContent()).isEqualTo(TEST_HTML_DESCRIPTION);
   }
@@ -43,6 +67,7 @@ public class RuleDescriptionSectionBuilderTest {
   @Test
   public void build_withSectionKeyAndHtmlResource_shouldLoadContentFromResource() {
     RuleDescriptionSection descriptionSection = new RuleDescriptionSectionBuilder().sectionKey(TEST_SECTION_KEY).htmlClasspathResourceUrl(RULE_DESCRIPTION_FILE_URL).build();
+    assertThat(descriptionSection).isInstanceOf(RuleDescriptionSection.class);
     assertThat(descriptionSection.getKey()).isEqualTo(TEST_SECTION_KEY);
     assertThat(descriptionSection.getHtmlContent()).isEqualTo(contentOf(RULE_DESCRIPTION_FILE_URL));
   }

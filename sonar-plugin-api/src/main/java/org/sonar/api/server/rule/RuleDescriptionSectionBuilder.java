@@ -21,13 +21,19 @@ package org.sonar.api.server.rule;
 
 import java.io.IOException;
 import java.net.URL;
+import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+/**
+ * This builder allows to build the right implementation of {@link RuleDescriptionSection}, depending on the provided arguments
+ * @since 9.5
+ */
 public final class RuleDescriptionSectionBuilder {
   private String sectionKey;
   private String htmlContent;
+  private Context context;
 
   /**
    * Identifier of the section, must be unique across sections of a given rule
@@ -58,7 +64,20 @@ public final class RuleDescriptionSectionBuilder {
     return this;
   }
 
-  public RuleDescriptionSection build() {
-    return new DefaultRuleDescriptionSection(sectionKey, htmlContent);
+  /**
+   * For context specific descriptions, the context key, must be unique across a given section of a rule.
+   * @since 9.7
+   */
+  public RuleDescriptionSectionBuilder context(@Nullable Context context) {
+    this.context = context;
+    return this;
   }
+
+  public RuleDescriptionSection build() {
+    if (context == null) {
+      return new DefaultRuleDescriptionSection(sectionKey, htmlContent);
+    }
+    return new ContextAwareRuleDescriptionSection(sectionKey, context, htmlContent);
+  }
+
 }

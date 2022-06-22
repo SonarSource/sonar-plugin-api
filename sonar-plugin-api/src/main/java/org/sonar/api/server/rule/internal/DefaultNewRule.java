@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.annotation.CheckForNull;
@@ -39,6 +40,7 @@ import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -55,6 +57,12 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 import static org.sonar.api.utils.Preconditions.checkState;
 
 class DefaultNewRule extends RulesDefinition.NewRule {
+
+  static final String SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT = "Section with key %s already added without context information. "
+    + "Impossible to mix for the same section key, context aware and non-context aware descriptions.";
+  static final String CONTEXT_KEY_NOT_UNIQUE = "A context with key %s was already added to section with key %s";
+  static final String SECTION_KEY_NOT_UNIQUE = "A section with key %s already exists";
+
   private final String pluginKey;
   private final String repoKey;
   private final String key;
@@ -134,13 +142,45 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   @Override
   public RulesDefinition.NewRule addDescriptionSection(RuleDescriptionSection ruleDescriptionSection) {
-    checkArgument(isSectionKeyUnique(ruleDescriptionSection.getKey()), "A section with key %s already exists", ruleDescriptionSection.getKey());
+    assertRuleDescriptionSectionIsValid(ruleDescriptionSection);
     ruleDescriptionSections.add(ruleDescriptionSection);
     return this;
   }
 
+  private void assertRuleDescriptionSectionIsValid(RuleDescriptionSection ruleDescriptionSection) {
+    ruleDescriptionSection.getContext().ifPresent(context -> assertContextAwareRuleDescriptionIsValid(ruleDescriptionSection, context));
+    if (ruleDescriptionSection.getContext().isEmpty()) {
+      checkArgument(isSectionKeyUnique(ruleDescriptionSection.getKey()), SECTION_KEY_NOT_UNIQUE, ruleDescriptionSection.getKey());
+    }
+  }
+
+  private void assertContextAwareRuleDescriptionIsValid(RuleDescriptionSection ruleDescriptionSection, Context context) {
+    String sectionKey = ruleDescriptionSection.getKey();
+    String contextKey = context.getKey();
+    checkArgument(isContextSetForAllRuleDescriptionSectionWithKey(sectionKey), SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT, sectionKey);
+    checkArgument(isContextKeyUniqueForSectionKey(sectionKey, contextKey), CONTEXT_KEY_NOT_UNIQUE, contextKey, sectionKey);
+  }
+
+  private boolean isContextSetForAllRuleDescriptionSectionWithKey(String sectionKey) {
+    return ruleDescriptionSections.stream()
+      .filter(section -> section.getKey().equals(sectionKey))
+      .map(RuleDescriptionSection::getContext)
+      .allMatch(Optional::isPresent);
+  }
+
+  private boolean isContextKeyUniqueForSectionKey(String sectionKey, String contextKey) {
+    return ruleDescriptionSections.stream()
+      .filter(section -> section.getKey().equals(sectionKey))
+      .map(RuleDescriptionSection::getContext)
+      .filter(Optional::isPresent)
+      .map(Optional::get)
+      .noneMatch(context -> contextKey.equals(context.getKey()));
+  }
+
   private boolean isSectionKeyUnique(String sectionKey) {
-    return ruleDescriptionSections.stream().map(RuleDescriptionSection::getKey).noneMatch(alreadyExistingKey -> alreadyExistingKey.equals(sectionKey));
+    return ruleDescriptionSections.stream()
+      .map(RuleDescriptionSection::getKey)
+      .noneMatch(alreadyExistingKey -> alreadyExistingKey.equals(sectionKey));
   }
 
   @Override

@@ -406,6 +406,9 @@ public interface RulesDefinition {
      * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
      * need to be called on top of that one.
      *
+     * Each section must have a different section key when they are non-contextual.
+     * As soon as one section is contextual for a section key, all sections with that key must be contextual. The pair "section key, context key" pair must still be unique.
+     *
      * @since 9.5
      */
     public abstract NewRule addDescriptionSection(RuleDescriptionSection ruleDescriptionSection);

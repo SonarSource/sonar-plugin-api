@@ -19,6 +19,8 @@
  */
 package org.sonar.api.server.rule;
 
+import java.util.Optional;
+
 /**
  * Represents a sub-section of a rule description (What's the risk, Assess the risk, etc.)
  *
@@ -28,6 +30,7 @@ public interface RuleDescriptionSection {
 
   /**
    * This class is a placeholder for the supported rule description section key constants.
+   *
    * @since 9.5
    */
   class RuleDescriptionSectionKeys {
@@ -45,6 +48,13 @@ public interface RuleDescriptionSection {
   String getKey();
 
   String getHtmlContent();
+
+  /**
+   * @since 9.7
+   */
+  default Optional<Context> getContext() {
+    return Optional.empty();
+  }
 
   static RuleDescriptionSectionBuilder builder() {
     return new RuleDescriptionSectionBuilder();
