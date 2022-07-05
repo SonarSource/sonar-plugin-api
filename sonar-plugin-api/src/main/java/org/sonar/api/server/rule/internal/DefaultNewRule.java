@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
@@ -51,6 +52,8 @@ import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.apache.commons.lang.StringUtils.trimToNull;
 import static org.sonar.api.utils.Preconditions.checkArgument;
@@ -62,6 +65,8 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     + "Impossible to mix for the same section key, context aware and non-context aware descriptions.";
   static final String CONTEXT_KEY_NOT_UNIQUE = "A context with key %s was already added to section with key %s";
   static final String SECTION_KEY_NOT_UNIQUE = "A section with key %s already exists";
+  static final String MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE = "All sections providing contexts must provide the same contexts."
+    + " Section '%s' has descriptions for contexts: %s, whereas section '%s' provides descriptions for contexts: %s. ";
 
   private final String pluginKey;
   private final String repoKey;
@@ -336,6 +341,30 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     if (isEmpty(htmlDescription) && isEmpty(markdownDescription)) {
       throw new IllegalStateException(format("One of HTML description or Markdown description must be defined for rule %s", this));
     }
+    validateSameContextKeysExistsForAllContextualizedSections(ruleDescriptionSections);
+  }
+
+  private static void validateSameContextKeysExistsForAllContextualizedSections(List<RuleDescriptionSection> ruleDescriptionSections) {
+    Map<String, Set<String>> sectionKeyToContextKeys = ruleDescriptionSections.stream()
+      .filter(section -> section.getContext().isPresent())
+      .collect(groupingBy(RuleDescriptionSection::getKey, mapping(s -> s.getContext().get().getKey(), Collectors.toSet())));
+
+    assertAllSectionsContainsSameContextKeys(sectionKeyToContextKeys);
+  }
+
+  private static void assertAllSectionsContainsSameContextKeys(Map<String, Set<String>> sectionKeyToContextKeys) {
+    if (sectionKeyToContextKeys.isEmpty()) {
+      return;
+    }
+
+    Map.Entry<String, Set<String>> referenceSectionToContexts = sectionKeyToContextKeys.entrySet().iterator().next();
+    String referenceSectionKey = referenceSectionToContexts.getKey();
+    Set<String> referenceContexts = referenceSectionToContexts.getValue();
+
+    sectionKeyToContextKeys.forEach((sectionKey, contextKeys) ->
+      checkArgument(contextKeys.equals(referenceContexts), MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE,
+        referenceSectionKey, referenceContexts, sectionKey, contextKeys)
+    );
   }
 
   @Override

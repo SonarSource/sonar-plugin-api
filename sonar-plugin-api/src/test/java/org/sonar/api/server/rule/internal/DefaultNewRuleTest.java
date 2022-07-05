@@ -19,6 +19,8 @@
  */
 package org.sonar.api.server.rule.internal;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
@@ -37,7 +39,10 @@ import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
+import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.HOW_TO_FIX_SECTION_KEY;
+import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.RESOURCES_SECTION_KEY;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.CONTEXT_KEY_NOT_UNIQUE;
+import static org.sonar.api.server.rule.internal.DefaultNewRule.MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_KEY_NOT_UNIQUE;
 
@@ -49,6 +54,11 @@ public class DefaultNewRuleTest {
   private static final RuleDescriptionSection CONTEXT_AWARE_RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey(
     RULE_DESCRIPTION_SECTION.getKey()).htmlContent("Html desc").context(CONTEXT_WITH_KEY_1).build();
   private final DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+
+  @Before
+  public void setUp() {
+    rule.setName("test rule");
+  }
 
   @Test
   public void testSimpleSetGet() {
@@ -123,7 +133,8 @@ public class DefaultNewRuleTest {
   }
 
   @Test
-  public void validate_fails() {
+  public void validate_fails_whenNameIsNotSet() {
+    rule.setName(null);
     rule.setHtmlDescription("html");
 
     assertThatThrownBy(() -> rule.validate())
@@ -261,4 +272,68 @@ public class DefaultNewRuleTest {
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage(format(SECTION_KEY_NOT_UNIQUE, RULE_DESCRIPTION_SECTION.getKey()));
   }
+
+  @Test
+  public void validate_succeeds_when_several_contextualized_section_not_mixing_different_context_keys() {
+    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx2"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
+    rule.validate();
+  }
+
+  @Test
+  public void validate_succeeds_when_single_contextualized_section_not_mixing_different_context_keys() {
+    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
+    rule.validate();
+  }
+
+  @Test
+  public void validate_succeeds_when_no_contextualized_section() {
+    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
+    rule.validate();
+  }
+
+  @Test
+  public void validate_fails_when_mixing_different_context_keys() {
+    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx2"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx3"));
+
+    assertThatThrownBy(rule::validate)
+      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx3, ctx1]", RESOURCES_SECTION_KEY, "[ctx1, ctx2]")
+      .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  public void validate_fails_when_more_contexts_available_for_one_section() {
+    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
+    rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
+
+    assertThatThrownBy(rule::validate)
+      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx1, ctx2]", RESOURCES_SECTION_KEY, "[ctx1]")
+      .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  private static RuleDescriptionSection createSectionWithContext(String sectionKey, String contextKey) {
+    return RuleDescriptionSection.builder()
+      .sectionKey(sectionKey)
+      .htmlContent(RandomStringUtils.randomAlphabetic(100))
+      .context(new Context(contextKey,contextKey + RandomStringUtils.randomAlphanumeric(10)))
+      .build();
+  }
+
+
 }
