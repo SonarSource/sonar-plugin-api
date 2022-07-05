@@ -20,6 +20,7 @@
 package org.sonar.api.batch.sensor.issue;
 
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
@@ -69,4 +70,11 @@ public interface Issue extends IIssue {
    * @since 9.2
    */
   boolean isQuickFixAvailable();
+
+  /**
+   * The optional rule description section context key, in case the analyzer detects a context for the issue.
+   * The key will match the one present in {@link org.sonar.api.server.rule.Context#getKey()}.
+   * @since 9.8
+   */
+  Optional<String> ruleDescriptionContextKey();
 }

@@ -86,4 +86,11 @@ public interface NewIssue {
    */
   void save();
 
+  /**
+   * Set the optional rule description section context key.
+   * The key needs to match the one present in {@link org.sonar.api.server.rule.Context#getKey()}.
+   * @since 9.8
+   */
+  NewIssue setRuleDescriptionContextKey(@Nullable String ruleDescriptionContextKey);
+
 }
