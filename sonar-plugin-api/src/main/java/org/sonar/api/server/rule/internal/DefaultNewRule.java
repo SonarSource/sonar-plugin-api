@@ -42,6 +42,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
+import org.sonar.api.server.rule.EducationPrincipleKeyFormat;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -89,6 +90,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private RuleScope scope;
   private final Set<RuleKey> deprecatedRuleKeys = new TreeSet<>();
   private final List<RuleDescriptionSection> ruleDescriptionSections = new ArrayList<>();
+  private final Set<String> educationPrincipleKeys = new TreeSet<>();
 
   DefaultNewRule(@Nullable String pluginKey, String repoKey, String key) {
     this.pluginKey = pluginKey;
@@ -373,6 +375,14 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return this;
   }
 
+  @Override
+  public DefaultNewRule addEducationPrincipleKeys(String... list) {
+    for (String educationPrincipleKey : list) {
+      EducationPrincipleKeyFormat.validate(educationPrincipleKey);
+      this.educationPrincipleKeys.add(educationPrincipleKey);
+    }
+    return this;
+  }
 
   String pluginKey() {
     return pluginKey;
@@ -392,6 +402,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   public List<RuleDescriptionSection> getRuleDescriptionSections() {
     return Collections.unmodifiableList(ruleDescriptionSections);
+  }
+
+  public Set<String> educationPrincipleKeys() {
+    return Collections.unmodifiableSet(educationPrincipleKeys);
   }
 
   String htmlDescription() {

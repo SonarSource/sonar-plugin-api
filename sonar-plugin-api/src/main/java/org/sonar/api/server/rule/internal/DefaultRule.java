@@ -63,6 +63,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   private final RuleScope scope;
   private final Set<RuleKey> deprecatedRuleKeys;
   private final List<RuleDescriptionSection> ruleDescriptionSections;
+  private final Set<String> educationPrincipleKeys;
 
   DefaultRule(DefaultRepository repository, DefaultNewRule newRule) {
     this.pluginKey = newRule.pluginKey();
@@ -92,6 +93,7 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.activatedByDefault = newRule.activatedByDefault();
     this.deprecatedRuleKeys = Collections.unmodifiableSet(new TreeSet<>(newRule.deprecatedRuleKeys()));
     this.ruleDescriptionSections = newRule.getRuleDescriptionSections();
+    this.educationPrincipleKeys = Collections.unmodifiableSet(newRule.educationPrincipleKeys());
   }
 
   @Override
@@ -133,6 +135,11 @@ public class DefaultRule extends RulesDefinition.Rule {
   @Override
   public List<RuleDescriptionSection> ruleDescriptionSections() {
     return Collections.unmodifiableList(ruleDescriptionSections);
+  }
+
+  @Override
+  public Set<String> educationPrincipleKeys() {
+    return educationPrincipleKeys;
   }
 
   @Override

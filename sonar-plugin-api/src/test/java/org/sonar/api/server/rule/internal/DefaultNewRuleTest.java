@@ -130,6 +130,9 @@ public class DefaultNewRuleTest {
 
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
     assertThat(rule.getRuleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION);
+
+    rule.addEducationPrincipleKeys("principle1", "principle2", "principle3");
+    assertThat(rule.educationPrincipleKeys()).containsExactly("principle1", "principle2", "principle3");
   }
 
   @Test
@@ -335,5 +338,9 @@ public class DefaultNewRuleTest {
       .build();
   }
 
-
+  @Test
+  public void fail_if_trying_to_insert_invalid_education_principle(){
+    assertThatThrownBy(()->rule.addEducationPrincipleKeys("invalid principle"))
+      .isInstanceOf(IllegalArgumentException.class);
+  }
 }

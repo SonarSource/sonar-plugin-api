@@ -105,7 +105,8 @@ public class RulesDefinitionContextTest {
       .setScope(RuleScope.ALL)
       .addOwaspTop10(RulesDefinition.OwaspTop10.A1, RulesDefinition.OwaspTop10.A3)
       .addCwe(1, 2, 123)
-      .addTags("two", "three", "four");
+      .addTags("two", "three", "four")
+      .addEducationPrincipleKeys("principle1", "principle2", "principle3");
 
     newRepo.createRule("ABC").setName("ABC").setMarkdownDescription("ABC");
     newRepo.done();
@@ -131,7 +132,7 @@ public class RulesDefinitionContextTest {
     assertThat(rule.status()).isEqualTo(RuleStatus.BETA);
     assertThat(rule.toString()).hasToString("[repository=findbugs, key=NPE]");
     assertThat(rule.repository()).isSameAs(repo);
-
+    assertThat(rule.educationPrincipleKeys()).containsOnly("principle1", "principle2", "principle3");
     RulesDefinition.Rule otherRule = repo.rule("ABC");
     assertThat(otherRule.htmlDescription()).isNull();
     assertThat(otherRule.markdownDescription()).isEqualTo("ABC");
@@ -471,7 +472,7 @@ public class RulesDefinitionContextTest {
       fail();
     } catch (Exception e) {
       assertThat(e).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Tag 'coding style' is invalid. Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'");
+        .hasMessage("Entry 'coding style' is invalid. Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'");
     }
   }
 
