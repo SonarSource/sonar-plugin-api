@@ -1,6 +1,9 @@
 # sonar-plugin-api
-Java API to develop plugins for SonarQube, SonarCloud and SonarLint.
+Java API to develop plugins for the Sonar ecosystem.
 This component was extracted out of SonarQube, and is released independently since v9.5.
 
+> :warning: Third-party plugins are supported only in SonarQube and SonarLint (for the latter only to run [custom rules](docs/adding-coding-rules)).
+
 ## Developing plugins
-See documentation [here](https://docs.sonarqube.org/latest/extend/developing-plugin/) about how to use the `sonar-plugin-api` to develop plugins.
+
+Please find the dedicated documentation [here](docs).
