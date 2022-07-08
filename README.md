@@ -7,7 +7,7 @@ The API is built with JDK 11.
 
 ## Developing plugins
 
-See documentation [here](https://docs.sonarqube.org/latest/extend/developing-plugin/) about how to use the `sonar-plugin-api` to develop plugins.
+See documentation [here](docs) about how to use the `sonar-plugin-api` to develop plugins.
 
 ## Dependency
 
@@ -33,7 +33,7 @@ The following tables indicate which API versions plugins can find at runtime:
 
 ### SonarQube
 | SonarQube              | Plugin API                |
-| ---------------------- | ------------------------- |
+|------------------------|---------------------------|
 | 9.9.0.65466            | 9.14.0.375                |
 | 9.8.0.63668            | 9.13.0.360                |
 | 9.7.1.62043            | 9.11.0.290                |
@@ -45,10 +45,6 @@ The following tables indicate which API versions plugins can find at runtime:
 
 ### SonarCloud
 Current version: 9.14.0.375
-
-## Optimizing the execution of sensors
-
-See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
 
 ## Have Question or Feedback?
 
