@@ -529,6 +529,14 @@ public interface RulesDefinition {
      * @since 7.1
      */
     public abstract NewRule addDeprecatedRuleKey(String repository, String key);
+
+    /**
+     * @since 9.8
+     * Register a list of education principle keys to attach to the given rule.
+     * Education principles must follow the format defined in {@link EducationPrincipleKeyFormat}
+     * Examples of education principle keys: "defense_in_depth", "least_trust_principle"
+     */
+    public abstract NewRule addEducationPrincipleKeys(String... list);
   }
 
   @Immutable
@@ -564,6 +572,11 @@ public interface RulesDefinition {
      * @since 9.5
      */
     public abstract List<RuleDescriptionSection> ruleDescriptionSections();
+
+    /**
+     * @since 9.8
+     */
+    public abstract Set<String> educationPrincipleKeys();
 
     @CheckForNull
     public abstract String htmlDescription();

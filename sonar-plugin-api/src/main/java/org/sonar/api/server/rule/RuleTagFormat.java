@@ -22,7 +22,6 @@ package org.sonar.api.server.rule;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
-import org.apache.commons.lang.StringUtils;
 
 import static java.lang.String.format;
 import static java.lang.String.join;
@@ -41,34 +40,28 @@ public class RuleTagFormat {
 
   private static final String VALID_CHARACTERS_REGEX = "^[a-z0-9\\+#\\-\\.]+$";
 
+  private static final StringPatternValidator STRING_VALIDATOR = new StringPatternValidator(VALID_CHARACTERS_REGEX, ERROR_MESSAGE_SUFFIX);
+
   private RuleTagFormat() {
     // only static methods
   }
 
   public static boolean isValid(String tag) {
-    return StringUtils.isNotBlank(tag) && tag.matches(VALID_CHARACTERS_REGEX);
+    return STRING_VALIDATOR.isValid(tag);
   }
 
   public static String validate(String tag) {
-    if (!isValid(tag)) {
-      throw new IllegalArgumentException(format("Tag '%s' is invalid. %s", tag, ERROR_MESSAGE_SUFFIX));
-    }
-    return tag;
+    return STRING_VALIDATOR.validate(tag);
   }
 
   public static Set<String> validate(Collection<String> tags) {
     Set<String> sanitizedTags = tags.stream()
       .filter(Objects::nonNull)
-      .filter(tag -> !tag.isEmpty())
-      .map(tag -> tag.toLowerCase(ENGLISH))
+      .filter(entry -> !entry.isEmpty())
+      .map(entry -> entry.toLowerCase(ENGLISH))
       .collect(toSet());
-    Set<String> invalidTags = sanitizedTags.stream()
-      .filter(tag -> !isValid(tag))
-      .collect(toSet());
-    if (invalidTags.isEmpty()) {
-      return sanitizedTags;
-    }
-    throw new IllegalArgumentException(format("Tags '%s' are invalid. %s", join(", ", invalidTags), ERROR_MESSAGE_SUFFIX));
+    STRING_VALIDATOR.validate(sanitizedTags);
+    return sanitizedTags;
   }
 
 }

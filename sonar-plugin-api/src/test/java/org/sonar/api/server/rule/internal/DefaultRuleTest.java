@@ -62,6 +62,7 @@ public class DefaultRuleTest {
     DebtRemediationFunction f = mock(DebtRemediationFunction.class);
     rule.setDebtRemediationFunction(f);
     rule.setSeverity("MAJOR");
+    rule.addEducationPrincipleKeys("principle_key1", "principle_key2", "principle_key3");
 
     DefaultRule defaultRule = new DefaultRule(repo, rule);
     assertThat(defaultRule.scope()).isEqualTo(RuleScope.MAIN);
@@ -81,6 +82,7 @@ public class DefaultRuleTest {
     assertThat(defaultRule.debtRemediationFunction()).isEqualTo(f);
     assertThat(defaultRule.markdownDescription()).isNull();
     assertThat(defaultRule.severity()).isEqualTo("MAJOR");
+    assertThat(defaultRule.educationPrincipleKeys()).containsOnly("principle_key1", "principle_key2", "principle_key3");
   }
 
   @Test
