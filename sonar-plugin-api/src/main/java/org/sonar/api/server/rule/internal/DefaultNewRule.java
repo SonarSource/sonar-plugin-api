@@ -49,6 +49,7 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
+import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
 
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -310,6 +311,17 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   }
 
   @Override
+  public DefaultNewRule addOwaspAsvs(OwaspAsvsVersion owaspAsvsVersion, String... requirements) {
+    requireNonNull(owaspAsvsVersion, "OWASP ASVS version must not be null");
+    requireNonNull(requirements, "Requirements for OWASP ASVS standard must not be null");
+    for (String requirement : requirements) {
+      String standard = owaspAsvsVersion.prefix() + ":" + requirement;
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
   public DefaultNewRule addPciDss(PciDssVersion pciDssVersion, String... requirements) {
     requireNonNull(pciDssVersion, "PCI DSS version must not be null");
     requireNonNull(requirements, "Requirements for PCI DSS standard must not be null");
@@ -461,6 +473,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   Set<RuleKey> deprecatedRuleKeys() {
     return deprecatedRuleKeys;
   }
+
   @Override
   public String toString() {
     return format("[repository=%s, key=%s]", repoKey, key);

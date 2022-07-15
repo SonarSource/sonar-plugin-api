@@ -293,6 +293,26 @@ public interface RulesDefinition {
     }
   }
 
+  enum OwaspAsvsVersion {
+    V4_0("4.0", "owaspAsvs-4.0");
+
+    private final String label;
+    private final String prefix;
+
+    OwaspAsvsVersion(String label, String prefix) {
+      this.label = label;
+      this.prefix = prefix;
+    }
+
+    public String label() {
+      return label;
+    }
+
+    public String prefix() {
+      return prefix;
+    }
+  }
+
   interface ExtendedRepository {
     String key();
 
@@ -505,6 +525,11 @@ public interface RulesDefinition {
      * @since 9.5
      */
     public abstract NewRule addPciDss(PciDssVersion version, String... requirements);
+
+    /**
+     * @since 9.9
+     */
+    public abstract NewRule addOwaspAsvs(OwaspAsvsVersion version, String... requirements);
 
     /**
      * @since 7.3

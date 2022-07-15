@@ -31,6 +31,7 @@ import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
@@ -118,6 +119,13 @@ public class DefaultNewRuleTest {
     assertThat(rule.securityStandards())
       .contains("pciDss-3.2:6.5.1", "pciDss-3.2:6.5", "pciDss-4.0:6.5.2", "pciDss-4.0:6.5.10");
 
+    rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.10.1");
+    rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.11.3");
+    rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.11.4", "1.11.5");
+
+    assertThat(rule.securityStandards())
+      .contains("owaspAsvs-4.0:1.10.1", "owaspAsvs-4.0:1.11.3", "owaspAsvs-4.0:1.11.4", "owaspAsvs-4.0:1.11.5");
+
     rule.setType(RuleType.SECURITY_HOTSPOT);
     assertThat(rule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
 
@@ -196,6 +204,20 @@ public class DefaultNewRuleTest {
     assertThatThrownBy(() -> rule.addPciDss(PciDssVersion.V3_2, (String[]) null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("Requirements for PCI DSS standard must not be null");
+  }
+
+  @Test
+  public void fail_if_null_owasp_asvs_version() {
+    assertThatThrownBy(() -> rule.addOwaspAsvs(null, "1.11.3"))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("OWASP ASVS version must not be null");
+  }
+
+  @Test
+  public void fail_if_null_owasp_asvs_array() {
+    assertThatThrownBy(() -> rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, (String[]) null))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("Requirements for OWASP ASVS standard must not be null");
   }
 
   @Test
