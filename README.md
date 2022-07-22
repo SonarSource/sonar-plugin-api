@@ -13,3 +13,6 @@ org.sonarsource.api.plugin:sonar-plugin-api:<version>
 You can find it in [maven central](https://mvnrepository.com/artifact/org.sonarsource.api.plugin/sonar-plugin-api).
 Also note that the version no longer follows SonarQube's versions. The `sonar-plugin-api` is now released separately.
 
+## Changelogs
+See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for changelogs. 
+
