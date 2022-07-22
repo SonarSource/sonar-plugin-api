@@ -28,7 +28,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * This builder allows to build the right implementation of {@link RuleDescriptionSection}, depending on the provided arguments
- * @since 9.5
+ * @since 9.6
  */
 public final class RuleDescriptionSectionBuilder {
   private String sectionKey;

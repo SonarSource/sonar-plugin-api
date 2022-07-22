@@ -24,14 +24,14 @@ import java.util.Optional;
 /**
  * Represents a sub-section of a rule description (What's the risk, Assess the risk, etc.)
  *
- * @since 9.5
+ * @since 9.6
  */
 public interface RuleDescriptionSection {
 
   /**
    * This class is a placeholder for the supported rule description section key constants.
    *
-   * @since 9.5
+   * @since 9.6
    */
   class RuleDescriptionSectionKeys {
     public static final String INTRODUCTION_SECTION_KEY = "introduction";
