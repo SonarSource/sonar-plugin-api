@@ -430,7 +430,7 @@ public interface RulesDefinition {
      * As soon as one section is contextual for a section key, all sections with that key must be contextual. The pair "section key, context key" pair must still be unique.
      * If several sections provide contexts, the provided context keys must be the same between sections.
      *
-     * @since 9.5
+     * @since 9.6
      */
     public abstract NewRule addDescriptionSection(RuleDescriptionSection ruleDescriptionSection);
 
@@ -594,7 +594,7 @@ public interface RulesDefinition {
 
     /**
      * See {@link NewRule#addDescriptionSection(RuleDescriptionSection)} to understand what are the requirements for a section.
-     * @since 9.5
+     * @since 9.6
      */
     public abstract List<RuleDescriptionSection> ruleDescriptionSections();
 
