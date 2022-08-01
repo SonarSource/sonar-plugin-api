@@ -16,3 +16,5 @@ Also note that the version no longer follows SonarQube's versions. The `sonar-pl
 ## Changelogs
 See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for changelogs. 
 
+## Optimizing the execution of sensors
+See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
