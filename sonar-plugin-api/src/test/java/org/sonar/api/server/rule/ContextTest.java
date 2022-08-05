@@ -22,11 +22,12 @@ package org.sonar.api.server.rule;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 public class ContextTest {
 
-  private static final String TEST_CONTEXT_KEY = "CONTEXT_KEY";
+  private static final String TEST_CONTEXT_KEY = "context_key";
   private static final String TEST_CONTEXT_DISPLAY_NAME = "CTX Display name";
 
   @Test
@@ -40,6 +41,11 @@ public class ContextTest {
   public void constructor_throws_if_context_key_missing() {
     assertThatNullPointerException().isThrownBy(() -> new Context(null, TEST_CONTEXT_DISPLAY_NAME))
       .withMessage("key must be provided");
+  }
+
+  @Test
+  public void constructor_throws_if_context_key_invalid() {
+    assertThatIllegalArgumentException().isThrownBy(() -> new Context("a b", TEST_CONTEXT_DISPLAY_NAME));
   }
 
   @Test

@@ -472,7 +472,7 @@ public class RulesDefinitionContextTest {
       fail();
     } catch (Exception e) {
       assertThat(e).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Entry 'coding style' is invalid. Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'");
+        .hasMessage("Entry 'coding style' is invalid. For Rule tags the entry has to match the regexp ^[a-z0-9\\+#\\-\\.]+$");
     }
   }
 

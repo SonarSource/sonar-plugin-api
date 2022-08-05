@@ -21,6 +21,7 @@ package org.sonar.api.server.rule;
 
 
 import static java.util.Objects.requireNonNull;
+import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 
 /**
  * Describes the context in which a {@link RuleDescriptionSection} is defined. Contexts can be for example frameworks - each rule may have
@@ -29,12 +30,20 @@ import static java.util.Objects.requireNonNull;
  */
 public class Context {
 
+  private static final StringPatternValidator CONTEXT_KEY_VALIDATOR = validatorWithCommonPatternForKeys("context keys");
+
   private final String key;
   private final String displayName;
 
+  /**
+   *
+   * @param key the context Key, must follow the pattern defined in {@link StringPatternValidator#COMMON_PATTERN_FOR_KEYS}
+   * @param displayName
+   */
   public Context(String key, String displayName) {
     requireNonNull(key, "key must be provided");
     requireNonNull(displayName, "displayName must be provided");
+    CONTEXT_KEY_VALIDATOR.validate(key);
     this.key = key;
     this.displayName = displayName;
   }

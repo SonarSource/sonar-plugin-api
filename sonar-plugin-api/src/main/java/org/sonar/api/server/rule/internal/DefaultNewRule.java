@@ -42,7 +42,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
-import org.sonar.api.server.rule.EducationPrincipleKeyFormat;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -50,6 +49,7 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
+import org.sonar.api.server.rule.StringPatternValidator;
 
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -58,6 +58,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.apache.commons.lang.StringUtils.trimToNull;
+import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 import static org.sonar.api.utils.Preconditions.checkState;
 
@@ -69,6 +70,8 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   static final String SECTION_KEY_NOT_UNIQUE = "A section with key %s already exists";
   static final String MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE = "All sections providing contexts must provide the same contexts."
     + " Section '%s' has descriptions for contexts: %s, whereas section '%s' provides descriptions for contexts: %s. ";
+
+  private static final StringPatternValidator EDUCATION_PRINCIPLE_KEYS_VALIDATOR = validatorWithCommonPatternForKeys("education principle keys");
 
   private final String pluginKey;
   private final String repoKey;
@@ -388,11 +391,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   }
 
   @Override
-  public DefaultNewRule addEducationPrincipleKeys(String... list) {
-    for (String educationPrincipleKey : list) {
-      EducationPrincipleKeyFormat.validate(educationPrincipleKey);
-      this.educationPrincipleKeys.add(educationPrincipleKey);
-    }
+  public DefaultNewRule addEducationPrincipleKeys(String... keys) {
+    Set<String> candidateEducationPrincipleKeys = Set.of(keys);
+    EDUCATION_PRINCIPLE_KEYS_VALIDATOR.validate(candidateEducationPrincipleKeys);
+    educationPrincipleKeys.addAll(candidateEducationPrincipleKeys);
     return this;
   }
 

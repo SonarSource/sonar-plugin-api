@@ -21,6 +21,7 @@ package org.sonar.api.server.rule;
 
 import java.util.Collection;
 import java.util.Set;
+import javax.annotation.Nullable;
 import org.apache.commons.lang.StringUtils;
 
 import static java.lang.String.format;
@@ -32,21 +33,28 @@ import static java.util.stream.Collectors.toSet;
  */
 public class StringPatternValidator {
 
-  private final String validCharacterRegex;
-  private final String errorMessageSuffix;
+  public static final String COMMON_PATTERN_FOR_KEYS = "^[a-z0-9_]+$";
+  private static final String IDENTIFIER_REGEX_DEFINITION = "For %s the entry has to match the regexp %s";
 
-  public StringPatternValidator(String validCharacterRegex, String errorMessageSuffix) {
+  private final String fieldUnderValidation;
+  private final String validCharacterRegex;
+
+  public StringPatternValidator(String fieldUnderValidation, String validCharacterRegex) {
+    this.fieldUnderValidation = fieldUnderValidation;
     this.validCharacterRegex = validCharacterRegex;
-    this.errorMessageSuffix = errorMessageSuffix;
   }
 
-  public boolean isValid(String entry) {
+  public static StringPatternValidator validatorWithCommonPatternForKeys(String fieldUnderValidation) {
+    return new StringPatternValidator(fieldUnderValidation, COMMON_PATTERN_FOR_KEYS);
+  }
+
+  public boolean isValid(@Nullable String entry) {
     return StringUtils.isNotBlank(entry) && entry.matches(validCharacterRegex);
   }
 
   public String validate(String entry) {
     if (!isValid(entry)) {
-      throw new IllegalArgumentException(format("Entry '%s' is invalid. %s", entry, errorMessageSuffix));
+      throw new IllegalArgumentException(format("Entry '%s' is invalid. " + IDENTIFIER_REGEX_DEFINITION, entry, fieldUnderValidation, validCharacterRegex));
     }
     return entry;
   }
@@ -56,7 +64,7 @@ public class StringPatternValidator {
       .filter(entry -> !isValid(entry))
       .collect(toSet());
     if (!invalidEntries.isEmpty()) {
-      throw new IllegalArgumentException(format("Entries '%s' are invalid. %s", join(", ", invalidEntries), errorMessageSuffix));
+      throw new IllegalArgumentException(format("Entries '%s' are invalid. " + IDENTIFIER_REGEX_DEFINITION, join(", ", invalidEntries), fieldUnderValidation, validCharacterRegex));
     }
   }
 }

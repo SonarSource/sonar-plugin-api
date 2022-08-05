@@ -26,6 +26,7 @@ import org.junit.Test;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.fail;
 
@@ -56,12 +57,7 @@ public class RuleTagFormatTest {
 
   @Test
   public void validate_and_fail() {
-    try {
-      RuleTagFormat.validate("  ");
-      fail();
-    } catch (IllegalArgumentException e) {
-      assertThat(e).hasMessage("Entry '  ' is invalid. Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'");
-    }
+    assertThatIllegalArgumentException().isThrownBy(() -> RuleTagFormat.validate(" "));
   }
 
   @Test
@@ -76,8 +72,6 @@ public class RuleTagFormatTest {
   @Test
   public void fail_to_validate_collection_of_tags() {
     List<String> tags = asList("coding style", "Stylé", "valid");
-    assertThatThrownBy(()->RuleTagFormat.validate(tags))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Entries 'coding style, stylé' are invalid. Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'");
+    assertThatIllegalArgumentException().isThrownBy(() -> RuleTagFormat.validate(tags));
   }
 }

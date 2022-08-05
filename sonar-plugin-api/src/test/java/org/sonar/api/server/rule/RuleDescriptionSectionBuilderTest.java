@@ -25,16 +25,18 @@ import java.util.Optional;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.contentOf;
 
 public class RuleDescriptionSectionBuilderTest {
 
   private static final String TEST_HTML_DESCRIPTION = "test HTML description";
-  private static final String TEST_SECTION_KEY = "Test";
+  private static final String TEST_SECTION_KEY = "test";
+  private static final String INVALID_TEST_SECTION_KEY = "test b";
   private static final String RULE_DESCRIPTION_FILE = "RuleDescriptionSectionBuilderTest.html";
 
   private static final String TEST_CONTEXT_DISPLAY_NAME = "TEST_CONTEXT_DISPLAY_NAME";
-  private static final String TEST_CONTEXT_KEY = "CONTEXT_KEY";
+  private static final String TEST_CONTEXT_KEY = "context_key";
   private static final Context TEST_CONTEXT = new Context(TEST_CONTEXT_KEY, TEST_CONTEXT_DISPLAY_NAME);
 
   private final URL RULE_DESCRIPTION_FILE_URL = Objects.requireNonNull(getClass().getResource(RULE_DESCRIPTION_FILE));
@@ -70,6 +72,11 @@ public class RuleDescriptionSectionBuilderTest {
     assertThat(descriptionSection).isInstanceOf(RuleDescriptionSection.class);
     assertThat(descriptionSection.getKey()).isEqualTo(TEST_SECTION_KEY);
     assertThat(descriptionSection.getHtmlContent()).isEqualTo(contentOf(RULE_DESCRIPTION_FILE_URL));
+  }
+
+  @Test
+  public void build_withInvalidSectionKey_shouldFail() {
+    assertThatIllegalArgumentException().isThrownBy(() -> new RuleDescriptionSectionBuilder().sectionKey(INVALID_TEST_SECTION_KEY));
   }
 
 }

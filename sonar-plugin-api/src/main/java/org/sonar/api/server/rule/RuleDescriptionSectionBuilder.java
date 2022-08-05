@@ -25,20 +25,25 @@ import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 
 /**
  * This builder allows to build the right implementation of {@link RuleDescriptionSection}, depending on the provided arguments
  * @since 9.6
  */
 public final class RuleDescriptionSectionBuilder {
+  private static final StringPatternValidator SECTION_KEY_VALIDATOR = validatorWithCommonPatternForKeys("section keys");
+
   private String sectionKey;
   private String htmlContent;
   private Context context;
 
   /**
    * Identifier of the section, must be unique across sections of a given rule
+   * Section keys must follow the format defined in {@link StringPatternValidator#COMMON_PATTERN_FOR_KEYS}
    */
   public RuleDescriptionSectionBuilder sectionKey(String sectionKey) {
+    SECTION_KEY_VALIDATOR.validate(sectionKey);
     this.sectionKey = sectionKey;
     return this;
   }

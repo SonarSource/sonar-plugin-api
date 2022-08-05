@@ -558,9 +558,9 @@ public interface RulesDefinition {
     /**
      * @since 9.8
      * Register a list of education principle keys to attach to the given rule.
-     * Education principles must follow the format defined in {@link EducationPrincipleKeyFormat}
+     * Education principles must follow the format defined in {@link StringPatternValidator#COMMON_PATTERN_FOR_KEYS}
      */
-    public abstract NewRule addEducationPrincipleKeys(String... list);
+    public abstract NewRule addEducationPrincipleKeys(String... keys);
   }
 
   @Immutable
