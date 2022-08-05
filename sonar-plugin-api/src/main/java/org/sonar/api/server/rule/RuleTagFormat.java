@@ -36,11 +36,9 @@ import static java.util.stream.Collectors.toSet;
  */
 public class RuleTagFormat {
 
-  private static final String ERROR_MESSAGE_SUFFIX = "Rule tags accept only the characters: a-z, 0-9, '+', '-', '#', '.'";
-
   private static final String VALID_CHARACTERS_REGEX = "^[a-z0-9\\+#\\-\\.]+$";
 
-  private static final StringPatternValidator STRING_VALIDATOR = new StringPatternValidator(VALID_CHARACTERS_REGEX, ERROR_MESSAGE_SUFFIX);
+  private static final StringPatternValidator STRING_VALIDATOR = new StringPatternValidator("Rule tags", VALID_CHARACTERS_REGEX);
 
   private RuleTagFormat() {
     // only static methods

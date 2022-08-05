@@ -361,8 +361,8 @@ public class DefaultNewRuleTest {
   }
 
   @Test
-  public void fail_if_trying_to_insert_invalid_education_principle(){
-    assertThatThrownBy(()->rule.addEducationPrincipleKeys("invalid principle"))
+  public void fail_if_trying_to_insert_education_principle_with_invalid_key(){
+    assertThatThrownBy(() -> rule.addEducationPrincipleKeys("invalid principle"))
       .isInstanceOf(IllegalArgumentException.class);
   }
 }

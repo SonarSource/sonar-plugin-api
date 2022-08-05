@@ -31,7 +31,7 @@ public class ContextAwareRuleDescriptionSectionTest {
 
   @Test
   public void constructor_instantiateFieldsCorrectly() {
-    Context context = new Context("ctxKey", "ctxDisplayName");
+    Context context = new Context("ctx_key", "ctxDisplayName");
     RuleDescriptionSection section = new ContextAwareRuleDescriptionSection(SECTION_KEY, context, SECTION_HTML_CONTENT);
 
     assertThat(section.getKey()).isEqualTo(SECTION_KEY);
