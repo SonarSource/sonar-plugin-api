@@ -34,8 +34,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+import javax.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+
+import static org.apache.commons.io.IOUtils.EOF;
 
 /**
  * Utility to zip directories and unzip files.
@@ -59,8 +62,29 @@ public final class ZipUtils {
     return unzip(zip, toDir, ze -> true);
   }
 
+  /**
+   * Unzip a file input stream to a directory.
+   *
+   * @param zip the zip file input stream
+   * @param toDir  the target directory. It is created if needed.
+   * @return the parameter {@code toDir}
+   * @since 6.2
+   */
   public static File unzip(InputStream zip, File toDir) throws IOException {
     return unzip(zip, toDir, ze -> true);
+  }
+
+  /**
+   * Unzip a file input stream to a directory.
+   *
+   * @param zip the zip file input stream
+   * @param toDir  the target directory. It is created if needed.
+   * @param unzipSizeThreshold  The parameter to prevent unzip size to exceed threshold(in Bytes)
+   * @return the parameter {@code toDir}
+   * @since 9.10
+   */
+  public static File unzip(InputStream zip, File toDir, long unzipSizeThreshold) throws IOException {
+    return unzip(zip, toDir, unzipSizeThreshold, ze -> true);
   }
 
   /**
@@ -74,23 +98,63 @@ public final class ZipUtils {
    * @since 6.2
    */
   public static File unzip(InputStream stream, File toDir, Predicate<ZipEntry> filter) throws IOException {
+    return unzip(stream, toDir, null, filter);
+  }
+
+  /**
+   * Unzip a file to a directory.
+   *
+   * @param stream the zip input file
+   * @param toDir  the target directory. It is created if needed.
+   * @param unzipSizeThreshold optional parameter to prevent unzip size to exceed threshold(in Bytes)
+   * @param filter filter zip entries so that only a subset of directories/files can be
+   *               extracted to target directory.
+   * @return the parameter {@code toDir}
+   * @since 9.10
+   */
+  public static File unzip(InputStream stream, File toDir, @Nullable Long unzipSizeThreshold, Predicate<ZipEntry> filter) throws IOException {
     if (!toDir.exists()) {
       FileUtils.forceMkdir(toDir);
     }
+
+    long totalSizeArchive = 0;
 
     Path targetDirNormalizedPath = toDir.toPath().normalize();
     try (ZipInputStream zipStream = new ZipInputStream(stream)) {
       ZipEntry entry;
       while ((entry = zipStream.getNextEntry()) != null) {
         if (filter.test(entry)) {
-          unzipEntry(entry, zipStream, targetDirNormalizedPath);
+          File target = getTargetFile(entry, targetDirNormalizedPath);
+          if (target.isDirectory()) {
+            continue;
+          }
+          if (unzipSizeThreshold != null) {
+            totalSizeArchive = extractZipEntry(zipStream, target, totalSizeArchive, unzipSizeThreshold);
+          } else {
+            copy(zipStream, target);
+          }
         }
       }
       return toDir;
     }
   }
 
-  private static void unzipEntry(ZipEntry entry, ZipInputStream zipStream, Path targetDirNormalized) throws IOException {
+  private static long extractZipEntry(ZipInputStream zipStream, File target, long totalSizeArchive, long threshold) throws IOException {
+    int nBytes = -1;
+    byte[] buffer = new byte[8192];
+    try (OutputStream outputStream = new FileOutputStream(target)) {
+      while (EOF != (nBytes = zipStream.read(buffer))) {
+        outputStream.write(buffer, 0, nBytes);
+        totalSizeArchive += nBytes;
+        if (totalSizeArchive > threshold) {
+          throw new IllegalStateException(String.format("Decompression failed because unzipped size reached threshold: %s bytes", threshold));
+        }
+      }
+    }
+    return totalSizeArchive;
+  }
+
+  private static File getTargetFile(ZipEntry entry, Path targetDirNormalized) throws IOException {
     File to = targetDirNormalized.resolve(entry.getName()).toFile();
     verifyInsideTargetDirectory(entry, to.toPath(), targetDirNormalized);
 
@@ -99,8 +163,8 @@ public final class ZipUtils {
     } else {
       File parent = to.getParentFile();
       throwExceptionIfDirectoryIsNotCreatable(parent);
-      copy(zipStream, to);
     }
+    return to;
   }
 
   private static void throwExceptionIfDirectoryIsNotCreatable(File to) throws IOException {
@@ -161,7 +225,7 @@ public final class ZipUtils {
 
   public static void zipDir(File dir, File zip) throws IOException {
     try (OutputStream out = Files.newOutputStream(zip.toPath());
-         ZipOutputStream zout = new ZipOutputStream(out)) {
+      ZipOutputStream zout = new ZipOutputStream(out)) {
       doZipDir(dir, zout);
     }
   }

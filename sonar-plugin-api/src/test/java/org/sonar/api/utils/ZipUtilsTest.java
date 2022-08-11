@@ -90,6 +90,23 @@ public class ZipUtilsTest {
   }
 
   @Test
+  public void should_throw_exception_when_size_exceed_limit() throws IOException {
+    InputStream zip = zipBomb().openStream();
+    File toDir = temp.newFolder();
+    assertThatThrownBy(() -> ZipUtils.unzip(zip, toDir, 1_000_000_000))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessage("Decompression failed because unzipped size reached threshold: 1000000000 bytes");
+  }
+
+  @Test
+  public void unzip_stream_under_threshold() throws Exception {
+    InputStream zip = urlToZip().openStream();
+    File toDir = temp.newFolder();
+    ZipUtils.unzip(zip, toDir, 1_000_000_000);
+    assertThat(toDir.list()).hasSize(3);
+  }
+
+  @Test
   public void fail_if_unzipping_file_outside_target_directory() throws Exception {
     File zip = new File(getClass().getResource("ZipUtilsTest/zip-slip.zip").toURI());
     File toDir = temp.newFolder();
@@ -105,13 +122,16 @@ public class ZipUtilsTest {
     File zip = new File(getClass().getResource("ZipUtilsTest/zip-slip.zip").toURI());
     File toDir = temp.newFolder();
 
-
     try (InputStream input = new FileInputStream(zip)) {
       assertThatThrownBy(() -> ZipUtils.unzip(input, toDir))
         .isInstanceOf(IllegalStateException.class)
         .hasMessage("Unzipping an entry outside the target directory is not allowed: ../../../../../../../../../../../../../../../../../.." +
           "/../../../../../../../../../../../../../../../../../../../../../../tmp/evil.txt");
     }
+  }
+
+  private URL zipBomb() {
+    return getClass().getResource("/org/sonar/api/utils/ZipUtilsTest/zip-bomb.zip");
   }
 
   private URL urlToZip() {
