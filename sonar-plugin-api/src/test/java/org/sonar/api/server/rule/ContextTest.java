@@ -39,8 +39,8 @@ public class ContextTest {
 
   @Test
   public void constructor_throws_if_context_key_missing() {
-    assertThatNullPointerException().isThrownBy(() -> new Context(null, TEST_CONTEXT_DISPLAY_NAME))
-      .withMessage("key must be provided");
+    assertThatIllegalArgumentException().isThrownBy(() -> new Context(null, TEST_CONTEXT_DISPLAY_NAME))
+      .withMessage("key must be provided and can't be empty");
   }
 
   @Test
@@ -50,8 +50,20 @@ public class ContextTest {
 
   @Test
   public void constructor_throws_if_context_display_name_missing() {
-    assertThatNullPointerException().isThrownBy(() -> new Context(TEST_CONTEXT_KEY, null))
-      .withMessage("displayName must be provided");
+    assertThatIllegalArgumentException().isThrownBy(() -> new Context(TEST_CONTEXT_KEY, null))
+      .withMessage("displayName must be provided and can't be empty");
+  }
+
+  @Test
+  public void constructor_throws_if_context_key_empty() {
+    assertThatIllegalArgumentException().isThrownBy(() -> new Context("", TEST_CONTEXT_DISPLAY_NAME))
+      .withMessage("key must be provided and can't be empty");
+  }
+
+  @Test
+  public void constructor_throws_if_context_display_name_empty() {
+    assertThatIllegalArgumentException().isThrownBy(() -> new Context(TEST_CONTEXT_KEY, ""))
+      .withMessage("displayName must be provided and can't be empty");
   }
 
 }
