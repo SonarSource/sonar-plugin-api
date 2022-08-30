@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.rule;
 
-import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 class DefaultRuleDescriptionSection implements RuleDescriptionSection {
 
@@ -27,8 +27,8 @@ class DefaultRuleDescriptionSection implements RuleDescriptionSection {
   private final String htmlContent;
 
   DefaultRuleDescriptionSection(String key, String htmlContent) {
-    requireNonNull(key, "The section key must be provided");
-    requireNonNull(htmlContent, "The html content of the section must be provided");
+    failIfEmpty(key, "The section key must be provided and can't be empty");
+    failIfEmpty(htmlContent, "The html content of the section must be provided and can't be empty");
     this.key = key;
     this.htmlContent = htmlContent;
   }
@@ -43,4 +43,9 @@ class DefaultRuleDescriptionSection implements RuleDescriptionSection {
     return htmlContent;
   }
 
+  private static void failIfEmpty(String str, String msg) {
+    if (isEmpty(str)) {
+      throw new IllegalArgumentException(msg);
+    }
+  }
 }

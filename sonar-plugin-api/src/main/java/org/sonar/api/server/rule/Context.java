@@ -19,13 +19,13 @@
  */
 package org.sonar.api.server.rule;
 
-
-import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 
 /**
  * Describes the context in which a {@link RuleDescriptionSection} is defined. Contexts can be for example frameworks - each rule may have
  * slightly different description section for each framework (context).
+ *
  * @since 9.7
  */
 public class Context {
@@ -36,13 +36,12 @@ public class Context {
   private final String displayName;
 
   /**
-   *
-   * @param key the context Key, must follow the pattern defined in {@link StringPatternValidator#COMMON_PATTERN_FOR_KEYS}
+   * @param key         the context Key, must follow the pattern defined in {@link StringPatternValidator#COMMON_PATTERN_FOR_KEYS}
    * @param displayName
    */
   public Context(String key, String displayName) {
-    requireNonNull(key, "key must be provided");
-    requireNonNull(displayName, "displayName must be provided");
+    failIfEmpty(key, "key must be provided and can't be empty");
+    failIfEmpty(displayName, "displayName must be provided and can't be empty");
     CONTEXT_KEY_VALIDATOR.validate(key);
     this.key = key;
     this.displayName = displayName;
@@ -54,5 +53,11 @@ public class Context {
 
   public String getDisplayName() {
     return displayName;
+  }
+
+  private static void failIfEmpty(String str, String msg) {
+    if (isEmpty(str)) {
+      throw new IllegalArgumentException(msg);
+    }
   }
 }

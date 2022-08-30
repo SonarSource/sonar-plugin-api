@@ -22,6 +22,7 @@ package org.sonar.api.server.rule;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 public class DefaultRuleDescriptionSectionTest {
@@ -39,16 +40,29 @@ public class DefaultRuleDescriptionSectionTest {
 
   @Test
   public void constructor_whenGivenNullKey_shouldFail() {
-    assertThatNullPointerException()
+    assertThatIllegalArgumentException()
       .isThrownBy(() -> new DefaultRuleDescriptionSection(null, SECTION_HTML_CONTENT))
-      .withMessage("The section key must be provided");
+      .withMessage("The section key must be provided and can't be empty");
   }
 
   @Test
   public void constructor_whenGivenNullHtmlContent_shouldFail() {
-    assertThatNullPointerException()
+    assertThatIllegalArgumentException()
       .isThrownBy(() -> new DefaultRuleDescriptionSection(SECTION_KEY, null))
-      .withMessage("The html content of the section must be provided");
+      .withMessage("The html content of the section must be provided and can't be empty");
   }
 
+  @Test
+  public void constructor_whenGivenEmptyKey_shouldFail() {
+    assertThatIllegalArgumentException()
+      .isThrownBy(() -> new DefaultRuleDescriptionSection("", SECTION_HTML_CONTENT))
+      .withMessage("The section key must be provided and can't be empty");
+  }
+
+  @Test
+  public void constructor_whenGivenEmptyHtmlContent_shouldFail() {
+    assertThatIllegalArgumentException()
+      .isThrownBy(() -> new DefaultRuleDescriptionSection(SECTION_KEY, ""))
+      .withMessage("The html content of the section must be provided and can't be empty");
+  }
 }
