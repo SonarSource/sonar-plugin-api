@@ -20,3 +20,10 @@ See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for
 
 ## Optimizing the execution of sensors
 See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
+
+Have Question or Feedback?
+--------------------------
+
+For support questions ("How do I?", "I got this error, why?", ...), please head to the [SonarSource forum](https://community.sonarsource.com/c/help). There are chances that a question similar to yours has already been answered. 
+
+Be aware that this forum is a community, so the standard pleasantries ("Hi", "Thanks", ...) are expected. And if you don't get an answer to your thread, you should sit on your hands for at least three days before bumping it. Operators are not standing by. :-)
