@@ -32,6 +32,13 @@ import org.sonar.api.rule.RuleKey;
 public interface NewIssue {
 
   /**
+   * The type of the flow reported for a given issue. Issue may have many flows reported with different types.
+   */
+  enum FlowType {
+    DATA, EXECUTION
+  }
+
+  /**
    * The {@link RuleKey} of the issue.
    */
   NewIssue forRule(RuleKey ruleKey);
@@ -73,6 +80,18 @@ public interface NewIssue {
    * @since 5.2
    */
   NewIssue addFlow(Iterable<NewIssueLocation> flowLocations);
+
+  /**
+   * Register a flow for this issue. A flow is an ordered list of issue locations that help to understand the issue.
+   * It should be a <b>path that backtracks the issue from its primary location to the start of the flow</b>.
+   * Several flows can be registered.
+   *
+   * @param flowType specifies type of flow that is being added. For details see
+   * {@link FlowType FlowType}.
+   * @param flowDescription optional description associated with a flow.
+   * @since 9.11
+   */
+  NewIssue addFlow(Iterable<NewIssueLocation> flowLocations, FlowType flowType, @Nullable String flowDescription);
 
   /**
    * Create a new location for this issue. First registered location is considered as primary location.
