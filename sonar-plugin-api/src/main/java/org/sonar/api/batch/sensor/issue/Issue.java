@@ -24,6 +24,7 @@ import java.util.Optional;
 import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.issue.NewIssue.FlowType;
 
 /**
  * Represents an issue detected by a {@link Sensor}.
@@ -36,6 +37,19 @@ public interface Issue extends IIssue {
      * @return Ordered list of locations for the execution flow
      */
     List<IssueLocation> locations();
+
+    /**
+     * @since 9.11
+     * @return Flow description. Can be null if it's not specified.
+     */
+    @CheckForNull
+    String description();
+
+    /**
+     * @since 9.11
+     * @return Type of the flow
+     */
+    FlowType type();
   }
 
   /**
