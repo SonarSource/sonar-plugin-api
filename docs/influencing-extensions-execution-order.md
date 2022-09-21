@@ -13,15 +13,15 @@ In Sonar products, extensions coming from those 3 extension points are executed 
 
 ## Registering for an execution phase
 
-Those extensions are executed by products during a `Phase`. There are 3 of them:
+Those extensions are executed by products during a _Phase_. There are 3 Phases:
 
 * PRE
 * DEFAULT
 * POST
 
-The phases execute in this order: PRE -> DEFAULT -> POST.
+The Phases execute in this order: PRE -> DEFAULT -> POST.
 
-Each extension can register for a specific phase. By default, they belong to the `DEFAULT` phase. This can be changed by annotating the extension class with the `Phase` annotation, as follows:
+Each extension can be registered in a specific Phase, enforcing their order of excution. By default, new extentions belong to the `DEFAULT` phase. This can be changed by annotating the extension class with the `Phase` annotation as follows:
 
 ```
 import org.sonar.api.batch.Phase;
@@ -34,13 +34,11 @@ public class MySensor implements Sensor {
 }
 ```
 
-As Phases are executed in a predefined order, registering extensions in different phases enforces their order of execution.
-
 ## Ordering extensions within a phase
 
-Within those phases, by default extensions are executed in a random order. It means that from one execution to another, the order is not guaranteed.
+By default, extensions within each Phase are executed in a random order; this means that from one execution to another, the order is not guaranteed.
 
-There is a mechanism to enforce extensions to be executed in a defined order, by explicitly marking the dependency between them. To achieve that, the two `@DependsUpon` and `@DependedUpon` annotations can be used:
+The order of execution can be enforced by explicitly marking the dependency between extentions using the `@DependedUpon` and `@DependsUpon` annotations:
 
 
 ```
@@ -60,12 +58,12 @@ public class SensorToBeExecutedSecond implements Sensor {
 }
 ```
 
-The `DependedUpon` and `DependsUpon` annotations serve to enforce a dependency between extensions. The execution order is guaranteed: extensions annotated with `DependedUpon` will be executed before extensions annotated with `DependsUpon`, for extensions who share the same dependency `value`.
+The `DependedUpon` and `DependsUpon` annotations enforce a dependency between extensions. The execution order is guaranteed: extensions annotated with `DependedUpon` will be executed before extensions annotated with `DependsUpon` for extensions who share the same dependency value.
 
-The role of the `value` parameter on the annotation is to act as a unique identifier for the dependency. This is what helps products order the extensions appropriately. This name has to be unique across all plugins installed in a product, so make sure to use a very specific, non-prone to collision name.
+The `value` parameter acts as a unique identifier for the dependency and helps products control the order of extensions. This name must be unique across all plugins installed in a product; it is best to use a very specific name, non-prone to collisions between plugins.
 
-This dependency mechanism not only works within a plugin but also across plugins. As a consequence, using these annotations could be considered as a contract with other plugins. This can have an impact if changing the plugin later, and developers might want to keep backward-compatibility.
+This dependency mechanism also works across multiple plugins. As a consequence, using these annotations could be considered as a contract with other plugins. This can have an impact if developers change the plugin in the future and want to ensure backwards compatibility.
 
-Extension ordering works only for extensions in the same Phase and between extensions of the same kind (see the different types in the introduction). Those different types of extensions are loaded at different times so it would not make sense to be able to order them, and using annotations in this case would not have any effect. Note that `org.sonar.api.batch.sensor.Sensor` extends `org.sonar.api.scanner.sensor.ProjectSensor` so ordering can be defined between classes implementing them. It will be applied only when scanning the 'root' module.
+Extension ordering only works for extensions _in the same Phase_ and _between extensions of the same kind_ (see the different extension types in the Introduction). The different types of extensions are loaded at different times and using annotations in this case would have no effect. Note that `org.sonar.api.batch.sensor.Sensor` extends `org.sonar.api.scanner.sensor.ProjectSensor` therefore, ordering can be defined by the classes which implement them. The extension will be applied only when scanning the 'root' module.
 
-Finally, there is a special case with this mechanism. A `org.sonar.api.batch.sensor.Sensor` can be marked `global` by calling `org.sonar.api.batch.sensor.SensorDescriptor#global()` from its `describe` method. It will be executed only once on the 'root' module. In this case each global Sensor is executed in its respective phase after the non-global ones. It is possible to order global Sensors only between them.
+There is a special case when ordering extensions: A `org.sonar.api.batch.sensor.Sensor` can be marked `global` by calling `org.sonar.api.batch.sensor.SensorDescriptor#global()` from it's _describe method_ and will be executed only once on the 'root' module. In this case, non-global sensors are executed first and each global sensor is executed in it's respective phase. It is not possible to control the orders of execution between non-global and global sensors.
