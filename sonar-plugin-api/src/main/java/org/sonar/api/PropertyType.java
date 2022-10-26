@@ -113,5 +113,10 @@ public enum PropertyType {
    * JSON property type
    * @since 8.8
    */
-  JSON
+  JSON,
+  /**
+   * Custom formatted text type
+   * @since 9.8
+   */
+  FORMATTED_TEXT
 }
