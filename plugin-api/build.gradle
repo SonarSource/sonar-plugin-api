@@ -58,8 +58,9 @@ artifactoryPublish.skip = false
 publishing {
   publications {
     mavenJava(MavenPublication) {
+      artifactId = 'sonar-plugin-api'
       pom {
-        name = project.name
+        name = 'Sonar Plugin API'
         description = project.description
         url = 'http://www.sonarqube.org/'
         organization {

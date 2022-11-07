@@ -19,9 +19,13 @@ dependencies {
 publishing {
   publications {
     mavenJava(MavenPublication) {
+      from components.java
+      artifact sourcesJar
+      artifact javadocJar
+      artifactId = 'sonar-plugin-api-test-utils'
       pom {
-        name = project.name
-        description = project.description
+        name = 'Sonar Plugin API - Test Utils'
+        description = 'Utility code to be used by plugin tests'
         url = 'http://www.sonarqube.org/'
         organization {
           name = 'SonarSource'
@@ -44,8 +48,6 @@ publishing {
           }
         }
       }
-      artifact sourcesJar
-      artifact javadocJar
     }
   }
 }
