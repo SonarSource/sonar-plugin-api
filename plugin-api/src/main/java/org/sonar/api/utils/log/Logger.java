@@ -268,4 +268,5 @@ public interface Logger {
   boolean setLevel(LoggerLevel level);
 
   LoggerLevel getLevel();
+
 }

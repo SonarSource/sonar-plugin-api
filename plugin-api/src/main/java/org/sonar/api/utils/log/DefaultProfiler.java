@@ -19,14 +19,12 @@
  */
 package org.sonar.api.utils.log;
 
-import java.util.function.Consumer;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.sonar.api.utils.System2;
-
-import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Consumer;
+import javax.annotation.Nullable;
+import org.apache.commons.lang.StringUtils;
+import org.sonar.api.utils.System2;
 
 class DefaultProfiler extends Profiler {
 
