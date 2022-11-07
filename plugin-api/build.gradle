@@ -59,18 +59,19 @@ artifactoryPublish.skip = false
 publishing {
   publications {
     mavenJava(MavenPublication) {
+      artifactId = 'sonar-plugin-api'
       pom {
-        name = project.name
+        name = 'Sonar Plugin API'
         description = project.description
-        url = 'http://www.sonarqube.org/'
+        url = 'https://www.sonarqube.org/'
         organization {
           name = 'SonarSource'
-          url = 'http://www.sonarsource.com'
+          url = 'https://www.sonarsource.com/'
         }
         licenses {
           license {
             name = 'GNU LGPL 3'
-            url = 'http://www.gnu.org/licenses/lgpl.txt'
+            url = 'https://www.gnu.org/licenses/lgpl-3.0.txt'
             distribution = 'repo'
           }
         }
