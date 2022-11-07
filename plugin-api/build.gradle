@@ -42,6 +42,9 @@ processResources {
 
 shadowJar {
   configurations = [project.configurations.runtimeClasspath]
+  dependencies {
+    exclude(dependency('org.slf4j:slf4j-api'))
+  }
   minimize {
     exclude(project(':check-api'))
   }
