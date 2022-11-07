@@ -80,7 +80,7 @@ subprojects {
   apply plugin: 'com.jfrog.artifactory'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
-  apply plugin: 'java'
+  apply plugin: 'java-library'
   apply plugin: 'maven-publish'
 
   java {
@@ -140,6 +140,7 @@ subprojects {
       // bundled plugin list -- keep it alphabetically ordered
       dependency 'commons-io:commons-io:2.11.0'
       dependency 'commons-lang:commons-lang:2.6'
+      dependency 'org.apache.commons:commons-lang3:3.12.0'
       dependency 'com.google.code.findbugs:jsr305:3.0.2'
       dependency 'com.google.code.gson:gson:2.9.0'
       dependency('com.google.guava:guava:31.1-jre') {
@@ -150,7 +151,7 @@ subprojects {
         exclude 'org.codehaus.mojo:animal-sniffer-annotations'
       }
       dependency 'com.tngtech.java:junit-dataprovider:1.13.1'
-      dependencySet(group: 'ch.qos.logback', version: '1.2.9') {
+      dependencySet(group: 'ch.qos.logback', version: '1.4.4') {
         entry 'logback-access'
         entry 'logback-classic'
         entry 'logback-core'
@@ -162,7 +163,7 @@ subprojects {
       dependency('org.mockito:mockito-core:4.4.0') {
         exclude 'org.hamcrest:hamcrest-core'
       }
-      dependencySet(group: 'org.slf4j', version: '1.7.30') {
+      dependencySet(group: 'org.slf4j', version: '2.0.3') {
         entry 'jcl-over-slf4j'
         entry 'jul-to-slf4j'
         entry 'log4j-over-slf4j'

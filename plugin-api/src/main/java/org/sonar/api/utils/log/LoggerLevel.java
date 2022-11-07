@@ -19,7 +19,11 @@
  */
 package org.sonar.api.utils.log;
 
-public enum  LoggerLevel {
+/**
+ * @deprecated should not be used
+ */
+@Deprecated(since = "9.13")
+public enum LoggerLevel {
   TRACE,
 
   DEBUG,

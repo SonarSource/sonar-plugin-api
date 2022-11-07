@@ -2,17 +2,17 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
   // please keep the list grouped by configuration and ordered by name
+  api 'org.slf4j:slf4j-api'
+  api project(':check-api')
+
   implementation 'commons-io:commons-io'
   implementation 'commons-lang:commons-lang'
   implementation 'com.google.code.gson:gson'
 
   // shaded, but not relocated
-  implementation project(':check-api')
 
-  compileOnly 'ch.qos.logback:logback-classic'
   compileOnly 'com.google.code.findbugs:jsr305'
   compileOnly 'javax.servlet:javax.servlet-api'
-  compileOnly 'org.slf4j:slf4j-api'
 
   testImplementation 'junit:junit'
   testImplementation 'com.google.guava:guava'

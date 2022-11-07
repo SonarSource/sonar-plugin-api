@@ -19,37 +19,41 @@
  */
 package org.sonar.api.testutils.log;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import java.util.List;
-import org.sonar.api.utils.log.ListInterceptor;
-import org.sonar.api.utils.log.LogAndArguments;
-import org.sonar.api.utils.log.LogInterceptors;
-import org.sonar.api.utils.log.LoggerLevel;
-import org.sonar.api.utils.log.Loggers;
-import org.sonar.api.utils.log.NullInterceptor;
+import java.util.stream.Collectors;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
+import org.slf4j.event.LoggingEvent;
 
-class AbstractLogTester<G extends AbstractLogTester> {
+class AbstractLogTester<G extends AbstractLogTester<G>> {
+
+  private final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+  private final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 
   protected void before() {
     // this shared instance breaks compatibility with parallel execution of tests
-    LogInterceptors.set(new ListInterceptor());
-    setLevel(LoggerLevel.INFO);
+    logger.addAppender(listAppender);
+    listAppender.start();
+    setLevel(Level.INFO);
   }
 
   protected void after() {
-    LogInterceptors.set(NullInterceptor.NULL_INSTANCE);
-    setLevel(LoggerLevel.INFO);
-  }
-
-  LoggerLevel getLevel() {
-    return Loggers.getFactory().getLevel();
+    listAppender.stop();
+    listAppender.list.clear();
+    logger.detachAppender(listAppender);
+    setLevel(Level.INFO);
   }
 
   /**
    * Enable/disable debug logs. Info, warn and error logs are always enabled.
    * By default INFO logs are enabled when LogTester is started.
    */
-  public G setLevel(LoggerLevel level) {
-    Loggers.getFactory().setLevel(level);
+  public G setLevel(Level level) {
+    Logger logbackLogger = (Logger) org.slf4j.LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
+    logbackLogger.setLevel(ch.qos.logback.classic.Level.toLevel(level.toString()));
     return (G) this;
   }
 
@@ -57,34 +61,34 @@ class AbstractLogTester<G extends AbstractLogTester> {
    * Logs in chronological order (item at index 0 is the oldest one)
    */
   public List<String> logs() {
-    return ((ListInterceptor) LogInterceptors.get()).logs();
+    return listAppender.list.stream().map(ILoggingEvent::getFormattedMessage).collect(Collectors.toList());
   }
 
   /**
    * Logs in chronological order (item at index 0 is the oldest one) for
    * a given level
    */
-  public List<String> logs(LoggerLevel level) {
-    return ((ListInterceptor) LogInterceptors.get()).logs(level);
+  public List<String> logs(Level level) {
+    return listAppender.list.stream()
+      .filter(e -> e.getLevel() == ch.qos.logback.classic.Level.toLevel(level.toString()))
+      .map(ILoggingEvent::getFormattedMessage)
+      .collect(Collectors.toList());
   }
 
-  /**
-   * Logs with arguments in chronological order (item at index 0 is the oldest one)
-   */
-  public List<LogAndArguments> getLogs() {
-    return ((ListInterceptor) LogInterceptors.get()).getLogs();
+
+  public List<LoggingEvent> getLoggingEvents() {
+    return listAppender.list.stream().map(LoggingEvent.class::cast).collect(Collectors.toList());
   }
 
-  /**
-   * Logs with arguments in chronological order (item at index 0 is the oldest one) for
-   * a given level
-   */
-  public List<LogAndArguments> getLogs(LoggerLevel level) {
-    return ((ListInterceptor) LogInterceptors.get()).getLogs(level);
+  public List<LoggingEvent> getLoggingEvents(Level level) {
+    return listAppender.list.stream()
+      .filter(e -> e.getLevel() == ch.qos.logback.classic.Level.toLevel(level.toString()))
+      .map(LoggingEvent.class::cast)
+      .collect(Collectors.toList());
   }
 
   public G clear() {
-    ((ListInterceptor) LogInterceptors.get()).clear();
+    listAppender.list.clear();
     return (G) this;
   }
 }

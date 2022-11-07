@@ -1,12 +1,20 @@
 
-
 dependencies {
-  implementation project(':plugin-api')
+  api project(':plugin-api')
+  implementation 'org.apache.commons:commons-lang3'
+  implementation 'ch.qos.logback:logback-classic'
+  compileOnly 'com.google.code.findbugs:jsr305'
 
+  // Used by LogTester
   compileOnly 'junit:junit'
   // Used by LogTesterJUnit5
   compileOnly 'org.junit.jupiter:junit-jupiter-api'
+
+  testImplementation 'junit:junit'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api'
+  testImplementation 'org.assertj:assertj-core'
 }
+
 
 publishing {
   publications {

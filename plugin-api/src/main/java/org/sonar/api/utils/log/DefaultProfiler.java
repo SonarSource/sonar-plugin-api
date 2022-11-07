@@ -19,7 +19,9 @@
  */
 package org.sonar.api.utils.log;
 
+import java.util.function.Consumer;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.sonar.api.utils.System2;
 
 import javax.annotation.Nullable;
@@ -32,12 +34,12 @@ class DefaultProfiler extends Profiler {
   private static final String DONE_SUFFIX = " (done)";
 
   private final LinkedHashMap<String, Object> context = new LinkedHashMap<>();
-  private final BaseLogger logger;
+  private final Logger logger;
 
   private long startTime = 0L;
   private String startMessage = null;
 
-  public DefaultProfiler(BaseLogger logger) {
+  public DefaultProfiler(Logger logger) {
     this.logger = logger;
   }
 
@@ -94,12 +96,12 @@ class DefaultProfiler extends Profiler {
 
   @Override
   public Profiler stopTrace() {
-    return doStopWithoutMessage(LoggerLevel.TRACE, DONE_SUFFIX);
+    return doStopWithoutMessage(logger::trace, DONE_SUFFIX);
   }
 
   @Override
   public Profiler stopDebug() {
-    return doStopWithoutMessage(LoggerLevel.DEBUG, DONE_SUFFIX);
+    return doStopWithoutMessage(logger::debug, DONE_SUFFIX);
   }
 
   @Override
@@ -111,36 +113,36 @@ class DefaultProfiler extends Profiler {
   @Override
   public Profiler stopInfo(boolean cacheUsed) {
     String suffix = cacheUsed ? " (done from cache)" : DONE_SUFFIX;
-    return doStopWithoutMessage(LoggerLevel.INFO, suffix);
+    return doStopWithoutMessage(logger::info, suffix);
   }
 
-  private Profiler doStopWithoutMessage(LoggerLevel level, String suffix) {
+  private Profiler doStopWithoutMessage(Consumer<String> logMethodToUse, String suffix) {
     if (startMessage == null) {
       throw new IllegalStateException("Profiler#stopXXX() can't be called without any message defined in start methods");
     }
-    doStop(level, startMessage, suffix);
+    doStop(logMethodToUse, startMessage, suffix);
     return this;
   }
 
   @Override
   public Profiler stopTrace(String message) {
-    doStop(LoggerLevel.TRACE, message, "");
+    doStop(logger::trace, message, "");
     return this;
   }
 
   @Override
   public Profiler stopDebug(String message) {
-    doStop(LoggerLevel.DEBUG, message, "");
+    doStop(logger::debug, message, "");
     return this;
   }
 
   @Override
   public Profiler stopInfo(String message) {
-    doStop(LoggerLevel.INFO, message, "");
+    doStop(logger::info, message, "");
     return this;
   }
 
-  private void doStop(LoggerLevel level, @Nullable String message, String messageSuffix) {
+  private void doStop(Consumer<String> logMethodToUse, @Nullable String message, String messageSuffix) {
     if (startTime == 0L) {
       throw new IllegalStateException("Profiler must be started before being stopped");
     }
@@ -153,7 +155,7 @@ class DefaultProfiler extends Profiler {
     }
     sb.append("time=").append(duration).append("ms");
     appendContext(sb);
-    logger.log(level, sb.toString());
+    logMethodToUse.accept(sb.toString());
     startTime = 0L;
     startMessage = null;
     context.clear();

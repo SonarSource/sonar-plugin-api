@@ -19,20 +19,16 @@
  */
 package org.sonar.api.utils.log;
 
-import ch.qos.logback.classic.Level;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.testutils.log.LogTester;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class LogbackLoggerTest {
-
-  LogbackLogger underTest = new LogbackLogger((ch.qos.logback.classic.Logger)LoggerFactory.getLogger(getClass()));
+public class Slf4jLoggerTest {
 
   @Rule
   public LogTester tester = new LogTester();
+  Slf4jLogger underTest = new Slf4jLogger(LoggerFactory.getLogger(getClass()));
 
   @Test
   public void log() {
@@ -65,31 +61,4 @@ public class LogbackLoggerTest {
     underTest.error("message", new IllegalArgumentException(""));
   }
 
-  @Test
-  public void change_level() {
-    assertThat(underTest.setLevel(LoggerLevel.ERROR)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.ERROR);
-
-    assertThat(underTest.setLevel(LoggerLevel.WARN)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.WARN);
-
-    assertThat(underTest.setLevel(LoggerLevel.INFO)).isTrue();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.INFO);
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-
-    assertThat(underTest.setLevel(LoggerLevel.DEBUG)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isTrue();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.DEBUG);
-
-    assertThat(underTest.setLevel(LoggerLevel.TRACE)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isTrue();
-    assertThat(underTest.isTraceEnabled()).isTrue();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.TRACE);
-  }
 }

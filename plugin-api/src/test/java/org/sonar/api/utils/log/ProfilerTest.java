@@ -21,6 +21,7 @@ package org.sonar.api.utils.log;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.event.Level;
 import org.sonar.api.testutils.log.LogTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,22 +38,22 @@ public class ProfilerTest {
 
   @Test
   public void create_null_profiler_if_trace_level_is_disabled() {
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
     Profiler profiler = Profiler.createIfTrace(Loggers.get("foo"));
     assertThat(profiler).isInstanceOf(DefaultProfiler.class);
 
-    tester.setLevel(LoggerLevel.DEBUG);
+    tester.setLevel(Level.DEBUG);
     profiler = Profiler.createIfTrace(Loggers.get("foo"));
     assertThat(profiler).isInstanceOf(NullProfiler.class);
   }
 
   @Test
   public void create_null_profiler_if_debug_level_is_disabled() {
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
     Profiler profiler = Profiler.createIfDebug(Loggers.get("foo"));
     assertThat(profiler).isInstanceOf(DefaultProfiler.class);
 
-    tester.setLevel(LoggerLevel.INFO);
+    tester.setLevel(Level.INFO);
     profiler = Profiler.createIfDebug(Loggers.get("foo"));
     assertThat(profiler).isInstanceOf(NullProfiler.class);
   }

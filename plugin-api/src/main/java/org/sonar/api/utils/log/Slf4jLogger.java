@@ -19,172 +19,154 @@
  */
 package org.sonar.api.utils.log;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
+import org.slf4j.Logger;
 import javax.annotation.Nullable;
 
 /**
- * Logback is used in production.
+ * Adapter of the deprecated {@link org.sonar.api.utils.log.Logger} interface
+ * @deprecated should not be used
  */
-class LogbackLogger extends BaseLogger {
+@Deprecated(since = "9.13")
+class Slf4jLogger extends BaseLogger {
 
-  private final Logger logback;
+  private final Logger slf4jLogger;
 
-  LogbackLogger(Logger logback) {
-    this.logback = logback;
+  Slf4jLogger(Logger slf4jLogger) {
+    this.slf4jLogger = slf4jLogger;
   }
 
   @Override
   public boolean isTraceEnabled() {
-    return logback.isTraceEnabled();
+    return slf4jLogger.isTraceEnabled();
   }
 
   @Override
   void doTrace(String msg) {
-    logback.trace(msg);
+    slf4jLogger.trace(msg);
   }
 
   @Override
   void doTrace(String msg, @Nullable Object arg) {
-    logback.trace(msg, arg);
+    slf4jLogger.trace(msg, arg);
   }
 
   @Override
   void doTrace(String msg, @Nullable Object arg1, @Nullable Object arg2) {
-    logback.trace(msg, arg1, arg2);
+    slf4jLogger.trace(msg, arg1, arg2);
   }
 
   @Override
   void doTrace(String msg, Object... args) {
-    logback.trace(msg, args);
+    slf4jLogger.trace(msg, args);
   }
 
   @Override
   public boolean isDebugEnabled() {
-    return logback.isDebugEnabled();
+    return slf4jLogger.isDebugEnabled();
   }
 
 
   @Override
   protected void doDebug(String msg) {
-    logback.debug(msg);
+    slf4jLogger.debug(msg);
   }
 
   @Override
   protected void doDebug(String msg, @Nullable Object arg) {
-    logback.debug(msg, arg);
+    slf4jLogger.debug(msg, arg);
   }
 
   @Override
   protected void doDebug(String msg, @Nullable Object arg1, @Nullable Object arg2) {
-    logback.debug(msg, arg1, arg2);
+    slf4jLogger.debug(msg, arg1, arg2);
   }
 
   @Override
   protected void doDebug(String msg, Object... args) {
-    logback.debug(msg, args);
+    slf4jLogger.debug(msg, args);
   }
 
   @Override
   protected void doInfo(String msg) {
-    logback.info(msg);
+    slf4jLogger.info(msg);
   }
 
   @Override
   protected void doInfo(String msg, @Nullable Object arg) {
-    logback.info(msg, arg);
+    slf4jLogger.info(msg, arg);
   }
 
   @Override
   protected void doInfo(String msg, @Nullable Object arg1, @Nullable Object arg2) {
-    logback.info(msg, arg1, arg2);
+    slf4jLogger.info(msg, arg1, arg2);
   }
 
   @Override
   protected void doInfo(String msg, Object... args) {
-    logback.info(msg, args);
+    slf4jLogger.info(msg, args);
   }
 
   @Override
   protected void doWarn(String msg) {
-    logback.warn(msg);
+    slf4jLogger.warn(msg);
   }
 
   @Override
   void doWarn(String msg, Throwable thrown) {
-    logback.warn(msg, thrown);
+    slf4jLogger.warn(msg, thrown);
   }
 
   @Override
   protected void doWarn(String msg, @Nullable Object arg) {
-    logback.warn(msg, arg);
+    slf4jLogger.warn(msg, arg);
   }
 
   @Override
   protected void doWarn(String msg, @Nullable Object arg1, @Nullable Object arg2) {
-    logback.warn(msg, arg1, arg2);
+    slf4jLogger.warn(msg, arg1, arg2);
   }
 
   @Override
   protected void doWarn(String msg, Object... args) {
-    logback.warn(msg, args);
+    slf4jLogger.warn(msg, args);
   }
 
   @Override
   protected void doError(String msg) {
-    logback.error(msg);
+    slf4jLogger.error(msg);
   }
 
   @Override
   protected void doError(String msg, @Nullable Object arg) {
-    logback.error(msg, arg);
+    slf4jLogger.error(msg, arg);
   }
 
   @Override
   protected void doError(String msg, @Nullable Object arg1, @Nullable Object arg2) {
-    logback.error(msg, arg1, arg2);
+    slf4jLogger.error(msg, arg1, arg2);
   }
 
   @Override
   protected void doError(String msg, Object... args) {
-    logback.error(msg, args);
+    slf4jLogger.error(msg, args);
   }
 
   @Override
   protected void doError(String msg, Throwable thrown) {
-    logback.error(msg, thrown);
+    slf4jLogger.error(msg, thrown);
   }
 
   @Override
   public boolean setLevel(LoggerLevel level) {
-    switch (level) {
-      case TRACE:
-        logback.setLevel(Level.TRACE);
-        break;
-      case DEBUG:
-        logback.setLevel(Level.DEBUG);
-        break;
-      case INFO:
-        logback.setLevel(Level.INFO);
-        break;
-      case WARN:
-        logback.setLevel(Level.WARN);
-        break;
-      case ERROR:
-        logback.setLevel(Level.ERROR);
-        break;
-      default:
-        throw new IllegalArgumentException("Only TRACE, DEBUG, INFO , WARN, ERROR logging levels are supported. Got: " + level);
-    }
-    return true;
+    return false;
   }
 
   @Override
   public LoggerLevel getLevel() {
-    return LoggerLevel.valueOf(logback.getEffectiveLevel().levelStr);
+    return LoggerLevel.INFO;
   }
 
-  Logger logbackLogger() {
-    return logback;
+  Logger slf4jLogger() {
+    return slf4jLogger;
   }
 }
