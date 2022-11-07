@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.ws.WebService.NewAction;
 import org.sonar.api.server.ws.WebService.NewController;
-import org.sonar.api.utils.log.LogTester;
+import org.sonar.api.testutils.log.LogTester;
 import org.sonar.api.utils.log.LoggerLevel;
 
 import static org.assertj.core.api.Assertions.assertThat;

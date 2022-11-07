@@ -1,0 +1,43 @@
+
+
+dependencies {
+  implementation project(':plugin-api')
+
+  compileOnly 'junit:junit'
+  // Used by LogTesterJUnit5
+  compileOnly 'org.junit.jupiter:junit-jupiter-api'
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      pom {
+        name = project.name
+        description = project.description
+        url = 'http://www.sonarqube.org/'
+        organization {
+          name = 'SonarSource'
+          url = 'http://www.sonarsource.com'
+        }
+        licenses {
+          license {
+            name = 'GNU LGPL 3'
+            url = 'http://www.gnu.org/licenses/lgpl.txt'
+            distribution = 'repo'
+          }
+        }
+        scm {
+          url = 'https://github.com/SonarSource/sonar-plugin-api'
+        }
+        developers {
+          developer {
+            id = 'sonarsource-team'
+            name = 'SonarSource Team'
+          }
+        }
+      }
+      artifact sourcesJar
+      artifact javadocJar
+    }
+  }
+}

@@ -17,9 +17,15 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.utils.log;
+package org.sonar.api.testutils.log;
 
 import java.util.List;
+import org.sonar.api.utils.log.ListInterceptor;
+import org.sonar.api.utils.log.LogAndArguments;
+import org.sonar.api.utils.log.LogInterceptors;
+import org.sonar.api.utils.log.LoggerLevel;
+import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.utils.log.NullInterceptor;
 
 class AbstractLogTester<G extends AbstractLogTester> {
 

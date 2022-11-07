@@ -21,6 +21,7 @@ package org.sonar.api.utils.log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
+import org.sonar.api.testutils.log.LogTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

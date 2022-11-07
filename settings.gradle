@@ -1,3 +1,4 @@
 rootProject.name='sonar-plugin-api'
 include 'plugin-api'
 include 'check-api'
+include 'plugin-api-test-utils'
