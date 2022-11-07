@@ -1,9 +1,3 @@
-sonarqube {
-  properties {
-    property 'sonar.projectName', "${projectTitle} :: Plugin API"
-  }
-}
-
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
@@ -13,7 +7,7 @@ dependencies {
   implementation 'com.google.code.gson:gson'
 
   // shaded, but not relocated
-  implementation project(':sonar-check-api')
+  implementation project(':check-api')
 
   compileOnly 'ch.qos.logback:logback-classic'
   compileOnly 'com.google.code.findbugs:jsr305'
@@ -50,7 +44,7 @@ processResources {
 shadowJar {
   configurations = [project.configurations.runtimeClasspath]
   minimize {
-    exclude(project(':sonar-check-api'))
+    exclude(project(':check-api'))
   }
   relocate('com.google', 'org.sonar.api.internal.google')
   relocate('org.apache.commons', 'org.sonar.api.internal.apachecommons')

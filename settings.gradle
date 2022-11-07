@@ -1,3 +1,3 @@
 rootProject.name='sonar-plugin-api'
-include 'sonar-plugin-api'
-include 'sonar-check-api'
+include 'plugin-api'
+include 'check-api'
