@@ -71,7 +71,6 @@ allprojects {
 
 sonarqube {
   properties {
-    property 'sonar.projectName', projectTitle
     property 'sonar.buildString', version
   }
 }
