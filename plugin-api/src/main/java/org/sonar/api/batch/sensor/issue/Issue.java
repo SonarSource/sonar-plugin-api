@@ -25,6 +25,7 @@ import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.issue.NewIssue.FlowType;
+import org.sonar.api.batch.sensor.issue.fix.QuickFix;
 
 /**
  * Represents an issue detected by a {@link Sensor}.
@@ -91,4 +92,10 @@ public interface Issue extends IIssue {
    * @since 9.8
    */
   Optional<String> ruleDescriptionContextKey();
+
+  /**
+   * The list of quick fixes contributed for this issue. Could be empty but never null.
+   * @since 9.13
+   */
+  List<QuickFix> quickFixes();
 }
