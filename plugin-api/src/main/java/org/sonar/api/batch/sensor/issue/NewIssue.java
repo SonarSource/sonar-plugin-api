@@ -22,6 +22,7 @@ package org.sonar.api.batch.sensor.issue;
 import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.issue.fix.NewQuickFix;
 import org.sonar.api.rule.RuleKey;
 
 /**
@@ -96,9 +97,28 @@ public interface NewIssue {
 
   /**
    * Create a new location for this issue. First registered location is considered as primary location.
+   *
    * @since 5.2
    */
   NewIssueLocation newLocation();
+
+  /**
+   * Create a new quick fix. Use {@link #addQuickFix(NewQuickFix)} to finish registering the new quick fix.
+   *
+   * @return a new uninitialized instance of a quick fix for this issue
+   * @since 9.13
+   */
+  NewQuickFix newQuickFix();
+
+  /**
+   * Add a new quick fix to this issue. While products should do their best to display quick fixes in the order they are contributed,
+   * sometimes due to external factors the quick fixes might be displayed in a different order.
+   *
+   * @param newQuickFix the quick fix to add
+   * @return this object
+   * @since 9.13
+   */
+  NewIssue addQuickFix(NewQuickFix newQuickFix);
 
   /**
    * Save the issue. If rule key is unknown or rule not enabled in the current quality profile then a warning is logged but no exception
