@@ -42,6 +42,8 @@ processResources {
 }
 
 shadowJar {
+  archivesBaseName = 'sonar-plugin-api'
+  archiveClassifier = ''
   configurations = [project.configurations.runtimeClasspath]
   minimize {
     exclude(project(':check-api'))
