@@ -2,7 +2,6 @@ plugins {
   id 'com.github.hierynomus.license' version '0.16.1'
   id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
   id 'com.jfrog.artifactory' version '4.28.1'
-  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'org.sonarqube' version '3.3'
 }
 
@@ -78,7 +77,6 @@ sonarqube {
 subprojects {
   apply plugin: 'com.github.hierynomus.license'
   apply plugin: 'com.jfrog.artifactory'
-  apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
   apply plugin: 'java'
   apply plugin: 'maven-publish'
@@ -134,42 +132,6 @@ subprojects {
   }
 
   rootProject.tasks["sonarqube"].dependsOn jacocoTestReport
-
-  dependencyManagement {
-    dependencies {
-      // bundled plugin list -- keep it alphabetically ordered
-      dependency 'commons-io:commons-io:2.11.0'
-      dependency 'commons-lang:commons-lang:2.6'
-      dependency 'com.google.code.findbugs:jsr305:3.0.2'
-      dependency 'com.google.code.gson:gson:2.9.0'
-      dependency('com.google.guava:guava:31.1-jre') {
-        exclude 'com.google.errorprone:error_prone_annotations'
-        exclude 'com.google.guava:listenablefuture'
-        exclude 'com.google.j2objc:j2objc-annotations'
-        exclude 'org.checkerframework:checker-qual'
-        exclude 'org.codehaus.mojo:animal-sniffer-annotations'
-      }
-      dependency 'com.tngtech.java:junit-dataprovider:1.13.1'
-      dependencySet(group: 'ch.qos.logback', version: '1.2.9') {
-        entry 'logback-access'
-        entry 'logback-classic'
-        entry 'logback-core'
-      }
-      dependency 'javax.servlet:javax.servlet-api:3.1.0'
-      dependency 'junit:junit:4.13.2'
-      dependency 'org.assertj:assertj-core:3.22.0'
-      dependency 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-      dependency('org.mockito:mockito-core:4.4.0') {
-        exclude 'org.hamcrest:hamcrest-core'
-      }
-      dependencySet(group: 'org.slf4j', version: '1.7.30') {
-        entry 'jcl-over-slf4j'
-        entry 'jul-to-slf4j'
-        entry 'log4j-over-slf4j'
-        entry 'slf4j-api'
-      }
-    }
-  }
 
   apply plugin: 'signing'
 

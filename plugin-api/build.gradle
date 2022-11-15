@@ -2,25 +2,25 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
   // please keep the list grouped by configuration and ordered by name
-  implementation 'commons-io:commons-io'
-  implementation 'commons-lang:commons-lang'
-  implementation 'com.google.code.gson:gson'
+  implementation libs.commons.io
+  implementation libs.commons.lang
+  implementation libs.gson
 
   // shaded, but not relocated
   implementation project(':check-api')
 
-  compileOnly 'ch.qos.logback:logback-classic'
-  compileOnly 'com.google.code.findbugs:jsr305'
-  compileOnly 'javax.servlet:javax.servlet-api'
-  compileOnly 'junit:junit'
+  compileOnly libs.logback.classic
+  compileOnly libs.jsr305
+  compileOnly libs.servlet.api
+  compileOnly libs.junit4
   // Used by LogTesterJUnit5
-  compileOnly 'org.junit.jupiter:junit-jupiter-api'
-  compileOnly 'org.slf4j:slf4j-api'
+  compileOnly libs.junit5
+  compileOnly libs.slf4j
 
-  testImplementation 'com.google.guava:guava'
-  testImplementation 'com.tngtech.java:junit-dataprovider'
-  testImplementation 'org.assertj:assertj-core'
-  testImplementation 'org.mockito:mockito-core'
+  testImplementation libs.guava
+  testImplementation libs.junit.dataprovider
+  testImplementation libs.assertj
+  testImplementation libs.mockito
 }
 
 configurations {

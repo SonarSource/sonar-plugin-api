@@ -1,3 +1,23 @@
 rootProject.name='sonar-plugin-api'
 include 'plugin-api'
 include 'check-api'
+
+dependencyResolutionManagement {
+  versionCatalogs {
+    libs {
+      library('commons-io', 'commons-io:commons-io:2.11.0')
+      library('commons-lang', 'commons-lang:commons-lang:2.6')
+      library('guava', 'com.google.guava:guava:31.1-jre')
+      library('gson', 'com.google.code.gson:gson:2.9.0')
+      library('jsr305', 'com.google.code.findbugs:jsr305:3.0.2')
+      library('servlet-api', 'javax.servlet:javax.servlet-api:3.1.0')
+      library('junit4', 'junit:junit:4.13.2')
+      library('junit5', 'org.junit.jupiter:junit-jupiter-api:5.8.2')
+      library('slf4j', 'org.slf4j:slf4j-api:1.7.30')
+      library('logback-classic', 'ch.qos.logback:logback-classic:1.2.9')
+      library('assertj', 'org.assertj:assertj-core:3.22.0')
+      library('mockito', 'org.mockito:mockito-core:4.4.0')
+      library('junit-dataprovider', 'com.tngtech.java:junit-dataprovider:1.13.1')
+    }
+  }
+}
