@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
+import java.util.List;
 import org.sonar.api.batch.fs.InputComponent;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.TextRange;
@@ -41,7 +42,7 @@ public interface NewIssueLocation {
   NewIssueLocation on(InputComponent component);
 
   /**
-   * Position in the file. Only applicable when {@link #on(InputComponent)} has been called with an InputFile. 
+   * Position in the file. Only applicable when {@link #on(InputComponent)} has been called with an InputFile.
    * See {@link InputFile#newRange(org.sonar.api.batch.fs.TextPointer, org.sonar.api.batch.fs.TextPointer)}
    */
   NewIssueLocation at(TextRange location);
@@ -52,5 +53,28 @@ public interface NewIssueLocation {
    * Formats like Markdown or HTML are not supported. Size must not be greater than {@link #MESSAGE_MAX_SIZE} characters.
    */
   NewIssueLocation message(String message);
+
+  /**
+   * Optional, message that can be formatted on the frontend.<br>
+   *
+   * Formats like Markdown or HTML are not supported. Size must not be greater than {@link #MESSAGE_MAX_SIZE} characters.<br>
+   *
+   * throws {@link java.lang.IllegalArgumentException} if any of the {@link org.sonar.api.batch.sensor.issue.NewMessageFormatting}
+   * instances passed in the {@code newMessageFormatting} is that:<br>
+   * - start is lesser than 0<br>
+   * - end is lesser than start<br>
+   * - end is greater than the size of {@code message}
+   *
+   * @since 9.13
+   */
+  NewIssueLocation message(String message, List<NewMessageFormatting> newMessageFormatting);
+
+  /**
+   * Creates new instance of NewMessageFormatting
+   * @return builder for NewMessageFormatting
+   *
+   * @since 9.13
+   */
+  NewMessageFormatting newMessageFormatting();
 
 }

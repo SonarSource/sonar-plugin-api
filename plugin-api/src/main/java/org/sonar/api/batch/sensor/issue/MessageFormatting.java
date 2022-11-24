@@ -19,40 +19,28 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
-import java.util.List;
-import javax.annotation.CheckForNull;
-import org.sonar.api.batch.fs.InputComponent;
-import org.sonar.api.batch.fs.TextRange;
-
 /**
- * Represents an issue location.
- *
- * @since 5.2
+ * Represents the data of the formatted part of the text in the issue message
+ * @since 9.13
  */
-public interface IssueLocation {
+public interface MessageFormatting {
+
+  enum Type {
+    CODE
+  }
 
   /**
-   * The {@link InputComponent} this location belongs to.
+   * The index of the first character in the string that will be formatted
    */
-  InputComponent inputComponent();
+  int start();
 
   /**
-   * Range of the issue. Null for global issues and issues on directories. Can also be null
-   * for files (issue global to the file).
+   * The index of the last character in the string that will be formatted
    */
-  @CheckForNull
-  TextRange textRange();
+  int end();
 
   /**
-   * Message of the issue.
+   * Type of the text that will be formatted
    */
-  @CheckForNull
-  String message();
-
-  /**
-   * @return list of text ranges in the message that can be highlighted when
-   * displaying the message according to specified type
-   */
-  List<MessageFormatting> messageFormattings();
-
+  Type type();
 }

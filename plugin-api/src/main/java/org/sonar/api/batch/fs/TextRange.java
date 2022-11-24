@@ -45,7 +45,7 @@ public interface TextRange {
 
   /**
    * Test if the current range has some common area with another range.
-   * Exemple: say the two ranges are on same line. Range with offsets [1,3] overlaps range with offsets [2,4] but not
+   * Example: say the two ranges are on same line. Range with offsets [1,3] overlaps range with offsets [2,4] but not
    * range with offset [3,5]
    */
   boolean overlap(TextRange another);
