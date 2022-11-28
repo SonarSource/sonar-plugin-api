@@ -45,7 +45,7 @@ build_task:
     memory: 4G
   env:
     SONAR_TOKEN: VAULT[development/kv/data/next data.token]
-    SONAR_HOST_URL: https://next.sonarqube.com/sonarqube
+    SONAR_HOST_URL: VAULT[development/kv/data/next data.url]
     #allow deployment of pull request artifacts to repox
     DEPLOY_PULL_REQUEST: true
   gradle_cache:
