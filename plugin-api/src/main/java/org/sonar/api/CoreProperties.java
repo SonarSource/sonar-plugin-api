@@ -203,6 +203,16 @@ public interface CoreProperties {
   String GLOBAL_EXCLUSIONS_PROPERTY = "sonar.global.exclusions";
   String GLOBAL_TEST_EXCLUSIONS_PROPERTY = "sonar.global.test.exclusions";
 
+  /**
+   * @since 9.14
+   */
+  String PROJECT_TESTS_INCLUSIONS_PROPERTY = "sonar.tests.inclusions";
+
+  /**
+   * @since 9.14
+   */
+  String PROJECT_TESTS_EXCLUSIONS_PROPERTY = "sonar.tests.exclusions";
+
   /* Sonar Core */
 
   String CORE_FORCE_AUTHENTICATION_PROPERTY = "sonar.forceAuthentication";
