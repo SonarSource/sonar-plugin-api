@@ -372,22 +372,30 @@ public interface CoreProperties {
 
   /**
    * @since 4.5
+   * @deprecated since 9.15
    */
+  @Deprecated(since="9.15", forRemoval=true)
   String LANGUAGE_SPECIFIC_PARAMETERS = "languageSpecificParameters";
 
   /**
    * @since 4.5
+   * @deprecated since 9.15
    */
+  @Deprecated(since="9.15", forRemoval=true)
   String LANGUAGE_SPECIFIC_PARAMETERS_LANGUAGE_KEY = "language";
 
   /**
    * @since 4.5
+   * @deprecated since 9.15
    */
+  @Deprecated(since="9.15", forRemoval=true)
   String LANGUAGE_SPECIFIC_PARAMETERS_MAN_DAYS_KEY = "man_days";
 
   /**
    * @since 4.5
+   * @deprecated since 9.15
    */
+  @Deprecated(since="9.15", forRemoval=true)
   String LANGUAGE_SPECIFIC_PARAMETERS_SIZE_METRIC_KEY = "size_metric";
 
   /**
