@@ -19,7 +19,7 @@ dependencies {
   testFixturesImplementation libs.junit4
   // Used by LogTesterJUnit5
   testFixturesImplementation libs.junit5
-  testFixturesImplementation libs.logback.classic
+  testFixturesApi libs.logback.classic
 
   testImplementation libs.junit4
   testImplementation libs.junit5
