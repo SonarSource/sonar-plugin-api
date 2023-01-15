@@ -26,6 +26,7 @@ import java.util.Collections;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.event.Level;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.ws.WebService.NewAction;
 import org.sonar.api.server.ws.WebService.NewController;
@@ -433,7 +434,7 @@ public class WebServiceTest {
     };
     ws.define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .doesNotContain("The response example is not set on action api/rule/list");
   }
 
@@ -445,7 +446,7 @@ public class WebServiceTest {
       newController.done();
     }).define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .contains("The response example is not set on action api/rule/list");
   }
 
@@ -458,7 +459,7 @@ public class WebServiceTest {
       newController.done();
     }).define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .contains("Since is not set on action api/rule/list");
   }
 
@@ -471,7 +472,7 @@ public class WebServiceTest {
       newController.done();
     }).define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .contains("Since is not set on action api/rule/list");
   }
 
@@ -484,7 +485,7 @@ public class WebServiceTest {
       newController.done();
     }).define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .contains("Description is not set on action api/rule/list");
   }
 
@@ -497,7 +498,7 @@ public class WebServiceTest {
       newController.done();
     }).define(context);
 
-    assertThat(logTester.logs(LoggerLevel.WARN))
+    assertThat(logTester.logs(Level.WARN))
       .contains("Description is not set on action api/rule/list");
   }
 

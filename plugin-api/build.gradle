@@ -12,7 +12,6 @@ dependencies {
   // shaded, but not relocated
   implementation project(':check-api')
 
-  compileOnly libs.logback.classic
   compileOnly libs.jsr305
   compileOnly libs.servlet.api
 
@@ -20,6 +19,7 @@ dependencies {
   testFixturesImplementation libs.junit4
   // Used by LogTesterJUnit5
   testFixturesImplementation libs.junit5
+  testFixturesImplementation libs.logback.classic
 
   testImplementation libs.junit4
   testImplementation libs.junit5

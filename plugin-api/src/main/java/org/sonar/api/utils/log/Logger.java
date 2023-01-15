@@ -262,9 +262,7 @@ public interface Logger {
   void error(String msg, Throwable thrown);
 
   /**
-   * Attempt to change logger level. Return true if it succeeded, false if
-   * the underlying logging facility does not allow to change level at
-   * runtime.
+   * Not supported since 9.15
    * <p>
    * This method must not be used to enable DEBUG or TRACE logs in tests. Use
    * {@link org.sonar.api.utils.log.LogTester#setLevel(LoggerLevel)} instead.
@@ -275,4 +273,26 @@ public interface Logger {
   boolean setLevel(LoggerLevel level);
 
   LoggerLevel getLevel();
+
+  default void log(LoggerLevel level, String msg) {
+    switch (level) {
+      case TRACE:
+        trace(msg);
+        break;
+      case DEBUG:
+        debug(msg);
+        break;
+      case INFO:
+        info(msg);
+        break;
+      case WARN:
+        warn(msg);
+        break;
+      case ERROR:
+        error(msg);
+        break;
+      default:
+        throw new IllegalArgumentException("Unsupported LoggerLevel value: " + level);
+    }
+  }
 }

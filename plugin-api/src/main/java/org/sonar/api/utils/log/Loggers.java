@@ -21,22 +21,12 @@ package org.sonar.api.utils.log;
 
 public abstract class Loggers {
 
-  static Loggers getFactory() {
-    return LoggerFactory.getFactory();
-  }
-
-  protected abstract Logger newInstance(String name);
-
-  protected abstract LoggerLevel getLevel();
-
-  protected abstract void setLevel(LoggerLevel level);
-
   public static Logger get(Class<?> name) {
-    return LoggerFactory.get(name);
+    return new Slf4jLogger(org.slf4j.LoggerFactory.getLogger(name));
   }
 
   public static Logger get(String name) {
-    return LoggerFactory.get(name);
+    return  new Slf4jLogger(org.slf4j.LoggerFactory.getLogger(name));
   }
 
 }

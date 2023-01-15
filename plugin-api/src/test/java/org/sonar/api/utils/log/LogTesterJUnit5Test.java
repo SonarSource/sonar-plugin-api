@@ -21,6 +21,7 @@ package org.sonar.api.utils.log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
+import org.slf4j.event.Level;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,18 +33,15 @@ public class LogTesterJUnit5Test {
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
     underTest.beforeTestExecution(null);
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
+    assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
 
     // change
-    underTest.setLevel(LoggerLevel.DEBUG);
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.DEBUG);
+    underTest.setLevel(Level.DEBUG);
+    assertThat(underTest.getLevel()).isEqualTo(Level.DEBUG);
 
     // reset to initial level after execution of test
     underTest.afterTestExecution(null);
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
+    assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
   }
 
   @Test
@@ -53,16 +51,15 @@ public class LogTesterJUnit5Test {
     Loggers.get("logger2").warn("warning: {}", 42);
 
     assertThat(underTest.logs()).containsExactly("an information", "warning: 42");
-    assertThat(underTest.logs(LoggerLevel.ERROR)).isEmpty();
-    assertThat(underTest.logs(LoggerLevel.INFO)).containsOnly("an information");
-    assertThat(underTest.logs(LoggerLevel.WARN)).containsOnly("warning: 42");
+    assertThat(underTest.logs(Level.ERROR)).isEmpty();
+    assertThat(underTest.logs(Level.INFO)).containsOnly("an information");
+    assertThat(underTest.logs(Level.WARN)).containsOnly("warning: 42");
 
     underTest.clear();
     assertThat(underTest.logs()).isEmpty();
-    assertThat(underTest.logs(LoggerLevel.INFO)).isEmpty();
+    assertThat(underTest.logs(Level.INFO)).isEmpty();
 
     underTest.afterTestExecution(null);
-    assertThat(LogInterceptors.get()).isSameAs(NullInterceptor.NULL_INSTANCE);
   }
 
   @Test
@@ -85,7 +82,7 @@ public class LogTesterJUnit5Test {
     assertThat(touchedDebug.get()).isFalse();
 
     // change level to DEBUG
-    underTest.setLevel(LoggerLevel.DEBUG);
+    underTest.setLevel(Level.DEBUG);
     Loggers.get("logger1").trace(() -> {
       touchedTrace.set(true);
       return "a trace information";
@@ -102,7 +99,7 @@ public class LogTesterJUnit5Test {
     underTest.clear();
 
     // change level to TRACE
-    underTest.setLevel(LoggerLevel.TRACE);
+    underTest.setLevel(Level.TRACE);
     Loggers.get("logger1").trace(() -> {
       touchedTrace.set(true);
       return "a trace information";

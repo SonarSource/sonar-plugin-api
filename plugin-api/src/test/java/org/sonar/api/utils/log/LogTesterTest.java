@@ -21,6 +21,7 @@ package org.sonar.api.utils.log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
+import org.slf4j.event.Level;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,18 +33,15 @@ public class LogTesterTest {
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
     underTest.before();
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
+    assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
 
     // change
-    underTest.setLevel(LoggerLevel.DEBUG);
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.DEBUG);
+    underTest.setLevel(Level.DEBUG);
+    assertThat(underTest.getLevel()).isEqualTo(Level.DEBUG);
 
     // reset to initial level after execution of test
     underTest.after();
-    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
+    assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
   }
 
   @Test
@@ -62,7 +60,6 @@ public class LogTesterTest {
     assertThat(underTest.logs(LoggerLevel.INFO)).isEmpty();
 
     underTest.after();
-    assertThat(LogInterceptors.get()).isSameAs(NullInterceptor.NULL_INSTANCE);
   }
 
   @Test
@@ -85,7 +82,7 @@ public class LogTesterTest {
     assertThat(touchedDebug.get()).isFalse();
 
     // change level to DEBUG
-    underTest.setLevel(LoggerLevel.DEBUG);
+    underTest.setLevel(Level.DEBUG);
     Loggers.get("logger1").trace(() -> {
       touchedTrace.set(true);
       return "a trace information";
@@ -102,7 +99,7 @@ public class LogTesterTest {
     underTest.clear();
 
     // change level to TRACE
-    underTest.setLevel(LoggerLevel.TRACE);
+    underTest.setLevel(Level.TRACE);
     Loggers.get("logger1").trace(() -> {
       touchedTrace.set(true);
       return "a trace information";

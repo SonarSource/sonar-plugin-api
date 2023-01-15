@@ -21,6 +21,7 @@ package org.sonar.api.utils.log;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.event.Level;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -38,18 +39,18 @@ public class DefaultProfilerTest {
     assertThat(underTest.isDebugEnabled()).isFalse();
     assertThat(underTest.isTraceEnabled()).isFalse();
 
-    tester.setLevel(LoggerLevel.DEBUG);
+    tester.setLevel(Level.DEBUG);
     assertThat(underTest.isDebugEnabled()).isTrue();
     assertThat(underTest.isTraceEnabled()).isFalse();
 
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
     assertThat(underTest.isDebugEnabled()).isTrue();
     assertThat(underTest.isTraceEnabled()).isTrue();
   }
 
   @Test
   public void stop_reuses_start_message() {
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
 
     // trace
     underTest.startTrace("Register rules");
@@ -77,7 +78,7 @@ public class DefaultProfilerTest {
 
   @Test
   public void different_start_and_stop_messages() {
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
 
     // start TRACE and stop DEBUG
     underTest.startTrace("Register rules");
@@ -105,7 +106,7 @@ public class DefaultProfilerTest {
 
   @Test
   public void log_on_at_stop() {
-    tester.setLevel(LoggerLevel.TRACE);
+    tester.setLevel(Level.TRACE);
 
     // trace
     underTest.start();

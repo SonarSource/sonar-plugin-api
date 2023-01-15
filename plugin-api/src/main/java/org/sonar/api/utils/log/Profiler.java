@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 public abstract class Profiler {
 
   public static Profiler create(Logger logger) {
-    return new DefaultProfiler((BaseLogger) logger);
+    return new DefaultProfiler(logger);
   }
 
   public static Profiler createIfTrace(Logger logger) {

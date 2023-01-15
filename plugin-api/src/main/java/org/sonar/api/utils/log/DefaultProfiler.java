@@ -32,12 +32,12 @@ class DefaultProfiler extends Profiler {
   private static final String DONE_SUFFIX = " (done)";
 
   private final LinkedHashMap<String, Object> context = new LinkedHashMap<>();
-  private final BaseLogger logger;
+  private final Logger logger;
 
   private long startTime = 0L;
   private String startMessage = null;
 
-  public DefaultProfiler(BaseLogger logger) {
+  public DefaultProfiler(Logger logger) {
     this.logger = logger;
   }
 
