@@ -15,6 +15,7 @@ dependencies {
   compileOnly libs.servlet.api
   compileOnly libs.slf4j
 
+  testFixturesCompileOnly libs.jsr305
   testFixturesImplementation libs.junit4
   // Used by LogTesterJUnit5
   testFixturesImplementation libs.junit5

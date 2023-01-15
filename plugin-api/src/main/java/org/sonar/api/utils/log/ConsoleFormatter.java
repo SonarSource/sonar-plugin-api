@@ -19,9 +19,8 @@
  */
 package org.sonar.api.utils.log;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Objects;
+import org.apache.commons.lang.StringUtils;
 
 class ConsoleFormatter {
 
