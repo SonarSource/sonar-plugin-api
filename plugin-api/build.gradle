@@ -2,6 +2,8 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java-test-fixtures'
 
 dependencies {
+  api libs.slf4j
+
   // please keep the list grouped by configuration and ordered by name
   implementation libs.commons.io
   implementation libs.commons.lang
@@ -13,7 +15,6 @@ dependencies {
   compileOnly libs.logback.classic
   compileOnly libs.jsr305
   compileOnly libs.servlet.api
-  compileOnly libs.slf4j
 
   testFixturesCompileOnly libs.jsr305
   testFixturesImplementation libs.junit4
