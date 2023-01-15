@@ -19,6 +19,10 @@
  */
 package org.sonar.api.utils.log;
 
+/**
+ * @deprecated use {@link org.slf4j.LoggerFactory}
+ */
+@Deprecated(since = "9.15")
 public abstract class Loggers {
 
   public static Logger get(Class<?> name) {

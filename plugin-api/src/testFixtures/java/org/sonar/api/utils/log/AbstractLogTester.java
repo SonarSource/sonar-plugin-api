@@ -61,7 +61,7 @@ class AbstractLogTester<G extends AbstractLogTester> {
   /**
    * @deprecated use {@link #setLevel(Level)}
    */
-  @Deprecated(since = "9.13")
+  @Deprecated(since = "9.15")
   public G setLevel(LoggerLevel sonarLevel) {
     return setLevel(toSlf4jLevel(sonarLevel));
 
@@ -94,7 +94,7 @@ class AbstractLogTester<G extends AbstractLogTester> {
   /**
    * @deprecated use {@link #logs(Level)}
    */
-  @Deprecated(since = "9.13")
+  @Deprecated(since = "9.15")
   public List<String> logs(LoggerLevel sonarLevel) {
     return logs(toSlf4jLevel(sonarLevel));
   }
