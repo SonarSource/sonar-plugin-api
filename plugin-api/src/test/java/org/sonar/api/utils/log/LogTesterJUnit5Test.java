@@ -32,7 +32,7 @@ public class LogTesterJUnit5Test {
   @Test
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
 
     // change
@@ -40,13 +40,13 @@ public class LogTesterJUnit5Test {
     assertThat(underTest.getLevel()).isEqualTo(Level.DEBUG);
 
     // reset to initial level after execution of test
-    underTest.afterTestExecution(null);
+    underTest.afterEach(null);
     assertThat(underTest.getLevel()).isEqualTo(Level.INFO);
   }
 
   @Test
   public void intercept_logs() throws Throwable {
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     Loggers.get("logger1").info("an information");
     Loggers.get("logger2").warn("warning: {}", 42);
 
@@ -59,13 +59,33 @@ public class LogTesterJUnit5Test {
     assertThat(underTest.logs()).isEmpty();
     assertThat(underTest.logs(Level.INFO)).isEmpty();
 
-    underTest.afterTestExecution(null);
+    underTest.afterEach(null);
+  }
+
+  @Test
+  public void can_change_log_level() throws Throwable {
+    underTest.beforeEach(null);
+    Loggers.get("logger1").info("an information");
+    Loggers.get("logger2").warn("warning: {}", 42);
+
+    assertThat(underTest.logs()).containsExactly("an information", "warning: 42");
+
+    underTest.clear();
+    assertThat(underTest.logs()).isEmpty();
+
+    underTest.setLevel(Level.WARN);
+    Loggers.get("logger1").info("an information");
+    Loggers.get("logger2").warn("warning: {}", 42);
+
+    assertThat(underTest.logs()).containsExactly("warning: 42");
+
+    underTest.afterEach(null);
   }
 
   @Test
   public void use_suppliers() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     AtomicBoolean touchedTrace = new AtomicBoolean();
     AtomicBoolean touchedDebug = new AtomicBoolean();
     Loggers.get("logger1").trace(() -> {
