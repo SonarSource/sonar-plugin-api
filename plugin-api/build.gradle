@@ -27,11 +27,7 @@ dependencies {
   testImplementation libs.junit.dataprovider
   testImplementation libs.assertj
   testImplementation libs.mockito
-}
-
-configurations {
-  // Make the compileOnly dependencies available when compiling/running tests
-  testImplementation.extendsFrom compileOnly
+  testImplementation libs.servlet.api
 }
 
 def on3Digits(version) {
@@ -56,9 +52,10 @@ shadowJar {
   }
   relocate('com.google', 'org.sonar.api.internal.google')
   relocate('org.apache.commons', 'org.sonar.api.internal.apachecommons')
+  dependencies {
+    exclude(dependency('org.slf4j:slf4j-api:.*'))
+  }
 }
-
-tasks["build"].dependsOn(shadowJar)
 
 // only interested in shadowJar, but because of https://github.com/gradle/gradle/issues/19946 we should keep producing regular jar
 jar.enabled = true
