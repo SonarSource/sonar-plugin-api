@@ -31,7 +31,7 @@ import org.sonar.api.batch.sensor.SensorDescriptor;
  * This layer over {@link java.io.File} adds information for code analyzers.
  * For unit testing purpose, use TestInputFileBuilder available in sonar-plugin-api-impl and initialize
  * the needed fields:
- * 
+ *
  * <pre>
  *   new TestInputFileBuilder("moduleKey", "relative/path/from/module/baseDir.java")
  *     .setModuleBaseDir(path)
@@ -46,7 +46,7 @@ public interface InputFile extends IndexedFile {
     MAIN, TEST
   }
 
-  /** 
+  /**
    * Status regarding previous analysis
    */
   enum Status {
@@ -135,11 +135,11 @@ public interface InputFile extends IndexedFile {
   Status status();
 
   /**
-   * Number of physical lines. This method supports all end-of-line characters. Formula is (number of line break + 1). 
+   * Number of physical lines. This method supports all end-of-line characters. Formula is (number of line break + 1).
    * <p>
    * Returns 1 if the file is empty.
-   * <br> 
-   * Returns 2 for <tt>foo\nbar</tt>. 
+   * <br>
+   * Returns 2 for <tt>foo\nbar</tt>.
    * <br>
    * Returns 3 for <tt>foo\nbar\n</tt>.
    */
@@ -193,6 +193,11 @@ public interface InputFile extends IndexedFile {
    * @since 6.0
    */
   Charset charset();
+
+  /**
+   * Hexadecimal MD5 digest of the file's content.
+   */
+  String md5Hash();
 
   /**
    * Return a string to identify this file (suitable for logs).
