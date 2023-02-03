@@ -24,6 +24,28 @@ Also note that the version no longer follows SonarQube's versions. The `sonar-pl
 
 See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for changelogs.
 
+## Compatibility
+
+Breaking changes to the API happen when the major version changes. As a result, plugins should be compatible with future versions of the API within the same major version.
+New APIs can be introduced in any release of the API, and plugins may want to do a runtime version check to see if they can use newly added APIs, depending on what platforms they intend to run.
+
+The following tables indicate which API versions plugins can find at runtime: 
+
+### SonarQube
+| SonarQube              | Plugin API                |
+| ---------------------- | ------------------------- |
+| 9.9.0.65466            | 9.14.0.375                |
+| 9.8.0.63668            | 9.13.0.360                |
+| 9.7.1.62043            | 9.11.0.290                |
+| 9.7.0.61563            | 9.11.0.290                |
+| 9.6.1.59531            | 9.9.0.229                 |
+| 9.6.0.59041            | 9.9.0.229                 |
+| 9.5.0.56709            | 9.6.1.114                 |
+| 9.4.0.54424 or earlier | Matches sonarqube version |
+
+### SonarCloud
+Current version: 9.14.0.375
+
 ## Optimizing the execution of sensors
 
 See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
