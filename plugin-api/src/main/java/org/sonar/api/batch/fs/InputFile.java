@@ -196,6 +196,7 @@ public interface InputFile extends IndexedFile {
 
   /**
    * Hexadecimal MD5 digest of the file's content.
+   * @since 9.15
    */
   String md5Hash();
 
