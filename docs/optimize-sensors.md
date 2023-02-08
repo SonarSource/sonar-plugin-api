@@ -17,6 +17,8 @@ Note that cached data doesn’t necessarily come from the previous analysis of t
 | Subsequent Analysis of a branch | Analyzed  branch    |
 | Pull Request | Target branch if exists, otherwise main branch |
 
+It's the plugin's responsibility to invalidate cached data. Plugins shouldn't rely on file statuses (`InputFile.status()`) to determine if a file was changed since data was cached. The reason is that in some situations, the computation of the file statuses is not done with the same branch from where the cached data is downloaded from.
+
 ### APIs
 
 ```
