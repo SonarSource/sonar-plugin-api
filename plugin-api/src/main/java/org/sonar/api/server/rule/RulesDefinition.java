@@ -237,6 +237,10 @@ public interface RulesDefinition {
     boolean isExternal();
   }
 
+  /**
+   * @deprecated in 9.15
+   */
+  @Deprecated(since = "9.15")
   enum CweVersion {
     Y2020("2020"), Y2021("2021");
 
@@ -423,11 +427,10 @@ public interface RulesDefinition {
      */
     public abstract NewRule setType(RuleType t);
 
-
     /**
      * The characteristic of the rule according to Clean Code Taxonomy.
-     *
      * Providing it is optional for now but will become mandatory in the future.
+     *
      * @since 9.16
      */
     @Beta
@@ -437,7 +440,6 @@ public interface RulesDefinition {
      * Add a rule description section. The sections must be added in the right order.
      * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
      * need to be called on top of that one.
-     *
      * Each section must have a different section key when they are non-contextual.
      * As soon as one section is contextual for a section key, all sections with that key must be contextual. The pair "section key, context key" pair must still be unique.
      * If several sections provide contexts, the provided context keys must be the same between sections.
@@ -460,6 +462,7 @@ public interface RulesDefinition {
     /**
      * The optional description, in a restricted Markdown format, has no max length. It's exclusive with HTML description
      * (see {@link #setHtmlDescription(String)})
+     *
      * @deprecated use {@link #addDescriptionSection(RuleDescriptionSection)} instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
@@ -467,6 +470,7 @@ public interface RulesDefinition {
 
     /**
      * Load description from a file available in classpath. Example : {@code setMarkdownDescription(getClass().getResource("/myrepo/Rule1234.md")}
+     *
      * @deprecated use {@link #addDescriptionSection(RuleDescriptionSection)} instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
@@ -522,7 +526,6 @@ public interface RulesDefinition {
 
     /**
      * @since 7.3
-     *
      * @deprecated since 9.3 Supports only OWASP Top 10 2017 standard, use addOwaspTop10(OwaspTop10Version, OwaspTop10...) for 2017,2021...
      */
     @Deprecated
@@ -613,6 +616,7 @@ public interface RulesDefinition {
 
     /**
      * See {@link NewRule#addDescriptionSection(RuleDescriptionSection)} to understand what are the requirements for a section.
+     *
      * @since 9.6
      */
     public abstract List<RuleDescriptionSection> ruleDescriptionSections();
@@ -626,7 +630,6 @@ public interface RulesDefinition {
     public abstract String htmlDescription();
 
     /**
-     *
      * @deprecated use html format instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
