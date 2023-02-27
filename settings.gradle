@@ -1,6 +1,7 @@
 rootProject.name='sonar-plugin-api'
 include 'plugin-api'
 include 'check-api'
+include 'test-fixtures'
 
 dependencyResolutionManagement {
   versionCatalogs {
