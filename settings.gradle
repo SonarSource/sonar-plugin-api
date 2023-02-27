@@ -5,6 +5,7 @@ include 'check-api'
 dependencyResolutionManagement {
   versionCatalogs {
     libs {
+      version('slf4j', '2.0.6')
       library('commons-io', 'commons-io:commons-io:2.11.0')
       library('commons-lang', 'commons-lang:commons-lang:2.6')
       library('guava', 'com.google.guava:guava:31.1-jre')
@@ -13,7 +14,7 @@ dependencyResolutionManagement {
       library('servlet-api', 'javax.servlet:javax.servlet-api:3.1.0')
       library('junit4', 'junit:junit:4.13.2')
       library('junit5', 'org.junit.jupiter:junit-jupiter-api:5.8.2')
-      library('slf4j', 'org.slf4j:slf4j-api:2.0.6')
+      library('slf4j', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
       library('logback-classic', 'ch.qos.logback:logback-classic:1.4.5')
       library('assertj', 'org.assertj:assertj-core:3.22.0')
       library('mockito', 'org.mockito:mockito-core:4.4.0')

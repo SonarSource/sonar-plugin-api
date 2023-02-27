@@ -94,6 +94,13 @@ publishing {
       artifact testFixturesJar
       artifact sourcesJar
       artifact javadocJar
+      pom.withXml {
+        def dependenciesNode = asNode().appendNode('dependencies')
+        def dependencyNode = dependenciesNode.appendNode('dependency')
+        dependencyNode.appendNode('groupId', 'org.slf4j')
+        dependencyNode.appendNode('artifactId', 'slf4j-api')
+        dependencyNode.appendNode('version', libs.versions.slf4j.get())
+      }
     }
   }
 }
