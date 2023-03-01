@@ -78,7 +78,7 @@ subprojects {
   apply plugin: 'com.github.hierynomus.license'
   apply plugin: 'com.jfrog.artifactory'
   apply plugin: 'jacoco'
-  apply plugin: 'java'
+  apply plugin: 'java-library'
   apply plugin: 'maven-publish'
 
   java {

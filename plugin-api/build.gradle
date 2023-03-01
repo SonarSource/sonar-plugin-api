@@ -12,11 +12,11 @@ dependencies {
   compileOnly libs.logback.classic
   compileOnly libs.jsr305
   compileOnly libs.servlet.api
-  compileOnly libs.junit4
-  // Used by LogTesterJUnit5
-  compileOnly libs.junit5
   compileOnly libs.slf4j
 
+  testImplementation libs.junit4
+  testImplementation libs.junit5
+  testImplementation project(':test-fixtures')
   testImplementation libs.guava
   testImplementation libs.junit.dataprovider
   testImplementation libs.assertj
