@@ -19,21 +19,19 @@
  */
 package org.sonar.api.utils.log;
 
-import static org.sonar.api.utils.Preconditions.checkArgument;
+import org.junit.Test;
 
-class LogInterceptors {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  private static volatile LogInterceptor instance = NullInterceptor.NULL_INSTANCE;
+public class ConsoleFormatterTest {
 
-  private LogInterceptors() {
+  @Test
+  public void format() {
+    assertThat(ConsoleFormatter.format("foo")).isEqualTo("foo");
+    assertThat(ConsoleFormatter.format("arg: {}", "foo")).isEqualTo("arg: foo");
+    assertThat(ConsoleFormatter.format("two args: {} and {}", "foo", 42)).isEqualTo("two args: foo and 42");
+    assertThat(ConsoleFormatter.format("args: {}, {} and {}", true, 42, 2L)).isEqualTo("args: true, 42 and 2");
+    assertThat(ConsoleFormatter.format("args: {}, {} and {}", null, null, null)).isEqualTo("args: null, null and null");
   }
 
-  static LogInterceptor get() {
-    return instance;
-  }
-
-  static void set(LogInterceptor li) {
-    checkArgument(li != null);
-    instance = li;
-  }
 }

@@ -28,7 +28,7 @@ public class LoggersTest {
 
   @Test
   public void factory() {
-    assertThat(Loggers.get("foo")).isInstanceOf(LogbackLogger.class);
-    assertThat(Loggers.get(Plugin.class)).isInstanceOf(LogbackLogger.class);
+    assertThat(Loggers.get("foo")).isInstanceOf(Slf4jLogger.class);
+    assertThat(Loggers.get(Plugin.class)).isInstanceOf(Slf4jLogger.class);
   }
 }

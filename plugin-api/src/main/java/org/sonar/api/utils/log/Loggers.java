@@ -23,14 +23,12 @@ public abstract class Loggers {
 
   protected abstract Logger newInstance(String name);
 
-  protected abstract void setLevel(LoggerLevel level);
-
   public static Logger get(Class<?> name) {
-    return LoggerFactory.get(name);
+    return LoggersLoader.get(name);
   }
 
   public static Logger get(String name) {
-    return LoggerFactory.get(name);
+    return LoggersLoader.get(name);
   }
 
 }

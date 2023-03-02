@@ -11,7 +11,6 @@ dependencies {
   // shaded, but not relocated
   implementation project(':check-api')
 
-  compileOnly libs.logback.classic
   compileOnly libs.jsr305
   compileOnly libs.servlet.api
 

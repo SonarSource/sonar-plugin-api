@@ -22,17 +22,11 @@ package org.sonar.api.utils.log;
 import org.slf4j.LoggerFactory;
 
 
-class LogbackLoggers extends Loggers {
+public class Slf4jLoggers extends Loggers {
 
   @Override
   protected Logger newInstance(String name) {
-    // logback is accessed through SLF4J
-    return new LogbackLogger((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name));
+    return new Slf4jLogger(LoggerFactory.getLogger(name));
   }
 
-  @Override
-  protected void setLevel(LoggerLevel level) {
-    ch.qos.logback.classic.Logger logback = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
-    new LogbackLogger(logback).setLevel(level);
-  }
 }

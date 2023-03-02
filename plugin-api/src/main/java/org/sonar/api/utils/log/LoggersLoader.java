@@ -19,37 +19,22 @@
  */
 package org.sonar.api.utils.log;
 
-/**
- * @since 8.7
- */
-public abstract class LoggerFactory {
+import java.util.ServiceLoader;
 
-  private static Loggers factory;
+class LoggersLoader {
 
-  private LoggerFactory() {
+  private static final Loggers INSTANCE = ServiceLoader.load(Loggers.class).findFirst().orElse(new Slf4jLoggers());
+
+  private LoggersLoader() {
     // no new instance
   }
 
-  static {
-    try {
-      Class.forName("ch.qos.logback.classic.Logger");
-      factory = new LogbackLoggers();
-    } catch (Exception e) {
-      // no slf4j -> testing environment
-      factory = new ConsoleLoggers();
-    }
-  }
-
-  static Loggers getFactory(){
-    return factory;
-  }
-
   static Logger get(Class<?> name) {
-    return factory.newInstance(name.getName());
+    return INSTANCE.newInstance(name.getName());
   }
 
   static Logger get(String name) {
-    return factory.newInstance(name);
+    return INSTANCE.newInstance(name);
   }
 
 }

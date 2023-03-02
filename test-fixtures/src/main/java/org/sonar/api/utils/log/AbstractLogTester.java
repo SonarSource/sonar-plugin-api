@@ -19,69 +19,126 @@
  */
 package org.sonar.api.utils.log;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
-class AbstractLogTester<G extends AbstractLogTester> {
+class AbstractLogTester<G extends AbstractLogTester<G>> {
 
-  private LoggerLevel level;
+  private final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
 
   protected void before() {
-    // this shared instance breaks compatibility with parallel execution of tests
-    LogInterceptors.set(new ListInterceptor());
+    getRootLogger().addAppender(listAppender);
+    listAppender.start();
     setLevel(LoggerLevel.INFO);
   }
 
   protected void after() {
-    LogInterceptors.set(NullInterceptor.NULL_INSTANCE);
+    listAppender.stop();
+    listAppender.list.clear();
+    getRootLogger().detachAppender(listAppender);
     setLevel(LoggerLevel.INFO);
   }
 
   LoggerLevel getLevel() {
-    return level;
+    return LoggerLevel.fromSlf4j(toSlf4j(getRootLogger().getLevel()));
+  }
+
+  private static Level toSlf4j(ch.qos.logback.classic.Level level) {
+    var slf4jIntLevel = ch.qos.logback.classic.Level.toLocationAwareLoggerInteger(level);
+    return Arrays.stream(Level.values()).filter(l -> l.toInt() == slf4jIntLevel).findFirst().orElseThrow(() -> new IllegalArgumentException("Unsupported level: " + level));
   }
 
   /**
-   * Enable/disable debug logs. Info, warn and error logs are always enabled.
+   * Change log level.
    * By default INFO logs are enabled when LogTester is started.
    */
-  public G setLevel(LoggerLevel level) {
-    LoggerFactory.getFactory().setLevel(level);
-    this.level = level;
+  public G setLevel(Level level) {
+    getRootLogger().setLevel(ch.qos.logback.classic.Level.fromLocationAwareLoggerInteger(level.toInt()));
     return (G) this;
+  }
+
+  /**
+   * @deprecated use {@link #setLevel(Level)}
+   */
+  @Deprecated(since = "9.15")
+  public G setLevel(LoggerLevel sonarLevel) {
+    return setLevel(sonarLevel.toSlf4j());
+
+  }
+
+  private static ch.qos.logback.classic.Logger getRootLogger() {
+    return (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
   }
 
   /**
    * Logs in chronological order (item at index 0 is the oldest one)
    */
   public List<String> logs() {
-    return ((ListInterceptor) LogInterceptors.get()).logs();
+    return listAppender.list.stream().map(e -> (LoggingEvent) e)
+      .map(LoggingEvent::getFormattedMessage)
+      .collect(Collectors.toList());
   }
 
   /**
    * Logs in chronological order (item at index 0 is the oldest one) for
    * a given level
    */
-  public List<String> logs(LoggerLevel level) {
-    return ((ListInterceptor) LogInterceptors.get()).logs(level);
+  public List<String> logs(Level level) {
+    return listAppender.list.stream().map(e -> (LoggingEvent) e)
+      .filter(e -> e.getLevel().equals(ch.qos.logback.classic.Level.fromLocationAwareLoggerInteger(level.toInt())))
+      .map(LoggingEvent::getFormattedMessage)
+      .collect(Collectors.toList());
+  }
+
+  /**
+   * @deprecated use {@link #logs(Level)}
+   */
+  @Deprecated(since = "9.15")
+  public List<String> logs(LoggerLevel sonarLevel) {
+    return logs(sonarLevel.toSlf4j());
   }
 
   /**
    * Logs with arguments in chronological order (item at index 0 is the oldest one)
    */
   public List<LogAndArguments> getLogs() {
-    return ((ListInterceptor) LogInterceptors.get()).getLogs();
+    return listAppender.list.stream().map(e -> (LoggingEvent) e)
+      .map(AbstractLogTester::convert)
+      .collect(Collectors.toList());
   }
+
 
   /**
    * Logs with arguments in chronological order (item at index 0 is the oldest one) for
    * a given level
    */
-  public List<LogAndArguments> getLogs(LoggerLevel level) {
-    return ((ListInterceptor) LogInterceptors.get()).getLogs(level);
+  public List<LogAndArguments> getLogs(Level level) {
+    return listAppender.list.stream().map(e -> (LoggingEvent) e)
+      .filter(e -> e.getLevel().equals(ch.qos.logback.classic.Level.fromLocationAwareLoggerInteger(level.toInt())))
+      .map(AbstractLogTester::convert)
+      .collect(Collectors.toList());
+  }
+
+  /**
+   * @deprecated use {@link #getLogs(Level)}
+   */
+  @Deprecated(since = "9.15")
+  public List<LogAndArguments> getLogs(LoggerLevel sonarLevel) {
+    return getLogs(sonarLevel.toSlf4j());
+  }
+
+  private static LogAndArguments convert(LoggingEvent e) {
+    return new LogAndArguments(e.getFormattedMessage(), e.getMessage(), e.getArgumentArray());
   }
 
   public G clear() {
-    ((ListInterceptor) LogInterceptors.get()).clear();
+    listAppender.list.clear();
     return (G) this;
   }
 }

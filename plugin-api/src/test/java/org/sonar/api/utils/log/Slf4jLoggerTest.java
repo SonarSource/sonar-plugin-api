@@ -19,16 +19,15 @@
  */
 package org.sonar.api.utils.log;
 
-import ch.qos.logback.classic.Level;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LogbackLoggerTest {
+public class Slf4jLoggerTest {
 
-  LogbackLogger underTest = new LogbackLogger((ch.qos.logback.classic.Logger)LoggerFactory.getLogger(getClass()));
+  private Slf4jLogger underTest = new Slf4jLogger(LoggerFactory.getLogger(getClass()));
 
   @Rule
   public LogTester tester = new LogTester();
@@ -65,30 +64,7 @@ public class LogbackLoggerTest {
   }
 
   @Test
-  public void change_level() {
-    assertThat(underTest.setLevel(LoggerLevel.ERROR)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.ERROR);
-
-    assertThat(underTest.setLevel(LoggerLevel.WARN)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.WARN);
-
-    assertThat(underTest.setLevel(LoggerLevel.INFO)).isTrue();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.INFO);
-    assertThat(underTest.isDebugEnabled()).isFalse();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-
-    assertThat(underTest.setLevel(LoggerLevel.DEBUG)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isTrue();
-    assertThat(underTest.isTraceEnabled()).isFalse();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.DEBUG);
-
-    assertThat(underTest.setLevel(LoggerLevel.TRACE)).isTrue();
-    assertThat(underTest.isDebugEnabled()).isTrue();
-    assertThat(underTest.isTraceEnabled()).isTrue();
-    assertThat(underTest.logbackLogger().getLevel()).isEqualTo(Level.TRACE);
+  public void change_level_unsupported() {
+    assertThat(underTest.setLevel(LoggerLevel.ERROR)).isFalse();
   }
 }

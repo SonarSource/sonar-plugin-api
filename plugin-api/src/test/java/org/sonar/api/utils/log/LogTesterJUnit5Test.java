@@ -59,7 +59,6 @@ public class LogTesterJUnit5Test {
     assertThat(underTest.logs(LoggerLevel.INFO)).isEmpty();
 
     underTest.afterTestExecution(null);
-    assertThat(LogInterceptors.get()).isSameAs(NullInterceptor.NULL_INSTANCE);
   }
 
   @Test

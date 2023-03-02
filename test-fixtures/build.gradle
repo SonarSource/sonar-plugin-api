@@ -1,10 +1,16 @@
 dependencies {
   api project(':plugin-api')
 
+  implementation libs.commons.lang
+  implementation libs.logback.classic
+
   compileOnly libs.jsr305
   compileOnly libs.junit4
   // Used by LogTesterJUnit5
   compileOnly libs.junit5
+
+  testImplementation libs.junit4
+  testImplementation libs.assertj
 }
 
 publishing {
