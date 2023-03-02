@@ -25,11 +25,10 @@ class ConsoleLoggers extends Loggers {
 
   @Override
   protected Logger newInstance(String name) {
-    return new ConsoleLogger();
+    return new ConsoleLogger(this);
   }
 
-  @Override
-  protected LoggerLevel getLevel() {
+  LoggerLevel getLevel() {
     return level;
   }
 

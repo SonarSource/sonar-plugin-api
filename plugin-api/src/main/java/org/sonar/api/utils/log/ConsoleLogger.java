@@ -32,19 +32,21 @@ import static org.sonar.api.utils.log.ConsoleFormatter.format;
  */
 class ConsoleLogger extends BaseLogger {
 
+  private final ConsoleLoggers factory;
   private final PrintStream stream;
 
-  ConsoleLogger() {
-    this.stream = System.out;
+  ConsoleLogger(ConsoleLoggers factory) {
+    this(factory, System.out);
   }
 
-  ConsoleLogger(PrintStream stream) {
+  ConsoleLogger(ConsoleLoggers factory, PrintStream stream) {
+    this.factory = factory;
     this.stream = stream;
   }
 
   @Override
   public boolean isTraceEnabled() {
-    return Loggers.getFactory().getLevel() == LoggerLevel.TRACE;
+    return factory.getLevel() == LoggerLevel.TRACE;
   }
 
   @Override
@@ -77,7 +79,7 @@ class ConsoleLogger extends BaseLogger {
 
   @Override
   public boolean isDebugEnabled() {
-    LoggerLevel level = Loggers.getFactory().getLevel();
+    LoggerLevel level = factory.getLevel();
     return level == LoggerLevel.TRACE || level == LoggerLevel.DEBUG;
   }
 
@@ -188,7 +190,7 @@ class ConsoleLogger extends BaseLogger {
 
   @Override
   public LoggerLevel getLevel() {
-    return Loggers.getFactory().getLevel();
+    return factory.getLevel();
   }
 
   private void log(String level, String msg) {

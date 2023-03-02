@@ -23,6 +23,8 @@ import java.util.List;
 
 class AbstractLogTester<G extends AbstractLogTester> {
 
+  private LoggerLevel level;
+
   protected void before() {
     // this shared instance breaks compatibility with parallel execution of tests
     LogInterceptors.set(new ListInterceptor());
@@ -35,7 +37,7 @@ class AbstractLogTester<G extends AbstractLogTester> {
   }
 
   LoggerLevel getLevel() {
-    return Loggers.getFactory().getLevel();
+    return level;
   }
 
   /**
@@ -43,7 +45,8 @@ class AbstractLogTester<G extends AbstractLogTester> {
    * By default INFO logs are enabled when LogTester is started.
    */
   public G setLevel(LoggerLevel level) {
-    Loggers.getFactory().setLevel(level);
+    LoggerFactory.getFactory().setLevel(level);
+    this.level = level;
     return (G) this;
   }
 

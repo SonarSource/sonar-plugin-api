@@ -33,17 +33,14 @@ public class LogTesterJUnit5Test {
     // when LogTester is used, then info logs are enabled by default
     underTest.beforeTestExecution(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
 
     // change
     underTest.setLevel(LoggerLevel.DEBUG);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.DEBUG);
 
     // reset to initial level after execution of test
     underTest.afterTestExecution(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
   }
 
   @Test

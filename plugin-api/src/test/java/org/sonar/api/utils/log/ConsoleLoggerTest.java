@@ -35,14 +35,12 @@ import static org.mockito.Mockito.verifyNoInteractions;
 public class ConsoleLoggerTest {
 
   private PrintStream stream = mock(PrintStream.class);
-  private ConsoleLogger underTest = new ConsoleLogger(stream);
-
-  @Rule
-  public LogTester tester = new LogTester();
+  private final ConsoleLoggers factory = new ConsoleLoggers();
+  private ConsoleLogger underTest = new ConsoleLogger(factory, stream);
 
   @Test
   public void debug_enabled() {
-    tester.setLevel(LoggerLevel.DEBUG);
+    factory.setLevel(LoggerLevel.DEBUG);
     assertThat(underTest.isDebugEnabled()).isTrue();
     assertThat(underTest.isTraceEnabled()).isFalse();
     underTest.debug("message");
@@ -53,13 +51,11 @@ public class ConsoleLoggerTest {
     verify(stream).println("DEBUG message foo");
     verify(stream).println("DEBUG message foo bar");
     verify(stream).println("DEBUG message foo bar baz");
-    assertThat(tester.logs(LoggerLevel.DEBUG)).containsExactly(
-      "message", "message foo", "message foo bar", "message foo bar baz");
   }
 
   @Test
   public void debug_disabled() {
-    tester.setLevel(LoggerLevel.INFO);
+    factory.setLevel(LoggerLevel.INFO);
     assertThat(underTest.isDebugEnabled()).isFalse();
     assertThat(underTest.isTraceEnabled()).isFalse();
     underTest.debug("message");
@@ -71,7 +67,7 @@ public class ConsoleLoggerTest {
 
   @Test
   public void trace_enabled() {
-    tester.setLevel(LoggerLevel.TRACE);
+    factory.setLevel(LoggerLevel.TRACE);
     assertThat(underTest.isDebugEnabled()).isTrue();
     assertThat(underTest.isTraceEnabled()).isTrue();
     underTest.trace("message");
@@ -83,7 +79,7 @@ public class ConsoleLoggerTest {
 
   @Test
   public void trace_disabled() {
-    tester.setLevel(LoggerLevel.DEBUG);
+    factory.setLevel(LoggerLevel.DEBUG);
     assertThat(underTest.isTraceEnabled()).isFalse();
     underTest.trace("message");
     underTest.trace("message {}", "foo");
@@ -102,8 +98,6 @@ public class ConsoleLoggerTest {
     verify(stream).println("INFO  message foo");
     verify(stream).println("INFO  message foo bar");
     verify(stream).println("INFO  message foo bar baz");
-    assertThat(tester.logs(LoggerLevel.INFO)).containsExactly(
-      "message", "message foo", "message foo bar", "message foo bar baz");
   }
 
   @Test
@@ -121,8 +115,6 @@ public class ConsoleLoggerTest {
       assertThat(msg).startsWith("WARN ");
     }
     verify(throwable).printStackTrace();
-    assertThat(tester.logs(LoggerLevel.WARN)).containsExactly(
-      "message", "message foo", "message foo bar", "message foo bar baz", "message with exception");
   }
 
   @Test
@@ -133,8 +125,6 @@ public class ConsoleLoggerTest {
     underTest.error("message {} {} {}", "foo", "bar", "baz");
     underTest.error("message with exception", new IllegalArgumentException());
     verify(stream, times(5)).println(startsWith("ERROR "));
-    assertThat(tester.logs(LoggerLevel.ERROR)).containsExactly(
-      "message", "message foo", "message foo bar", "message foo bar baz", "message with exception");
   }
 
   @Test

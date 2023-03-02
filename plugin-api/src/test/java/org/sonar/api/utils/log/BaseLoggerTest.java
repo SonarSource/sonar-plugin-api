@@ -25,6 +25,6 @@ public class BaseLoggerTest {
 
   @Test
   public void log() {
-    new ConsoleLogger().log(LoggerLevel.WARN, "message");
+    new ConsoleLogger(null).log(LoggerLevel.WARN, "message");
   }
 }

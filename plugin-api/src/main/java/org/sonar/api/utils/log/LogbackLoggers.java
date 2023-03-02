@@ -19,32 +19,15 @@
  */
 package org.sonar.api.utils.log;
 
-import ch.qos.logback.classic.Level;
 import org.slf4j.LoggerFactory;
 
-/**
- * Note that this is not "Slf4jLoggers" as there's a coupling on Logback
- * in order to change level of root logger.
- */
+
 class LogbackLoggers extends Loggers {
 
   @Override
   protected Logger newInstance(String name) {
     // logback is accessed through SLF4J
     return new LogbackLogger((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(name));
-  }
-
-  @Override
-  protected LoggerLevel getLevel() {
-    ch.qos.logback.classic.Logger logback = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
-    switch (logback.getLevel().levelInt) {
-      case Level.TRACE_INT:
-        return LoggerLevel.TRACE;
-      case Level.DEBUG_INT:
-        return LoggerLevel.DEBUG;
-      default:
-        return LoggerLevel.INFO;
-    }
   }
 
   @Override

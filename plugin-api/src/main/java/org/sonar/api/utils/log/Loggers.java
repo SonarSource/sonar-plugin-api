@@ -21,13 +21,7 @@ package org.sonar.api.utils.log;
 
 public abstract class Loggers {
 
-  static Loggers getFactory() {
-    return LoggerFactory.getFactory();
-  }
-
   protected abstract Logger newInstance(String name);
-
-  protected abstract LoggerLevel getLevel();
 
   protected abstract void setLevel(LoggerLevel level);
 
