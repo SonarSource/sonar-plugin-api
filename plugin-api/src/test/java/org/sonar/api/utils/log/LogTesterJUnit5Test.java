@@ -31,7 +31,7 @@ public class LogTesterJUnit5Test {
   @Test
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
 
     // change
@@ -39,13 +39,13 @@ public class LogTesterJUnit5Test {
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
 
     // reset to initial level after execution of test
-    underTest.afterTestExecution(null);
+    underTest.afterEach(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
   }
 
   @Test
   public void intercept_logs() throws Throwable {
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     Loggers.get("logger1").info("an information");
     Loggers.get("logger2").warn("warning: {}", 42);
 
@@ -58,13 +58,13 @@ public class LogTesterJUnit5Test {
     assertThat(underTest.logs()).isEmpty();
     assertThat(underTest.logs(LoggerLevel.INFO)).isEmpty();
 
-    underTest.afterTestExecution(null);
+    underTest.afterEach(null);
   }
 
   @Test
   public void use_suppliers() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.beforeTestExecution(null);
+    underTest.beforeEach(null);
     AtomicBoolean touchedTrace = new AtomicBoolean();
     AtomicBoolean touchedDebug = new AtomicBoolean();
     Loggers.get("logger1").trace(() -> {
