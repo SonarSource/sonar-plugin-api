@@ -19,12 +19,15 @@
  */
 package org.sonar.api.testfixtures.log;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
 import org.sonar.api.utils.log.LoggerLevel;
 import org.sonar.api.utils.log.Loggers;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 public class LogTesterTest {
 
@@ -52,9 +55,23 @@ public class LogTesterTest {
     Loggers.get("logger2").warn("warning: {}", 42);
 
     assertThat(underTest.logs()).containsExactly("an information", "warning: 42");
+    assertThat(underTest.getLogs()).extracting(LogAndArguments::getRawMsg, LogAndArguments::getFormattedMsg, l -> l.getArgs().map(List::of).orElse(null))
+      .containsExactly(
+        tuple("an information", "an information", null),
+        tuple("warning: {}", "warning: 42", List.of(42)));
+
     assertThat(underTest.logs(LoggerLevel.ERROR)).isEmpty();
+    assertThat(underTest.getLogs(LoggerLevel.ERROR)).isEmpty();
+
     assertThat(underTest.logs(LoggerLevel.INFO)).containsOnly("an information");
+    assertThat(underTest.getLogs(LoggerLevel.INFO)).extracting(LogAndArguments::getRawMsg, LogAndArguments::getFormattedMsg, l -> l.getArgs().map(List::of).orElse(null))
+      .containsExactly(
+        tuple("an information", "an information", null));
+
     assertThat(underTest.logs(LoggerLevel.WARN)).containsOnly("warning: 42");
+    assertThat(underTest.getLogs(LoggerLevel.WARN)).extracting(LogAndArguments::getRawMsg, LogAndArguments::getFormattedMsg, l -> l.getArgs().map(List::of).orElse(null))
+      .containsExactly(
+        tuple("warning: {}", "warning: 42", List.of(42)));
 
     underTest.clear();
     assertThat(underTest.logs()).isEmpty();

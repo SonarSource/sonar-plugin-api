@@ -22,6 +22,7 @@ package org.sonar.api.utils.log;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.sonar.api.testfixtures.log.LogTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,33 +36,86 @@ public class Slf4jLoggerTest {
 
   @Test
   public void log() {
-    // no assertions. Simply verify that calls do not fail.
-    underTest.trace("message");
-    underTest.trace("message {}", "foo");
-    underTest.trace("message {} {}", "foo", "bar");
-    underTest.trace("message {} {} {}", "foo", "bar", "baz");
+    tester.setLevel(LoggerLevel.TRACE);
 
-    underTest.debug("message");
-    underTest.debug("message {}", "foo");
-    underTest.debug("message {} {}", "foo", "bar");
-    underTest.debug("message {} {} {}", "foo", "bar", "baz");
+    underTest.trace("trace message");
+    underTest.trace("trace message {}", "foo");
+    underTest.trace("trace message {} {}", "foo", "bar");
+    underTest.trace("trace message {} {} {}", "foo", "bar", "baz");
+    underTest.log(LoggerLevel.TRACE, "trace message");
 
-    underTest.info("message");
-    underTest.info("message {}", "foo");
-    underTest.info("message {} {}", "foo", "bar");
-    underTest.info("message {} {} {}", "foo", "bar", "baz");
+    underTest.debug("debug message");
+    underTest.debug("debug message {}", "foo");
+    underTest.debug("debug message {} {}", "foo", "bar");
+    underTest.debug("debug message {} {} {}", "foo", "bar", "baz");
+    underTest.log(LoggerLevel.DEBUG, "debug message");
 
-    underTest.warn("message");
-    underTest.warn("message {}", "foo");
-    underTest.warn("message {} {}", "foo", "bar");
-    underTest.warn("message {} {} {}", "foo", "bar", "baz");
-    underTest.warn("message", new NullPointerException("boom!"));
+    underTest.info("info message");
+    underTest.info("info message {}", "foo");
+    underTest.info("info message {} {}", "foo", "bar");
+    underTest.info("info message {} {} {}", "foo", "bar", "baz");
+    underTest.log(LoggerLevel.INFO, "info message");
 
-    underTest.error("message");
-    underTest.error("message {}", "foo");
-    underTest.error("message {} {}", "foo", "bar");
-    underTest.error("message {} {} {}", "foo", "bar", "baz");
-    underTest.error("message", new IllegalArgumentException(""));
+    underTest.warn("warn message");
+    underTest.warn("warn message {}", "foo");
+    underTest.warn("warn message {} {}", "foo", "bar");
+    underTest.warn("warn message {} {} {}", "foo", "bar", "baz");
+    underTest.warn("warn message", new NullPointerException("boom!"));
+    underTest.log(LoggerLevel.WARN, "warn message");
+
+    underTest.error("error message");
+    underTest.error("error message {}", "foo");
+    underTest.error("error message {} {}", "foo", "bar");
+    underTest.error("error message {} {} {}", "foo", "bar", "baz");
+    underTest.error("error message", new IllegalArgumentException(""));
+    underTest.log(LoggerLevel.ERROR, "error message");
+
+    assertThat(tester.logs(LoggerLevel.TRACE)).containsExactly(
+      "trace message",
+      "trace message foo",
+      "trace message foo bar",
+      "trace message foo bar baz",
+      "trace message");
+    assertThat(tester.logs(LoggerLevel.DEBUG)).containsExactly(
+      "debug message",
+      "debug message foo",
+      "debug message foo bar",
+      "debug message foo bar baz",
+      "debug message");
+    assertThat(tester.logs(LoggerLevel.INFO)).containsExactly(
+      "info message",
+      "info message foo",
+      "info message foo bar",
+      "info message foo bar baz",
+      "info message");
+    assertThat(tester.logs(LoggerLevel.WARN)).containsExactly(
+      "warn message",
+      "warn message foo",
+      "warn message foo bar",
+      "warn message foo bar baz",
+      "warn message",
+      "warn message");
+    assertThat(tester.logs(LoggerLevel.ERROR)).containsExactly(
+      "error message",
+      "error message foo",
+      "error message foo bar",
+      "error message foo bar baz",
+      "error message",
+      "error message");
+  }
+
+  @Test
+  public void testGetLevel() {
+    tester.setLevel(Level.TRACE);
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.TRACE);
+    tester.setLevel(Level.DEBUG);
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
+    tester.setLevel(Level.INFO);
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
+    tester.setLevel(Level.WARN);
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.WARN);
+    tester.setLevel(Level.ERROR);
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.ERROR);
   }
 
   @Test
