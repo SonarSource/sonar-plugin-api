@@ -35,12 +35,18 @@ public enum LoggerLevel {
     this.slf4jLevel = slf4jLevel;
   }
 
-  static LoggerLevel fromSlf4j(Level slf4jLevel) {
+  /**
+   * @since 9.15
+   */
+  public static LoggerLevel fromSlf4j(Level slf4jLevel) {
     return Arrays.stream(LoggerLevel.values()).filter(l -> l.slf4jLevel == slf4jLevel).findFirst()
       .orElseThrow(() -> new IllegalArgumentException("Unsupported level: " + slf4jLevel));
   }
 
-  Level toSlf4j() {
+  /**
+   * @since 9.15
+   */
+  public Level toSlf4j() {
     return slf4jLevel;
   }
 }

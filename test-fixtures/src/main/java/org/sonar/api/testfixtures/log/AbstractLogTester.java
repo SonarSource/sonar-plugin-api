@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.utils.log;
+package org.sonar.api.testfixtures.log;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
+import org.sonar.api.utils.log.LoggerLevel;
 
 class AbstractLogTester<G extends AbstractLogTester<G>> {
 

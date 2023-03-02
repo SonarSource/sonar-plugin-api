@@ -57,8 +57,6 @@ shadowJar {
 
 tasks["build"].dependsOn(shadowJar)
 
-// only interested in shadowJar
-jar.enabled = false
 artifactoryPublish.skip = false
 
 publishing {

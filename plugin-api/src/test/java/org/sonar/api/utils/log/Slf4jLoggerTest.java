@@ -22,6 +22,7 @@ package org.sonar.api.utils.log;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.testfixtures.log.LogTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
