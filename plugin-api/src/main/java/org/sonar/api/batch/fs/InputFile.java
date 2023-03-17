@@ -195,7 +195,8 @@ public interface InputFile extends IndexedFile {
   Charset charset();
 
   /**
-   * Hexadecimal MD5 digest of the file's content.
+   * Hexadecimal MD5 digest of the file's content as it is returned by {@link #contents()} and {@link #inputStream()},
+   * without BOM (byte order mark) if there is one.
    * @since 9.15
    */
   String md5Hash();
