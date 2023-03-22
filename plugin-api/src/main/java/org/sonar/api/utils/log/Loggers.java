@@ -19,16 +19,16 @@
  */
 package org.sonar.api.utils.log;
 
+import org.slf4j.LoggerFactory;
+
 public abstract class Loggers {
 
-  protected abstract Logger newInstance(String name);
-
-  public static Logger get(Class<?> name) {
-    return LoggersLoader.get(name);
+  public static Logger get(Class<?> aClass) {
+    return new Slf4jLogger(LoggerFactory.getLogger(aClass));
   }
 
   public static Logger get(String name) {
-    return LoggersLoader.get(name);
+    return new Slf4jLogger(LoggerFactory.getLogger(name));
   }
 
 }

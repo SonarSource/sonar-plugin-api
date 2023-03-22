@@ -271,7 +271,9 @@ public interface Logger {
    * <p>
    * The standard use-case is to customize logging of embedded 3rd-party
    * libraries.
+   * @deprecated since 9.15 will always return false
    */
+  @Deprecated(since = "9.15")
   boolean setLevel(LoggerLevel level);
 
   LoggerLevel getLevel();
