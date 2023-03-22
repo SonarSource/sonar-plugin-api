@@ -46,6 +46,11 @@ The following tables indicate which API versions plugins can find at runtime:
 ### SonarCloud
 Current version: 9.14.0.375
 
+### SonarLint
+Latest SonarLint for IntelliJ implements: 9.13.0.360
+Latest SonarLint for Eclipse implements: 9.13.0.360
+Latest SonarLint for VSCode implements: 9.13.0.360
+
 ## Optimizing the execution of sensors
 
 See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
