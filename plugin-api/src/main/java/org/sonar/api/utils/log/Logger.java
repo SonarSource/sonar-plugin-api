@@ -45,7 +45,9 @@ import javax.annotation.Nullable;
  * <p>
  * See <code>org.sonar.api.utils.log.LogTester</code> from the test-fixtures for testing facilities.
  * @since 5.1
+ * @deprecated since 9.15 in favor of {@link org.slf4j.Logger}
  */
+@Deprecated(since = "9.15")
 public interface Logger {
 
   boolean isTraceEnabled();
