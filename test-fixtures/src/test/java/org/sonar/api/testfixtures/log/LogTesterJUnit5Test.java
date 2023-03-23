@@ -17,38 +17,37 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.utils.log;
+package org.sonar.api.testfixtures.log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
+import org.sonar.api.utils.log.LoggerLevel;
+import org.sonar.api.utils.log.Loggers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LogTesterTest {
+public class LogTesterJUnit5Test {
 
-  LogTester underTest = new LogTester();
+  LogTesterJUnit5 underTest = new LogTesterJUnit5();
 
   @Test
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.before();
+    underTest.beforeEach(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
 
     // change
     underTest.setLevel(LoggerLevel.DEBUG);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.DEBUG);
 
     // reset to initial level after execution of test
-    underTest.after();
+    underTest.afterEach(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
-    assertThat(Loggers.getFactory().getLevel()).isEqualTo(LoggerLevel.INFO);
   }
 
   @Test
   public void intercept_logs() throws Throwable {
-    underTest.before();
+    underTest.beforeEach(null);
     Loggers.get("logger1").info("an information");
     Loggers.get("logger2").warn("warning: {}", 42);
 
@@ -61,14 +60,13 @@ public class LogTesterTest {
     assertThat(underTest.logs()).isEmpty();
     assertThat(underTest.logs(LoggerLevel.INFO)).isEmpty();
 
-    underTest.after();
-    assertThat(LogInterceptors.get()).isSameAs(NullInterceptor.NULL_INSTANCE);
+    underTest.afterEach(null);
   }
 
   @Test
   public void use_suppliers() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
-    underTest.before();
+    underTest.beforeEach(null);
     AtomicBoolean touchedTrace = new AtomicBoolean();
     AtomicBoolean touchedDebug = new AtomicBoolean();
     Loggers.get("logger1").trace(() -> {

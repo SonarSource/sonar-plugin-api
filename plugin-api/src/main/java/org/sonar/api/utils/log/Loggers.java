@@ -19,24 +19,20 @@
  */
 package org.sonar.api.utils.log;
 
+import org.slf4j.LoggerFactory;
+
+/**
+ * @deprecated since 9.15 in favor of {@link org.slf4j.LoggerFactory}
+ */
+@Deprecated(since = "9.15")
 public abstract class Loggers {
 
-  static Loggers getFactory() {
-    return LoggerFactory.getFactory();
-  }
-
-  protected abstract Logger newInstance(String name);
-
-  protected abstract LoggerLevel getLevel();
-
-  protected abstract void setLevel(LoggerLevel level);
-
-  public static Logger get(Class<?> name) {
-    return LoggerFactory.get(name);
+  public static Logger get(Class<?> aClass) {
+    return new Slf4jLogger(LoggerFactory.getLogger(aClass));
   }
 
   public static Logger get(String name) {
-    return LoggerFactory.get(name);
+    return new Slf4jLogger(LoggerFactory.getLogger(name));
   }
 
 }

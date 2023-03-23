@@ -17,10 +17,10 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.utils.log;
+package org.sonar.api.testfixtures.log;
 
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
@@ -56,15 +56,15 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  *
  * @since 8.1
  */
-public class LogTesterJUnit5 extends AbstractLogTester<LogTesterJUnit5> implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class LogTesterJUnit5 extends AbstractLogTester<LogTesterJUnit5> implements BeforeEachCallback, AfterEachCallback {
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) throws Exception {
     before();
   }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) throws Exception {
     after();
   }
 }

@@ -1,6 +1,8 @@
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
+  api libs.slf4j
+
   // please keep the list grouped by configuration and ordered by name
   implementation libs.commons.io
   implementation libs.commons.lang
@@ -9,14 +11,12 @@ dependencies {
   // shaded, but not relocated
   implementation project(':check-api')
 
-  compileOnly libs.logback.classic
   compileOnly libs.jsr305
   compileOnly libs.servlet.api
-  compileOnly libs.junit4
-  // Used by LogTesterJUnit5
-  compileOnly libs.junit5
-  compileOnly libs.slf4j
 
+  testImplementation libs.junit4
+  testImplementation libs.junit5
+  testImplementation project(':test-fixtures')
   testImplementation libs.guava
   testImplementation libs.junit.dataprovider
   testImplementation libs.assertj
@@ -50,12 +50,13 @@ shadowJar {
   }
   relocate('com.google', 'org.sonar.api.internal.google')
   relocate('org.apache.commons', 'org.sonar.api.internal.apachecommons')
+  dependencies {
+    exclude(dependency('org.slf4j:slf4j-api:.*'))
+  }
 }
 
 tasks["build"].dependsOn(shadowJar)
 
-// only interested in shadowJar
-jar.enabled = false
 artifactoryPublish.skip = false
 
 publishing {
@@ -90,6 +91,13 @@ publishing {
       artifact source: shadowJar, classifier: null
       artifact sourcesJar
       artifact javadocJar
+      pom.withXml {
+        def dependenciesNode = asNode().appendNode('dependencies')
+        def dependencyNode = dependenciesNode.appendNode('dependency')
+        dependencyNode.appendNode('groupId', 'org.slf4j')
+        dependencyNode.appendNode('artifactId', 'slf4j-api')
+        dependencyNode.appendNode('version', libs.versions.slf4j.get())
+      }
     }
   }
 }

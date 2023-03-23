@@ -43,9 +43,11 @@ import javax.annotation.Nullable;
  * INFO, WARN and ERROR levels are always enabled. They can't be disabled by users.
  * DEBUG and TRACE levels are enabled on demand with the property <code>sonar.log.level</code>.
  * <p>
- * See {@link org.sonar.api.utils.log.LogTester} for testing facilities.
+ * See <code>org.sonar.api.utils.log.LogTester</code> from the test-fixtures for testing facilities.
  * @since 5.1
+ * @deprecated since 9.15 in favor of {@link org.slf4j.Logger}
  */
+@Deprecated(since = "9.15")
 public interface Logger {
 
   boolean isTraceEnabled();
@@ -267,12 +269,39 @@ public interface Logger {
    * runtime.
    * <p>
    * This method must not be used to enable DEBUG or TRACE logs in tests. Use
-   * {@link org.sonar.api.utils.log.LogTester#setLevel(LoggerLevel)} instead.
+   * <code>org.sonar.api.utils.log.LogTester.setLevel(LoggerLevel)</code> from the test-fixtures instead.
    * <p>
    * The standard use-case is to customize logging of embedded 3rd-party
    * libraries.
+   * @deprecated since 9.15 will always return false
    */
+  @Deprecated(since = "9.15")
   boolean setLevel(LoggerLevel level);
 
   LoggerLevel getLevel();
+
+  /**
+   * @since 9.15
+   */
+  default void log(LoggerLevel level, String msg) {
+    switch (level) {
+      case TRACE:
+        trace(msg);
+        break;
+      case DEBUG:
+        debug(msg);
+        break;
+      case INFO:
+        info(msg);
+        break;
+      case WARN:
+        warn(msg);
+        break;
+      case ERROR:
+        error(msg);
+        break;
+      default:
+        throw new IllegalArgumentException("Unsupported LoggerLevel value: " + level);
+    }
+  }
 }

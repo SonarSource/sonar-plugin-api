@@ -19,14 +19,14 @@
  */
 package org.sonar.api.utils.log;
 
-public enum  LoggerLevel {
+/**
+ * @deprecated since 9.15 in favor of {@link org.slf4j.event.Level}
+ */
+@Deprecated(since = "9.15")
+public enum LoggerLevel {
   TRACE,
-
   DEBUG,
-
   INFO,
-
   WARN,
-
-  ERROR
+  ERROR;
 }

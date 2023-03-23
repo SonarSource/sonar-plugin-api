@@ -28,10 +28,7 @@ public class LoggersTest {
 
   @Test
   public void factory() {
-    // logback is used by sonar-plugin-api
-    assertThat(Loggers.getFactory()).isInstanceOf(LogbackLoggers.class);
-
-    assertThat(Loggers.get("foo")).isInstanceOf(LogbackLogger.class);
-    assertThat(Loggers.get(Plugin.class)).isInstanceOf(LogbackLogger.class);
+    assertThat(Loggers.get("foo")).isInstanceOf(Slf4jLogger.class);
+    assertThat(Loggers.get(Plugin.class)).isInstanceOf(Slf4jLogger.class);
   }
 }
