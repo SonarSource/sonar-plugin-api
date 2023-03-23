@@ -19,34 +19,14 @@
  */
 package org.sonar.api.utils.log;
 
-import java.util.Arrays;
-import org.slf4j.event.Level;
-
+/**
+ * @deprecated since 9.15 in favor of {@link org.slf4j.event.Level}
+ */
+@Deprecated(since = "9.15")
 public enum LoggerLevel {
-  TRACE(Level.TRACE),
-  DEBUG(Level.DEBUG),
-  INFO(Level.INFO),
-  WARN(Level.WARN),
-  ERROR(Level.ERROR);
-
-  private final Level slf4jLevel;
-
-  LoggerLevel(Level slf4jLevel) {
-    this.slf4jLevel = slf4jLevel;
-  }
-
-  /**
-   * @since 9.15
-   */
-  public static LoggerLevel fromSlf4j(Level slf4jLevel) {
-    return Arrays.stream(LoggerLevel.values()).filter(l -> l.slf4jLevel == slf4jLevel).findFirst()
-      .orElseThrow(() -> new IllegalArgumentException("Unsupported level: " + slf4jLevel));
-  }
-
-  /**
-   * @since 9.15
-   */
-  public Level toSlf4j() {
-    return slf4jLevel;
-  }
+  TRACE,
+  DEBUG,
+  INFO,
+  WARN,
+  ERROR;
 }

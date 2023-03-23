@@ -24,12 +24,29 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 import org.sonar.api.utils.log.LoggerLevel;
 
 class AbstractLogTester<G extends AbstractLogTester<G>> {
+
+  private static final Map<LoggerLevel, Level> sonarToSlf4jLevel = Map.of(
+    LoggerLevel.TRACE, Level.TRACE,
+    LoggerLevel.DEBUG, Level.DEBUG,
+    LoggerLevel.INFO, Level.INFO,
+    LoggerLevel.WARN, Level.WARN,
+    LoggerLevel.ERROR, Level.ERROR
+  );
+
+  private static final Map<Level, LoggerLevel> slf4jToSonarLevel = Map.of(
+    Level.TRACE, LoggerLevel.TRACE,
+    Level.DEBUG, LoggerLevel.DEBUG,
+    Level.INFO, LoggerLevel.INFO,
+    Level.WARN, LoggerLevel.WARN,
+    Level.ERROR, LoggerLevel.ERROR
+  );
 
   private final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
 
@@ -47,7 +64,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
   }
 
   LoggerLevel getLevel() {
-    return LoggerLevel.fromSlf4j(toSlf4j(getRootLogger().getLevel()));
+    return slf4jToSonarLevel.get(toSlf4j(getRootLogger().getLevel()));
   }
 
   private static Level toSlf4j(ch.qos.logback.classic.Level level) {
@@ -69,7 +86,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
    */
   @Deprecated(since = "9.15")
   public G setLevel(LoggerLevel sonarLevel) {
-    return setLevel(sonarLevel.toSlf4j());
+    return setLevel(sonarToSlf4jLevel.get(sonarLevel));
 
   }
 
@@ -102,7 +119,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
    */
   @Deprecated(since = "9.15")
   public List<String> logs(LoggerLevel sonarLevel) {
-    return logs(sonarLevel.toSlf4j());
+    return logs(sonarToSlf4jLevel.get(sonarLevel));
   }
 
   /**
@@ -131,7 +148,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
    */
   @Deprecated(since = "9.15")
   public List<LogAndArguments> getLogs(LoggerLevel sonarLevel) {
-    return getLogs(sonarLevel.toSlf4j());
+    return getLogs(sonarToSlf4jLevel.get(sonarLevel));
   }
 
   private static LogAndArguments convert(LoggingEvent e) {
