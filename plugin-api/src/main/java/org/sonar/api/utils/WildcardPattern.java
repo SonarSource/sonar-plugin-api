@@ -53,10 +53,7 @@ import org.apache.commons.lang.StringUtils;
  * e.g. <code>org/Foo.java</code> or <code>org/foo/Bar.java</code> or <code>org/foo/bar/Baz.java</code></li>
  * </ul>
  * <p>
- * Another implementation, which is also based on Java Regular Expressions, can be found in
- * <a href="https://github.com/JetBrains/intellij-community/blob/idea/107.743/platform/util/src/com/intellij/openapi/util/io/FileUtil.java#L847">FileUtil</a>
- * from IntelliJ OpenAPI.
- * 
+ *
  * @since 1.10
  */
 @ThreadSafe
