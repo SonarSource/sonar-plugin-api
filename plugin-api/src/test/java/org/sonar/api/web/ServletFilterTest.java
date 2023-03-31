@@ -223,6 +223,7 @@ public class ServletFilterTest {
       "*.js",
       "*.js.map",
       "*.pdf",
+      "*.woff2",
       "/json/*",
       "/static/*",
       "/robots.txt",
