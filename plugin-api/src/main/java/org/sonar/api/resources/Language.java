@@ -48,8 +48,12 @@ public interface Language {
   String getName();
 
   /**
-   * For example ["jav", "java"].
-   * If empty, then all files in source directories are considered as sources.
+   * Filename extensions, without the dot. For example <code>["jav", "java"]</code>. Source files having any of those extensions will
+   * be associated to this language. This is equivalent to have {@link #filenamePatterns()}
+   * returning <code>["&#42;&#42;/&#42;.jav", "&#42;&#42;/&#42;.java"]</code>.<br/>
+   * The filename extension matching is case-insensitive, so declaring <code>["java"]</code> will match "src/main/java/Foo.java" and
+   * "src/main/java/Foo.JAVA".<br/>
+   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered.
    */
   String[] getFileSuffixes();
 
@@ -59,5 +63,18 @@ public interface Language {
    */
   default boolean publishAllFiles() {
     return true;
+  }
+
+  /**
+   * Provide a list of patterns following the {@link org.sonar.api.utils.WildcardPattern} syntax. Source files matching any of those patterns will
+   * be associated to this language.
+   * Pattern are considered relative: <code>["pom.xml"]</code> is equivalent to <code>["&#42;&#42;/pom.xml"]</code> <br/>
+   * The filename extension matching is case-insensitive, so declaring <code>["&#42;&#42;/&#42;Test.java"]</code> will match "FooTest.java" and
+   * "FooTest.JAVA" but <strong>not</strong> "FooTEST.java".<br/>
+   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered.
+   * @since 9.16
+   */
+  default String[] filenamePatterns() {
+    return new String[0];
   }
 }

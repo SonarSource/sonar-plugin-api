@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.16
+
+* Extension point `org.sonar.api.resources.Language` now supports `filenamePatterns` to detect files' language based on more complex filename patterns than only filename extensions.
+
 ## 9.15
 
 * `org.sonar.api.utils.log.Loggers` and `org.sonar.api.utils.log.Logger` are now deprecated in favor of the direct use of [SLF4J](https://www.slf4j.org/):
