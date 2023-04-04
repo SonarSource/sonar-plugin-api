@@ -26,7 +26,14 @@ import org.sonar.api.server.ServerSide;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
- * The extension point to define a new language
+ * The extension point to define a new language. A Language is defined by a key and a name (aka label).
+ * <br/><br/>
+ * When source files are analyzed on SonarLint or on scanner side, they will be optionally assigned to a language. A given source file
+ * (see {@link org.sonar.api.batch.fs.InputFile}) can only have one language (or no language).
+ * Implementors can declare file extensions (using {@link #getFileSuffixes()})
+ * or filename patterns (using {@link #filenamePatterns()} that will be used to decide which language should be associated to a file.
+ * <br/>
+ * Since a source file can only have one language, patterns should match disjoint sets of files.
  *
  * @since 1.10
  */
@@ -53,7 +60,8 @@ public interface Language {
    * returning <code>["&#42;&#42;/&#42;.jav", "&#42;&#42;/&#42;.java"]</code>.<br/>
    * The filename extension matching is case-insensitive, so declaring <code>["java"]</code> will match "src/main/java/Foo.java" and
    * "src/main/java/Foo.JAVA".<br/>
-   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered.
+   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered. Implementors should be careful
+   * to have each language suffix and patterns matching disjoint set of files, since a file can be assigned to only one language.
    */
   String[] getFileSuffixes();
 
@@ -71,7 +79,8 @@ public interface Language {
    * Pattern are considered relative: <code>["pom.xml"]</code> is equivalent to <code>["&#42;&#42;/pom.xml"]</code> <br/>
    * The filename extension matching is case-insensitive, so declaring <code>["&#42;&#42;/&#42;Test.java"]</code> will match "FooTest.java" and
    * "FooTest.JAVA" but <strong>not</strong> "FooTEST.java".<br/>
-   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered.
+   * If both {@link #getFileSuffixes()} and {@link #filenamePatterns()} are provided, both will be considered. Implementors should be careful
+   * to have each language suffix and patterns matching disjoint set of files, since a file can be assigned to only one language.
    * @since 9.16
    */
   default String[] filenamePatterns() {
