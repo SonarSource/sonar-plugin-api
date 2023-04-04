@@ -33,7 +33,7 @@ The following tables indicate which API versions plugins can find at runtime:
 
 ### SonarQube
 | SonarQube              | Plugin API                |
-| ---------------------- | ------------------------- |
+|------------------------|---------------------------|
 | 9.9.0.65466            | 9.14.0.375                |
 | 9.8.0.63668            | 9.13.0.360                |
 | 9.7.1.62043            | 9.11.0.290                |
@@ -47,9 +47,11 @@ The following tables indicate which API versions plugins can find at runtime:
 Current version: 9.14.0.375
 
 ### SonarLint
-Latest SonarLint for IntelliJ implements: 9.13.0.360
-Latest SonarLint for Eclipse implements: 9.13.0.360
-Latest SonarLint for VSCode implements: 9.13.0.360
+| Flavor   | Plugin API                |
+|----------|---------------------------|
+| IntelliJ | 9.13.0.360                |
+| Eclipse  | 9.13.0.360                |
+| VSCode   | 9.13.0.360                |
 
 ## Optimizing the execution of sensors
 
