@@ -24,10 +24,8 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * <b>For tests only</b>
- * <br>
- * This JUnit 5 extension allows to configure and access logs in tests. By default
- * trace level is enabled.
+ * This JUnit 5 extension allows to configure and access logs in tests. By default,
+ * INFO level is enabled.
  * <br>
  * Warning - not compatible with parallel execution of tests in the same JVM fork.
  * <br>
