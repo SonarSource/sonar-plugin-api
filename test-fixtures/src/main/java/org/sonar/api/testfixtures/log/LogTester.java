@@ -24,10 +24,8 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 /**
- * <b>For tests only</b>
- * <br>
- * This JUnit rule allows to configure and access logs in tests. By default
- * trace level is enabled.
+ * This JUnit rule allows to configure and access logs in tests. By default,
+ * INFO level is enabled.
  * <br>
  * Warning - not compatible with parallel execution of tests in the same JVM fork.
  * <br>
