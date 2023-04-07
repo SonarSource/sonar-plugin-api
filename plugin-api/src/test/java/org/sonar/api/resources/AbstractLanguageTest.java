@@ -71,6 +71,13 @@ public class AbstractLanguageTest {
       .hasMessage("The following language key exceeds 20 characters: 'aKeyWhichIsVeryVeryVeryVeryVeryLong'");
   }
 
+  @Test
+  public void should_return_empty_filename_pattern_by_default() {
+    var lang = new Language1();
+
+    assertThat(lang.filenamePatterns()).isEmpty();
+  }
+
   static class TooLongKeyLanguage extends AbstractLanguage {
     public TooLongKeyLanguage() {
       super("aKeyWhichIsVeryVeryVeryVeryVeryLong");
