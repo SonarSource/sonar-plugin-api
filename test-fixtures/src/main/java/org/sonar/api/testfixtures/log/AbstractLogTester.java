@@ -131,7 +131,6 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
       .collect(Collectors.toList());
   }
 
-
   /**
    * Logs with arguments in chronological order (item at index 0 is the oldest one) for
    * a given level
@@ -152,7 +151,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
   }
 
   private static LogAndArguments convert(LoggingEvent e) {
-    return new LogAndArguments(e.getFormattedMessage(), e.getMessage(), e.getArgumentArray());
+    return new LogAndArguments(e.getFormattedMessage(), e.getMessage(), e.getThrowableProxy(), e.getArgumentArray());
   }
 
   public G clear() {
