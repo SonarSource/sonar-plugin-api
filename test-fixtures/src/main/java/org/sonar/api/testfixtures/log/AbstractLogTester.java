@@ -21,7 +21,6 @@ package org.sonar.api.testfixtures.log;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
     Level.ERROR, LoggerLevel.ERROR
   );
 
-  private final ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+  private final ConcurrentListAppender<ILoggingEvent> listAppender = new ConcurrentListAppender<>();
 
   protected void before() {
     getRootLogger().addAppender(listAppender);
