@@ -19,37 +19,29 @@
  */
 package org.sonar.api.testfixtures.log;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import java.util.Arrays;
 import java.util.Optional;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 
 public final class LogAndArguments {
   private final String rawMsg;
+  private final Throwable throwable;
   private final Object[] args;
   private final String msg;
 
-  LogAndArguments(String msg, String rawMsg) {
+  LogAndArguments(String msg, String rawMsg, @Nullable IThrowableProxy t, Object... args) {
     this.rawMsg = rawMsg;
     this.msg = msg;
-    this.args = null;
-  }
-
-  LogAndArguments(String msg, String rawMsg, @Nullable Object arg1) {
-    this.rawMsg = rawMsg;
-    this.args = new Object[] {arg1};
-    this.msg = msg;
-  }
-
-  LogAndArguments(String msg, String rawMsg, @Nullable Object arg1, @Nullable Object arg2) {
-    this.rawMsg = rawMsg;
-    this.msg = msg;
-    this.args = new Object[] {arg1, arg2};
-  }
-
-  LogAndArguments(String msg, String rawMsg, Object... args) {
-    this.rawMsg = rawMsg;
-    this.msg = msg;
+    this.throwable = t instanceof ThrowableProxy ? ((ThrowableProxy) t).getThrowable() : null;
     this.args = args;
+  }
+
+  @CheckForNull
+  public Throwable getThrowable() {
+    return throwable;
   }
 
   public String getRawMsg() {
@@ -66,10 +58,12 @@ public final class LogAndArguments {
 
   @Override
   public String toString() {
+    String throwableStr = throwable != null ? (throwable.getClass().getName() + ": " + throwable.getMessage()) : null;
     return "LogAndArguments{" +
       "rawMsg='" + rawMsg + '\'' +
       ", args=" + Arrays.toString(args) +
       ", msg='" + msg + '\'' +
+      ", throwable='" + throwableStr + '\'' +
       '}';
   }
 }
