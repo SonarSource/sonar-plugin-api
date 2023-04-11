@@ -51,6 +51,17 @@ public class LogTesterTest {
   }
 
   @Test
+  public void should_change_default_level_before_test() {
+    // Change default level to DEBUG instead of INFO by default
+    LogTester underTest = new LogTester().setLevel(Level.DEBUG);
+    // First test
+    underTest.before();
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.DEBUG);
+    // changing level during a test
+    underTest.setLevel(LoggerLevel.ERROR);
+  }
+
+  @Test
   public void change_log_level() {
     // change level
     underTest.setLevel(Level.DEBUG);

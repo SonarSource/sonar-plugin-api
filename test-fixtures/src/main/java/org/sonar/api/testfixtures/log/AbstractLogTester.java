@@ -49,17 +49,21 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
 
   private final ConcurrentListAppender<ILoggingEvent> listAppender = new ConcurrentListAppender<>();
 
+  protected AbstractLogTester() {
+    setLevel(Level.INFO);
+  }
+
   protected void before() {
     getRootLogger().addAppender(listAppender);
     listAppender.start();
-    setLevel(LoggerLevel.INFO);
   }
 
   protected void after() {
     listAppender.stop();
     listAppender.list.clear();
     getRootLogger().detachAppender(listAppender);
-    setLevel(LoggerLevel.INFO);
+    // Reset the level for following-up test suites
+    setLevel(Level.INFO);
   }
 
   LoggerLevel getLevel() {
@@ -73,7 +77,7 @@ class AbstractLogTester<G extends AbstractLogTester<G>> {
 
   /**
    * Change log level.
-   * By default INFO logs are enabled when LogTester is started.
+   * By default, INFO logs are enabled when LogTester is started.
    */
   public G setLevel(Level level) {
     getRootLogger().setLevel(ch.qos.logback.classic.Level.fromLocationAwareLoggerInteger(level.toInt()));

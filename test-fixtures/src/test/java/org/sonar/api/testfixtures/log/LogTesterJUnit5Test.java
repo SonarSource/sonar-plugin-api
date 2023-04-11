@@ -33,6 +33,7 @@ public class LogTesterJUnit5Test {
   @Test
   public void info_level_by_default() throws Throwable {
     // when LogTester is used, then info logs are enabled by default
+    assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
     underTest.beforeEach(null);
     assertThat(underTest.getLevel()).isEqualTo(LoggerLevel.INFO);
 
