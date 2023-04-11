@@ -24,6 +24,11 @@ Also note that the version no longer follows SonarQube's versions. The `sonar-pl
 
 See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for changelogs.
 
+
+## Deprecation Policy
+
+See the [deprecation policy](docs/deprecation-policy.md).
+
 ## Compatibility
 
 Breaking changes to the API happen when the major version changes. As a result, plugins should be compatible with future versions of the API within the same major version.
