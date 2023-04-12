@@ -19,9 +19,10 @@
  */
 package org.sonar.api.security;
 
+import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
 
-import javax.servlet.http.HttpServletRequest;
+import org.sonar.api.server.http.HttpRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -52,7 +53,7 @@ public class SecurityRealmTest {
       }
     };
     Authenticator proxy = realm.doGetAuthenticator();
-    Authenticator.Context context = new Authenticator.Context("foo", "bar", mock(HttpServletRequest.class));
+    Authenticator.Context context = new Authenticator.Context("foo", "bar", mock(HttpRequest.class), mock(HttpServletRequest.class));
     proxy.doAuthenticate(context);
 
     verify(deprecatedAuthenticator).authenticate("foo", "bar");
