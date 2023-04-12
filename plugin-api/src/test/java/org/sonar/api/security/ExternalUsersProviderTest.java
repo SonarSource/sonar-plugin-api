@@ -20,9 +20,9 @@
 package org.sonar.api.security;
 
 import com.google.common.base.Preconditions;
-import org.junit.Test;
-
 import javax.servlet.http.HttpServletRequest;
+import org.junit.Test;
+import org.sonar.api.server.http.HttpRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -35,14 +35,14 @@ public class ExternalUsersProviderTest {
       @Override
       public UserDetails doGetUserDetails(Context context) {
         Preconditions.checkNotNull(context.getUsername());
-        Preconditions.checkNotNull(context.getRequest());
+        Preconditions.checkNotNull(context.getHttpRequest());
         UserDetails user = new UserDetails();
         user.setName(context.getUsername());
         user.setEmail("foo@bar.com");
         return user;
       }
     };
-    UserDetails user = provider.doGetUserDetails(new ExternalUsersProvider.Context("foo", mock(HttpServletRequest.class)));
+    UserDetails user = provider.doGetUserDetails(new ExternalUsersProvider.Context("foo", mock(HttpRequest.class), mock(HttpServletRequest.class)));
 
     assertThat(user.getName()).isEqualTo("foo");
     assertThat(user.getEmail()).isEqualTo("foo@bar.com");

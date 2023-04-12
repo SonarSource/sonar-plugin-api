@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
+import org.sonar.api.server.http.HttpRequest;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,12 +45,17 @@ public abstract class Authenticator {
     private String username;
     private String password;
     private HttpServletRequest request;
+    private HttpRequest httpRequest;
 
-    public Context(@Nullable String username, @Nullable String password, HttpServletRequest request) {
+    /**
+     * This class is not meant to be instantiated by plugins, except for tests.
+     */
+    public Context(@Nullable String username, @Nullable String password, HttpRequest httpRequest, HttpServletRequest request) {
       requireNonNull(request);
-      this.request = request;
       this.username = username;
       this.password = password;
+      this.httpRequest = httpRequest;
+      this.request = request;
     }
 
     /**
@@ -66,8 +72,19 @@ public abstract class Authenticator {
       return password;
     }
 
+    /**
+     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
+     */
+    @Deprecated(since = "9.16", forRemoval = true)
     public HttpServletRequest getRequest() {
       return request;
+    }
+
+    /**
+     * @since 9.16
+     */
+    public HttpRequest getHttpRequest() {
+      return httpRequest;
     }
   }
 }

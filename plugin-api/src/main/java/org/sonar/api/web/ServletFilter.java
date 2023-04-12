@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import javax.servlet.Filter;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 
@@ -38,11 +37,13 @@ import static org.apache.commons.lang.StringUtils.substringBeforeLast;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**
+ * {@code @deprecated} since 9.16. Use {@link org.sonar.api.web.HttpFilter} instead.
  * @since 3.1
  */
 @ServerSide
 @ExtensionPoint
-public abstract class ServletFilter implements Filter {
+@Deprecated(forRemoval = true, since = "9.16")
+public abstract class ServletFilter implements javax.servlet.Filter {
 
   /**
    * Override to change URL. Default is /*
@@ -65,7 +66,7 @@ public abstract class ServletFilter implements Filter {
       this.exclusions = unmodifiableList(new ArrayList<>(builder.exclusions));
       if (builder.inclusionPredicates.isEmpty()) {
         // because Stream#anyMatch() returns false if stream is empty
-        this.inclusionPredicates = new Predicate[] {s -> true};
+        this.inclusionPredicates = new Predicate[]{s -> true};
       } else {
         this.inclusionPredicates = builder.inclusionPredicates.stream().toArray(Predicate[]::new);
       }

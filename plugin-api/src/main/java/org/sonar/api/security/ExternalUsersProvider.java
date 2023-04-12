@@ -21,6 +21,7 @@ package org.sonar.api.security;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
+import org.sonar.api.server.http.HttpRequest;
 
 /**
  * Note that prefix "do" for names of methods is reserved for future enhancements, thus should not be used in subclasses.
@@ -43,9 +44,14 @@ public abstract class ExternalUsersProvider {
   public static final class Context {
     private String username;
     private HttpServletRequest request;
+    private HttpRequest httpRequest;
 
-    public Context(@Nullable String username, HttpServletRequest request) {
+    /**
+     * This class is not meant to be instantiated by plugins, except for tests.
+     */
+    public Context(@Nullable String username, HttpRequest httpRequest, HttpServletRequest request) {
       this.username = username;
+      this.httpRequest = httpRequest;
       this.request = request;
     }
 
@@ -53,8 +59,19 @@ public abstract class ExternalUsersProvider {
       return username;
     }
 
+    /**
+     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
+     */
+    @Deprecated(since = "9.16", forRemoval = true)
     public HttpServletRequest getRequest() {
       return request;
+    }
+
+    /**
+     * @since 9.16
+     */
+    public HttpRequest getHttpRequest() {
+      return httpRequest;
     }
   }
 }

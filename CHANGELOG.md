@@ -3,6 +3,11 @@
 ## 9.16
 
 * Extension point `org.sonar.api.resources.Language` now supports `filenamePatterns` to detect files' language based on more complex filename patterns than only filename extensions.
+* Usage of `javax-servlet-api` is now deprecated in favor of custom, framework agnostic API:
+  * Replace ~~`org.sonar.api.web.ServletFilter`~~ by `org.sonar.api.server.web.HttpFilter`
+  * Replace ~~`javax.servlet.http.HttpServletRequest`~~ by `org.sonar.api.server.http.HttpRequest`
+  * Replace ~~`javax.servlet.http.HttpServletResponse`~~ by `org.sonar.api.server.http.HttpResponse`
+  * Other added classes: `org.sonar.api.web.FilterChain`, `org.sonar.api.web.UrlPattern` and `org.sonar.api.server.http.Cookie`
 
 ## 9.15
 
