@@ -20,14 +20,13 @@
 package org.sonar.api.security;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
+import org.sonar.api.server.http.HttpRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -40,7 +39,7 @@ public class ExternalGroupsProviderTest {
 
     String userName = "foo";
     assertThat(groupsProvider.doGetGroups(new ExternalGroupsProvider.Context(userName,
-      mock(HttpServletRequest.class)))).isNull();
+      mock(HttpRequest.class)))).isNull();
   }
 
   @Test
@@ -51,7 +50,7 @@ public class ExternalGroupsProviderTest {
       @Override
       public Collection<String> doGetGroups(Context context) {
         Preconditions.checkNotNull(context.getUsername());
-        Preconditions.checkNotNull(context.getRequest());
+        Preconditions.checkNotNull(context.getHttpRequest());
 
         return userGroupsMap.get(context.getUsername());
       }
@@ -63,7 +62,7 @@ public class ExternalGroupsProviderTest {
   private static void runDoGetGroupsTests(ExternalGroupsProvider groupsProvider, Map<String, Collection<String>> userGroupsMap) {
     for (Map.Entry<String, Collection<String>> userGroupMapEntry : userGroupsMap.entrySet()) {
       Collection<String> groups = groupsProvider.doGetGroups(new ExternalGroupsProvider.Context(
-        userGroupMapEntry.getKey(), mock(HttpServletRequest.class)));
+        userGroupMapEntry.getKey(), mock(HttpRequest.class)));
       assertThat(groups).isEqualTo(userGroupMapEntry.getValue());
     }
   }

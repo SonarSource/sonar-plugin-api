@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
+import org.sonar.api.server.http.HttpRequest;
+import org.sonar.api.server.http.JavaxHttpRequest;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,13 +45,31 @@ public abstract class Authenticator {
   public static final class Context {
     private String username;
     private String password;
+    /**
+     * @deprecated since 9.16 use {@link #httpRequest} instead
+     */
+    @Deprecated(since = "9.16", forRemoval = true)
     private HttpServletRequest request;
+    private HttpRequest httpRequest;
 
+    /**
+     * @deprecated since 9.16 use {@link #Context(String, String, HttpRequest)} instead
+     */
+    @Deprecated(since = "9.16", forRemoval = true)
     public Context(@Nullable String username, @Nullable String password, HttpServletRequest request) {
       requireNonNull(request);
       this.request = request;
       this.username = username;
       this.password = password;
+      this.httpRequest = new JavaxHttpRequest(request);
+    }
+
+    public Context(@Nullable String username, @Nullable String password, HttpRequest httpRequest) {
+      requireNonNull(httpRequest);
+      this.httpRequest = httpRequest;
+      this.username = username;
+      this.password = password;
+      this.request = (HttpServletRequest) httpRequest.getRawRequest();
     }
 
     /**
@@ -66,8 +86,19 @@ public abstract class Authenticator {
       return password;
     }
 
+    /**
+     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
+     */
+    @Deprecated(since = "9.16", forRemoval = true)
     public HttpServletRequest getRequest() {
       return request;
+    }
+
+    /**
+     * @since 9.16
+     */
+    public HttpRequest getHttpRequest() {
+      return httpRequest;
     }
   }
 }
