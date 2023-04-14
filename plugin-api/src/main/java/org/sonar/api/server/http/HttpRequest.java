@@ -67,6 +67,13 @@ public interface HttpRequest {
   String getQueryString();
 
   /**
+   * Returns the portion of the request URI that indicates the context of the request. The context path always comes first
+   * in a request URI. The path starts with a "/" character but does not end with a "/" character. For servlets in the
+   * default (root) context, this method returns "". The container does not decode this string.
+   */
+  String getContextPath();
+
+  /**
    * Returns the value of a request parameter as a String, or null if the parameter does not exist.
    * You should only use this method when you are sure the parameter has only one value. If the parameter might have more than one value,
    * use {@link #getParameterValues}.
@@ -74,7 +81,7 @@ public interface HttpRequest {
   String getParameter(String name);
 
   /**
-   * Returns an array containing all of the values the given request parameter has, or null if the parameter does not exist.
+   * Returns an array containing all the values the given request parameter has, or null if the parameter does not exist.
    */
   String[] getParameterValues(String name);
 

@@ -69,6 +69,11 @@ public class JakartaHttpRequest implements HttpRequest {
   }
 
   @Override
+  public String getContextPath() {
+    return delegate.getContextPath();
+  }
+
+  @Override
   public String getParameter(String name) {
     return delegate.getParameter(name);
   }
