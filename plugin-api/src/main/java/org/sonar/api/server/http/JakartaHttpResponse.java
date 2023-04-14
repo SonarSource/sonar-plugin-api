@@ -21,6 +21,7 @@ package org.sonar.api.server.http;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
@@ -57,6 +58,21 @@ public class JakartaHttpResponse implements HttpResponse {
   @Override
   public int getStatus() {
     return delegate.getStatus();
+  }
+
+  @Override
+  public void setContentType(String contentType) {
+    delegate.setContentType(contentType);
+  }
+
+  @Override
+  public PrintWriter getWriter() throws IOException {
+    return delegate.getWriter();
+  }
+
+  @Override
+  public void setHeader(String name, String value) {
+    delegate.setHeader(name, value);
   }
 
   @Override

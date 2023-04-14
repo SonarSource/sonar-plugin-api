@@ -20,6 +20,7 @@
 package org.sonar.api.server.http;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
@@ -54,6 +55,23 @@ public interface HttpResponse {
    * Gets the current status code of this response.
    */
   int getStatus();
+
+  /**
+   * Sets the content type of the response being sent to the client, if the response has not been committed yet.
+   */
+  void setContentType(String contentType);
+
+  /**
+   * Returns a <code>PrintWriter</code> object that can send character text to the client. Calling flush()
+   * on the <code>PrintWriter</code> commits the response.
+   */
+  PrintWriter getWriter() throws IOException;
+
+  /**
+   * Sets a response header with the given name and value. If the header had already been set, the new value overwrites
+   * the previous one.
+   */
+  void setHeader(String name, String value);
 
   /**
    * Sends a temporary redirect response to the client using the specified redirect location URL and clears the buffer.
