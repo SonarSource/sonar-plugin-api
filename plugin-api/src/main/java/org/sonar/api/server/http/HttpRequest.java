@@ -28,7 +28,6 @@ import java.util.Enumeration;
  */
 public interface HttpRequest {
 
-
   /**
    * Returns the port number to which the request was sent.
    */
