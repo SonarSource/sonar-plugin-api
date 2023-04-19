@@ -1,5 +1,6 @@
 # sonar-plugin-api
 
+Hi
 Java API to develop plugins for SonarQube, SonarCloud and SonarLint.
 This component was extracted out of SonarQube, and is released independently since v9.5.
 
