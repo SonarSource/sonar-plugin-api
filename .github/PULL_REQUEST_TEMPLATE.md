@@ -11,7 +11,7 @@
   - [ ] Add a `@deprecated since X.Y` in the JavaDoc
   - [ ] Document the replacement in the JavaDoc (if any)
 - [ ] When dropping an API:
-  - [ ] Make sure it respects the [deprecation policy](../docs/deprecation-policy.md)
+  - [ ] Make sure it respects the [deprecation policy](https://github.com/SonarSource/sonar-plugin-api/blob/master/docs/deprecation-policy.md)
   - [ ] Bump the major version (breaking change)
 - [ ] Make sure checks are green: build passes, Quality Gate is green
 - [ ] Merge after getting approval by at least one member of the guild
