@@ -20,6 +20,7 @@
 package org.sonar.api.server.http;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 
@@ -78,4 +79,25 @@ public interface HttpResponse {
    * The buffer will be replaced with the data set by this method.
    */
   void sendRedirect(String location) throws IOException;
+
+  /**
+   * Adds the specified cookie to the response.  This method can be called
+   * multiple times to set more than one cookie.
+   */
+  void addCookie(Cookie cookie);
+
+  /**
+   * Returns a {@link java.io.OutputStream} suitable for writing binary
+   * data in the response. The servlet container does not encode the
+   * binary data.
+   * Either this method or {@link #getWriter} may
+   * be called to write the body, not both.
+   */
+  OutputStream getOutputStream() throws IOException;
+
+  /**
+   * Sets the character encoding (MIME charset) of the response
+   * being sent to the client, for example, to UTF-8.
+   */
+  void setCharacterEncoding(String charset);
 }

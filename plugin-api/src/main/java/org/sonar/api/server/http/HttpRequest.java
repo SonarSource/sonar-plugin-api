@@ -19,6 +19,8 @@
  */
 package org.sonar.api.server.http;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Enumeration;
 
 /**
@@ -90,6 +92,8 @@ public interface HttpRequest {
    */
   String getHeader(String name);
 
+  Enumeration<String> getHeaderNames();
+
   /**
    * Returns all the values of the specified request header as an Enumeration of String objects.
    */
@@ -99,4 +103,42 @@ public interface HttpRequest {
    * Returns the name of the HTTP method with which this request was made, for example, GET, POST, or PUT.
    */
   String getMethod();
+
+
+  /**
+   * Returns an array containing all of the <code>Cookie</code>
+   * objects the client sent with this request.
+   */
+  Cookie[] getCookies();
+
+  /**
+   * Returns the Internet Protocol (IP) address of the client
+   * or last proxy that sent the request.
+   */
+  String getRemoteAddr();
+
+
+  /**
+   * Stores an attribute in this request.
+   * Attributes are reset between requests.
+   */
+  void setAttribute(String name, Object value);
+
+  /**
+   * Returns the part of this request's URL that calls
+   * the servlet. This path starts with a "/" character
+   * and includes either the servlet name or a path to
+   * the servlet, but does not include any extra path
+   * information or a query string.
+   */
+  String getServletPath();
+
+
+  /**
+   * Retrieves the body of the request as character data using
+   * a <code>BufferedReader</code>.  The reader translates the character
+   * data according to the character encoding used on the body.
+   */
+  BufferedReader getReader() throws IOException;
+
 }
