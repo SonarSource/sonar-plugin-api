@@ -23,7 +23,6 @@ import java.util.Collection;
 import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.server.http.HttpRequest;
-import org.sonar.api.server.http.JavaxHttpRequest;
 
 /**
  * Note that prefix "do" for names of methods is reserved for future enhancements, thus should not be used in subclasses.
@@ -47,27 +46,16 @@ public abstract class ExternalGroupsProvider {
 
   public static final class Context {
     private String username;
-    /**
-     * @deprecated since 9.16 use {@link #httpRequest} instead
-     */
-    @Deprecated(since = "9.16", forRemoval = true)
     private HttpServletRequest request;
     private HttpRequest httpRequest;
 
     /**
-     * @deprecated since 9.16 use {@link #Context(String, HttpRequest)} instead
+     * This class is not meant to be instantiated by plugins, except for tests.
      */
-    @Deprecated(since = "9.16", forRemoval = true)
-    public Context(String username, HttpServletRequest request) {
-      this.username = username;
-      this.request = request;
-      this.httpRequest = new JavaxHttpRequest(request);
-    }
-
-    public Context(String username, HttpRequest httpRequest) {
+    public Context(String username, HttpRequest httpRequest, HttpServletRequest request) {
       this.username = username;
       this.httpRequest = httpRequest;
-      this.request = (HttpServletRequest) httpRequest.getRawRequest();
+      this.request = request;
     }
 
     public String getUsername() {

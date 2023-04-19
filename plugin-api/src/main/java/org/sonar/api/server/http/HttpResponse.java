@@ -78,9 +78,4 @@ public interface HttpResponse {
    * The buffer will be replaced with the data set by this method.
    */
   void sendRedirect(String location) throws IOException;
-
-  /**
-   * Returns the raw response object from the Servlet API that matches this response.
-   */
-  Object getRawResponse();
 }
