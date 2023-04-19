@@ -17,50 +17,33 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.batch.sensor.issue;
+package org.sonar.api.code;
 
-import javax.annotation.CheckForNull;
 import org.sonar.api.Beta;
-import org.sonar.api.batch.rule.Severity;
-import org.sonar.api.batch.sensor.Sensor;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 
+import static org.sonar.api.code.CharacteristicsCategory.*;
+
 /**
- * Represents an issue imported from an external rule engine by a {@link Sensor}.
- * @since 7.2
+ * Enum that represents Characteristic according to the new Clean Code Taxonomy. Should be used instead of {@link RuleType} as it will
+ * become mandatory in the future to provide it.
+ *
+ * @since 9.16
  */
-public interface ExternalIssue extends IIssue {
+@Beta
+public enum CodeCharacteristic {
 
-  /**
-   * @since 7.4
-   */
-  String engineId();
+  CLEAR(DEVELOPMENT), CONSISTENT(DEVELOPMENT), STRUCTURED(DEVELOPMENT), TESTED(DEVELOPMENT),
 
-  /**
-   * @since 7.4
-   */
-  String ruleId();
+  ROBUST(PRODUCTION), SECURE(PRODUCTION), PORTABLE(PRODUCTION), COMPLIANT(PRODUCTION);
 
-  Severity severity();
+  private final CharacteristicsCategory characteristicsCategory;
 
-  /**
-   * Effort to fix the issue, in minutes.
-   */
-  @CheckForNull
-  Long remediationEffort();
+  CodeCharacteristic(CharacteristicsCategory characteristicsCategory) {
+    this.characteristicsCategory = characteristicsCategory;
+  }
 
-  /**
-   * Type of the issue.
-   */
-  RuleType type();
-
-  /**
-   * Characteristic of the issue according to Clean Code Taxonomy.
-   * @since 9.16
-   */
-  @Beta
-  @CheckForNull
-  CodeCharacteristic characteristic();
-
+  public CharacteristicsCategory getCharacteristicsCategory() {
+    return characteristicsCategory;
+  }
 }

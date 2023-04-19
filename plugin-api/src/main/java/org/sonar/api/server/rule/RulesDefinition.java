@@ -29,11 +29,13 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import org.sonar.api.Beta;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.debt.DebtRemediationFunction;
@@ -421,6 +423,16 @@ public interface RulesDefinition {
      */
     public abstract NewRule setType(RuleType t);
 
+
+    /**
+     * The characteristic of the rule according to Clean Code Taxonomy.
+     *
+     * Providing it is optional for now but will become mandatory in the future.
+     * @since 9.16
+     */
+    @Beta
+    public abstract NewRule setCharacteristic(CodeCharacteristic codeCharacteristic);
+
     /**
      * Add a rule description section. The sections must be added in the right order.
      * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
@@ -588,6 +600,14 @@ public interface RulesDefinition {
      * @since 5.5
      */
     public abstract RuleType type();
+
+    /**
+     * @see NewRule#setCharacteristic(CodeCharacteristic)
+     * @since 9.16
+     */
+    @CheckForNull
+    @Beta
+    public abstract CodeCharacteristic characteristic();
 
     public abstract String severity();
 

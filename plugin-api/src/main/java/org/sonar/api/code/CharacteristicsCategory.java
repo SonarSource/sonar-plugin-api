@@ -17,50 +17,11 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.batch.sensor.issue;
+package org.sonar.api.code;
 
-import javax.annotation.CheckForNull;
 import org.sonar.api.Beta;
-import org.sonar.api.batch.rule.Severity;
-import org.sonar.api.batch.sensor.Sensor;
-import org.sonar.api.code.CodeCharacteristic;
-import org.sonar.api.rules.RuleType;
 
-/**
- * Represents an issue imported from an external rule engine by a {@link Sensor}.
- * @since 7.2
- */
-public interface ExternalIssue extends IIssue {
-
-  /**
-   * @since 7.4
-   */
-  String engineId();
-
-  /**
-   * @since 7.4
-   */
-  String ruleId();
-
-  Severity severity();
-
-  /**
-   * Effort to fix the issue, in minutes.
-   */
-  @CheckForNull
-  Long remediationEffort();
-
-  /**
-   * Type of the issue.
-   */
-  RuleType type();
-
-  /**
-   * Characteristic of the issue according to Clean Code Taxonomy.
-   * @since 9.16
-   */
-  @Beta
-  @CheckForNull
-  CodeCharacteristic characteristic();
-
+@Beta
+public enum CharacteristicsCategory {
+  DEVELOPMENT, PRODUCTION
 }

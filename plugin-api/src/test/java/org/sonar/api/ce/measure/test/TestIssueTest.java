@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.utils.Duration;
 
@@ -40,6 +41,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setEffort(Duration.create(10L))
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .setType(RuleType.BUG)
       .build();
 
@@ -49,6 +51,7 @@ public class TestIssueTest {
     assertThat(issue.status()).isEqualTo(org.sonar.api.issue.Issue.STATUS_RESOLVED);
     assertThat(issue.resolution()).isEqualTo(org.sonar.api.issue.Issue.RESOLUTION_FIXED);
     assertThat(issue.effort()).isEqualTo(Duration.create(10L));
+    assertThat(issue.characteristic()).isEqualTo(CodeCharacteristic.ROBUST);
   }
 
   @Test
@@ -63,6 +66,7 @@ public class TestIssueTest {
 
     assertThat(issue.resolution()).isNull();
     assertThat(issue.effort()).isNull();
+    assertThat(issue.characteristic()).isNull();
   }
 
   @Test
@@ -73,6 +77,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(NullPointerException.class)
       .hasMessage("key cannot be null");
@@ -93,6 +98,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(NullPointerException.class)
       .hasMessage("ruleKey cannot be null");
@@ -114,6 +120,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution("unknown")
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("resolution 'unknown' is invalid");
@@ -127,6 +134,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(NullPointerException.class)
       .hasMessage("severity cannot be null");
@@ -148,6 +156,7 @@ public class TestIssueTest {
       .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("severity 'unknown' is invalid");
@@ -161,6 +170,7 @@ public class TestIssueTest {
       .setSeverity(Severity.BLOCKER)
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(NullPointerException.class)
       .hasMessage("status cannot be null");
@@ -182,6 +192,7 @@ public class TestIssueTest {
       .setStatus("unknown")
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setType(RuleType.BUG)
+      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build())
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("status 'unknown' is invalid");

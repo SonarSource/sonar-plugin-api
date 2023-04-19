@@ -22,12 +22,16 @@ package org.sonar.api.rules;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.CheckForNull;
+import org.sonar.api.code.CodeCharacteristic;
 
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Type of the rule. It is strongly recommended using {@link CodeCharacteristic} alongside as it will become mandatory in the future.
+ */
 public enum RuleType {
   CODE_SMELL(1), BUG(2), VULNERABILITY(3), SECURITY_HOTSPOT(4);
 

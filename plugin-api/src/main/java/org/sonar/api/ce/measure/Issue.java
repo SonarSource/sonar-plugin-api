@@ -20,7 +20,9 @@
 package org.sonar.api.ce.measure;
 
 import javax.annotation.CheckForNull;
+import org.sonar.api.Beta;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.utils.Duration;
 
@@ -58,5 +60,13 @@ public interface Issue {
   Duration effort();
 
   RuleType type();
+
+  /**
+   * Characteristic of the issue according to Clean Code Taxonomy.
+   * @since 9.16
+   */
+  @Beta
+  @CheckForNull
+  CodeCharacteristic characteristic();
 
 }
