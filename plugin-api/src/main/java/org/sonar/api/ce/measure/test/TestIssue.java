@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.utils.Duration;
 
@@ -34,13 +35,14 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 @Immutable
 public class TestIssue implements Issue {
 
-  private String key;
-  private String status;
-  private String resolution;
-  private String severity;
-  private RuleKey ruleKey;
-  private Duration effort;
-  private RuleType type;
+  private final String key;
+  private final String status;
+  private final String resolution;
+  private final String severity;
+  private final RuleKey ruleKey;
+  private final Duration effort;
+  private final RuleType type;
+  private final CodeCharacteristic characteristic;
 
   private TestIssue(Builder builder) {
     this.key = builder.key;
@@ -50,6 +52,7 @@ public class TestIssue implements Issue {
     this.ruleKey = builder.ruleKey;
     this.effort = builder.effort;
     this.type = builder.type;
+    this.characteristic = builder.characteristic;
   }
 
   @Override
@@ -94,6 +97,14 @@ public class TestIssue implements Issue {
     return type;
   }
 
+  /**
+   * @since 9.16
+   */
+  @Override
+  public CodeCharacteristic characteristic() {
+    return characteristic;
+  }
+
   public static class Builder {
     private String key;
     private String status;
@@ -102,6 +113,7 @@ public class TestIssue implements Issue {
     private RuleKey ruleKey;
     private Duration effort;
     private RuleType type;
+    private CodeCharacteristic characteristic;
 
     public Builder setKey(String key) {
       this.key = validateKey(key);
@@ -141,6 +153,15 @@ public class TestIssue implements Issue {
      */
     public Builder setType(RuleType type) {
       this.type = validateType(type);
+      return this;
+    }
+
+    /**
+     * @since 9.16
+     */
+    public Builder setCharacteristic(CodeCharacteristic characteristic) {
+      requireNonNull(characteristic, "Characteristic cannot be null");
+      this.characteristic = characteristic;
       return this;
     }
 

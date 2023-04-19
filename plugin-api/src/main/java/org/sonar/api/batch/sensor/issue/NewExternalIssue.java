@@ -20,9 +20,11 @@
 package org.sonar.api.batch.sensor.issue;
 
 import javax.annotation.Nullable;
+import org.sonar.api.Beta;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -52,9 +54,18 @@ public interface NewExternalIssue {
   NewExternalIssue ruleId(String ruleId);
 
   /**
-   * Type of issue.
+   * Type of the issue.
    */
   NewExternalIssue type(RuleType type);
+
+  /**
+   * Characteristic of the issue according to Clean Code Taxonomy.
+   * Providing it is optional for now but will become mandatory in the future.
+   *
+   * @since 9.16
+   */
+  @Beta
+  NewExternalIssue characteristic(CodeCharacteristic characteristic);
 
   /**
    * Effort to fix the issue, in minutes.

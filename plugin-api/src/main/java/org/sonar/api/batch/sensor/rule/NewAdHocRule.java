@@ -20,8 +20,10 @@
 package org.sonar.api.batch.sensor.rule;
 
 import javax.annotation.Nullable;
+import org.sonar.api.Beta;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -57,6 +59,15 @@ public interface NewAdHocRule {
    * Type of the rule.
    */
   NewAdHocRule type(RuleType type);
+
+  /**
+   * Characteristic of the rule according to Clean Code Taxonomy.
+   * Providing it is optional for now but will become mandatory in the future.
+   *
+   * @since 9.16
+   */
+  @Beta
+  NewAdHocRule characteristic(CodeCharacteristic characteristic);
 
   /**
    * Set the severity of the rule.
