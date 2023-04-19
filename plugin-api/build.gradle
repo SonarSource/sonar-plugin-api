@@ -13,7 +13,6 @@ dependencies {
 
   compileOnly libs.jsr305
   compileOnly libs.javax.servlet.api
-  compileOnly libs.jakarta.servlet.api
 
   testImplementation libs.junit4
   testImplementation libs.junit5
