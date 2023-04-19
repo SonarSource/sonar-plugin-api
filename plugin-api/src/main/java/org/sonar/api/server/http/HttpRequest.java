@@ -99,9 +99,4 @@ public interface HttpRequest {
    * Returns the name of the HTTP method with which this request was made, for example, GET, POST, or PUT.
    */
   String getMethod();
-
-  /**
-   * Returns the raw request object from the Servlet API that matches this request.
-   */
-  Object getRawRequest();
 }
