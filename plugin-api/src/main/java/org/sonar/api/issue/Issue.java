@@ -255,4 +255,10 @@ public interface Issue extends Serializable {
    * @since 5.1
    */
   Collection<String> tags();
+
+  /**
+   * @since 9.17
+   */
+  @CheckForNull
+  Collection<String> codeVariants();
 }
