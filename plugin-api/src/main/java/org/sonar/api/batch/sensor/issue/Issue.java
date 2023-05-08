@@ -98,4 +98,10 @@ public interface Issue extends IIssue {
    * @since 9.13
    */
   List<QuickFix> quickFixes();
+
+  /**
+   * @since 9.17
+   */
+  @CheckForNull
+  List<String> codeVariants();
 }

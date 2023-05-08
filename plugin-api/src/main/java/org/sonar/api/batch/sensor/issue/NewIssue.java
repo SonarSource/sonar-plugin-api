@@ -133,4 +133,12 @@ public interface NewIssue {
    */
   NewIssue setRuleDescriptionContextKey(@Nullable String ruleDescriptionContextKey);
 
+  /**
+   * Registers a list of code variants for this issue.
+   * In C and C++, it is commonplace to have multiple code variants. Two source codes are defined here as variants of each other if there
+   * is any difference in their preprocessed source code.
+   * @since 9.17
+   */
+  NewIssue setCodeVariants(@Nullable Iterable<String> codeVariants);
+
 }
