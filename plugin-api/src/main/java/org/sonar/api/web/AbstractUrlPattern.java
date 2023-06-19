@@ -51,7 +51,7 @@ abstract class AbstractUrlPattern {
     this.exclusions = unmodifiableList(new ArrayList<>(builder.exclusions));
     if (builder.inclusionPredicates.isEmpty()) {
       // because Stream#anyMatch() returns false if stream is empty
-      this.inclusionPredicates = new Predicate[]{s -> true};
+      this.inclusionPredicates = new Predicate[] {s -> true};
     } else {
       this.inclusionPredicates = (Predicate<String>[]) builder.inclusionPredicates.stream().toArray(Predicate[]::new);
     }
@@ -112,6 +112,10 @@ abstract class AbstractUrlPattern {
     Builder() {
     }
 
+    /**
+     * @deprecated since 10.0. Products implementing the API should define this internally.
+     */
+    @Deprecated(since = "10.0")
     public static Collection<String> staticResourcePatterns() {
       return STATIC_RESOURCES;
     }
@@ -152,7 +156,6 @@ abstract class AbstractUrlPattern {
         .collect(Collectors.toList()));
       return (B) this;
     }
-
 
     public abstract T build();
 
