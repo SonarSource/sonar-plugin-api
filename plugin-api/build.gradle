@@ -53,6 +53,7 @@ shadowJar {
   dependencies {
     exclude(dependency('org.slf4j:slf4j-api:.*'))
   }
+  exclude 'META-INF/**/module-info.class'
 }
 
 tasks["build"].dependsOn(shadowJar)
