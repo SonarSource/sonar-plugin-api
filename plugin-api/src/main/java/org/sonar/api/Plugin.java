@@ -38,7 +38,7 @@ import static java.util.Objects.requireNonNull;
  *  {@literal @}Override
  *   public void define(Context context) {
  *     context.addExtensions(MySensor.class, MyRules.class);
- *     if (context.getSonarQubeVersion().isGreaterThanOrEqual(Version.create(6, 0))) {
+ *     if (context.getRuntime().getApiVersion().isGreaterThanOrEqual(Version.create(6, 0))) {
  *       // Extension which supports only versions 6.0 and greater
  *       // See org.sonar.api.SonarRuntime for more details.
  *       context.addExtension(MyNewExtension.class);
@@ -104,16 +104,20 @@ public interface Plugin {
     /**
      * Shortcut on {@code getRuntime().getApiVersion()} since version 6.0.
      *
+     * @return the version of SonarQube API at runtime, not at compilation time
      * @see #getRuntime()
      * @since 5.5
-     * @return the version of SonarQube API at runtime, not at compilation time
+     * @deprecated since 10.0. The name is confusing: the API version is different from the SonarQube version since the extraction. Use the
+     * advised replacement
      */
+    @Deprecated(since = "10.0")
     public Version getSonarQubeVersion() {
       return sonarRuntime.getApiVersion();
     }
 
     /**
-     * Runtime environment. Can be use to add some extensions only on some conditions.
+     * Runtime environment. Can be used to add some extensions only on some conditions.
+     *
      * @since 6.0
      */
     public SonarRuntime getRuntime() {

@@ -102,9 +102,13 @@ public interface SensorContext {
   /**
    * Version of API at runtime, not at compilation time. It's a shortcut on
    * {@code runtime().getApiVersion()} since 6.0.
-   * @since 5.5
+   *
    * @see #runtime() since version 6.0.
+   * @since 5.5
+   * @deprecated since 10.0. The name is confusing: the API version is different from the SonarQube version since the extraction. Use the
+   * advised replacement
    */
+  @Deprecated(since = "10.0")
   Version getSonarQubeVersion();
 
   /**

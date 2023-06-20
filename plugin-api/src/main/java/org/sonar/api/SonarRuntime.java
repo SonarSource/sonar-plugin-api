@@ -126,13 +126,6 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
  * </pre>
  *
  * <p>
- * As this component was introduced in version 6.0, the pattern described above can't be
- * exactly applied when plugin must support version 5.6 Long Term Support. In this case plugin
- * should use {@link SonarQubeVersion}, for example through {@link Plugin.Context#getSonarQubeVersion()} or
- * {@link SensorContext#getSonarQubeVersion()}.
- * </p>
- *
- * <p>
  * Unit tests of plugin extensions can add a test dependency to available in sonar-plugin-api-impl and create instances of {@link SonarRuntime}
  * via {@link org.sonar.api.internal.SonarRuntimeImpl}.
  * </p>
