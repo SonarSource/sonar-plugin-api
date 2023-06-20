@@ -111,7 +111,7 @@ public class ConditionBuilder_PostProjectAnalysisTaskTesterTest {
 
   @Test
   public void verify_getters_of_object_returned_by_buildNoValue() {
-    initValidBuilder().setOnLeakPeriod(true);
+    initValidBuilder();
 
     QualityGate.Condition condition = underTest.buildNoValue();
 
@@ -210,7 +210,7 @@ public class ConditionBuilder_PostProjectAnalysisTaskTesterTest {
 
   @Test
   public void verify_getters_of_object_returned_by_build() {
-    initValidBuilder().setOnLeakPeriod(true);
+    initValidBuilder();
 
     QualityGate.Condition condition = underTest.build(SOME_STATUS_BUT_NO_VALUE, SOME_VALUE);
 

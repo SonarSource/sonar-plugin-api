@@ -49,7 +49,6 @@ import static org.sonar.api.PropertyType.BOOLEAN;
 import static org.sonar.api.PropertyType.FLOAT;
 import static org.sonar.api.PropertyType.INTEGER;
 import static org.sonar.api.PropertyType.JSON;
-import static org.sonar.api.PropertyType.LONG;
 import static org.sonar.api.PropertyType.PROPERTY_SET;
 import static org.sonar.api.PropertyType.REGULAR_EXPRESSION;
 import static org.sonar.api.PropertyType.SINGLE_SELECT_LIST;
@@ -181,7 +180,6 @@ public final class PropertyDefinition {
     EnumMap<PropertyType, Function<String, Result>> map = new EnumMap<>(PropertyType.class);
     map.put(BOOLEAN, validateBoolean());
     map.put(INTEGER, validateInteger());
-    map.put(LONG, validateInteger());
     map.put(FLOAT, validateFloat());
     map.put(REGULAR_EXPRESSION, validateRegexp());
     map.put(SINGLE_SELECT_LIST,
@@ -259,13 +257,6 @@ public final class PropertyDefinition {
    * Options for property of type {@link PropertyType#SINGLE_SELECT_LIST}.<br>
    * For example {"property_1", "property_3", "property_3"}).
    * <br>
-   * Options for property of type {@link PropertyType#METRIC}.<br>
-   * If no option is specified, any metric will match.
-   * If options are specified, all must match for the metric to be displayed.
-   * Three types of filter are supported <code>key:REGEXP</code>, <code>domain:REGEXP</code> and <code>type:comma_separated__list_of_types</code>.
-   * For example <code>key:new_.*</code> will match any metric which key starts by <code>new_</code>.
-   * For example <code>type:INT,FLOAT</code> will match any metric of type <code>INT</code> or <code>FLOAT</code>.
-   * For example <code>type:NUMERIC</code> will match any metric of numerictype.
    */
   public List<String> options() {
     return options;
@@ -553,7 +544,7 @@ public final class PropertyDefinition {
 
     /**
      * Flag the property as hidden. Hidden properties are not displayed in Settings pages
-     * but allow plugins to benefit from type and default values when calling {@link Settings}.
+     * but allow plugins to benefit from type and default values when calling {@link Configuration}.
      */
     public Builder hidden() {
       this.hidden = true;
@@ -587,12 +578,8 @@ public final class PropertyDefinition {
     private void fixType(String key, PropertyType type) {
       // Auto-detect passwords and licenses for old versions of plugins that
       // do not declare property types
-      if (type == PropertyType.STRING) {
-        if (StringUtils.endsWith(key, ".password.secured")) {
-          this.type = PropertyType.PASSWORD;
-        } else if (StringUtils.endsWith(key, ".license.secured")) {
-          this.type = PropertyType.LICENSE;
-        }
+      if (type == PropertyType.STRING && StringUtils.endsWith(key, ".password.secured")) {
+        this.type = PropertyType.PASSWORD;
       }
     }
   }

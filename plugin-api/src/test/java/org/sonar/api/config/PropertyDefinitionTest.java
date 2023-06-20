@@ -225,19 +225,6 @@ public class PropertyDefinitionTest {
   }
 
   @Test
-  public void validate_long() {
-    PropertyDefinition def = PropertyDefinition.builder("foo").name("foo").type(PropertyType.LONG).build();
-
-    assertThat(def.validate(null).isValid()).isTrue();
-    assertThat(def.validate("").isValid()).isTrue();
-    assertThat(def.validate("   ").isValid()).isTrue();
-    assertThat(def.validate("123456").isValid()).isTrue();
-
-    assertThat(def.validate("foo").isValid()).isFalse();
-    assertThat(def.validate("foo").getErrorKey()).isEqualTo("notInteger");
-  }
-
-  @Test
   public void should_validate_float() {
     PropertyDefinition def = PropertyDefinition.builder("foo").name("foo").type(PropertyType.FLOAT).build();
 
@@ -284,14 +271,6 @@ public class PropertyDefinitionTest {
 
     assertThat(def.key()).isEqualTo("scm.password.secured");
     assertThat(def.type()).isEqualTo(PropertyType.PASSWORD);
-  }
-
-  @Test
-  public void PropertyDef() {
-    PropertyDefinition def = PropertyDefinition.builder("views.license.secured").name("Views license").build();
-
-    assertThat(def.key()).isEqualTo("views.license.secured");
-    assertThat(def.type()).isEqualTo(PropertyType.LICENSE);
   }
 
   @Test
@@ -443,7 +422,7 @@ public class PropertyDefinitionTest {
   }
 
   @Properties(@Property(key = "hello", name = "Hello", defaultValue = "world", description = "desc",
-    options = {"de", "en"}, category = "categ", type = PropertyType.FLOAT, global = false, project = true, module = true, multiValues = true, propertySetKey = "set"))
+    options = {"de", "en"}, category = "categ", type = PropertyType.FLOAT, global = false, project = true, module = true, multiValues = true))
   static class Init {
   }
 

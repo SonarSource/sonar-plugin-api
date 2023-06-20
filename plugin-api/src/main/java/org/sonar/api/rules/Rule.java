@@ -81,32 +81,13 @@ public class Rule {
   private String status = STATUS_READY;
   private String language;
   private Rule template = null;
-  private List<RuleParam> params = new ArrayList<>();
+  private final List<RuleParam> params = new ArrayList<>();
   private Date createdAt;
   private Date updatedAt;
   private String tags;
   private String systemTags;
 
-  /**
-   * @deprecated since 2.3. Use the factory method {@link #create()}
-   */
-  @Deprecated
-  public Rule() {
-  }
-
-  /**
-   * Creates rule with minimum set of info
-   *
-   * @param pluginName the plugin name indicates which plugin the rule belongs to
-   * @param key        the key should be unique within a plugin, but it is even more careful for the time being that it is unique across the
-   *                   application
-   * @deprecated since 2.3. Use the factory method {@link #create()}
-   */
-  @Deprecated
-  public Rule(String pluginName, String key) {
-    this.pluginName = pluginName;
-    this.key = key;
-    this.configKey = key;
+  private Rule() {
   }
 
   /**

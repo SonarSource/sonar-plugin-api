@@ -48,14 +48,6 @@ public final class Qualifiers {
   public static final String APP = "APP";
 
   /**
-   * Library, for example a JAR dependency of Java projects.
-   * Scope of libraries is Scopes.PROJECT
-   * @deprecated since 5.2 No more design features
-   */
-  @Deprecated
-  public static final String LIBRARY = "LIB";
-
-  /**
    * Project
    * Scope is Scopes.PROJECT
    */

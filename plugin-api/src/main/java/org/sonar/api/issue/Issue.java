@@ -210,14 +210,6 @@ public interface Issue extends Serializable {
   String authorLogin();
 
   /**
-   * Non-null list of comments, ordered by chronological order.
-   *
-   * @deprecated since 7.2, comments are not more available
-   */
-  @Deprecated
-  List<IssueComment> comments();
-
-  /**
    * During a scan return if the current issue is a new one.
    * @return always false on server side
    * @since 4.0

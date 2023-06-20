@@ -40,12 +40,6 @@ public @interface UserRole {
    */
   Set<String> PUBLIC_PERMISSIONS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(UserRole.USER, UserRole.CODEVIEWER)));
 
-  /**
-   * @deprecated use the constant USER since 1.12.
-   */
-  @Deprecated
-  String VIEWER = "user";
-
   String USER = "user";
   String ADMIN = "admin";
   String CODEVIEWER = "codeviewer";

@@ -519,23 +519,6 @@ public class PostProjectAnalysisTaskTester {
       return this;
     }
 
-    /**
-     * @deprecated in 7.6. This method has no longer any effect.
-     */
-    @Deprecated
-    public ConditionBuilder setWarningThreshold(@Nullable String warningThreshold) {
-      return this;
-    }
-
-    /**
-     * @deprecated in 7.6. This method has no longer any effect.
-     * Conditions "on leak period" were removed. Use "New X" conditions instead.
-     */
-    @Deprecated
-    public ConditionBuilder setOnLeakPeriod(boolean onLeakPeriod) {
-      return this;
-    }
-
     public QualityGate.Condition buildNoValue() {
       checkCommonProperties();
       return new QualityGate.Condition() {
@@ -557,21 +540,6 @@ public class PostProjectAnalysisTaskTester {
         @Override
         public String getErrorThreshold() {
           return errorThreshold;
-        }
-
-        @Deprecated
-        @Override
-        public String getWarningThreshold() {
-          return null;
-        }
-
-        /**
-         * @deprecated in 7.6. Conditions "on leak period" were removed. Use "New X" conditions instead.
-         */
-        @Deprecated
-        @Override
-        public boolean isOnLeakPeriod() {
-          return false;
         }
 
         @Override
@@ -615,21 +583,6 @@ public class PostProjectAnalysisTaskTester {
         @Override
         public String getErrorThreshold() {
           return errorThreshold;
-        }
-
-        @Deprecated
-        @Override
-        public String getWarningThreshold() {
-          return null;
-        }
-
-        /**
-         * @deprecated in 7.6. Conditions "on leak period" were removed. Use "New X" conditions instead.
-         */
-        @Deprecated
-        @Override
-        public boolean isOnLeakPeriod() {
-          return false;
         }
 
         @Override

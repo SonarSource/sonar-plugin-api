@@ -17,20 +17,25 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.rules;
+package org.sonar.api.resources;
 
-import org.junit.Test;
-import org.sonar.check.Priority;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RulePriorityTest {
+class ScopesTest {
   @Test
-  public void test_toCheckPriority() {
-    assertThat(RulePriority.fromCheckPriority(Priority.BLOCKER)).isEqualTo(RulePriority.BLOCKER);
-    assertThat(RulePriority.fromCheckPriority(Priority.CRITICAL)).isEqualTo(RulePriority.CRITICAL);
-    assertThat(RulePriority.fromCheckPriority(Priority.MAJOR)).isEqualTo(RulePriority.MAJOR);
-    assertThat(RulePriority.fromCheckPriority(Priority.MINOR)).isEqualTo(RulePriority.MINOR);
-    assertThat(RulePriority.fromCheckPriority(Priority.INFO)).isEqualTo(RulePriority.INFO);
+  void it_should_order_scopes() {
+    assertThat(Scopes.isHigherThan(Scopes.DIRECTORY, Scopes.FILE)).isTrue();
+    assertThat(Scopes.isHigherThan(Scopes.PROJECT, Scopes.FILE)).isTrue();
+    assertThat(Scopes.isHigherThan(Scopes.PROJECT, Scopes.DIRECTORY)).isTrue();
+    assertThat(Scopes.isHigherThan(Scopes.FILE, Scopes.FILE)).isFalse();
+    assertThat(Scopes.isHigherThan(Scopes.DIRECTORY, Scopes.DIRECTORY)).isFalse();
+    assertThat(Scopes.isHigherThan(Scopes.PROJECT, Scopes.PROJECT)).isFalse();
+
+    assertThat(Scopes.isHigherThanOrEquals(Scopes.FILE, Scopes.FILE)).isTrue();
+    assertThat(Scopes.isHigherThanOrEquals(Scopes.DIRECTORY, Scopes.DIRECTORY)).isTrue();
+    assertThat(Scopes.isHigherThanOrEquals(Scopes.PROJECT, Scopes.PROJECT)).isTrue();
   }
+
 }

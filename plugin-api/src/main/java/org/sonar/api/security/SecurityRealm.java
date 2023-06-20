@@ -43,27 +43,10 @@ public abstract class SecurityRealm {
   }
 
   /**
-   * @return {@link LoginPasswordAuthenticator} associated with this realm, never null
-   * @deprecated replaced by doGetAuthenticator in version 3.1
-   */
-  @Deprecated
-  public LoginPasswordAuthenticator getLoginPasswordAuthenticator() {
-    return null;
-  }
-
-  /**
    * @since 3.1
+   * @since 10.0 this method does not provide a default implementation anymore
    */
-  public Authenticator doGetAuthenticator() {
-    // this method is not overridden when deprecated getLoginPasswordAuthenticator
-    // is used
-    return new Authenticator() {
-      @Override
-      public boolean doAuthenticate(Context context) {
-        return getLoginPasswordAuthenticator().authenticate(context.getUsername(), context.getPassword());
-      }
-    };
-  }
+  public abstract Authenticator doGetAuthenticator();
 
   /**
    * @return {@link ExternalUsersProvider} associated with this realm, null if not supported

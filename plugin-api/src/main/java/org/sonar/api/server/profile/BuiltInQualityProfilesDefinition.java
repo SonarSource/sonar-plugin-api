@@ -43,9 +43,7 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**
  * Define built-in quality profiles which are automatically registered during SonarQube startup.
- * We no more provide any facility to load profiles from XML file or annotated classes, but it should
- * be straightforward to implement (adapt code of deprecated {@link org.sonar.api.profiles.AnnotationProfileParser}
- * or {@link org.sonar.api.profiles.XMLProfileParser} for example).
+ * We no more provide any facility to load profiles from XML file or annotated classes.
  *
  * @since 6.6
  */
