@@ -31,6 +31,7 @@ import org.sonar.api.server.ServerSide;
  * {@code @deprecated} since 9.16. Use {@link org.sonar.api.web.HttpFilter} instead.
  *
  * @since 3.1
+ * @deprecated since 9.16. Use {@link org.sonar.api.web.HttpFilter} instead.
  */
 @ServerSide
 @ExtensionPoint

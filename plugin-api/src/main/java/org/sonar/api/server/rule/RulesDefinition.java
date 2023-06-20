@@ -463,7 +463,7 @@ public interface RulesDefinition {
      * The optional description, in a restricted Markdown format, has no max length. It's exclusive with HTML description
      * (see {@link #setHtmlDescription(String)})
      *
-     * @deprecated use {@link #addDescriptionSection(RuleDescriptionSection)} instead
+     * @deprecated since 9.6. Use {@link #addDescriptionSection(RuleDescriptionSection)} instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
     public abstract NewRule setMarkdownDescription(@Nullable String s);
@@ -471,7 +471,7 @@ public interface RulesDefinition {
     /**
      * Load description from a file available in classpath. Example : {@code setMarkdownDescription(getClass().getResource("/myrepo/Rule1234.md")}
      *
-     * @deprecated use {@link #addDescriptionSection(RuleDescriptionSection)} instead
+     * @deprecated since 9.6. Use {@link #addDescriptionSection(RuleDescriptionSection)} instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
     public abstract NewRule setMarkdownDescription(@Nullable URL classpathUrl);
@@ -630,7 +630,7 @@ public interface RulesDefinition {
     public abstract String htmlDescription();
 
     /**
-     * @deprecated use html format instead
+     * @deprecated since 9.6. Use html format instead
      */
     @Deprecated(since = "9.6", forRemoval = true)
     @CheckForNull
