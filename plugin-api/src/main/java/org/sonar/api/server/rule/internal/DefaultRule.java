@@ -156,9 +156,13 @@ public class DefaultRule extends RulesDefinition.Rule {
     return htmlDescription;
   }
 
+  /**
+   * @deprecated since 9.6 markdown support fur rule descriptions will be dropped
+   */
   @Override
   @CheckForNull
   @Deprecated(since = "9.6", forRemoval = true)
+
   public String markdownDescription() {
     return markdownDescription;
   }
@@ -246,4 +250,3 @@ public class DefaultRule extends RulesDefinition.Rule {
     return format("[repository=%s, key=%s]", repoKey, key);
   }
 }
-

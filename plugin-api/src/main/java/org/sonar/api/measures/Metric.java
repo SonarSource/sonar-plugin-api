@@ -326,8 +326,9 @@ public class Metric<G extends Serializable> implements Serializable, org.sonar.a
 
   /**
    * @return whether the metric is a managed by the users ("manual metric")
+   * @deprecated since 9.1. There is no replacement
    */
-  @Deprecated
+  @Deprecated(since = "9.1")
   public Boolean getUserManaged() {
     return userManaged;
   }
@@ -337,7 +338,9 @@ public class Metric<G extends Serializable> implements Serializable, org.sonar.a
    *
    * @param userManaged whether the metric is user managed
    * @return this
+   * @deprecated since 9.1. There is no replacement
    */
+  @Deprecated(since = "9.1")
   public Metric<G> setUserManaged(Boolean userManaged) {
     this.userManaged = userManaged;
     return this;
@@ -697,8 +700,9 @@ public class Metric<G extends Serializable> implements Serializable, org.sonar.a
      * @param b true if the metric can be edited online.
      * @return the builder
      * @since 2.10
+     * @deprecated since 9.1. There is no replacement
      */
-    @Deprecated
+    @Deprecated(since = "9.1")
     public Builder setUserManaged(boolean b) {
       this.userManaged = b;
       return this;

@@ -123,7 +123,7 @@ public class ActiveRule implements Cloneable {
   /**
    * For internal use
    * @since 6.6
-   * @deprecated
+   * @deprecated since 6.6, internal usage only
    */
   @Deprecated
   public RulePriority getOverriddenSeverity() {
