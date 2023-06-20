@@ -3,11 +3,20 @@
 ## 10.0
 
 * Moved out tester classes to the dedicated test-fixtures artifact
+* Remove `org.sonar.api.SonarQubeVersion`.
+* Deprecate `org.sonar.api.Plugin.Context.getSonarQubeVersion()`. The name is confusing: the API version is different from the SonarQube version since the extraction. Use `org.sonar.api.SonarRuntime.getApiVersion()` instead.
+
+## 9.17
+
+* Introduce `org.sonar.api.batch.sensor.issue.NewIssue.setCodeVariants(Iterable<String>)` to contribute issues for given variants (e.g. different target platforms)
+* Improvements on `org.sonar.api.testfixtures.log.LogTester`:
+  * intercepts logged exceptions
+  * thread-safe
 
 ## 9.16
 
 * Extension point `org.sonar.api.resources.Language` now supports `filenamePatterns` to detect files' language based on more complex filename patterns than only filename extensions.
-* Usage of `javax-servlet-api` is now deprecated in favor of custom, framework agnostic API:
+* Usage of `javax-servlet-api` is now deprecated in favor of custom, framework-agnostic API:
   * Replace ~~`org.sonar.api.web.ServletFilter`~~ by `org.sonar.api.server.web.HttpFilter`
   * Replace ~~`javax.servlet.http.HttpServletRequest`~~ by `org.sonar.api.server.http.HttpRequest`
   * Replace ~~`javax.servlet.http.HttpServletResponse`~~ by `org.sonar.api.server.http.HttpResponse`
