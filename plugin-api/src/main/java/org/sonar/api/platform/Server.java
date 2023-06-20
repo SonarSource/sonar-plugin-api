@@ -46,17 +46,6 @@ public abstract class Server {
   public abstract String getId();
 
   /**
-   * Since 6.7, it returns exactly {@link #getId()}. In previous
-   * versions it returned ab UUID generated on demand by system
-   * administrators and may be null.
-   *
-   * @deprecated replaced by {@link #getId()} in 6.7.
-   * @since 2.10
-   */
-  @Deprecated
-  public abstract String getPermanentServerId();
-
-  /**
    * Non-null version of SonarQube at runtime
    */
   public abstract String getVersion();
@@ -83,13 +72,4 @@ public abstract class Server {
    * @since 5.4
    */
   public abstract String getPublicRootUrl();
-
-  /**
-   * Return whether or not the {#getPublicRootUrl} is started with https.
-   *
-   * @since 5.4
-   * @deprecated since 5.6, use instead {@link javax.servlet.http.HttpServletRequest#getHeader(String)} and check that X-Forwarded-Proto header is set to "https".
-   */
-  @Deprecated
-  public abstract boolean isSecured();
 }

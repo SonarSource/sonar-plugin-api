@@ -49,12 +49,6 @@ public final class CoreMetrics {
   public static String DOMAIN_DUPLICATIONS = "Duplications";
 
   /**
-   * @deprecated in 5.5. Renamed to {@link #DOMAIN_DUPLICATIONS}
-   */
-  @Deprecated
-  public static String DOMAIN_DUPLICATION = "Duplication";
-
-  /**
    * SonarQube Quality Model
    *
    * @since 5.5
@@ -168,23 +162,6 @@ public final class CoreMetrics {
    */
   public static final Metric<Integer> FILES = new Metric.Builder(FILES_KEY, "Files", Metric.ValueType.INT)
     .setDescription("Number of files")
-    .setDirection(Metric.DIRECTION_WORST)
-    .setQualitative(false)
-    .setDomain(DOMAIN_SIZE)
-    .create();
-
-  /**
-   * @deprecated since 7.7 - no longer computed
-   */
-  @Deprecated
-  public static final String DIRECTORIES_KEY = "directories";
-
-  /**
-   * @deprecated since 7.7 - no longer computed
-   */
-  @Deprecated
-  public static final Metric<Integer> DIRECTORIES = new Metric.Builder(DIRECTORIES_KEY, "Directories", Metric.ValueType.INT)
-    .setDescription("Directories")
     .setDirection(Metric.DIRECTION_WORST)
     .setQualitative(false)
     .setDomain(DOMAIN_SIZE)
@@ -1773,25 +1750,6 @@ public final class CoreMetrics {
   public static final Metric<String> QUALITY_GATE_DETAILS = new Metric.Builder(QUALITY_GATE_DETAILS_KEY, "Quality Gate Details", Metric.ValueType.DATA)
     .setDescription("The project detailed status with regard to its quality gate")
     .setDomain(DOMAIN_GENERAL)
-    .create();
-
-  /**
-   * @since 4.4
-   * @deprecated since 5.5
-   */
-  @Deprecated
-  public static final String QUALITY_PROFILES_KEY = "quality_profiles";
-
-  /**
-   * @since 4.4
-   * @deprecated since 5.5
-   */
-  @Deprecated
-  public static final Metric<String> QUALITY_PROFILES = new Metric.Builder(QUALITY_PROFILES_KEY, "Profiles", Metric.ValueType.DATA)
-    .setDescription("Details of quality profiles used during analysis")
-    .setQualitative(false)
-    .setDomain(DOMAIN_GENERAL)
-    .setHidden(true)
     .create();
 
   /**

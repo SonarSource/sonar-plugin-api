@@ -21,6 +21,9 @@ dependencies {
   testImplementation libs.junit.dataprovider
   testImplementation libs.assertj
   testImplementation libs.mockito
+
+  testRuntimeOnly libs.jupiter.vintage.engine
+  testRuntimeOnly libs.jupiter.engine
 }
 
 configurations {
@@ -101,4 +104,9 @@ publishing {
       }
     }
   }
+}
+
+test {
+  // Enabling the JUnit Platform (see https://github.com/junit-team/junit5-samples/tree/master/junit5-migration-gradle)
+  useJUnitPlatform()
 }

@@ -19,14 +19,10 @@
  */
 package org.sonar.api.security;
 
-import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
-
-import org.sonar.api.server.http.HttpRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class SecurityRealmTest {
 
@@ -40,22 +36,5 @@ public class SecurityRealmTest {
       }
     };
     assertThat(realm.doGetAuthenticator()).isSameAs(authenticator);
-    assertThat(realm.getLoginPasswordAuthenticator()).isNull();
-  }
-
-  @Test
-  public void getLoginPasswordAuthenticator_deprecated_method_replaced_by_getAuthenticator() {
-    final LoginPasswordAuthenticator deprecatedAuthenticator = mock(LoginPasswordAuthenticator.class);
-    SecurityRealm realm = new SecurityRealm() {
-      @Override
-      public LoginPasswordAuthenticator getLoginPasswordAuthenticator() {
-        return deprecatedAuthenticator;
-      }
-    };
-    Authenticator proxy = realm.doGetAuthenticator();
-    Authenticator.Context context = new Authenticator.Context("foo", "bar", mock(HttpRequest.class), mock(HttpServletRequest.class));
-    proxy.doAuthenticate(context);
-
-    verify(deprecatedAuthenticator).authenticate("foo", "bar");
   }
 }

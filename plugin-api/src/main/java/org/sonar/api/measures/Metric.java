@@ -103,11 +103,6 @@ public class Metric<G extends Serializable> implements Serializable, org.sonar.a
 
   public enum Level {
     OK("Green"),
-    /**
-     * @deprecated in 7.6.
-     */
-    @Deprecated
-    WARN("Orange"),
     ERROR("Red");
 
     private static final List<String> NAMES = Arrays.stream(values())
@@ -162,78 +157,6 @@ public class Metric<G extends Serializable> implements Serializable, org.sonar.a
     this.userManaged = builder.userManaged;
     this.deleteHistoricalData = builder.deleteHistoricalData;
     this.decimalScale = builder.decimalScale;
-  }
-
-  /**
-   * Creates an empty metric
-   *
-   * @deprecated in 1.12. Use the {@link Builder} factory.
-   */
-  @Deprecated
-  public Metric() {
-  }
-
-  /**
-   * Creates a metric based on its key. Shortcut to Metric(key, ValueType.INT)
-   *
-   * @param key the metric key
-   * @deprecated since 2.7 use the {@link Builder} factory.
-   */
-  @Deprecated
-  public Metric(String key) {
-    this(key, ValueType.INT);
-  }
-
-  /**
-   * Creates a metric based on a key and a type. Shortcut to
-   * Metric(key, key, key, type, -1, Boolean.FALSE, null, false)
-   *
-   * @param key  the key
-   * @param type the type
-   * @deprecated since 2.7 use the {@link Builder} factory.
-   */
-  @Deprecated
-  public Metric(String key, ValueType type) {
-    this(key, key, key, type, -1, Boolean.FALSE, null, false);
-  }
-
-  /**
-   * @deprecated since 2.7 use the {@link Builder} factory.
-   */
-  @Deprecated
-  public Metric(String key, String name, String description, ValueType type, Integer direction, Boolean qualitative, String domain) {
-    this(key, name, description, type, direction, qualitative, domain, false);
-  }
-
-  /**
-   * Creates a fully qualified metric.
-   *
-   * @param key         the metric key
-   * @param name        the metric name
-   * @param description the metric description
-   * @param type        the metric type
-   * @param direction   the metric direction
-   * @param qualitative whether the metric is qualitative
-   * @param domain      the metric domain
-   * @param userManaged whether the metric is user managed
-   */
-  private Metric(String key, String name, String description, ValueType type, Integer direction, Boolean qualitative, @Nullable String domain,
-    boolean userManaged) {
-    this.key = key;
-    this.description = description;
-    this.type = type;
-    this.direction = direction;
-    this.domain = domain;
-    this.name = name;
-    this.qualitative = qualitative;
-    this.userManaged = userManaged;
-    if (ValueType.PERCENT == this.type) {
-      this.bestValue = (direction == DIRECTION_BETTER) ? 100.0 : 0.0;
-      this.worstValue = (direction == DIRECTION_BETTER) ? 0.0 : 100.0;
-      this.decimalScale = DEFAULT_DECIMAL_SCALE;
-    } else if (ValueType.FLOAT == this.type) {
-      this.decimalScale = DEFAULT_DECIMAL_SCALE;
-    }
   }
 
   /**

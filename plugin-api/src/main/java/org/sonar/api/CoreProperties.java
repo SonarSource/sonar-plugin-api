@@ -222,39 +222,6 @@ public interface CoreProperties {
   String SONAR_VALIDATE_WEBHOOKS_PROPERTY = "sonar.validateWebhooks";
   boolean SONAR_VALIDATE_WEBHOOKS_DEFAULT_VALUE = true;
 
-  /**
-   * @deprecated since 2.14. See http://jira.sonarsource.com/browse/SONAR-3153. Replaced by {@link #CORE_AUTHENTICATOR_REALM}.
-   */
-  @Deprecated
-  String CORE_AUTHENTICATOR_CLASS = "sonar.authenticator.class";
-
-  /**
-   * @since 2.14
-   * @deprecated since 7.1, this setting should not be used by plugin
-   */
-  @Deprecated
-  String CORE_AUTHENTICATOR_REALM = "sonar.security.realm";
-
-  /**
-   * @deprecated since 7.1, this setting should not be used by plugin
-   */
-  @Deprecated
-  String CORE_AUTHENTICATOR_IGNORE_STARTUP_FAILURE = "sonar.authenticator.ignoreStartupFailure";
-
-  /**
-   * @deprecated since 6.3. This feature is not supported anymore
-   * @see <a href="https://jira.sonarsource.com/browse/SONAR-8208">SONAR-8208/a>
-   */
-  @Deprecated
-  String CORE_AUTHENTICATOR_CREATE_USERS = "sonar.authenticator.createUsers";
-
-  /**
-   * @since 3.6
-   * @deprecated since 5.4. This feature is not supported anymore. See http://jira.sonarsource.com/browse/SONAR-7219
-   */
-  @Deprecated
-  String CORE_AUTHENTICATOR_UPDATE_USER_ATTRIBUTES = "sonar.security.updateUserAttributes";
-
   String SERVER_ID = "sonar.core.id";
 
   // format is yyyy-MM-dd'T'HH:mm:ssZ
@@ -299,13 +266,6 @@ public interface CoreProperties {
    * @since 3.3
    */
   String LINKS_SOURCES = "sonar.links.scm";
-
-  /**
-   * @since 3.3
-   * @deprecated since 7.1, developer connection link is no more feed
-   */
-  @Deprecated
-  String LINKS_SOURCES_DEV = "sonar.links.scm_dev";
 
   /**
    * @since 3.4

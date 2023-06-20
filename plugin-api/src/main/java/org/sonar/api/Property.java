@@ -86,14 +86,6 @@ public @interface Property {
    *
    * @since 3.0  Options for property of type {@link PropertyType#SINGLE_SELECT_LIST}
    * For example {"property_1", "property_3", "property_3"}).
-   *
-   * @since 3.3  Options for property of type {@link PropertyType#METRIC}<br>
-   * If no option is specified, any metric will match.<br>
-   * If options are specified, all must match for the metric to be displayed.<br>
-   * Three types of filter are supported <code>key:REGEXP</code>, <code>domain:REGEXP</code> and <code>type:comma_separated__list_of_types</code>.<br>
-   * For example <code>key:new_.*</code> will match any metric which key starts by <code>new_</code>.<br>
-   * For example <code>type:INT,FLOAT</code> will match any metric of type <code>INT</code> or <code>FLOAT</code>.<br>
-   * For example <code>type:NUMERIC</code> will match any metric of numerictype.
    */
   String[] options() default {};
 
@@ -103,16 +95,6 @@ public @interface Property {
    * @since 3.3
    */
   boolean multiValues() default false;
-
-  /**
-   * A Property of type <code>PropertyType.PROPERTY_SET</code> can reference a set of properties
-   * by its key.
-   *
-   * @since 3.3
-   * @deprecated since 6.1, as it was not used and too complex to maintain.
-   */
-  @Deprecated
-  String propertySetKey() default "";
 
   /**
    * A Property with fields is considered a property set.

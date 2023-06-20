@@ -19,7 +19,6 @@
  */
 package org.sonar.api.rules;
 
-import java.util.Locale;
 import org.sonar.check.Priority;
 
 /**
@@ -36,30 +35,6 @@ public enum RulePriority {
   INFO, MINOR, MAJOR, CRITICAL, BLOCKER;
 
   private static final String UNKNOWN_PRIORITY = "Unknown priority ";
-
-  /**
-   * A class to map priority level prior to Sonar 1.10 to the new ones
-   *
-   * @param level an old priority level : Error or Warning
-   * @return the corresponding RulePriority
-   * @deprecated in 3.6
-   */
-  @Deprecated
-  public static RulePriority valueOfString(String level) {
-    try {
-      return RulePriority.valueOf(level.toUpperCase(Locale.ENGLISH));
-
-    } catch (IllegalArgumentException ex) {
-      // backward compatibility
-      if ("ERROR".equalsIgnoreCase(level)) {
-        return RulePriority.MAJOR;
-      } else if ("WARNING".equalsIgnoreCase(level)) {
-        return RulePriority.INFO;
-      }
-    }
-    throw new IllegalArgumentException(UNKNOWN_PRIORITY + level);
-  }
-
 
   public static RulePriority fromCheckPriority(Priority checkPriority) {
     if (checkPriority == Priority.BLOCKER) {

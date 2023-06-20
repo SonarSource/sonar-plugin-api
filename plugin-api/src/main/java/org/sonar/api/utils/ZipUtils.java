@@ -276,14 +276,4 @@ public final class ZipUtils {
       throw new IllegalStateException("Unzipping an entry outside the target directory is not allowed: " + entry.getName());
     }
   }
-
-  /**
-   * @see #unzip(File, File, Predicate)
-   * @deprecated replaced by {@link Predicate<ZipEntry>} in 6.2.
-   */
-  @Deprecated
-  @FunctionalInterface
-  public interface ZipEntryFilter {
-    boolean accept(ZipEntry entry);
-  }
 }

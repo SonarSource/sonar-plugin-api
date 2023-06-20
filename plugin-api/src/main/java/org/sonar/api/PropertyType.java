@@ -59,21 +59,6 @@ public enum PropertyType {
   SINGLE_SELECT_LIST,
 
   /**
-   * Sonar Metric
-   *
-   * @deprecated since 6.3, this type is useless as Dashboards have been removed
-   */
-  @Deprecated
-  METRIC,
-
-  /**
-   * SonarSource license
-   * @deprecated in 6.7.
-   */
-  @Deprecated
-  LICENSE,
-
-  /**
    * Regular expression
    *
    * @since 3.2
@@ -92,22 +77,6 @@ public enum PropertyType {
   * @since 5.1
   */
   USER_LOGIN,
-
-  /**
-   * Level metric type
-   *
-   * @deprecated since 6.3, this type is useless as Dashboards have been removed
-   */
-  @Deprecated
-  METRIC_LEVEL,
-
-  /**
-   * Long value, positive or negative
-   *
-   * @deprecated since 6.3, this type is useless as Dashboards have been removed
-   */
-  @Deprecated
-  LONG,
 
   /**
    * JSON property type

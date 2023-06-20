@@ -20,7 +20,6 @@
 package org.sonar.api.ce.posttask;
 
 import java.util.Collection;
-import javax.annotation.CheckForNull;
 import org.sonar.api.measures.Metric;
 
 /**
@@ -50,11 +49,6 @@ public interface QualityGate {
   enum Status {
     /** at least one threshold is defined, no threshold is reached */
     OK,
-    /**
-     * @deprecated in 7.6.
-     */
-    @Deprecated
-    WARN,
     /** at least one error threshold is reached */
     ERROR
   }
@@ -87,21 +81,6 @@ public interface QualityGate {
     String getErrorThreshold();
 
     /**
-     * @deprecated in 7.6. Implementations should always return null.
-     */
-    @Deprecated
-    @CheckForNull
-    String getWarningThreshold();
-
-    /**
-     * Whether this condition is defined on the leak period or on an absolute value.
-     * @deprecated in 7.6. Implementations should always return false.
-     * Conditions "on leak period" were removed. Use "New X" conditions instead.
-     */
-    @Deprecated
-    boolean isOnLeakPeriod();
-
-    /**
      * The value of the measure.
      * <p>
      * If the type of the metric (which key is provided by {@link #getMetricKey()}) is numerical, the value can be parsed
@@ -120,16 +99,6 @@ public interface QualityGate {
    * Quality Gate condition operator.
    */
   enum Operator {
-    /**
-     * @deprecated in 7.6. Using this operator will have no effect.
-     */
-    @Deprecated
-    EQUALS,
-    /**
-     * @deprecated in 7.6.  Using this operator will have no effect.
-     */
-    @Deprecated
-    NOT_EQUALS,
     GREATER_THAN,
     LESS_THAN
   }
@@ -147,12 +116,6 @@ public interface QualityGate {
      * Condition evaluated as OK, error thresholds has not been reached.
      */
     OK,
-    /**
-     * Condition evaluated as WARN, only warning thresholds has been reached.
-     * @deprecated in 7.6
-     */
-    @Deprecated
-    WARN,
     /**
      * Condition evaluated as ERROR, error thresholds has been reached (and most likely warning thresholds too).
      */

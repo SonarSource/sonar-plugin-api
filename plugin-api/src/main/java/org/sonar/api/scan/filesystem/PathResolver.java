@@ -31,8 +31,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.utils.PathUtils;
 
-import static java.util.stream.Collectors.joining;
-
 /**
  * @since 3.5
  */
@@ -50,25 +48,6 @@ public class PathResolver {
       result.add(relativeFile(dir, path));
     }
     return result;
-  }
-
-  /**
-   * @deprecated since 6.0 was used when component keys were relative to source dirs
-   */
-  @Deprecated
-  @CheckForNull
-  public RelativePath relativePath(Collection<File> dirs, File file) {
-    List<String> stack = new ArrayList<>();
-    File cursor = file;
-    while (cursor != null) {
-      File parentDir = parentDir(dirs, cursor);
-      if (parentDir != null) {
-        return new RelativePath(parentDir, stack.stream().collect(joining("/")));
-      }
-      stack.add(0, cursor.getName());
-      cursor = cursor.getParentFile();
-    }
-    return null;
   }
 
   /**
@@ -129,27 +108,5 @@ public class PathResolver {
       }
     }
     return null;
-  }
-
-  /**
-   * @deprecated since 6.0 was used when component keys were relative to source dirs
-   */
-  @Deprecated
-  public static final class RelativePath {
-    private File dir;
-    private String path;
-
-    public RelativePath(File dir, String path) {
-      this.dir = dir;
-      this.path = path;
-    }
-
-    public File dir() {
-      return dir;
-    }
-
-    public String path() {
-      return path;
-    }
   }
 }
