@@ -20,7 +20,6 @@
 package org.sonar.api.web;
 
 import java.io.IOException;
-
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.http.HttpRequest;
@@ -29,7 +28,10 @@ import org.sonar.api.server.http.HttpResponse;
 /**
  * A filter is an object that performs filtering tasks on either the
  * request to a resource (a servlet or static content), or on the response
- * from a resource, or both..
+ * from a resource, or both.
+ * This extension point is not intended to intercept all requests. When the
+ * platform intercepts and serves a request (for example with a web service filter),
+ * plugin filters do not get invoked, as the filters defined by plugins are at the end of the filter chain.
  *
  * @since 9.16
  */
@@ -45,14 +47,12 @@ public abstract class HttpFilter {
   public void init() {
   }
 
-
   /**
    * The <code>doFilter</code> method of the Filter is called by the
    * SonarQube each time a request/response pair is passed through the
    * chain due to a client request for a resource at the end of the chain.
    * The FilterChain passed in to this method allows the Filter to pass
    * on the request and response to the next entity in the chain.
-   *
    * <p>A typical implementation of this method would follow the following
    * pattern:
    * <ol>
@@ -76,16 +76,13 @@ public abstract class HttpFilter {
    */
   public abstract void doFilter(HttpRequest request, HttpResponse response, FilterChain chain) throws IOException;
 
-
   /**
    * Called by the SonarQube to indicate to a filter that it is being
    * taken out of service.
-   *
    * <p>This method is only called once all threads within the filter's
    * doFilter method have exited or after a timeout period has passed.
    * After the web container calls this method, it will not call the
    * doFilter method again on this instance of the filter.
-   *
    * <p>This method gives the filter an opportunity to clean up any
    * resources that are being held (for example, memory, file handles,
    * threads) and make sure that any persistent state is synchronized

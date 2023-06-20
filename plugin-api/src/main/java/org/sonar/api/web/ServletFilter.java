@@ -23,6 +23,11 @@ import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 
 /**
+ * Plugins can implement filters to serve HTTP requests that would otherwise not be served by the platform. This extension point
+ * is not intended to intercept all requests.
+ * When the platform intercepts and serves a request (for example with a web service filter), plugin filters do not get invoked,
+ * as the filters defined by plugins are at the end of the filter chain.
+ * Plugin filters get invoked when no other filters are interrupting the chain and returning a response to the request.
  * {@code @deprecated} since 9.16. Use {@link org.sonar.api.web.HttpFilter} instead.
  *
  * @since 3.1
@@ -63,7 +68,6 @@ public abstract class ServletFilter implements javax.servlet.Filter {
      * @since 6.0
      */
     public static class Builder extends AbstractUrlPattern.Builder<UrlPattern, Builder> {
-
 
       private Builder() {
         super();
