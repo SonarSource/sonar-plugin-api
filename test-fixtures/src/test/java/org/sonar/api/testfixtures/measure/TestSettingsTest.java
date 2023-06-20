@@ -17,7 +17,30 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-@ParametersAreNonnullByDefault
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.junit.Test;
+import org.sonar.api.testfixtures.measure.TestSettings;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class TestSettingsTest {
+
+  TestSettings underTest = new TestSettings();
+
+  @Test
+  public void get_string_value() {
+    underTest.setValue("key", "value");
+
+    assertThat(underTest.getString("key")).isEqualTo("value");
+    assertThat(underTest.getString("unknown")).isNull();
+  }
+
+  @Test
+  public void get_string_array_value() {
+    underTest.setValue("key", "value1,value2");
+
+    assertThat(underTest.getStringArray("key")).containsOnly("value1", "value2");
+    assertThat(underTest.getStringArray("unknown")).isEmpty();
+  }
+}

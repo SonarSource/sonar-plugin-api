@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.posttask;
+package org.sonar.api.testfixtures.posttask;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -25,23 +25,26 @@ import java.util.Map;
 import java.util.Random;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import org.sonar.api.ce.posttask.Branch;
+import org.sonar.api.ce.posttask.CeTask;
+import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
+import org.sonar.api.ce.posttask.Project;
+import org.sonar.api.ce.posttask.QualityGate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.sonar.api.ce.posttask.Branch.Type.BRANCH;
 
 public class PostProjectAnalysisTaskTesterTest {
 
-  private CeTask ceTask = mock(CeTask.class);
-  private Project project = mock(Project.class);
+  private CeTask ceTask = Mockito.mock(CeTask.class);
+  private Project project = Mockito.mock(Project.class);
   private long someDateAsLong = 846351351684351L;
   private Date someDate = new Date(someDateAsLong);
   private String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
-  private QualityGate qualityGate = mock(QualityGate.class);
+  private QualityGate qualityGate = Mockito.mock(QualityGate.class);
   private CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
   private PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
 
@@ -112,9 +115,9 @@ public class PostProjectAnalysisTaskTesterTest {
 
   @Test
   public void verify_toString_of_ProjectAnalysis_object_passed_to_PostProjectAnalysisTask() {
-    when(ceTask.toString()).thenReturn("CeTask");
-    when(project.toString()).thenReturn("Project");
-    when(qualityGate.toString()).thenReturn("QualityGate");
+    Mockito.when(ceTask.toString()).thenReturn("CeTask");
+    Mockito.when(project.toString()).thenReturn("Project");
+    Mockito.when(qualityGate.toString()).thenReturn("QualityGate");
     underTest.withCeTask(ceTask).withProject(project).withQualityGate(qualityGate).at(someDate);
 
     underTest.execute();
@@ -156,12 +159,12 @@ public class PostProjectAnalysisTaskTesterTest {
     for (int i = 0; i < 1 + random.nextInt(10); i++) {
       expected.put(String.valueOf(i), random.nextInt(100));
     }
-    PostProjectAnalysisTask projectAnalysisTask = mock(PostProjectAnalysisTask.class);
-    doAnswer(i -> {
+    PostProjectAnalysisTask projectAnalysisTask = Mockito.mock(PostProjectAnalysisTask.class);
+    Mockito.doAnswer(i -> {
       PostProjectAnalysisTask.Context context = i.getArgument(0);
       expected.forEach((k, v) -> context.getLogStatistics().add(k, v));
       return null;
-    }).when(projectAnalysisTask).finished(any(PostProjectAnalysisTask.Context.class));
+    }).when(projectAnalysisTask).finished(ArgumentMatchers.any(PostProjectAnalysisTask.Context.class));
     PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(projectAnalysisTask);
     underTest.withCeTask(ceTask).withProject(project).withQualityGate(qualityGate).withAnalysisUuid(analysisUuid).at(someDate);
 

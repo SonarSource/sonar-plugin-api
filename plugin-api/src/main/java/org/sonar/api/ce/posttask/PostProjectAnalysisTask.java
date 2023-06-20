@@ -29,13 +29,12 @@ import org.sonar.api.ce.ComputeEngineSide;
  * analysis report processing ends in the Compute Engine.
  *
  * <p>
- * If more then one implementation of {@link PostProjectAnalysisTask} is found, they will be executed in no specific order.
+ * If more than one implementation of {@link PostProjectAnalysisTask} is found, they will be executed in no specific order.
  *
  * <p>
- * Class {@link PostProjectAnalysisTaskTester} is provided to write unit tests of implementations of this interface.
+ * Class PostProjectAnalysisTaskTester in sonar-plugin-api-test-fixtures is provided to write unit tests of implementations of this interface.
  *
  * @since 5.5
- * @see PostProjectAnalysisTaskTester
  */
 @ExtensionPoint
 @ComputeEngineSide

@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
 import org.junit.Test;
 import org.sonar.api.ce.measure.Issue;
@@ -25,6 +25,7 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.testfixtures.measure.TestIssue;
 import org.sonar.api.utils.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;

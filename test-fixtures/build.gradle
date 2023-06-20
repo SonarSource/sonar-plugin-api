@@ -12,6 +12,7 @@ dependencies {
   testImplementation libs.junit4
   testImplementation libs.junit5
   testImplementation libs.assertj
+  testImplementation libs.mockito
 }
 
 publishing {
