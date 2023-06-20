@@ -20,13 +20,12 @@
 package org.sonar.api.testfixtures.measure;
 
 import org.junit.Test;
-import org.sonar.api.testfixtures.measure.TestSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestSettingsTest {
 
-  TestSettings underTest = new TestSettings();
+  private final TestSettings underTest = new TestSettings();
 
   @Test
   public void get_string_value() {

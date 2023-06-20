@@ -39,14 +39,14 @@ import static org.sonar.api.ce.posttask.Branch.Type.BRANCH;
 
 public class PostProjectAnalysisTaskTesterTest {
 
-  private CeTask ceTask = Mockito.mock(CeTask.class);
-  private Project project = Mockito.mock(Project.class);
-  private long someDateAsLong = 846351351684351L;
-  private Date someDate = new Date(someDateAsLong);
-  private String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
-  private QualityGate qualityGate = Mockito.mock(QualityGate.class);
-  private CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
-  private PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
+  private final CeTask ceTask = Mockito.mock(CeTask.class);
+  private final Project project = Mockito.mock(Project.class);
+  private final long someDateAsLong = 846351351684351L;
+  private final Date someDate = new Date(someDateAsLong);
+  private final String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
+  private final QualityGate qualityGate = Mockito.mock(QualityGate.class);
+  private final CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
+  private final PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
 
   @Test
   public void of_throws_NPE_if_PostProjectAnalysisTask_is_null() {
@@ -85,7 +85,7 @@ public class PostProjectAnalysisTaskTesterTest {
   public void execute_throws_NPE_if_ceTask_is_null() {
     underTest.withProject(project).at(someDate);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("ceTask cannot be null");
   }
@@ -94,7 +94,7 @@ public class PostProjectAnalysisTaskTesterTest {
   public void execute_throws_NPE_if_project_is_null() {
     underTest.withCeTask(ceTask).at(someDate);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("project cannot be null");
   }
@@ -131,14 +131,14 @@ public class PostProjectAnalysisTaskTesterTest {
   public void execute_throws_NPE_if_date_is_null() {
     underTest.withCeTask(ceTask).withProject(project);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("date cannot be null");
   }
 
   @Test
   public void getLogStatistics_throws_ISE_if_called_before_execute() {
-    assertThatThrownBy(() -> underTest.getLogStatistics())
+    assertThatThrownBy(underTest::getLogStatistics)
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("execute must be called first");
   }

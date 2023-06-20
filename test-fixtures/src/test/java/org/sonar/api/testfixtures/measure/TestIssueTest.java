@@ -21,11 +21,10 @@ package org.sonar.api.testfixtures.measure;
 
 import org.junit.Test;
 import org.sonar.api.ce.measure.Issue;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
-import org.sonar.api.testfixtures.measure.TestIssue;
 import org.sonar.api.utils.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;

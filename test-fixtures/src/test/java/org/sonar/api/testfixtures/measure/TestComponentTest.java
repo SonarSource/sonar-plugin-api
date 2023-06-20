@@ -21,7 +21,6 @@ package org.sonar.api.testfixtures.measure;
 
 import org.junit.Test;
 import org.sonar.api.ce.measure.Component;
-import org.sonar.api.testfixtures.measure.TestComponent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -58,7 +57,7 @@ public class TestComponentTest {
   public void fail_with_ISE_when_calling_get_file_attributes_on_not_file() {
     TestComponent component = new TestComponent("Project", Component.Type.PROJECT, null);
 
-    assertThatThrownBy(() -> component.getFileAttributes())
+    assertThatThrownBy(component::getFileAttributes)
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Only component of type FILE have a FileAttributes object");
   }
@@ -110,7 +109,7 @@ public class TestComponentTest {
   @Test
   public void test_to_string() {
     assertThat(new TestComponent("File", Component.Type.FILE, new TestComponent.FileAttributesImpl("xoo", true)).toString())
-      .isEqualTo("ComponentImpl{key=File, type='FILE', fileAttributes=FileAttributesImpl{languageKey='xoo', unitTest=true}}");
+      .hasToString("ComponentImpl{key=File, type='FILE', fileAttributes=FileAttributesImpl{languageKey='xoo', unitTest=true}}");
   }
 
 }

@@ -20,7 +20,6 @@
 package org.sonar.api.testfixtures.measure;
 
 import org.junit.Test;
-import org.sonar.api.testfixtures.measure.TestMeasure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

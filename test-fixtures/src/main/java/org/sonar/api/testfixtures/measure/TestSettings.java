@@ -28,7 +28,7 @@ import org.sonar.api.ce.measure.Settings;
 
 public class TestSettings implements Settings {
 
-  private Map<String, String> valuesByKey = new HashMap<>();
+  private final Map<String, String> valuesByKey = new HashMap<>();
 
   public Settings setValue(String key, String value){
     valuesByKey.put(key, value);

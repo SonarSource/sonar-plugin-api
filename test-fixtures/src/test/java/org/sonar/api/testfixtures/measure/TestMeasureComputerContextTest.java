@@ -24,15 +24,10 @@ import org.junit.Test;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.ce.measure.Settings;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
-import org.sonar.api.testfixtures.measure.TestComponent;
-import org.sonar.api.testfixtures.measure.TestIssue;
-import org.sonar.api.testfixtures.measure.TestMeasureComputerContext;
-import org.sonar.api.testfixtures.measure.TestMeasureComputerDefinition;
-import org.sonar.api.testfixtures.measure.TestSettings;
 import org.sonar.api.utils.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
