@@ -19,16 +19,17 @@
  */
 package org.sonar.api.testfixtures.measure;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestSettingsTest {
+class TestSettingsTest {
 
   private final TestSettings underTest = new TestSettings();
 
   @Test
-  public void get_string_value() {
+  void get_string_value() {
     underTest.setValue("key", "value");
 
     assertThat(underTest.getString("key")).isEqualTo("value");
@@ -36,7 +37,7 @@ public class TestSettingsTest {
   }
 
   @Test
-  public void get_string_array_value() {
+  void get_string_array_value() {
     underTest.setValue("key", "value1,value2");
 
     assertThat(underTest.getStringArray("key")).containsOnly("value1", "value2");

@@ -19,7 +19,7 @@
  */
 package org.sonar.api.testfixtures.measure;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rule.RuleKey;
@@ -30,10 +30,10 @@ import org.sonar.api.utils.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class TestIssueTest {
+class TestIssueTest {
 
   @Test
-  public void create_issue() {
+  void create_issue() {
     Issue issue = new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -55,7 +55,7 @@ public class TestIssueTest {
   }
 
   @Test
-  public void create_issue_with_minimal_fields() {
+  void create_issue_with_minimal_fields() {
     Issue issue = new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -70,7 +70,7 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_issue_without_key() {
+  void fail_with_NPE_when_building_issue_without_key() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setRuleKey(RuleKey.of("xoo", "S01"))
       .setSeverity(Severity.BLOCKER)
@@ -84,14 +84,14 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_creating_issue_with_null_key() {
+  void fail_with_NPE_when_creating_issue_with_null_key() {
     assertThatThrownBy(() -> new TestIssue.Builder().setKey(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("key cannot be null");
   }
 
   @Test
-  public void fail_with_NPE_when_building_issue_without_rule_key() {
+  void fail_with_NPE_when_building_issue_without_rule_key() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setSeverity(Severity.BLOCKER)
@@ -105,14 +105,14 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_creating_issue_with_null_rule_key() {
+  void fail_with_NPE_when_creating_issue_with_null_rule_key() {
     assertThatThrownBy(() -> new TestIssue.Builder().setRuleKey(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("ruleKey cannot be null");
   }
 
   @Test
-  public void fail_with_IAE_when_building_issue_with_invalid_resolution() {
+  void fail_with_IAE_when_building_issue_with_invalid_resolution() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -127,7 +127,7 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_issue_without_severity() {
+  void fail_with_NPE_when_building_issue_without_severity() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -141,14 +141,14 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_creating_issue_with_null_severity() {
+  void fail_with_NPE_when_creating_issue_with_null_severity() {
     assertThatThrownBy(() -> new TestIssue.Builder().setSeverity(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("severity cannot be null");
   }
 
   @Test
-  public void fail_with_IAE_when_building_issue_with_invalid_severity() {
+  void fail_with_IAE_when_building_issue_with_invalid_severity() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -163,7 +163,7 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_issue_without_status() {
+  void fail_with_NPE_when_building_issue_without_status() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
@@ -177,14 +177,14 @@ public class TestIssueTest {
   }
 
   @Test
-  public void fail_with_NPE_when_creating_issue_with_null_status() {
+  void fail_with_NPE_when_creating_issue_with_null_status() {
     assertThatThrownBy(() -> new TestIssue.Builder().setStatus(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("status cannot be null");
   }
 
   @Test
-  public void fail_with_IAE_when_building_issue_with_invalid_status() {
+  void fail_with_IAE_when_building_issue_with_invalid_status() {
     assertThatThrownBy(() -> new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))
