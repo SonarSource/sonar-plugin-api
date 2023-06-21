@@ -89,7 +89,7 @@ public class RulesDefinitionContextTest {
     context.createRepository("k", "java").setName("SonarAnalyzer").done();
     RulesDefinition.Repository repo = context.repository("k");
     assertThat(repo).isNotNull();
-    assertThat(repo.name()).isEqualTo("SonarQube");
+    assertThat(repo.name()).isEqualTo("Sonar");
   }
 
   @Test
