@@ -17,16 +17,16 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
 import java.util.Arrays;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.ce.measure.Settings;
+import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.utils.Duration;
 
@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.ce.measure.MeasureComputer.MeasureComputerDefinition;
 
-public class TestMeasureComputerContextTest {
+class TestMeasureComputerContextTest {
 
   static final String INPUT_METRIC = "INPUT_METRIC";
   static final String OUTPUT_METRIC = "OUTPUT_METRIC";
@@ -51,136 +51,136 @@ public class TestMeasureComputerContextTest {
   TestMeasureComputerContext underTest = new TestMeasureComputerContext(PROJECT, settings, DEFINITION);
 
   @Test
-  public void get_component() {
+  void get_component() {
     assertThat(underTest.getComponent()).isEqualTo(PROJECT);
   }
 
   @Test
-  public void get_settings() {
+  void get_settings() {
     assertThat(underTest.getSettings()).isEqualTo(settings);
   }
 
   @Test
-  public void get_int_measure() {
+  void get_int_measure() {
     underTest.addInputMeasure(INPUT_METRIC, 10);
 
     assertThat(underTest.getMeasure(INPUT_METRIC).getIntValue()).isEqualTo(10);
   }
 
   @Test
-  public void get_double_measure() {
+  void get_double_measure() {
     underTest.addInputMeasure(INPUT_METRIC, 10d);
 
     assertThat(underTest.getMeasure(INPUT_METRIC).getDoubleValue()).isEqualTo(10d);
   }
 
   @Test
-  public void get_long_measure() {
+  void get_long_measure() {
     underTest.addInputMeasure(INPUT_METRIC, 10L);
 
     assertThat(underTest.getMeasure(INPUT_METRIC).getLongValue()).isEqualTo(10L);
   }
 
   @Test
-  public void get_string_measure() {
+  void get_string_measure() {
     underTest.addInputMeasure(INPUT_METRIC, "text");
 
     assertThat(underTest.getMeasure(INPUT_METRIC).getStringValue()).isEqualTo("text");
   }
 
   @Test
-  public void get_boolean_measure() {
+  void get_boolean_measure() {
     underTest.addInputMeasure(INPUT_METRIC, true);
 
     assertThat(underTest.getMeasure(INPUT_METRIC).getBooleanValue()).isTrue();
   }
 
   @Test
-  public void fail_with_IAE_when_trying_to_get_measure_on_unknown_metric() {
+  void fail_with_IAE_when_trying_to_get_measure_on_unknown_metric() {
     assertThatThrownBy(() -> underTest.getMeasure("unknown"))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Only metrics in [INPUT_METRIC] can be used to load measures");
   }
 
   @Test
-  public void get_int_children_measures() {
+  void get_int_children_measures() {
     underTest.addChildrenMeasures(INPUT_METRIC, 10, 20);
 
     assertThat(underTest.getChildrenMeasures(INPUT_METRIC)).hasSize(2);
   }
 
   @Test
-  public void get_doublet_children_measures() {
+  void get_doublet_children_measures() {
     underTest.addChildrenMeasures(INPUT_METRIC, 10d, 20d);
 
     assertThat(underTest.getChildrenMeasures(INPUT_METRIC)).hasSize(2);
   }
 
   @Test
-  public void get_long_children_measures() {
+  void get_long_children_measures() {
     underTest.addChildrenMeasures(INPUT_METRIC, 10L, 20L);
 
     assertThat(underTest.getChildrenMeasures(INPUT_METRIC)).hasSize(2);
   }
 
   @Test
-  public void get_string_children_measures() {
+  void get_string_children_measures() {
     underTest.addChildrenMeasures(INPUT_METRIC, "value1", "value2");
 
     assertThat(underTest.getChildrenMeasures(INPUT_METRIC)).hasSize(2);
   }
 
   @Test
-  public void fail_with_IAE_when_trying_to_get_children_measures_on_unknown_metric() {
+  void fail_with_IAE_when_trying_to_get_children_measures_on_unknown_metric() {
     assertThatThrownBy(() -> underTest.getChildrenMeasures("unknown"))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Only metrics in [INPUT_METRIC] can be used to load measures");
   }
 
   @Test
-  public void add_int_measure() {
+  void add_int_measure() {
     underTest.addMeasure(OUTPUT_METRIC, 10);
 
     assertThat(underTest.getMeasure(OUTPUT_METRIC).getIntValue()).isEqualTo(10);
   }
 
   @Test
-  public void add_double_measure() {
+  void add_double_measure() {
     underTest.addMeasure(OUTPUT_METRIC, 10d);
 
     assertThat(underTest.getMeasure(OUTPUT_METRIC).getDoubleValue()).isEqualTo(10d);
   }
 
   @Test
-  public void add_long_measure() {
+  void add_long_measure() {
     underTest.addMeasure(OUTPUT_METRIC, 10L);
 
     assertThat(underTest.getMeasure(OUTPUT_METRIC).getLongValue()).isEqualTo(10L);
   }
 
   @Test
-  public void add_string_measure() {
+  void add_string_measure() {
     underTest.addMeasure(OUTPUT_METRIC, "text");
 
     assertThat(underTest.getMeasure(OUTPUT_METRIC).getStringValue()).isEqualTo("text");
   }
 
   @Test
-  public void fail_with_IAE_when_trying_to_add_measure_on_unknown_metric() {
+  void fail_with_IAE_when_trying_to_add_measure_on_unknown_metric() {
     assertThatThrownBy(() -> underTest.addMeasure("unknown", 10))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Only metrics in [OUTPUT_METRIC] can be used to add measures. Metric 'unknown' is not allowed.");
   }
 
   @Test
-  public void fail_with_IAE_when_trying_to_add_measure_on_input_metric() {
+  void fail_with_IAE_when_trying_to_add_measure_on_input_metric() {
     assertThatThrownBy(() -> underTest.addMeasure(INPUT_METRIC, 10))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Only metrics in [OUTPUT_METRIC] can be used to add measures. Metric 'INPUT_METRIC' is not allowed.");
   }
 
   @Test
-  public void fail_with_UOE_when_trying_to_add_same_measures_twice() {
+  void fail_with_UOE_when_trying_to_add_same_measures_twice() {
     underTest.addMeasure(OUTPUT_METRIC, 10);
 
     assertThatThrownBy(() -> underTest.addMeasure(OUTPUT_METRIC, 20))
@@ -189,7 +189,7 @@ public class TestMeasureComputerContextTest {
   }
 
   @Test
-  public void get_issues() {
+  void get_issues() {
     Issue issue = new TestIssue.Builder()
       .setKey("ABCD")
       .setRuleKey(RuleKey.of("xoo", "S01"))

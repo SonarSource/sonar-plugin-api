@@ -17,13 +17,30 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
-import org.sonar.api.ce.measure.MeasureComputer;
 
-public class TestMeasureComputerDefinitionContext implements MeasureComputer.MeasureComputerDefinitionContext {
-  @Override
-  public MeasureComputer.MeasureComputerDefinition.Builder newDefinitionBuilder() {
-    return new TestMeasureComputerDefinition.MeasureComputerDefinitionBuilderImpl();
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class TestSettingsTest {
+
+  private final TestSettings underTest = new TestSettings();
+
+  @Test
+  void get_string_value() {
+    underTest.setValue("key", "value");
+
+    assertThat(underTest.getString("key")).isEqualTo("value");
+    assertThat(underTest.getString("unknown")).isNull();
+  }
+
+  @Test
+  void get_string_array_value() {
+    underTest.setValue("key", "value1,value2");
+
+    assertThat(underTest.getStringArray("key")).containsOnly("value1", "value2");
+    assertThat(underTest.getStringArray("unknown")).isEmpty();
   }
 }

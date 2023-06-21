@@ -17,7 +17,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-@ParametersAreNonnullByDefault
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.sonar.api.ce.measure.MeasureComputer;
+
+public class TestMeasureComputerDefinitionContext implements MeasureComputer.MeasureComputerDefinitionContext {
+  @Override
+  public MeasureComputer.MeasureComputerDefinition.Builder newDefinitionBuilder() {
+    return new TestMeasureComputerDefinition.MeasureComputerDefinitionBuilderImpl();
+  }
+}

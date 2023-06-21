@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0
+
+* Moved out tester classes to the dedicated test-fixtures artifact
+
 ## 9.16
 
 * Extension point `org.sonar.api.resources.Language` now supports `filenamePatterns` to detect files' language based on more complex filename patterns than only filename extensions.

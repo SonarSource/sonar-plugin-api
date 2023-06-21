@@ -17,20 +17,20 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.MeasureComputer.MeasureComputerDefinition;
-import org.sonar.api.ce.measure.test.TestMeasureComputerDefinition.MeasureComputerDefinitionBuilderImpl;
+import org.sonar.api.testfixtures.measure.TestMeasureComputerDefinition.MeasureComputerDefinitionBuilderImpl;
 import org.sonar.api.measures.CoreMetrics;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class TestMeasureComputerDefinitionTest {
+class TestMeasureComputerDefinitionTest {
 
   @Test
-  public void build_definition() {
+  void build_definition() {
     MeasureComputerDefinition definition = new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .setOutputMetrics("OUTPUT_1", "OUTPUT_2")
@@ -41,7 +41,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void build_definition_without_input_metric() {
+  void build_definition_without_input_metric() {
     MeasureComputerDefinition definition = new MeasureComputerDefinitionBuilderImpl()
       .setOutputMetrics("OUTPUT_1", "OUTPUT_2")
       .build();
@@ -51,7 +51,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_definition_with_null_input_metrics() {
+  void fail_with_NPE_when_building_definition_with_null_input_metrics() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics((String[]) null)
       .setOutputMetrics("OUTPUT_1", "OUTPUT_2")
@@ -61,7 +61,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_definition_with_on_null_input_metric() {
+  void fail_with_NPE_when_building_definition_with_on_null_input_metric() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", null)
       .setOutputMetrics("OUTPUT_1", "OUTPUT_2")
@@ -71,7 +71,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_definition_with_null_output_metrics() {
+  void fail_with_NPE_when_building_definition_with_null_output_metrics() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .setOutputMetrics((String[]) null)
@@ -81,7 +81,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_definition_without_output_metrics() {
+  void fail_with_NPE_when_building_definition_without_output_metrics() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .build())
@@ -90,7 +90,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_NPE_when_building_definition_with_on_null_ouput_metric() {
+  void fail_with_NPE_when_building_definition_with_on_null_ouput_metric() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .setOutputMetrics("OUTPUT_1", null)
@@ -100,7 +100,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_IAE_when_building_definition_with_empty_output_metrics() {
+  void fail_with_IAE_when_building_definition_with_empty_output_metrics() {
     assertThatThrownBy(() ->  new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .setOutputMetrics()
@@ -110,7 +110,7 @@ public class TestMeasureComputerDefinitionTest {
   }
 
   @Test
-  public void fail_with_IAE_when_building_definition_with_core_metrics_in_output_metrics() {
+  void fail_with_IAE_when_building_definition_with_core_metrics_in_output_metrics() {
     assertThatThrownBy(() -> new MeasureComputerDefinitionBuilderImpl()
       .setInputMetrics("INPUT_1", "INPUT_2")
       .setOutputMetrics(CoreMetrics.NCLOC_KEY)

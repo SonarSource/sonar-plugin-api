@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.measure.test;
+package org.sonar.api.testfixtures.measure;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ import org.sonar.api.ce.measure.Settings;
 
 public class TestSettings implements Settings {
 
-  private Map<String, String> valuesByKey = new HashMap<>();
+  private final Map<String, String> valuesByKey = new HashMap<>();
 
   public Settings setValue(String key, String value){
     valuesByKey.put(key, value);

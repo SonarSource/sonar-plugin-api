@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.posttask;
+package org.sonar.api.testfixtures.posttask;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +29,14 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
+import org.sonar.api.ce.posttask.Analysis;
+import org.sonar.api.ce.posttask.Branch;
+import org.sonar.api.ce.posttask.CeTask;
+import org.sonar.api.ce.posttask.Organization;
+import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
+import org.sonar.api.ce.posttask.Project;
+import org.sonar.api.ce.posttask.QualityGate;
+import org.sonar.api.ce.posttask.ScannerContext;
 
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
@@ -39,10 +47,10 @@ import static org.sonar.api.utils.Preconditions.checkState;
  * This class can be used to test {@link PostProjectAnalysisTask} implementations, see example below:
  * <pre>
  * import static org.assertj.core.api.Assertions.assertThat;
- * import static org.sonar.api.ce.posttask.PostProjectAnalysisTaskTester.newCeTaskBuilder;
- * import static org.sonar.api.ce.posttask.PostProjectAnalysisTaskTester.newConditionBuilder;
- * import static org.sonar.api.ce.posttask.PostProjectAnalysisTaskTester.newProjectBuilder;
- * import static org.sonar.api.ce.posttask.PostProjectAnalysisTaskTester.newQualityGateBuilder;
+ * import static org.sonar.api.testfixtures.posttask.PostProjectAnalysisTaskTester.newCeTaskBuilder;
+ * import static org.sonar.api.testfixtures.posttask.PostProjectAnalysisTaskTester.newConditionBuilder;
+ * import static org.sonar.api.testfixtures.posttask.PostProjectAnalysisTaskTester.newProjectBuilder;
+ * import static org.sonar.api.testfixtures.posttask.PostProjectAnalysisTaskTester.newQualityGateBuilder;
  * public class CaptorPostProjectAnalysisTaskTest {
  *   private class CaptorPostProjectAnalysisTask implements PostProjectAnalysisTask {
  *     private ProjectAnalysis projectAnalysis;

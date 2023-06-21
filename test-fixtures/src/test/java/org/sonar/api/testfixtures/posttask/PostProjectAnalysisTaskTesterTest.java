@@ -17,14 +17,19 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.ce.posttask;
+package org.sonar.api.testfixtures.posttask;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.sonar.api.ce.posttask.Branch;
+import org.sonar.api.ce.posttask.CeTask;
+import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
+import org.sonar.api.ce.posttask.Project;
+import org.sonar.api.ce.posttask.QualityGate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,70 +39,70 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.sonar.api.ce.posttask.Branch.Type.BRANCH;
 
-public class PostProjectAnalysisTaskTesterTest {
+class PostProjectAnalysisTaskTesterTest {
 
-  private CeTask ceTask = mock(CeTask.class);
-  private Project project = mock(Project.class);
-  private long someDateAsLong = 846351351684351L;
-  private Date someDate = new Date(someDateAsLong);
-  private String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
-  private QualityGate qualityGate = mock(QualityGate.class);
-  private CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
-  private PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
+  private final CeTask ceTask = mock(CeTask.class);
+  private final Project project = mock(Project.class);
+  private final long someDateAsLong = 846351351684351L;
+  private final Date someDate = new Date(someDateAsLong);
+  private final String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
+  private final QualityGate qualityGate = mock(QualityGate.class);
+  private final CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
+  private final PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
 
   @Test
-  public void of_throws_NPE_if_PostProjectAnalysisTask_is_null() {
+  void of_throws_NPE_if_PostProjectAnalysisTask_is_null() {
     assertThatThrownBy(() -> PostProjectAnalysisTaskTester.of(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("PostProjectAnalysisTask instance cannot be null");
   }
 
   @Test
-  public void withCeTask_throws_NPE_if_ceTask_is_null() {
+  void withCeTask_throws_NPE_if_ceTask_is_null() {
     assertThatThrownBy(() -> underTest.withCeTask(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("ceTask cannot be null");
   }
 
   @Test
-  public void withProject_throws_NPE_if_project_is_null() {
+  void withProject_throws_NPE_if_project_is_null() {
     assertThatThrownBy(() -> underTest.withProject(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("project cannot be null");
   }
 
   @Test
-  public void at_throws_NPE_if_date_is_null() {
+  void at_throws_NPE_if_date_is_null() {
     assertThatThrownBy(() -> underTest.at(null))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("date cannot be null");
   }
 
   @Test
-  public void withQualityGate_does_not_throw_NPE_if_project_is_null() {
+  void withQualityGate_does_not_throw_NPE_if_project_is_null() {
     underTest.withQualityGate(null);
   }
 
   @Test
-  public void execute_throws_NPE_if_ceTask_is_null() {
+  void execute_throws_NPE_if_ceTask_is_null() {
     underTest.withProject(project).at(someDate);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("ceTask cannot be null");
   }
 
   @Test
-  public void execute_throws_NPE_if_project_is_null() {
+  void execute_throws_NPE_if_project_is_null() {
     underTest.withCeTask(ceTask).at(someDate);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("project cannot be null");
   }
 
   @Test
-  public void verify_getters_of_ProjectAnalysis_object_passed_to_PostProjectAnalysisTask() {
+  void verify_getters_of_ProjectAnalysis_object_passed_to_PostProjectAnalysisTask() {
     underTest.withCeTask(ceTask).withProject(project).withQualityGate(qualityGate).withAnalysisUuid(analysisUuid).at(someDate);
 
     underTest.execute();
@@ -111,7 +116,7 @@ public class PostProjectAnalysisTaskTesterTest {
   }
 
   @Test
-  public void verify_toString_of_ProjectAnalysis_object_passed_to_PostProjectAnalysisTask() {
+  void verify_toString_of_ProjectAnalysis_object_passed_to_PostProjectAnalysisTask() {
     when(ceTask.toString()).thenReturn("CeTask");
     when(project.toString()).thenReturn("Project");
     when(qualityGate.toString()).thenReturn("QualityGate");
@@ -120,28 +125,29 @@ public class PostProjectAnalysisTaskTesterTest {
     underTest.execute();
 
     assertThat(captorPostProjectAnalysisTask.projectAnalysis)
-      .hasToString("ProjectAnalysis{ceTask=CeTask, project=Project, date=846351351684351, analysisDate=846351351684351, qualityGate=QualityGate}");
+      .hasToString("ProjectAnalysis{ceTask=CeTask, project=Project, date=846351351684351, analysisDate=846351351684351, " +
+        "qualityGate=QualityGate}");
 
   }
 
   @Test
-  public void execute_throws_NPE_if_date_is_null() {
+  void execute_throws_NPE_if_date_is_null() {
     underTest.withCeTask(ceTask).withProject(project);
 
-    assertThatThrownBy(() -> underTest.execute())
+    assertThatThrownBy(underTest::execute)
       .isInstanceOf(NullPointerException.class)
       .hasMessage("date cannot be null");
   }
 
   @Test
-  public void getLogStatistics_throws_ISE_if_called_before_execute() {
-    assertThatThrownBy(() -> underTest.getLogStatistics())
+  void getLogStatistics_throws_ISE_if_called_before_execute() {
+    assertThatThrownBy(underTest::getLogStatistics)
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("execute must be called first");
   }
 
   @Test
-  public void getLogStatistics_returns_empty_if_no_log_statistic_added_by_tested_Task() {
+  void getLogStatistics_returns_empty_if_no_log_statistic_added_by_tested_Task() {
     underTest.withCeTask(ceTask).withProject(project).withQualityGate(qualityGate).withAnalysisUuid(analysisUuid).at(someDate);
 
     underTest.execute();
@@ -150,7 +156,7 @@ public class PostProjectAnalysisTaskTesterTest {
   }
 
   @Test
-  public void getLogStatistics_returns_log_statistics_added_by_tested_Task() {
+  void getLogStatistics_returns_log_statistics_added_by_tested_Task() {
     Random random = new Random();
     Map<String, Object> expected = new HashMap<>();
     for (int i = 0; i < 1 + random.nextInt(10); i++) {
@@ -171,7 +177,7 @@ public class PostProjectAnalysisTaskTesterTest {
   }
 
   @Test
-  public void branch_builder_builds_branch_of_type_branch_by_default() {
+  void branch_builder_builds_branch_of_type_branch_by_default() {
     Branch branch = PostProjectAnalysisTaskTester.newBranchBuilder().build();
 
     assertThat(branch.getType()).isEqualTo(BRANCH);

@@ -20,6 +20,7 @@
 package org.sonar.api.ce.posttask;
 
 import org.junit.Test;
+import org.sonar.api.testfixtures.posttask.PostProjectAnalysisTaskTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
