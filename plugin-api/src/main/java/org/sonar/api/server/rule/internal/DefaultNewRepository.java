@@ -70,7 +70,7 @@ public class DefaultNewRepository implements RulesDefinition.NewRepository {
   @Override
   public DefaultNewRepository setName(@Nullable String s) {
     if ("SonarAnalyzer".equals(s)) {
-      this.name = "SonarQube";
+      this.name = "Sonar";
     } else if (StringUtils.isNotEmpty(s)) {
       this.name = s;
     }
