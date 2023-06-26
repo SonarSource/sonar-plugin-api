@@ -31,7 +31,6 @@
 * Remove `org.sonar.api.measures.Metric.Level.WARN`. No replacement
 * Remove `org.sonar.api.measures.CoreMetrics.DOMAIN_DUPLICATION`. Use `org.sonar.api.measures.CoreMetrics.DOMAIN_DUPLICATIONS` instead
 * Remove `org.sonar.api.measures.CoreMetrics.DIRECTORIES_KEY` and `org.sonar.api.measures.CoreMetrics.DIRECTORIES`. No replacement
-* Remove `org.sonar.api.measures.CoreMetrics.QUALITY_PROFILES_KEY` and `org.sonar.api.measures.CoreMetrics.QUALITY_PROFILES`. No replacement
 * Remove `org.sonar.api.utils.HttpDownloader.TIMEOUT_MILLISECONDS`.
   Use `org.sonar.api.utils.HttpDownloader.DEFAULT_READ_TIMEOUT_IN_MILLISECONDS`
   or `org.sonar.api.utils.HttpDownloader.DEFAULT_CONNECT_TIMEOUT_IN_MILLISECONDS` instead
