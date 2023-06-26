@@ -1753,6 +1753,25 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 4.4
+   * @deprecated since 5.5
+   */
+  @Deprecated(since = "5.5")
+  public static final String QUALITY_PROFILES_KEY = "quality_profiles";
+
+  /**
+   * @since 4.4
+   * @deprecated since 5.5
+   */
+  @Deprecated(since = "5.5")
+  public static final Metric<String> QUALITY_PROFILES = new Metric.Builder(QUALITY_PROFILES_KEY, "Profiles", Metric.ValueType.DATA)
+    .setDescription("Details of quality profiles used during analysis")
+    .setQualitative(false)
+    .setDomain(DOMAIN_GENERAL)
+    .setHidden(true)
+    .create();
+
+  /**
    * @since 5.2
    */
   public static final String LAST_COMMIT_DATE_KEY = "last_commit_date";
