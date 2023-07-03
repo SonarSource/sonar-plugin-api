@@ -41,7 +41,6 @@
 * Remove `org.sonar.api.issue.IssueComment` and `org.sonar.api.issue.Issue.comments()`. No replacement
 * Remove `org.sonar.api.batch.rule.Rules`. No replacement
 * Remove `org.sonar.api.notifications.NotificationChannel` and `org.sonar.api.notifications.Notification`. No replacement
-* Remove `org.sonar.api.config.Settings` and `org.sonar.api.batch.sensor.SensorContext.settings()`. Use `org.sonar.api.config.Configuration` instead
 * Remove `org.sonar.api.scan.filesystem.PathResolver.RelativePath` and `org.sonar.api.scan.filesystem.PathResolver.relativePath(java.util.Collection<java.io.File>, java.io.File)`. No replacement
 * Remove `org.sonar.api.platform.Server.getPermanentServerId()`. Use `org.sonar.api.platform.Server.getId()` instead
 * Remove `org.sonar.api.rules.RulePriority.valueOfString(String)`. Use `org.sonar.api.rules.RulePriority.valueOf(String)` instead

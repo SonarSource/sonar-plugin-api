@@ -43,6 +43,7 @@ import org.sonar.api.batch.sensor.rule.AdHocRule;
 import org.sonar.api.batch.sensor.rule.NewAdHocRule;
 import org.sonar.api.batch.sensor.symbol.NewSymbolTable;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.config.Settings;
 import org.sonar.api.scanner.fs.InputProject;
 import org.sonar.api.scanner.sensor.ProjectSensor;
 import org.sonar.api.utils.Version;
@@ -53,6 +54,13 @@ import org.sonar.api.utils.Version;
  * @since 5.1
  */
 public interface SensorContext {
+
+  /**
+   * @deprecated since 6.5 use {@link #config()}
+   */
+  @Deprecated(since = "6.5")
+  Settings settings();
+
   /**
    * Get settings of the project.
    * @since 6.5
