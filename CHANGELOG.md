@@ -49,7 +49,8 @@
 
 ## 9.17
 
-* Introduce `org.sonar.api.batch.sensor.issue.NewIssue.setCodeVariants(Iterable<String>)` to contribute issues for given variants (e.g. different target platforms)
+* Introduce `org.sonar.api.batch.sensor.issue.NewIssue.setCodeVariants(Iterable<String>)` for analyzers to contribute issues for given variants (e.g. different target platforms)
+* Introduce 'org.sonar.api.issue.Issue.codeVariants()' 
 * Improvements on `org.sonar.api.testfixtures.log.LogTester`:
   * intercepts logged exceptions
   * thread-safe
@@ -72,3 +73,30 @@
   *  `org.sonar.api.utils.log.LogTester` &rarr; `org.sonar.api.testfixtures.log.LogTester`
   *  `org.sonar.api.utils.log.LogTesterJUnit5` &rarr; `org.sonar.api.testfixtures.log.LogTesterJUnit5`
 * **Breaking change for tests**: the default log level when using `LogTester` is now `INFO`. This is consistent with the default behavior of Sonar products. If you want to assert `DEBUG` or `TRACE` logs in your tests, you should first change the log level by using for example `logTester.setLevel(Level.DEBUG)`.
+
+## 9.14
+
+* Properties `sonar.tests.inclusions` and `sonar.tests.exclusions` added to `org.sonar.api.CoreProperties` as alias for `sonar.test.inclusions` and `sonar.test.exclusion`
+
+# 9.13
+
+* Support for plugins to add messages to issue locations with formatting:
+  * Added interface `org.sonar.api.batch.sensor.issue.MessageFormatting`
+  * Added interface `org.sonar.api.batch.sensor.issue.NewMessageFormatting`
+  * Added method `org.sonar.api.batch.sensor.issue.IssueLocation.messageFormattings()` 
+  * Added method `org.sonar.api.batch.sensor.issue.NewIssueLocation.message(String, List<NewMessageFormatting>)`
+  * Added method `org.sonar.api.batch.sensor.issue.NewIssueLocation.newMessageFormatting`
+* Support for plugins to add quick fixes to issues:
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.InputFileEdit`
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.NewInputFileEdit`
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.NewQuickFix`
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.NewTextEdit`
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.QuickFix`
+  * Added interface `org.sonar.api.batch.sensor.issue.fix.TextEdit`
+  * Added method `org.sonar.api.batch.sensor.issue.Issue.quickFixes()`
+  * Added method `org.sonar.api.batch.sensor.issue.NewIssue.newQuickFix()`
+  * Added method `org.sonar.api.batch.sensor.issue.NewIssue.addQuickFix(NewQuickFix)`
+
+## 9.12
+
+* Added a new property type: `org.sonar.api.PropertyType.FORMATTED_TEXT`
