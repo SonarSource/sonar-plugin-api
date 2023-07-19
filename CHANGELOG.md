@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.1
+
+* Remove @Beta Code Characteristics `org.sonar.api.code.CodeCharacteristic`
+
 ## 10.0
 
 * Moved out tester classes to the dedicated test-fixtures artifact

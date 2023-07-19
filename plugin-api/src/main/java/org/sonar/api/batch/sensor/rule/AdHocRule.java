@@ -20,10 +20,8 @@
 package org.sonar.api.batch.sensor.rule;
 
 import javax.annotation.CheckForNull;
-import org.sonar.api.Beta;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -62,14 +60,5 @@ public interface AdHocRule {
    * Type of the rule.
    */
   RuleType type();
-
-  /**
-   * Characteristic of the rule according to Clean Code Taxonomy.
-   *
-   * @since 9.16
-   */
-  @Beta
-  @CheckForNull
-  CodeCharacteristic characteristic();
 
 }

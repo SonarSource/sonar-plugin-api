@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.ce.measure.Settings;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -198,7 +197,6 @@ class TestMeasureComputerContextTest {
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setEffort(Duration.create(10L))
       .setType(RuleType.BUG)
-      .setCharacteristic(CodeCharacteristic.ROBUST)
       .build();
     underTest.setIssues(Arrays.asList(issue));
 

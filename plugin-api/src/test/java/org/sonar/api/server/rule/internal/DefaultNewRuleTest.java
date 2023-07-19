@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
@@ -129,10 +128,6 @@ public class DefaultNewRuleTest {
 
     rule.setType(RuleType.SECURITY_HOTSPOT);
     assertThat(rule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
-
-
-    rule.setCharacteristic(CodeCharacteristic.SECURE);
-    assertThat(rule.characteristic()).isEqualTo(CodeCharacteristic.SECURE);
 
     DebtRemediationFunction f = mock(DebtRemediationFunction.class);
     rule.setDebtRemediationFunction(f);
