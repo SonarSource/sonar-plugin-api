@@ -39,7 +39,6 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
@@ -78,7 +77,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private final String repoKey;
   private final String key;
   private RuleType type;
-  private CodeCharacteristic characteristic;
   private String name;
   private String htmlDescription;
   private String markdownDescription;
@@ -150,12 +148,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   @Override
   public DefaultNewRule setType(RuleType t) {
     this.type = t;
-    return this;
-  }
-
-  @Override
-  public RulesDefinition.NewRule setCharacteristic(CodeCharacteristic codeCharacteristic) {
-    this.characteristic = codeCharacteristic;
     return this;
   }
 
@@ -416,10 +408,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   RuleType type() {
     return type;
-  }
-
-  CodeCharacteristic characteristic() {
-    return characteristic;
   }
 
   String name() {

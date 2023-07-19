@@ -37,7 +37,6 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.code.CodeCharacteristic;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.RuleDescriptionSection;
@@ -579,7 +578,7 @@ public class RulesDefinitionContextTest {
   public void type_is_defined() {
     RulesDefinition.NewRepository newRepository = context.createRepository("findbugs", "java");
     newRepository.createRule("NPE").setName("NPE").setHtmlDescription("desc")
-      .setType(RuleType.VULNERABILITY).setCharacteristic(CodeCharacteristic.SECURE).setTags("bug", "misra");
+      .setType(RuleType.VULNERABILITY).setTags("bug", "misra");
     newRepository.done();
 
     RulesDefinition.Rule rule = context.repository("findbugs").rule("NPE");
@@ -592,7 +591,7 @@ public class RulesDefinitionContextTest {
   @Test
   public void guess_type_from_tags_if_type_is_missing() {
     RulesDefinition.NewRepository newRepository = context.createRepository("findbugs", "java");
-    newRepository.createRule("NPE").setName("NPE").setCharacteristic(CodeCharacteristic.ROBUST).setHtmlDescription("desc").setTags("bug", "misra");
+    newRepository.createRule("NPE").setName("NPE").setHtmlDescription("desc").setTags("bug", "misra");
     newRepository.done();
 
     RulesDefinition.Rule rule = context.repository("findbugs").rule("NPE");
