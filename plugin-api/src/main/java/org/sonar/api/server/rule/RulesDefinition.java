@@ -31,6 +31,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
@@ -408,6 +410,14 @@ public interface RulesDefinition {
     public abstract NewRule setSeverity(String s);
 
     /**
+     * Add a default impact to the rule.
+     * The impact can be overriden by an issue of this rule.
+     * It is only possible to define a default impact for a given {@link SoftwareQuality}
+     * @since 10.1
+     */
+    public abstract NewRule addDefaultImpact(SoftwareQuality softwareQuality, Severity severity);
+
+    /**
      * The type as defined by the SonarQube Quality Model.
      * <br>
      * When a plugin does not define rule type, then it is deduced from
@@ -594,6 +604,8 @@ public interface RulesDefinition {
     public abstract RuleType type();
 
     public abstract String severity();
+
+    public abstract Map<SoftwareQuality, Severity> impacts();
 
     /**
      * See {@link NewRule#addDescriptionSection(RuleDescriptionSection)} to understand what are the requirements for a section.

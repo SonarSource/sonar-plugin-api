@@ -28,6 +28,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
@@ -52,6 +54,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   private final String markdownDescription;
   private final String internalKey;
   private final String severity;
+  private final Map<SoftwareQuality, Severity> impacts;
   private final boolean template;
   private final DebtRemediationFunction debtRemediationFunction;
   private final String gapDescription;
@@ -75,6 +78,7 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.markdownDescription = newRule.markdownDescription();
     this.internalKey = newRule.internalKey();
     this.severity = newRule.severity();
+    this.impacts = Collections.unmodifiableMap(newRule.impacts());
     this.template = newRule.template();
     this.status = newRule.status();
     this.debtRemediationFunction = newRule.debtRemediationFunction();
@@ -130,6 +134,11 @@ public class DefaultRule extends RulesDefinition.Rule {
   @Override
   public String severity() {
     return severity;
+  }
+
+  @Override
+  public Map<SoftwareQuality, Severity> impacts() {
+    return impacts;
   }
 
   @Override

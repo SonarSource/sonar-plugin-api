@@ -19,7 +19,10 @@
  */
 package org.sonar.api.ce.measure;
 
+import java.util.Map;
 import javax.annotation.CheckForNull;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.utils.Duration;
@@ -58,5 +61,10 @@ public interface Issue {
   Duration effort();
 
   RuleType type();
+
+  /**
+   * @since 10.1
+   */
+  Map<SoftwareQuality, Severity> impacts();
 
 }

@@ -19,10 +19,14 @@
  */
 package org.sonar.api.testfixtures.measure;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.ce.measure.Issue;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -41,8 +45,10 @@ public class TestIssue implements Issue {
   private final RuleKey ruleKey;
   private final Duration effort;
   private final RuleType type;
+  private final Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts;
 
   private TestIssue(Builder builder) {
+
     this.key = builder.key;
     this.status = builder.status;
     this.resolution = builder.resolution;
@@ -50,6 +56,7 @@ public class TestIssue implements Issue {
     this.ruleKey = builder.ruleKey;
     this.effort = builder.effort;
     this.type = builder.type;
+    this.impacts = Collections.unmodifiableMap(builder.impacts);
   }
 
   @Override
@@ -94,11 +101,17 @@ public class TestIssue implements Issue {
     return type;
   }
 
+  @Override
+  public Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts() {
+    return impacts;
+  }
+
   public static class Builder {
     private String key;
     private String status;
     private String resolution;
     private String severity;
+    private Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts = new HashMap<>();
     private RuleKey ruleKey;
     private Duration effort;
     private RuleType type;
@@ -115,6 +128,12 @@ public class TestIssue implements Issue {
 
     public Builder setSeverity(String severity) {
       this.severity = validateSeverity(severity);
+      return this;
+    }
+
+    public Builder addImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity) {
+      validateImpacts(impacts, softwareQuality);
+      this.impacts.put(softwareQuality, severity);
       return this;
     }
 
@@ -174,6 +193,10 @@ public class TestIssue implements Issue {
     private static RuleType validateType(RuleType type) {
       requireNonNull(type, "type cannot be null");
       return type;
+    }
+
+    private static void validateImpacts(Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts, SoftwareQuality softwareQuality) {
+      checkArgument(!impacts.containsKey(softwareQuality), "Software quality %s is already defined in impacts", softwareQuality);
     }
 
     public Issue build() {

@@ -20,12 +20,14 @@
 package org.sonar.api.batch.sensor.issue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.issue.NewIssue.FlowType;
 import org.sonar.api.batch.sensor.issue.fix.QuickFix;
+import org.sonar.api.issue.impact.SoftwareQuality;
 
 /**
  * Represents an issue detected by a {@link Sensor}.
@@ -65,6 +67,12 @@ public interface Issue extends IIssue {
    */
   @CheckForNull
   Severity overriddenSeverity();
+
+  /**
+   * Retrieve the overriden impacts for this issue.
+   * @since 10.1
+   */
+  Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> overridenImpacts();
 
   /**
    * Primary locations for this issue.

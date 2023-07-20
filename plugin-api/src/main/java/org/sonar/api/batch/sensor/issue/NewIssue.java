@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.issue.fix.NewQuickFix;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
 /**
@@ -56,6 +57,13 @@ public interface NewIssue {
    * Setting a null value or not calling this method means to use severity configured in quality profile.
    */
   NewIssue overrideSeverity(@Nullable Severity severity);
+
+  /**
+   * Override severity of an impact defined by the rule.
+   * The impact for the SoftwareQuality must have already been defined by the rule.
+   * @since 10.1
+   */
+  NewIssue overrideImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity);
 
   /**
    * Primary location for this issue.
