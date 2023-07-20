@@ -3,6 +3,7 @@
 ## 10.1
 
 * Remove @Beta Code Characteristics `org.sonar.api.code.CodeCharacteristic`
+* Introduce `org.sonar.api.rules.CleanCodeAttribute` to contribute to Clean Code Taxonomy.
 
 ## 10.0
 

@@ -27,6 +27,7 @@ import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
@@ -39,6 +40,7 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 
 import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -130,6 +132,9 @@ public class DefaultNewRuleTest {
 
     rule.setType(RuleType.SECURITY_HOTSPOT);
     assertThat(rule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
+
+    rule.setCleanCodeAttribute(CleanCodeAttribute.FOCUSED);
+    assertThat(rule.cleanCodeAttribute()).isEqualTo(CleanCodeAttribute.FOCUSED);
 
     DebtRemediationFunction f = mock(DebtRemediationFunction.class);
     rule.setDebtRemediationFunction(f);

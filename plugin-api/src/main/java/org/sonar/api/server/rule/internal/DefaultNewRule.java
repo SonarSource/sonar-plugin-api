@@ -40,6 +40,7 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.Context;
@@ -78,6 +79,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private final String repoKey;
   private final String key;
   private RuleType type;
+  private CleanCodeAttribute attribute;
   private String name;
   private String htmlDescription;
   private String markdownDescription;
@@ -157,6 +159,12 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   public RulesDefinition.NewRule addDefaultImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity) {
     checkArgument(!impacts.containsKey(softwareQuality), "Impact for Software quality %s has already been defined for rule %s", softwareQuality, this);
     this.impacts.put(softwareQuality, severity);
+    return this;
+  }
+
+  @Override
+  public RulesDefinition.NewRule setCleanCodeAttribute(CleanCodeAttribute attribute) {
+    this.attribute = attribute;
     return this;
   }
 
@@ -419,6 +427,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return type;
   }
 
+  CleanCodeAttribute cleanCodeAttribute() {
+    return attribute;
+  }
+
   String name() {
     return name;
   }
@@ -449,7 +461,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return severity;
   }
 
-  Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts(){
+  Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts() {
     return impacts;
   }
 

@@ -24,6 +24,7 @@ import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -56,6 +57,14 @@ public interface NewExternalIssue {
    * Type of issue.
    */
   NewExternalIssue type(RuleType type);
+
+  /**
+   * Attribute of the issue according to Clean Code Taxonomy.
+   * Providing it is optional for now but will become mandatory in the future.
+   *
+   * @since 10.1
+   */
+  NewExternalIssue cleanCodeAttribute(CleanCodeAttribute attribute);
 
   /**
    * Effort to fix the issue, in minutes.

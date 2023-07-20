@@ -36,6 +36,7 @@ import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.debt.DebtRemediationFunction;
@@ -436,6 +437,13 @@ public interface RulesDefinition {
     public abstract NewRule setType(RuleType t);
 
     /**
+     * The clean code attribute of rule according to Clean Code Taxonomy.
+     * Providing it is optional for now, but will become mandatory in the future.
+     * @since 10.1
+     */
+    public abstract NewRule setCleanCodeAttribute(CleanCodeAttribute attribute);
+
+    /**
      * Add a rule description section. The sections must be added in the right order.
      * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
      * need to be called on top of that one.
@@ -602,6 +610,13 @@ public interface RulesDefinition {
      * @since 5.5
      */
     public abstract RuleType type();
+
+    /**
+     * @see NewRule#setCleanCodeAttribute(CleanCodeAttribute)
+     * @since 10.1
+     */
+    @CheckForNull
+    public abstract CleanCodeAttribute cleanCodeAttribute();
 
     public abstract String severity();
 
