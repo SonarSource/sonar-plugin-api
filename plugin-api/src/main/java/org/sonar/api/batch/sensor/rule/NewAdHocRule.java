@@ -22,6 +22,7 @@ package org.sonar.api.batch.sensor.rule;
 import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -62,6 +63,13 @@ public interface NewAdHocRule {
    * Set the severity of the rule.
    */
   NewAdHocRule severity(Severity severity);
+
+  /**
+   * Add new default impact to the rule.
+   * It is only possible to define a default impact for a given {@link SoftwareQuality}
+   * @since 10.1
+   */
+  NewAdHocRule addDefaultImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity);
 
   /**
    * Save the rule. There is almost no validation, except that no duplicated ad hoc rule keys are permitted.

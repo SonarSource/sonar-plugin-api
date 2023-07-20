@@ -21,6 +21,7 @@ package org.sonar.api.testfixtures.measure;
 
 import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Issue;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -28,6 +29,7 @@ import org.sonar.api.utils.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.sonar.api.issue.impact.Severity.HIGH;
 
 class TestIssueTest {
 
@@ -41,6 +43,7 @@ class TestIssueTest {
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setEffort(Duration.create(10L))
       .setType(RuleType.BUG)
+      .addImpact(SoftwareQuality.MAINTAINABILITY, HIGH)
       .build();
 
     assertThat(issue.key()).isEqualTo("ABCD");
@@ -49,6 +52,7 @@ class TestIssueTest {
     assertThat(issue.status()).isEqualTo(org.sonar.api.issue.Issue.STATUS_RESOLVED);
     assertThat(issue.resolution()).isEqualTo(org.sonar.api.issue.Issue.RESOLUTION_FIXED);
     assertThat(issue.effort()).isEqualTo(Duration.create(10L));
+    assertThat(issue.impacts()).hasSize(1).containsEntry(SoftwareQuality.MAINTAINABILITY, HIGH);
   }
 
   @Test
@@ -185,5 +189,15 @@ class TestIssueTest {
       .build())
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("status 'unknown' is invalid");
+  }
+
+  @Test
+  void fail_with_IAE_when_building_issue_with_same_impact() {
+    TestIssue.Builder builder = new TestIssue.Builder()
+      .addImpact(SoftwareQuality.MAINTAINABILITY, HIGH);
+
+    assertThatThrownBy(() -> builder.addImpact(SoftwareQuality.MAINTAINABILITY, HIGH))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage("Software quality MAINTAINABILITY is already defined in impacts");
   }
 }

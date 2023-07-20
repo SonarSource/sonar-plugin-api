@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
@@ -82,6 +84,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private String markdownDescription;
   private String internalKey;
   private String severity = Severity.MAJOR;
+  private Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts = new EnumMap<>(SoftwareQuality.class);
   private boolean template;
   private RuleStatus status = RuleStatus.defaultStatus();
   private DebtRemediationFunction debtRemediationFunction;
@@ -148,6 +151,13 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   @Override
   public DefaultNewRule setType(RuleType t) {
     this.type = t;
+    return this;
+  }
+
+  @Override
+  public RulesDefinition.NewRule addDefaultImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity) {
+    checkArgument(!defaultImpacts.containsKey(softwareQuality), "Impact for Software quality %s has already been defined for rule %s", softwareQuality, this);
+    this.defaultImpacts.put(softwareQuality, severity);
     return this;
   }
 
@@ -438,6 +448,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   String severity() {
     return severity;
+  }
+
+  Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts() {
+    return defaultImpacts;
   }
 
   boolean template() {
