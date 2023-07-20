@@ -22,6 +22,8 @@ package org.sonar.api.server.rule.internal;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
@@ -135,6 +137,9 @@ public class DefaultNewRuleTest {
 
     rule.setSeverity("MAJOR");
     assertThat(rule.severity()).isEqualTo("MAJOR");
+
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    assertThat(rule.defaultImpacts()).hasSize(1).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
 
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
     assertThat(rule.getRuleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION);
@@ -364,5 +369,13 @@ public class DefaultNewRuleTest {
   public void fail_if_trying_to_insert_education_principle_with_invalid_key(){
     assertThatThrownBy(() -> rule.addEducationPrincipleKeys("invalid principle"))
       .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  public void fail_if_same_software_quality_is_added_twice(){
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    assertThatThrownBy(()->rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.LOW))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessage("Impact for Software quality MAINTAINABILITY has already been defined for rule [repository=repo, key=key]");
   }
 }

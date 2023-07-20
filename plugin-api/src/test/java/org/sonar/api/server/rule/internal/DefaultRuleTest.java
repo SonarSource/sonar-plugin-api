@@ -20,9 +20,12 @@
 package org.sonar.api.server.rule.internal;
 
 import org.junit.Test;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.RuleDescriptionSection;
@@ -59,6 +62,7 @@ public class DefaultRuleTest {
     rule.addCwe(12);
     rule.addCwe(10);
     rule.setType(RuleType.SECURITY_HOTSPOT);
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
     DebtRemediationFunction f = mock(DebtRemediationFunction.class);
     rule.setDebtRemediationFunction(f);
     rule.setSeverity("MAJOR");
@@ -79,6 +83,8 @@ public class DefaultRuleTest {
     assertThat(defaultRule.status()).isEqualTo(RuleStatus.READY);
     assertThat(rule.securityStandards()).containsOnly("cwe:10", "cwe:12");
     assertThat(defaultRule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
+    assertThat(defaultRule.defaultImpacts()).hasSize(1).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    assertThat(defaultRule.cleanCodeAttribute()).isEqualTo(CleanCodeAttribute.COMPLETE);
     assertThat(defaultRule.debtRemediationFunction()).isEqualTo(f);
     assertThat(defaultRule.markdownDescription()).isNull();
     assertThat(defaultRule.severity()).isEqualTo("MAJOR");

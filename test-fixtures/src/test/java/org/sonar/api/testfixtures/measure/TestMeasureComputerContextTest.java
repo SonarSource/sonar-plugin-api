@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Issue;
 import org.sonar.api.ce.measure.Settings;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -32,6 +33,7 @@ import org.sonar.api.utils.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.ce.measure.MeasureComputer.MeasureComputerDefinition;
+import static org.sonar.api.issue.impact.Severity.HIGH;
 
 class TestMeasureComputerContextTest {
 
@@ -197,6 +199,7 @@ class TestMeasureComputerContextTest {
       .setResolution(org.sonar.api.issue.Issue.RESOLUTION_FIXED)
       .setEffort(Duration.create(10L))
       .setType(RuleType.BUG)
+      .addImpact(SoftwareQuality.MAINTAINABILITY, HIGH)
       .build();
     underTest.setIssues(Arrays.asList(issue));
 

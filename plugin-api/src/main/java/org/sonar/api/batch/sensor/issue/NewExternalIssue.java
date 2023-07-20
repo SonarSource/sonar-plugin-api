@@ -22,6 +22,7 @@ package org.sonar.api.batch.sensor.issue;
 import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.RuleType;
 
@@ -65,6 +66,13 @@ public interface NewExternalIssue {
    * Set the severity of the issue.
    */
   NewExternalIssue severity(Severity severity);
+
+  /**
+   * Add a new impact or override the severity of an impact already defined by the rule.
+   * It is only possible to define a default impact for a given {@link SoftwareQuality}
+   * @since 10.1
+   */
+  NewExternalIssue addImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity);
 
   /**
    * Primary location for this issue.

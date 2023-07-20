@@ -19,9 +19,11 @@
  */
 package org.sonar.api.batch.sensor.rule;
 
+import java.util.Map;
 import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rules.RuleType;
 
 /**
@@ -60,5 +62,19 @@ public interface AdHocRule {
    * Type of the rule.
    */
   RuleType type();
+
+  /**
+   * Default impacts of the rule
+   * @since 10.1
+   */
+  Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts();
+
+  /**
+   * Clean Code Attribute of the rule according to Clean Code Taxonomy.
+   *
+   * @since 10.1
+   */
+  @CheckForNull
+  CleanCodeAttribute cleanCodeAttribute();
 
 }
