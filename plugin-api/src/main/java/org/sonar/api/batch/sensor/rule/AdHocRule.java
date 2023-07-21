@@ -25,6 +25,7 @@ import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.rules.CleanCodeAttribute;
 
 /**
  * Represents a rule imported from an external rule engine by a {@link Sensor}.
@@ -70,8 +71,7 @@ public interface AdHocRule {
   Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts();
 
   /**
-   * Clean Code Attribute of the rule according to Clean Code Taxonomy.
-   *
+   * Clean Code Attribute of the rule.
    * @since 10.1
    */
   @CheckForNull
