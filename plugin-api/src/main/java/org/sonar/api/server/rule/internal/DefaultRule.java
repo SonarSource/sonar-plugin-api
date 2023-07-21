@@ -33,6 +33,7 @@ import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.RuleDescriptionSection;
@@ -50,6 +51,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   private final String key;
   private final String name;
   private final RuleType type;
+  private final CleanCodeAttribute cleanCodeAttribute;
   private final String htmlDescription;
   private final String markdownDescription;
   private final String internalKey;
@@ -85,6 +87,7 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.gapDescription = newRule.gapDescription();
     this.scope = newRule.scope() == null ? RuleScope.MAIN : newRule.scope();
     this.type = newRule.type() == null ? RuleTagsToTypeConverter.convert(newRule.tags()) : newRule.type();
+    this.cleanCodeAttribute = newRule.cleanCodeAttribute();
     Set<String> tagsBuilder = new TreeSet<>(newRule.tags());
     tagsBuilder.removeAll(RuleTagsToTypeConverter.RESERVED_TAGS);
     this.tags = Collections.unmodifiableSet(tagsBuilder);
@@ -129,6 +132,12 @@ public class DefaultRule extends RulesDefinition.Rule {
   @Override
   public RuleType type() {
     return type;
+  }
+
+  @CheckForNull
+  @Override
+  public CleanCodeAttribute cleanCodeAttribute() {
+    return cleanCodeAttribute;
   }
 
   @Override

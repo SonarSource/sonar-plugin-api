@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.annotation.CheckForNull;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rules.RuleType;
 
@@ -60,5 +61,12 @@ public interface ExternalIssue extends IIssue {
    * @since 10.1
    */
   Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> impacts();
+
+  /**
+   * Clean Code Attribute of the issue.
+   * @since 10.1
+   */
+  @CheckForNull
+  CleanCodeAttribute cleanCodeAttribute();
 
 }

@@ -4,6 +4,7 @@
 
 * Remove @Beta Code Characteristics `org.sonar.api.code.CodeCharacteristic`
 * Introduce `org.sonar.api.issue.impact.SoftwareQuality` and `org.sonar.api.issue.impact.Severity` to define impacts of rules and issues
+* Introduce `org.sonar.api.rules.CleanCodeAttribute` to define clean code attribute on rules.
 
 ## 10.0
 

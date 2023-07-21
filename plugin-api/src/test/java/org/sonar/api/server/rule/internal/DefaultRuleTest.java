@@ -63,6 +63,7 @@ public class DefaultRuleTest {
     rule.addCwe(10);
     rule.setType(RuleType.SECURITY_HOTSPOT);
     rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    rule.setCleanCodeAttribute(CleanCodeAttribute.COMPLETE);
     DebtRemediationFunction f = mock(DebtRemediationFunction.class);
     rule.setDebtRemediationFunction(f);
     rule.setSeverity("MAJOR");

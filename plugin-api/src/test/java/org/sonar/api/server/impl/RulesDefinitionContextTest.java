@@ -37,6 +37,7 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleScope;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
+import org.sonar.api.rules.CleanCodeAttribute;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.RuleDescriptionSection;
@@ -586,6 +587,17 @@ public class RulesDefinitionContextTest {
     assertThat(rule.type()).isEqualTo(RuleType.VULNERABILITY);
     // tag "bug" is reserved and removed.
     assertThat(rule.tags()).containsOnly("misra");
+  }
+  @Test
+
+  public void cleanCodeAttribute_is_defined() {
+    RulesDefinition.NewRepository newRepository = context.createRepository("findbugs", "java");
+    newRepository.createRule("NPE").setName("NPE").setHtmlDescription("desc")
+      .setType(RuleType.VULNERABILITY).setCleanCodeAttribute(CleanCodeAttribute.EFFICIENT);
+    newRepository.done();
+
+    RulesDefinition.Rule rule = context.repository("findbugs").rule("NPE");
+    assertThat(rule.cleanCodeAttribute()).isEqualTo(CleanCodeAttribute.EFFICIENT);
   }
 
   @Test
