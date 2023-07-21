@@ -366,21 +366,21 @@ public class DefaultNewRuleTest {
     return RuleDescriptionSection.builder()
       .sectionKey(sectionKey)
       .htmlContent(RandomStringUtils.randomAlphabetic(100))
-      .context(new Context(contextKey,contextKey + RandomStringUtils.randomAlphanumeric(10)))
+      .context(new Context(contextKey, contextKey + RandomStringUtils.randomAlphanumeric(10)))
       .build();
   }
 
   @Test
-  public void fail_if_trying_to_insert_education_principle_with_invalid_key(){
+  public void fail_if_trying_to_insert_education_principle_with_invalid_key() {
     assertThatThrownBy(() -> rule.addEducationPrincipleKeys("invalid principle"))
       .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
-  public void fail_if_same_software_quality_is_added_twice(){
+  public void fail_if_same_software_quality_is_added_twice() {
     rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
-    assertThatThrownBy(()->rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.LOW))
+    assertThatThrownBy(() -> rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.LOW))
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Impact for Software quality MAINTAINABILITY has already been defined for rule [repository=repo, key=key]");
+      .hasMessage("Impact for Software Quality MAINTAINABILITY has already been defined for rule [repository=repo, key=key]");
   }
 }

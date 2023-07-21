@@ -86,7 +86,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private String markdownDescription;
   private String internalKey;
   private String severity = Severity.MAJOR;
-  private Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts = new EnumMap<>(SoftwareQuality.class);
+  private final Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts = new EnumMap<>(SoftwareQuality.class);
   private boolean template;
   private RuleStatus status = RuleStatus.defaultStatus();
   private DebtRemediationFunction debtRemediationFunction;
@@ -158,7 +158,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
   @Override
   public RulesDefinition.NewRule addDefaultImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity) {
-    checkArgument(!defaultImpacts.containsKey(softwareQuality), "Impact for Software quality %s has already been defined for rule %s", softwareQuality, this);
+    checkArgument(!defaultImpacts.containsKey(softwareQuality), "Impact for Software Quality %s has already been defined for rule %s", softwareQuality, this);
     this.defaultImpacts.put(softwareQuality, severity);
     return this;
   }
@@ -424,6 +424,11 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return repoKey;
   }
 
+  /**
+   * @deprecated since 10.1, use {@link #defaultImpacts()}
+   */
+  @Deprecated(since = "10.1")
+  @CheckForNull
   RuleType type() {
     return type;
   }
@@ -458,6 +463,11 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return internalKey;
   }
 
+  /**
+   * @deprecated since 10.1, use {@link #defaultImpacts()}
+   */
+  @Deprecated(since = "10.1")
+  @CheckForNull
   String severity() {
     return severity;
   }

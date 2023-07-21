@@ -131,7 +131,10 @@ public interface Issue extends Serializable {
 
   /**
    * See constants in {@link org.sonar.api.rule.Severity}.
+   * @deprecated since 10.1
    */
+  @Deprecated(since = "10.1")
+  @CheckForNull
   String severity();
 
   @CheckForNull

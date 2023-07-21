@@ -588,8 +588,8 @@ public class RulesDefinitionContextTest {
     // tag "bug" is reserved and removed.
     assertThat(rule.tags()).containsOnly("misra");
   }
-  @Test
 
+  @Test
   public void cleanCodeAttribute_is_defined() {
     RulesDefinition.NewRepository newRepository = context.createRepository("findbugs", "java");
     newRepository.createRule("NPE").setName("NPE").setHtmlDescription("desc")
