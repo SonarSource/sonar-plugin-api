@@ -106,6 +106,32 @@ public class DefaultNewRuleTest {
     rule.setStatus(RuleStatus.READY);
     assertThat(rule.status()).isEqualTo(RuleStatus.READY);
 
+    assertSecurityStandards();
+
+    rule.setType(RuleType.SECURITY_HOTSPOT);
+    assertThat(rule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
+
+    rule.setCleanCodeAttribute(CleanCodeAttribute.FOCUSED);
+    assertThat(rule.cleanCodeAttribute()).isEqualTo(CleanCodeAttribute.FOCUSED);
+
+    DebtRemediationFunction f = mock(DebtRemediationFunction.class);
+    rule.setDebtRemediationFunction(f);
+    assertThat(rule.debtRemediationFunction()).isEqualTo(f);
+
+    rule.setSeverity("MAJOR");
+    assertThat(rule.severity()).isEqualTo("MAJOR");
+
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    assertThat(rule.defaultImpacts()).hasSize(1).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+
+    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
+    assertThat(rule.getRuleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION);
+
+    rule.addEducationPrincipleKeys("principle1", "principle2", "principle3");
+    assertThat(rule.educationPrincipleKeys()).containsExactly("principle1", "principle2", "principle3");
+  }
+
+  private void assertSecurityStandards() {
     rule.addCwe(12);
     rule.addCwe(10);
     assertThat(rule.securityStandards()).containsOnly("cwe:10", "cwe:12");
@@ -129,28 +155,6 @@ public class DefaultNewRuleTest {
 
     assertThat(rule.securityStandards())
       .contains("owaspAsvs-4.0:1.10.1", "owaspAsvs-4.0:1.11.3", "owaspAsvs-4.0:1.11.4", "owaspAsvs-4.0:1.11.5");
-
-    rule.setType(RuleType.SECURITY_HOTSPOT);
-    assertThat(rule.type()).isEqualTo(RuleType.SECURITY_HOTSPOT);
-
-    rule.setCleanCodeAttribute(CleanCodeAttribute.FOCUSED);
-    assertThat(rule.cleanCodeAttribute()).isEqualTo(CleanCodeAttribute.FOCUSED);
-
-    DebtRemediationFunction f = mock(DebtRemediationFunction.class);
-    rule.setDebtRemediationFunction(f);
-    assertThat(rule.debtRemediationFunction()).isEqualTo(f);
-
-    rule.setSeverity("MAJOR");
-    assertThat(rule.severity()).isEqualTo("MAJOR");
-
-    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
-    assertThat(rule.defaultImpacts()).hasSize(1).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
-
-    rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
-    assertThat(rule.getRuleDescriptionSections()).containsExactly(RULE_DESCRIPTION_SECTION);
-
-    rule.addEducationPrincipleKeys("principle1", "principle2", "principle3");
-    assertThat(rule.educationPrincipleKeys()).containsExactly("principle1", "principle2", "principle3");
   }
 
   @Test
