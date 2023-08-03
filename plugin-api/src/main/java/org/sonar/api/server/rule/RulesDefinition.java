@@ -619,7 +619,6 @@ public interface RulesDefinition {
      * @deprecated since 10.1, use {@link #defaultImpacts()} instead
      */
     @Deprecated(since = "10.1")
-    @CheckForNull
     public abstract RuleType type();
 
     /**
@@ -633,7 +632,6 @@ public interface RulesDefinition {
      * @deprecated since 10.1, use {@link #defaultImpacts()} instead
      */
     @Deprecated(since = "10.1")
-    @CheckForNull
     public abstract String severity();
 
     /**
