@@ -6,6 +6,7 @@
 * Introduce `org.sonar.api.issue.impact.SoftwareQuality` and `org.sonar.api.issue.impact.Severity` to define impacts of rules and issues
 * Introduce `org.sonar.api.rules.CleanCodeAttribute` to define clean code attribute on rules.
 * Deprecate `org.sonar.api.rules.RuleType`, `org.sonar.api.batch.rule.Severity` and `org.sonar.api.rule.Severity`. Use impacts with `org.sonar.api.issue.impact.SoftwareQuality` and `org.sonar.api.issue.impact.Severity` instead
+* Deprecate `org.sonar.api.server.rule.RuleTagsToTypeConverter`
 
 ## 10.0
 

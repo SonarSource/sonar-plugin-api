@@ -22,6 +22,7 @@ package org.sonar.api.rules;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 public class CleanCodeAttributeTest {
 
   @Test
@@ -35,6 +36,11 @@ public class CleanCodeAttributeTest {
   public void getAttributeCategory_shouldReturnExpectedCategory() {
     assertThat(CleanCodeAttribute.COMPLETE.getAttributeCategory()).isEqualTo(CleanCodeAttributeCategory.INTENTIONAL);
     assertThat(CleanCodeAttribute.CONVENTIONAL.getAttributeCategory()).isEqualTo(CleanCodeAttributeCategory.CONSISTENT);
+  }
+
+  @Test
+  public void defaultCleanCodeAttribute_shouldReturnExpectedValue() {
+    assertThat(CleanCodeAttribute.defaultCleanCodeAttribute()).isEqualTo(CleanCodeAttribute.CONVENTIONAL);
   }
 
 }

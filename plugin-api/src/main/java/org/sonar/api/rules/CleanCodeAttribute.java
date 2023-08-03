@@ -53,4 +53,8 @@ public enum CleanCodeAttribute {
   public CleanCodeAttributeCategory getAttributeCategory() {
     return attributeCategory;
   }
+
+  public static CleanCodeAttribute defaultCleanCodeAttribute() {
+    return CONVENTIONAL;
+  }
 }
