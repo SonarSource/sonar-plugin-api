@@ -20,6 +20,7 @@
 package org.sonar.api.batch.sensor.issue;
 
 import javax.annotation.Nullable;
+import org.sonar.api.Beta;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.issue.impact.SoftwareQuality;
@@ -63,8 +64,10 @@ public interface NewExternalIssue {
   /**
    * Attribute of the issue according to Clean Code Taxonomy.
    * Providing it is optional for now but will become mandatory in the future.
+   * This method is experimental and might change in the future.
    * @since 10.1
    */
+  @Beta
   NewExternalIssue cleanCodeAttribute(CleanCodeAttribute attribute);
 
   /**
@@ -82,8 +85,10 @@ public interface NewExternalIssue {
   /**
    * Add a new impact or override the severity of an impact already defined by the rule.
    * It is only possible to define a default impact for a given {@link SoftwareQuality}
+   * This method is experimental and might change in the future.
    * @since 10.1
    */
+  @Beta
   NewExternalIssue addImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity);
 
   /**
