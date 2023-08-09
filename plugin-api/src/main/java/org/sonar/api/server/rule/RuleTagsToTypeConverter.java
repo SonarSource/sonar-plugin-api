@@ -51,6 +51,6 @@ public class RuleTagsToTypeConverter {
     if (tags.contains(TAG_SECURITY)) {
       return RuleType.VULNERABILITY;
     }
-    return RuleType.CODE_SMELL;
+    return null;
   }
 }

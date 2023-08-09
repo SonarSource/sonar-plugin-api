@@ -34,15 +34,19 @@ import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.sonar.api.rules.RuleType.BUG;
+import static org.sonar.api.rules.RuleType.CODE_SMELL;
+import static org.sonar.api.rules.RuleType.VULNERABILITY;
 
 public class DefaultRuleTest {
 
   private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
   private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION_2 = new RuleDescriptionSectionBuilder().sectionKey("section_key_2").htmlContent("html desc 2").build();
 
+  private DefaultRepository repo = mock(DefaultRepository.class);
+
   @Test
   public void getters() {
-    DefaultRepository repo = mock(DefaultRepository.class);
     DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
 
     rule.setScope(RuleScope.MAIN);
@@ -90,6 +94,80 @@ public class DefaultRuleTest {
     assertThat(defaultRule.markdownDescription()).isNull();
     assertThat(defaultRule.severity()).isEqualTo("MAJOR");
     assertThat(defaultRule.educationPrincipleKeys()).containsOnly("principle_key1", "principle_key2", "principle_key3");
+  }
+
+  @Test
+  public void constructor_impact_is_set_when_type_and_severity_is_null() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(CODE_SMELL);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.MAJOR);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.MEDIUM);
+  }
+
+  @Test
+  public void constructor_type_and_severity_are_set_when_impact_is_defined() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+    rule.addDefaultImpact(SoftwareQuality.SECURITY, Severity.LOW);
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(VULNERABILITY);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.MINOR);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.SECURITY, Severity.LOW);
+  }
+
+  @Test
+  public void constructor_impact_is_mapped_when_type_and_severity_are_set() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+    rule.setSeverity(org.sonar.api.rule.Severity.CRITICAL);
+    rule.setType(BUG);
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(BUG);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.CRITICAL);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.RELIABILITY, Severity.HIGH);
+  }
+
+  @Test
+  public void constructor_impact_is_mapped_and_severity_is_major_when_only_type_is_set() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+    rule.setType(VULNERABILITY);
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(VULNERABILITY);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.MAJOR);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.SECURITY, Severity.MEDIUM);
+  }
+
+  @Test
+  public void constructor_severity_is_set_to_major_when_type_and_impact_are_defined() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+    rule.setType(VULNERABILITY);
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.LOW);
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(VULNERABILITY);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.MAJOR);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.LOW);
+  }
+
+  @Test
+  public void constructor_type_is_set_to_code_smell_when_severity_and_impact_are_defined() {
+    DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.MEDIUM);
+    rule.setSeverity(org.sonar.api.rule.Severity.BLOCKER);
+
+    DefaultRule defaultRule = new DefaultRule(repo, rule);
+
+    assertThat(defaultRule.type()).isEqualTo(CODE_SMELL);
+    assertThat(defaultRule.severity()).isEqualTo(org.sonar.api.rule.Severity.BLOCKER);
+    assertThat(defaultRule.defaultImpacts()).containsEntry(SoftwareQuality.MAINTAINABILITY, Severity.MEDIUM);
   }
 
   @Test

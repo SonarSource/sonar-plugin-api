@@ -85,7 +85,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   private String htmlDescription;
   private String markdownDescription;
   private String internalKey;
-  private String severity = Severity.MAJOR;
+  private String severity;
   private final Map<SoftwareQuality, org.sonar.api.issue.impact.Severity> defaultImpacts = new EnumMap<>(SoftwareQuality.class);
   private boolean template;
   private RuleStatus status = RuleStatus.defaultStatus();
