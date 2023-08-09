@@ -42,6 +42,7 @@ import org.sonar.api.server.rule.RulesDefinition;
 
 import static java.lang.String.format;
 import static java.util.Collections.unmodifiableList;
+import static org.sonar.api.rule.Severity.MAJOR;
 
 @Immutable
 public class DefaultRule extends RulesDefinition.Rule {
@@ -79,14 +80,11 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.htmlDescription = newRule.htmlDescription();
     this.markdownDescription = newRule.markdownDescription();
     this.internalKey = newRule.internalKey();
-    this.severity = newRule.severity();
-    this.defaultImpacts = Collections.unmodifiableMap(newRule.defaultImpacts());
     this.template = newRule.template();
     this.status = newRule.status();
     this.debtRemediationFunction = newRule.debtRemediationFunction();
     this.gapDescription = newRule.gapDescription();
     this.scope = newRule.scope() == null ? RuleScope.MAIN : newRule.scope();
-    this.type = newRule.type() == null ? RuleTagsToTypeConverter.convert(newRule.tags()) : newRule.type();
     this.cleanCodeAttribute = newRule.cleanCodeAttribute();
     Set<String> tagsBuilder = new TreeSet<>(newRule.tags());
     tagsBuilder.removeAll(RuleTagsToTypeConverter.RESERVED_TAGS);
@@ -101,6 +99,50 @@ public class DefaultRule extends RulesDefinition.Rule {
     this.deprecatedRuleKeys = Collections.unmodifiableSet(new TreeSet<>(newRule.deprecatedRuleKeys()));
     this.ruleDescriptionSections = newRule.getRuleDescriptionSections();
     this.educationPrincipleKeys = Collections.unmodifiableSet(newRule.educationPrincipleKeys());
+
+    this.type = determineType(newRule);
+    this.severity = determineSeverity(newRule);
+    this.defaultImpacts = determineImpacts(newRule);
+  }
+
+  private static RuleType determineType(DefaultNewRule newRule) {
+    RuleType type = newRule.type() == null ? RuleTagsToTypeConverter.convert(newRule.tags()) : newRule.type();
+    if (type != null) {
+      return type;
+    }
+
+    if (shouldUseBackmapping(newRule)) {
+      SoftwareQuality softwareQuality = ImpactMapper.getBestImpactForBackmapping(newRule.defaultImpacts()).getKey();
+      return ImpactMapper.convertToRuleType(softwareQuality);
+    }
+    return RuleType.CODE_SMELL;
+  }
+
+  private static String determineSeverity(DefaultNewRule newRule) {
+    String severity = newRule.severity();
+    if (severity != null) {
+      return severity;
+    }
+
+    if (shouldUseBackmapping(newRule)) {
+      Severity impactSeverity = ImpactMapper.getBestImpactForBackmapping(newRule.defaultImpacts()).getValue();
+      return ImpactMapper.convertToDeprecatedSeverity(impactSeverity);
+    }
+    return MAJOR;
+  }
+
+  private Map<SoftwareQuality, Severity> determineImpacts(DefaultNewRule newRule) {
+    if (!newRule.defaultImpacts().isEmpty() || type == RuleType.SECURITY_HOTSPOT) {
+      return Collections.unmodifiableMap(newRule.defaultImpacts());
+    }
+    SoftwareQuality softwareQuality = ImpactMapper.convertToSoftwareQuality(type);
+    Severity impactSeverity = ImpactMapper.convertToImpactSeverity(severity);
+
+    return Map.of(softwareQuality, impactSeverity);
+  }
+
+  private static boolean shouldUseBackmapping(DefaultNewRule newRule) {
+    return newRule.type() == null && newRule.severity() == null && !newRule.defaultImpacts().isEmpty();
   }
 
   @Override
@@ -259,4 +301,5 @@ public class DefaultRule extends RulesDefinition.Rule {
   public String toString() {
     return format("[repository=%s, key=%s]", repoKey, key);
   }
+
 }

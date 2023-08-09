@@ -43,9 +43,9 @@ public class RuleTagsToTypeConverterTest {
   }
 
   @Test
-  public void default_is_code_smell() {
-    assertThat(convert(asList("clumsy", "spring"))).isEqualTo(RuleType.CODE_SMELL);
-    assertThat(convert(Collections.emptyList())).isEqualTo(RuleType.CODE_SMELL);
+  public void default_is_null() {
+    assertThat(convert(asList("clumsy", "spring"))).isNull();
+    assertThat(convert(Collections.emptyList())).isNull();
   }
 
   @Test
