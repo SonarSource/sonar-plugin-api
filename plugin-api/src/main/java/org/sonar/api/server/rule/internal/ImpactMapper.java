@@ -38,8 +38,8 @@ import static org.sonar.api.rule.Severity.MINOR;
 @Deprecated(since = "10.1")
 public class ImpactMapper {
 
-  static final List<SoftwareQuality> ORDERED_SOFTWARE_QUALITIES = List.of(SoftwareQuality.MAINTAINABILITY,
-    SoftwareQuality.RELIABILITY, SoftwareQuality.SECURITY);
+  static final List<SoftwareQuality> ORDERED_SOFTWARE_QUALITIES = List.of(SoftwareQuality.SECURITY,
+    SoftwareQuality.RELIABILITY, SoftwareQuality.MAINTAINABILITY);
 
   private ImpactMapper() {
     // This class is designed to be static
