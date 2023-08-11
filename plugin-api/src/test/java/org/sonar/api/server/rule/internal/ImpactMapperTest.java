@@ -20,6 +20,7 @@
 package org.sonar.api.server.rule.internal;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.ThrowableAssert;
@@ -160,23 +161,23 @@ public class ImpactMapperTest {
   }
 
   @Test
-  public void getBestImpactForBackMapping_givenAllImpacts_returnMaintainability() {
-    Map<SoftwareQuality, Severity> map = new HashMap<>();
-    map.put(SoftwareQuality.MAINTAINABILITY, HIGH);
-    map.put(SoftwareQuality.SECURITY, LOW);
+  public void getBestImpactForBackMapping_givenAllImpacts_returnSecurity() {
+    Map<SoftwareQuality, Severity> map = new LinkedHashMap<>();
     map.put(SoftwareQuality.RELIABILITY, MEDIUM);
+    map.put(SoftwareQuality.SECURITY, LOW);
+    map.put(SoftwareQuality.MAINTAINABILITY, HIGH);
 
     Map.Entry<SoftwareQuality, Severity> bestImpactForBackMapping = ImpactMapper.getBestImpactForBackmapping(map);
 
-    assertThat(bestImpactForBackMapping.getKey()).isEqualTo(SoftwareQuality.MAINTAINABILITY);
-    assertThat(bestImpactForBackMapping.getValue()).isEqualTo(HIGH);
+    assertThat(bestImpactForBackMapping.getKey()).isEqualTo(SoftwareQuality.SECURITY);
+    assertThat(bestImpactForBackMapping.getValue()).isEqualTo(LOW);
   }
 
   @Test
   public void orderOfSoftwareQualities_shouldIncludeAllValuesFromEnum() {
     List<SoftwareQuality> orderedSoftwareQualities = ImpactMapper.ORDERED_SOFTWARE_QUALITIES;
 
-    assertThat(orderedSoftwareQualities).containsExactly(SoftwareQuality.values());
+    assertThat(orderedSoftwareQualities).containsExactlyInAnyOrder(SoftwareQuality.values());
   }
 
 }
