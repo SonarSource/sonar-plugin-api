@@ -13,6 +13,8 @@
 - [ ] When dropping an API:
   - [ ] Make sure it respects the [deprecation policy](https://github.com/SonarSource/sonar-plugin-api/blob/master/docs/deprecation-policy.md)
   - [ ] Bump the major version (breaking change)
+- [ ] Make sure the tests adhere to the convention:
+  - All test method names should use `snake_case`, for example: `test_validate_input`. It can also start with the `methodName`
 - [ ] Make sure checks are green: build passes, Quality Gate is green
 - [ ] Merge after getting approval by at least one member of the guild
   - If no review is made within 3 days, gently ping the reviewers
