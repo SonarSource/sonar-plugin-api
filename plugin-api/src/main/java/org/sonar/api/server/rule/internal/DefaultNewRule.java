@@ -61,6 +61,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.apache.commons.lang.StringUtils.trimToNull;
+import static org.sonar.api.rules.RuleType.SECURITY_HOTSPOT;
 import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 import static org.sonar.api.utils.Preconditions.checkState;
@@ -375,6 +376,10 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     }
     if (isEmpty(htmlDescription) && isEmpty(markdownDescription)) {
       throw new IllegalStateException(format("One of HTML description or Markdown description must be defined for rule %s", this));
+    }
+    if (type != null && type.equals(SECURITY_HOTSPOT)){
+      attribute = null;
+      defaultImpacts.clear();
     }
     validateSameContextKeysExistsForAllContextualizedSections(ruleDescriptionSections);
   }

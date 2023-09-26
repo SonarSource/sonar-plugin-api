@@ -167,6 +167,19 @@ public class DefaultNewRuleTest {
   }
 
   @Test
+  public void validate_CctAndImpactsAreRemovedForSecurityHotspots() {
+    rule.setHtmlDescription("html");
+    rule.setName("name");
+    rule.setType(RuleType.SECURITY_HOTSPOT);
+    rule.setCleanCodeAttribute(CleanCodeAttribute.MODULAR);
+    rule.addDefaultImpact(SoftwareQuality.MAINTAINABILITY, Severity.HIGH);
+    rule.validate();
+
+    assertThat(rule.cleanCodeAttribute()).isNull();
+    assertThat(rule.defaultImpacts()).isEmpty();
+  }
+
+  @Test
   public void validate_succeeds() {
     rule.setHtmlDescription("html");
     rule.setName("name");
