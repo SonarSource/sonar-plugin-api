@@ -28,6 +28,7 @@ import org.sonar.api.server.ServerSide;
 import static java.util.Arrays.asList;
 import static org.sonar.api.CoreProperties.CATEGORY_GENERAL;
 import static org.sonar.api.CoreProperties.SUBCATEGORY_EMAIL;
+import static org.sonar.api.PropertyType.EMAIL;
 import static org.sonar.api.PropertyType.INTEGER;
 import static org.sonar.api.PropertyType.SINGLE_SELECT_LIST;
 
@@ -157,6 +158,7 @@ public class EmailSettings {
         .defaultValue(FROM_DEFAULT)
         .category(CATEGORY_GENERAL)
         .subCategory(SUBCATEGORY_EMAIL)
+        .type(EMAIL)
         .index(5)
         .build(),
       PropertyDefinition.builder(FROM_NAME)

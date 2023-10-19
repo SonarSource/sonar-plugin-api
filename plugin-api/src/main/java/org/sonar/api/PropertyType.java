@@ -88,5 +88,11 @@ public enum PropertyType {
    * Custom formatted text type
    * @since 9.12
    */
-  FORMATTED_TEXT
+  FORMATTED_TEXT,
+
+  /**
+   * Email address
+   * @since 10.2
+   */
+  EMAIL
 }

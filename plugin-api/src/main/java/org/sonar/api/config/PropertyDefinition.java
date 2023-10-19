@@ -31,6 +31,7 @@ import java.util.regex.PatternSyntaxException;
 import javax.annotation.Nullable;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.Property;
 import org.sonar.api.PropertyType;
@@ -46,6 +47,7 @@ import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.sonar.api.PropertyType.BOOLEAN;
+import static org.sonar.api.PropertyType.EMAIL;
 import static org.sonar.api.PropertyType.FLOAT;
 import static org.sonar.api.PropertyType.INTEGER;
 import static org.sonar.api.PropertyType.JSON;
@@ -182,6 +184,7 @@ public final class PropertyDefinition {
     map.put(INTEGER, validateInteger());
     map.put(FLOAT, validateFloat());
     map.put(REGULAR_EXPRESSION, validateRegexp());
+    map.put(EMAIL, validateEmail());
     map.put(SINGLE_SELECT_LIST,
       aValue -> options.contains(aValue) ? Result.SUCCESS : Result.newError("notInOptions"));
     return map;
@@ -224,6 +227,15 @@ public final class PropertyDefinition {
       } catch (PatternSyntaxException e) {
         return Result.newError("notRegexp");
       }
+    };
+  }
+
+  private static Function<String, Result> validateEmail() {
+    return value -> {
+      if (!EmailValidator.getInstance(true, true).isValid(value)) {
+        return Result.newError("notEmail");
+      }
+      return Result.SUCCESS;
     };
   }
 
