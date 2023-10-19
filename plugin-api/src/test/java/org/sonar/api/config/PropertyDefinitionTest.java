@@ -252,6 +252,23 @@ public class PropertyDefinitionTest {
   }
 
   @Test
+  public void validate_email() {
+    PropertyDefinition def = PropertyDefinition.builder("foo").name("foo").type(PropertyType.EMAIL).build();
+
+    assertThat(def.validate(null).isValid()).isTrue();
+    assertThat(def.validate("").isValid()).isTrue();
+    assertThat(def.validate("   ").isValid()).isTrue();
+    assertThat(def.validate("test@sonarsource.com").isValid()).isTrue();
+    assertThat(def.validate("test@localhost").isValid()).isTrue();
+
+    assertThat(def.validate("test@sonarsource.sonar").isValid()).isFalse();
+    assertThat(def.validate("test@sonarsource.sonar").getErrorKey()).isEqualTo("notEmail");
+    assertThat(def.validate("test@sonarsource.com,test@sonarsource.com").isValid()).isFalse();
+    assertThat(def.validate("@sonarsource.com").isValid()).isFalse();
+    assertThat(def.validate("test").isValid()).isFalse();
+  }
+
+  @Test
   public void should_validate_single_select_list() {
     PropertyDefinition def = PropertyDefinition.builder("foo").name("foo").type(PropertyType.SINGLE_SELECT_LIST).options("de", "en").build();
 

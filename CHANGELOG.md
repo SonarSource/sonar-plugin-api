@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.2
+
+* Introduce email property type: `org.sonar.api.PropertyType.EMAIL`
+
 ## 10.1
 
 * Remove @Beta Code Characteristics `org.sonar.api.code.CodeCharacteristic`
