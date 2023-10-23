@@ -51,7 +51,7 @@ The following tables indicate which API versions plugins can find at runtime:
 | 9.4.0.54424 or earlier | Matches sonarqube version |
 
 ### SonarCloud
-Current version: 9.14.0.375
+Current version: 10.1.0.809
 
 ### SonarLint
 | Flavor   | Plugin API                |
