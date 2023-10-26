@@ -38,8 +38,15 @@ public interface DefaultTransitions {
 
   /**
    * @since 5.1
+   * @deprecated since 10.3, use {@link #ACCEPT} instead
    */
+  @Deprecated(since = "10.3")
   String WONT_FIX = "wontfix";
+
+  /**
+   * @since 10.3
+   */
+  String ACCEPT = "accept";
 
   /**
    * @deprecated since 8.1, transition has no effect
@@ -77,6 +84,6 @@ public interface DefaultTransitions {
   /**
    * @since 4.4
    */
-  List<String> ALL = unmodifiableList(asList(CONFIRM, UNCONFIRM, REOPEN, RESOLVE, FALSE_POSITIVE, WONT_FIX, CLOSE,
-    SET_AS_IN_REVIEW, RESOLVE_AS_REVIEWED, RESET_AS_TO_REVIEW));
+  List<String> ALL = List.of(CONFIRM, UNCONFIRM, REOPEN, RESOLVE, FALSE_POSITIVE, WONT_FIX, CLOSE,
+    SET_AS_IN_REVIEW, RESOLVE_AS_REVIEWED, RESET_AS_TO_REVIEW, ACCEPT);
 }
