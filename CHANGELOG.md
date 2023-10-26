@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.3
+
+* Introduce `org.sonar.api.issue.Issue.RESOLUTION_ACCEPTED` which effectively replaces `org.sonar.api.issue.Issue.RESOLUTION_WONT_FIX`
+* Introduce `org.sonar.api.issue.DefaultTransitions.ACCEPT` which effectively replaces `org.sonar.api.issue.DefaultTransitions.WONT_FIX`.
+* Deprecate `org.sonar.api.issue.DefaultTransitions.WONT_FIX`. Use `org.sonar.api.issue.DefaultTransitions.ACCEPT` instead.
+* Deprecate `org.sonar.api.issue.Issue.RESOLUTION_WONT_FIX`. Use `org.sonar.api.issue.Issue.RESOLUTION_ACCEPTED` instead.
+
 ## 10.2
 
 * Introduce email property type: `org.sonar.api.PropertyType.EMAIL`

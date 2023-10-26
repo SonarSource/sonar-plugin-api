@@ -28,9 +28,6 @@ import javax.annotation.CheckForNull;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.Duration;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-
 /**
  * @since 3.6
  */
@@ -71,8 +68,16 @@ public interface Issue extends Serializable {
   /**
    * Issue is irrelevant in the context and was muted by user.
    * @since 5.1
+   * @deprecated since 10.3, use {@link #RESOLUTION_ACCEPTED} instead
    */
+  @Deprecated(since = "10.3")
   String RESOLUTION_WONT_FIX = "WONTFIX";
+
+  /**
+   * Issue is acknowledged and accepted by the user.
+   * @since 10.3
+   */
+  String RESOLUTION_ACCEPTED = "ACCEPTED";
 
   /**
    * Security Hotspot has been reviewed and resolved as safe.
@@ -86,9 +91,10 @@ public interface Issue extends Serializable {
    */
   String RESOLUTION_ACKNOWLEDGED = "ACKNOWLEDGED";
 
-  List<String> RESOLUTIONS = unmodifiableList(asList(RESOLUTION_FALSE_POSITIVE, RESOLUTION_WONT_FIX, RESOLUTION_FIXED, RESOLUTION_REMOVED));
+  List<String> RESOLUTIONS = List.of(RESOLUTION_FALSE_POSITIVE, RESOLUTION_WONT_FIX, RESOLUTION_FIXED,
+    RESOLUTION_REMOVED, RESOLUTION_ACCEPTED);
 
-  List<String> SECURITY_HOTSPOT_RESOLUTIONS = unmodifiableList(asList(RESOLUTION_FIXED, RESOLUTION_SAFE, RESOLUTION_ACKNOWLEDGED));
+  List<String> SECURITY_HOTSPOT_RESOLUTIONS = List.of(RESOLUTION_FIXED, RESOLUTION_SAFE, RESOLUTION_ACKNOWLEDGED);
 
   /**
    * @since 7.8
@@ -111,8 +117,8 @@ public interface Issue extends Serializable {
    *
    * @since 4.4
    */
-  List<String> STATUSES = unmodifiableList(asList(STATUS_OPEN, STATUS_CONFIRMED, STATUS_REOPENED, STATUS_RESOLVED, STATUS_CLOSED,
-    STATUS_TO_REVIEW, STATUS_REVIEWED));
+  List<String> STATUSES = List.of(STATUS_OPEN, STATUS_CONFIRMED, STATUS_REOPENED, STATUS_RESOLVED, STATUS_CLOSED,
+    STATUS_TO_REVIEW, STATUS_REVIEWED);
 
   /**
    * Unique generated key. It looks like "d2de809c-1512-4ae2-9f34-f5345c9f1a13".
