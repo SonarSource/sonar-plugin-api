@@ -26,6 +26,7 @@ import org.sonar.api.measures.Metric;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.sonar.api.measures.CoreMetrics.ACCEPTED_ISSUES;
 import static org.sonar.api.measures.CoreMetrics.FILES;
 import static org.sonar.api.measures.CoreMetrics.NCLOC;
 import static org.sonar.api.measures.CoreMetrics.getMetric;
@@ -37,7 +38,7 @@ public class CoreMetricsTest {
   public void read_metrics_from_class_reflection() {
     List<Metric> metrics = getMetrics();
     assertThat(metrics.size()).isGreaterThan(100);
-    assertThat(metrics).contains(NCLOC, FILES);
+    assertThat(metrics).contains(NCLOC, FILES, ACCEPTED_ISSUES);
   }
 
   @Test
