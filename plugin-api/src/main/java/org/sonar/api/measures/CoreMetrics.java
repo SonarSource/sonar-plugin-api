@@ -930,14 +930,34 @@ public final class CoreMetrics {
 
   /**
    * @since 5.6
+   * @deprecated since 10.3. Use {@link #ACCEPTED_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.3")
   public static final String WONT_FIX_ISSUES_KEY = "wont_fix_issues";
 
   /**
    * @since 5.6
+   * @deprecated since 10.3. Use {@link #ACCEPTED_ISSUES} instead.
    */
+  @Deprecated(since = "10.3")
   public static final Metric<Integer> WONT_FIX_ISSUES = new Metric.Builder(WONT_FIX_ISSUES_KEY, "Won't Fix Issues", Metric.ValueType.INT)
     .setDescription("Won't fix issues")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .create();
+
+  /**
+   * @since 10.3
+   */
+  public static final String ACCEPTED_ISSUES_KEY = "accepted_issues";
+
+  /**
+   * @since 10.3
+   */
+  public static final Metric<Integer> ACCEPTED_ISSUES = new Metric.Builder(ACCEPTED_ISSUES_KEY, "Accepted Issues", Metric.ValueType.INT)
+    .setDescription("Accepted issues")
     .setDirection(Metric.DIRECTION_WORST)
     .setDomain(DOMAIN_ISSUES)
     .setBestValue(0.0)
