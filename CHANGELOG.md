@@ -4,10 +4,8 @@
 
 * Deprecate `org.sonar.api.measures.CoreMetrics.WONT_FIX_ISSUES` metric and related key.
 * Introduce `org.sonar.api.measures.CoreMetrics.ACCEPTED_ISSUES` which effectively replaces `org.sonar.api.measures.CoreMetrics.WONT_FIX_ISSUES`
-* Introduce `org.sonar.api.issue.Issue.RESOLUTION_ACCEPTED` which effectively replaces `org.sonar.api.issue.Issue.RESOLUTION_WONT_FIX`
 * Introduce `org.sonar.api.issue.DefaultTransitions.ACCEPT` which effectively replaces `org.sonar.api.issue.DefaultTransitions.WONT_FIX`.
 * Deprecate `org.sonar.api.issue.DefaultTransitions.WONT_FIX`. Use `org.sonar.api.issue.DefaultTransitions.ACCEPT` instead.
-* Deprecate `org.sonar.api.issue.Issue.RESOLUTION_WONT_FIX`. Use `org.sonar.api.issue.Issue.RESOLUTION_ACCEPTED` instead.
 
 ## 10.2
 

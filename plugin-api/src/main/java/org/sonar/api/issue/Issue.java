@@ -68,16 +68,8 @@ public interface Issue extends Serializable {
   /**
    * Issue is irrelevant in the context and was muted by user.
    * @since 5.1
-   * @deprecated since 10.3, use {@link #RESOLUTION_ACCEPTED} instead
    */
-  @Deprecated(since = "10.3")
   String RESOLUTION_WONT_FIX = "WONTFIX";
-
-  /**
-   * Issue is acknowledged and accepted by the user.
-   * @since 10.3
-   */
-  String RESOLUTION_ACCEPTED = "ACCEPTED";
 
   /**
    * Security Hotspot has been reviewed and resolved as safe.
@@ -92,7 +84,7 @@ public interface Issue extends Serializable {
   String RESOLUTION_ACKNOWLEDGED = "ACKNOWLEDGED";
 
   List<String> RESOLUTIONS = List.of(RESOLUTION_FALSE_POSITIVE, RESOLUTION_WONT_FIX, RESOLUTION_FIXED,
-    RESOLUTION_REMOVED, RESOLUTION_ACCEPTED);
+    RESOLUTION_REMOVED);
 
   List<String> SECURITY_HOTSPOT_RESOLUTIONS = List.of(RESOLUTION_FIXED, RESOLUTION_SAFE, RESOLUTION_ACKNOWLEDGED);
 
