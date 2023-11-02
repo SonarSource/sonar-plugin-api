@@ -1,4 +1,4 @@
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
-* @damien-urruty-sonarsource @dbmeneses @anita-stanisz-sonarsource @johann-beleites-sonarsource @leo-geoffroy-sonarsource
+* @damien-urruty-sonarsource @anita-stanisz-sonarsource @johann-beleites-sonarsource @leo-geoffroy-sonarsource
 # The owner team ; keep this at the end of the file
 .github/CODEOWNERS @sonarsource/sonarqube-team
