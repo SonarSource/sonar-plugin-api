@@ -19,12 +19,11 @@
  */
 package org.sonar.api.issue;
 
-
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultTransitionsTest {
+public class DefaultTransitionsTest {
 
   @Test
   public void ALLfield_shouldNotBeEmpty() {
