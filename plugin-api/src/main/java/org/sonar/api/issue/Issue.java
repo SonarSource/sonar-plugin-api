@@ -46,69 +46,114 @@ public interface Issue extends Serializable {
 
   /**
    * Default status when creating an issue.
+   *
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
    */
+  @Deprecated(since = "10.4")
   String STATUS_OPEN = "OPEN";
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String STATUS_CONFIRMED = "CONFIRMED";
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String STATUS_REOPENED = "REOPENED";
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String STATUS_RESOLVED = "RESOLVED";
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
   String STATUS_CLOSED = "CLOSED";
-
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String RESOLUTION_FIXED = "FIXED";
 
   /**
    * Resolution when issue is flagged as false positive.
    */
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String RESOLUTION_FALSE_POSITIVE = "FALSE-POSITIVE";
 
   /**
    * Resolution when rule has been uninstalled or disabled in the Quality profile.
-    */
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   String RESOLUTION_REMOVED = "REMOVED";
 
   /**
    * Issue is irrelevant in the context and was muted by user.
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
    * @since 5.1
    */
+  @Deprecated(since = "10.4")
   String RESOLUTION_WONT_FIX = "WONTFIX";
 
   /**
    * Security Hotspot has been reviewed and resolved as safe.
+   * @deprecated since 10.4 as Security Hotspot are deprecated.
    * @since 8.1
    */
+  @Deprecated(since = "10.4")
   String RESOLUTION_SAFE = "SAFE";
 
   /**
    * Security Hotspot has been reviewed and acknowledged that it poses a risk.
+   * @deprecated since 10.4 as Security Hotspot are deprecated.
    * @since 9.4
    */
+  @Deprecated(since = "10.4")
   String RESOLUTION_ACKNOWLEDGED = "ACKNOWLEDGED";
 
+  /**
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "10.4")
   List<String> RESOLUTIONS = List.of(RESOLUTION_FALSE_POSITIVE, RESOLUTION_WONT_FIX, RESOLUTION_FIXED,
     RESOLUTION_REMOVED);
 
+  /**
+   * @deprecated since 10.4 as Security Hotspot are deprecated
+   */
+  @Deprecated(since = "10.4")
   List<String> SECURITY_HOTSPOT_RESOLUTIONS = List.of(RESOLUTION_FIXED, RESOLUTION_SAFE, RESOLUTION_ACKNOWLEDGED);
 
   /**
-   * @since 7.8
+   * @deprecated since 10.4 as Security Hotspot are deprecated
    */
+  @Deprecated(since = "10.4")
   String STATUS_TO_REVIEW = "TO_REVIEW";
 
   /**
    * @deprecated since 8.1, status has been mapped as `TO_REVIEW`
    */
-  @Deprecated
+  @Deprecated(since = "8.1")
   String STATUS_IN_REVIEW = "IN_REVIEW";
 
   /**
-   * @since 7.8
+   * @deprecated since 10.4 as Security Hotspot are deprecated
    */
+  @Deprecated(since = "10.4")
   String STATUS_REVIEWED = "REVIEWED";
 
   /**
    * Return all available statuses
    *
    * @since 4.4
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
    */
+  @Deprecated(since = "10.4")
   List<String> STATUSES = List.of(STATUS_OPEN, STATUS_CONFIRMED, STATUS_REOPENED, STATUS_RESOLVED, STATUS_CLOSED,
     STATUS_TO_REVIEW, STATUS_REVIEWED);
 
@@ -161,13 +206,17 @@ public interface Issue extends Serializable {
 
   /**
    * See constant values in {@link Issue}.
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
    */
+  @Deprecated(since = "10.4")
   String status();
 
   /**
    * The type of resolution, or null if the issue is not resolved. See constant values in {@link Issue}.
+   * @deprecated since 10.4 in favor of {@link IssueStatus}
    */
   @CheckForNull
+  @Deprecated(since = "10.4")
   String resolution();
 
   /**
@@ -212,6 +261,7 @@ public interface Issue extends Serializable {
 
   /**
    * During a scan return if the current issue is a new one.
+   *
    * @return always false on server side
    * @since 4.0
    */
@@ -219,6 +269,7 @@ public interface Issue extends Serializable {
 
   /**
    * During a scan returns true if the issue is copied from another branch.
+   *
    * @since 6.6
    */
   boolean isCopied();

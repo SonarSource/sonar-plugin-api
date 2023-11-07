@@ -21,6 +21,7 @@ package org.sonar.api.ce.measure;
 
 import java.util.Map;
 import javax.annotation.CheckForNull;
+import org.sonar.api.issue.IssueStatus;
 import org.sonar.api.issue.impact.Severity;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
@@ -40,14 +41,26 @@ public interface Issue {
 
   /**
    * Available list of status can be found in {@link org.sonar.api.issue.Issue#STATUSES}
+   *
+   * @deprecated since 10.4 in favor of {@link Issue#issueStatus()}
    */
+  @Deprecated(since = "10.4")
   String status();
 
   /**
    * Available list of resolutions can be found in {@link org.sonar.api.issue.Issue#RESOLUTIONS}
+   *
+   * @deprecated since 10.4 in favor of {@link Issue#issueStatus()}
    */
   @CheckForNull
+  @Deprecated(since = "10.4")
   String resolution();
+
+  /**
+   * @since 10.4
+   * Available list of status can be found in {@link IssueStatus#values()}
+   */
+  IssueStatus issueStatus();
 
   /**
    * See constants in {@link org.sonar.api.rule.Severity}.

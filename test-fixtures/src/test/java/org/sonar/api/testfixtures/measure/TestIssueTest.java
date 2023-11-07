@@ -21,6 +21,7 @@ package org.sonar.api.testfixtures.measure;
 
 import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.measure.Issue;
+import org.sonar.api.issue.IssueStatus;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
