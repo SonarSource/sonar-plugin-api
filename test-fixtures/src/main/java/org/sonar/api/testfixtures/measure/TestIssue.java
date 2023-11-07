@@ -26,6 +26,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.ce.measure.Issue;
+import org.sonar.api.issue.IssueStatus;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.Severity;
@@ -68,15 +69,28 @@ public class TestIssue implements Issue {
     return ruleKey;
   }
 
+  /**
+   * @deprecated in favor of {@link Issue#issueStatus()}
+   */
   @Override
+  @Deprecated(since = "10.4")
   public String status() {
     return status;
   }
 
+  /**
+   * @deprecated in favor of {@link Issue#issueStatus()}
+   */
   @Override
   @CheckForNull
+  @Deprecated(since = "10.4")
   public String resolution() {
     return resolution;
+  }
+
+  @Override
+  public IssueStatus issueStatus() {
+    return IssueStatus.of(status, resolution);
   }
 
   @Override

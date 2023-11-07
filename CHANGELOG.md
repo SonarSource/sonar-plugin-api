@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.5
+
+* Introduce `org.sonar.api.issue.IssueStatus` to simplify `status` and `resolution` on issues.
+* Deprecate `org.sonar.api.ce.measure.Issue.status()` and `org.sonar.api.ce.measure.Issue.resolution()`. Use `org.sonar.api.ce.measure.Issue.issueStatus()` method instead.
+* Deprecate `org.sonar.api.issue.Issue.status()` and `org.sonar.api.issue.Issue.resolution()`. No replacement.
+* Deprecate `STATUS_OPEN`, `STATUS_CONFIRMED`, `STATUS_REOPENED`, `STATUS_RESOLVED`, `STATUS_CLOSED`,
+  `RESOLUTION_FIXED`, `RESOLUTION_FALSE_POSITIVE`, `RESOLUTION_REMOVED`, `RESOLUTION_WONT_FIX`, use `org.sonar.api.issue.IssueStatus` enum instead
+* Deprecate `RESOLUTION_SAFE`, `RESOLUTION_ACKNOWLEDGED`, `STATUS_TO_REVIEW`, `STATUS_REVIEWED`. No replacement.
+
 ## 10.4
 
 * Add new metrics `org.sonar.api.measures.CoreMetrics.NEW_ACCEPTED_ISSUES` and `org.sonar.api.measures.CoreMetrics.HIGH_IMPACT_ACCEPTED_ISSUES`.
