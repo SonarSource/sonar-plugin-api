@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4
+
+* Fixed misleading javadoc of `org.sonar.api.config.Configuration` to make it clear that at Compute Engine level project configuration is not provided.
+
 ## 10.3
 
 * Deprecate `org.sonar.api.measures.CoreMetrics.WONT_FIX_ISSUES` metric and related key.
