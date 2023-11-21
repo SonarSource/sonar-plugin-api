@@ -29,8 +29,7 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
  * Component to get effective configuration. Values of properties depend on the runtime environment:
  * <ul>
  *   <li>immutable project configuration in scanner.</li>
- *   <li>global configuration in web server. It does not allow to get the settings overridden on projects.</li>
- *   <li>project configuration in Compute Engine.</li>
+ *   <li>global configuration in Web Server and Compute Engine. It does not allow to get the settings overridden on projects.</li>
  * </ul>
  *
  * <h3>Usage</h3>
