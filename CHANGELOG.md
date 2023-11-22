@@ -3,6 +3,8 @@
 ## 10.4
 
 * Fixed misleading javadoc of `org.sonar.api.config.Configuration` to make it clear that at Compute Engine level project configuration is not provided.
+* Deprecate `org.sonar.api.issue.DefaultTransitions.UNCOMFIRM`. There is no replacement as `org.sonar.api.issue.DefaultTransitions.CONFIRM` is subject to removal in the future.
+* Deprecate `org.sonar.api.issue.DefaultTransitions.CONFIRM`. Use `org.sonar.api.issue.DefaultTransitions.ACCEPT` instead.
 
 ## 10.3
 
