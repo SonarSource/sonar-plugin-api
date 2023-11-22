@@ -29,7 +29,16 @@ import static java.util.Collections.unmodifiableList;
  */
 public interface DefaultTransitions {
 
+  /**
+   * @deprecated since 10.4, use {@link #ACCEPT} instead
+   */
+  @Deprecated(since = "10.4")
   String CONFIRM = "confirm";
+
+  /**
+   * @deprecated since 10.4. There is no replacement as `org.sonar.api.issue.DefaultTransitions.CONFIRM` is subject to removal in the future.
+   */
+  @Deprecated(since = "10.4")
   String UNCONFIRM = "unconfirm";
   String REOPEN = "reopen";
   String RESOLVE = "resolve";
