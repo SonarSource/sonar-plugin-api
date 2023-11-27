@@ -8,6 +8,8 @@
 * Deprecate `STATUS_OPEN`, `STATUS_CONFIRMED`, `STATUS_REOPENED`, `STATUS_RESOLVED`, `STATUS_CLOSED`,
   `RESOLUTION_FIXED`, `RESOLUTION_FALSE_POSITIVE`, `RESOLUTION_REMOVED`, `RESOLUTION_WONT_FIX`, use `org.sonar.api.issue.IssueStatus` enum instead
 * Deprecate `RESOLUTION_SAFE`, `RESOLUTION_ACKNOWLEDGED`, `STATUS_TO_REVIEW`, `STATUS_REVIEWED`. No replacement.
+* Deprecate `org.sonar.api.measures.CoreMetrics.REOPENED_ISSUES`, `org.sonar.api.measures.CoreMetrics.OPEN_ISSUES`. Use `org.sonar.api.measures.CoreMetrics.VIOLATIONS` instead.
+* Deprecate `org.sonar.api.measures.CoreMetrics.CONFIRMED_ISSUES`. No replacement.
 
 ## 10.4
 

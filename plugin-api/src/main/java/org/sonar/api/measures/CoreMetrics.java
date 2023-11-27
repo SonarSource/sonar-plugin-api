@@ -999,12 +999,16 @@ public final class CoreMetrics {
 
   /**
    * @since 3.6
+   * @deprecated since 10.4. Use {@link #VIOLATIONS_KEY} instead.
    */
+  @Deprecated(since = "10.4")
   public static final String OPEN_ISSUES_KEY = "open_issues";
 
   /**
    * @since 3.6
+   * @deprecated since 10.4. Use {@link #VIOLATIONS} instead.
    */
+  @Deprecated(since = "10.4")
   public static final Metric<Integer> OPEN_ISSUES = new Metric.Builder(OPEN_ISSUES_KEY, "Open Issues", Metric.ValueType.INT)
     .setDescription("Open issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1015,12 +1019,16 @@ public final class CoreMetrics {
 
   /**
    * @since 3.6
+   * @deprecated since 10.4. Use {@link #VIOLATIONS_KEY} instead.
    */
+  @Deprecated(since = "10.4")
   public static final String REOPENED_ISSUES_KEY = "reopened_issues";
 
   /**
    * @since 3.6
+   * @deprecated since 10.4. Use {@link #VIOLATIONS} instead.
    */
+  @Deprecated(since = "10.4")
   public static final Metric<Integer> REOPENED_ISSUES = new Metric.Builder(REOPENED_ISSUES_KEY, "Reopened Issues", Metric.ValueType.INT)
     .setDescription("Reopened issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1032,12 +1040,16 @@ public final class CoreMetrics {
 
   /**
    * @since 3.6
+   * @deprecated since 10.4 as status {@link org.sonar.api.issue.Issue#STATUS_CONFIRMED} is deprecated. No replacement.
    */
+  @Deprecated(since = "10.4")
   public static final String CONFIRMED_ISSUES_KEY = "confirmed_issues";
 
   /**
    * @since 3.6
+   * @deprecated since 10.4 as status {@link org.sonar.api.issue.Issue#STATUS_CONFIRMED} is deprecated. No replacement.
    */
+  @Deprecated(since = "10.4")
   public static final Metric<Integer> CONFIRMED_ISSUES = new Metric.Builder(CONFIRMED_ISSUES_KEY, "Confirmed Issues", Metric.ValueType.INT)
     .setDescription("Confirmed issues")
     .setDirection(Metric.DIRECTION_WORST)
