@@ -33,7 +33,7 @@ except_nightly_cron: &EXCEPT_ON_NIGHTLY_CRON
   only_if: $CIRRUS_CRON != $NIGHTLY_CRON
 
 container_definition: &CONTAINER_DEFINITION
-  image: ${CIRRUS_AWS_ACCOUNT}.dkr.ecr.eu-central-1.amazonaws.com/base:j11-g7-latest
+  image: ${CIRRUS_AWS_ACCOUNT}.dkr.ecr.eu-central-1.amazonaws.com/base:j17-g7-latest
   cluster_name: ${CIRRUS_CLUSTER_NAME}
   region: eu-central-1
   namespace: default
