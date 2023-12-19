@@ -1839,6 +1839,7 @@ public final class CoreMetrics {
     .setDescription("Count of issues that would be fixed by the pull request.")
     .setDirection(Metric.DIRECTION_BETTER)
     .setDomain(DOMAIN_ISSUES)
+    .setDeleteHistoricalData(true)
     .setHidden(true)
     .create();
 
