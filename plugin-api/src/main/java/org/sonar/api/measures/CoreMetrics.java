@@ -1827,6 +1827,21 @@ public final class CoreMetrics {
     .setHidden(true)
     .create();
 
+  /**
+   * @since 10.4
+   *
+   * This metric is only needed to present additional information for pull requests about number of issues that pull request might be
+   * fixing.
+   */
+  public static final String PULL_REQUEST_FIXED_ISSUES_KEY = "pull_request_fixed_issues";
+  public static final Metric<Metric.Level> PULL_REQUEST_FIXED_ISSUES = new Metric.Builder(PULL_REQUEST_FIXED_ISSUES_KEY,
+    "Pull request fixed issues", Metric.ValueType.INT)
+    .setDescription("Count of issues that would be fixed by the pull request.")
+    .setDirection(Metric.DIRECTION_BETTER)
+    .setDomain(DOMAIN_ISSUES)
+    .setHidden(true)
+    .create();
+
   private static final List<Metric> METRICS;
 
   static {
