@@ -965,6 +965,39 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 10.4
+   */
+  public static final String NEW_ACCEPTED_ISSUES_KEY = "new_accepted_issues";
+
+  /**
+   * @since 10.4
+   */
+  public static final Metric<Integer> NEW_ACCEPTED_ISSUES = new Metric.Builder(NEW_ACCEPTED_ISSUES_KEY, "New Accepted Issues", Metric.ValueType.INT)
+    .setDescription("New accepted issues")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .setDeleteHistoricalData(true)
+    .create();
+
+  /**
+   * @since 10.4
+   */
+  public static final String HIGH_IMPACT_ACCEPTED_ISSUES_KEY = "high_impact_accepted_issues";
+
+  /**
+   * @since 10.4
+   */
+  public static final Metric<Integer> HIGH_IMPACT_ACCEPTED_ISSUES = new Metric.Builder(HIGH_IMPACT_ACCEPTED_ISSUES_KEY, "High Impact Accepted Issues", Metric.ValueType.INT)
+    .setDescription("Accepted issues with high impact")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .create();
+
+  /**
    * @since 3.6
    */
   public static final String OPEN_ISSUES_KEY = "open_issues";

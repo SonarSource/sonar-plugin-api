@@ -2,6 +2,7 @@
 
 ## 10.4
 
+* Add new metrics `org.sonar.api.measures.CoreMetrics.NEW_ACCEPTED_ISSUES` and `org.sonar.api.measures.CoreMetrics.HIGH_IMPACT_ACCEPTED_ISSUES`.
 * Add new metric `org.sonar.api.measures.CoreMetrics.PULL_REQUEST_FIXED_ISSUES` to represent issues that would be fixed by the pull request.
 * Fixed misleading javadoc of `org.sonar.api.config.Configuration` to make it clear that at Compute Engine level project configuration is not provided.
 * Deprecate `org.sonar.api.issue.DefaultTransitions.UNCOMFIRM`. There is no replacement as `org.sonar.api.issue.DefaultTransitions.CONFIRM` is subject to removal in the future.
