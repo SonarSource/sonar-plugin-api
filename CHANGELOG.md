@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.6
+
+* Add new metrics `org.sonar.api.measures.CoreMetrics.SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.MAINTAINABILITY_ISSUES` and `org.sonar.api.measures.CoreMetrics.RELIABILITY_ISSUES`.
+
 ## 10.5
 
 * Introduce `org.sonar.api.issue.IssueStatus` to simplify `status` and `resolution` on issues.

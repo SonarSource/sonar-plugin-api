@@ -24,6 +24,7 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.sonar.api.Beta;
 import org.sonar.api.utils.SonarException;
 
 import static org.sonar.api.measures.Metric.ValueType.BOOL;
@@ -995,6 +996,80 @@ public final class CoreMetrics {
     .setDomain(DOMAIN_ISSUES)
     .setBestValue(0.0)
     .setOptimizedBestValue(true)
+    .create();
+
+  /**
+   * @since 10.6
+   */
+  @Beta
+  public static final String MAINTAINABILITY_ISSUES_KEY = "maintainability_issues";
+
+  /**
+   * This metric relates to issues with the software quality set as 'Maintainability'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   *   "total": 3,
+   *   "high": 1,
+   *   "medium": 1,
+   *   "low": 1
+   * }
+   *
+   * @since 10.6
+   */
+  @Beta
+  public static final Metric<String> MAINTAINABILITY_ISSUES = new Metric.Builder(MAINTAINABILITY_ISSUES_KEY, "Maintainability Issues", Metric.ValueType.DATA)
+    .setDescription("Maintainability issues")
+    .setDomain(DOMAIN_ISSUES)
+    .create();
+
+  /**
+   * @since 10.6
+   */
+  @Beta
+  public static final String RELIABILITY_ISSUES_KEY = "reliability_issues";
+
+  /**
+   * This metric relates to issues with the software quality set as 'Reliability'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   *   "total": 3,
+   *   "high": 1,
+   *   "medium": 1,
+   *   "low": 1
+   * }
+   *
+   * @since 10.6
+   */
+  @Beta
+  public static final Metric<String> RELIABILITY_ISSUES = new Metric.Builder(RELIABILITY_ISSUES_KEY, "Reliability Issues", Metric.ValueType.DATA)
+    .setDescription("Reliability issues")
+    .setDomain(DOMAIN_ISSUES)
+    .create();
+
+  /**
+   * @since 10.6
+   */
+  @Beta
+  public static final String SECURITY_ISSUES_KEY = "security_issues";
+
+  /**
+   * This metric relates to issues with the software quality set as 'Security'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   *   "total": 3,
+   *   "high": 1,
+   *   "medium": 1,
+   *   "low": 1
+   * }
+   * @since 10.6
+   */
+  @Beta
+  public static final Metric<String> SECURITY_ISSUES = new Metric.Builder(SECURITY_ISSUES_KEY, "Security Issues", Metric.ValueType.DATA)
+    .setDescription("Security issues")
+    .setDomain(DOMAIN_ISSUES)
     .create();
 
   /**
