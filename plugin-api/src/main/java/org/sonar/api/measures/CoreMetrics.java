@@ -1010,9 +1010,9 @@ public final class CoreMetrics {
    * Example of the format:
    * {
    *   "total": 3,
-   *   "high": 1,
-   *   "medium": 1,
-   *   "low": 1
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1
    * }
    *
    * @since 10.6
@@ -1035,9 +1035,9 @@ public final class CoreMetrics {
    * Example of the format:
    * {
    *   "total": 3,
-   *   "high": 1,
-   *   "medium": 1,
-   *   "low": 1
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1
    * }
    *
    * @since 10.6
@@ -1060,9 +1060,9 @@ public final class CoreMetrics {
    * Example of the format:
    * {
    *   "total": 3,
-   *   "high": 1,
-   *   "medium": 1,
-   *   "low": 1
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1
    * }
    * @since 10.6
    */
