@@ -984,12 +984,16 @@ public final class CoreMetrics {
 
   /**
    * @since 10.4
+   * @deprecated since 10.6
    */
+  @Deprecated(since = "10.6")
   public static final String HIGH_IMPACT_ACCEPTED_ISSUES_KEY = "high_impact_accepted_issues";
 
   /**
    * @since 10.4
+   * @deprecated since 10.6
    */
+  @Deprecated(since = "10.6")
   public static final Metric<Integer> HIGH_IMPACT_ACCEPTED_ISSUES = new Metric.Builder(HIGH_IMPACT_ACCEPTED_ISSUES_KEY, "High Impact Accepted Issues", Metric.ValueType.INT)
     .setDescription("Accepted issues with high impact")
     .setDirection(Metric.DIRECTION_WORST)
