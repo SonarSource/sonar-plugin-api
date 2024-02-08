@@ -40,6 +40,7 @@ The following tables indicate which API versions plugins can find at runtime:
 
 | SonarQube              | Plugin API                |
 |------------------------|---------------------------|
+| 10.4.0.87286           | 10.6.0.2114               |
 | 10.3.0.82913           | 10.2.0.1908               |
 | 10.2.0.77647           | 10.1.0.809                |
 | 10.1.0.73491           | 9.17.0.587                |
