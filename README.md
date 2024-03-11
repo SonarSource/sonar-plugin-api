@@ -60,9 +60,9 @@ Current version: 10.1.0.809
 ### SonarLint
 | Flavor   | Plugin API                |
 |----------|---------------------------|
-| IntelliJ | 9.13.0.360                |
-| Eclipse  | 9.13.0.360                |
-| VSCode   | 9.13.0.360                |
+| IntelliJ | 10.1.0.809                |
+| Eclipse  | 10.1.0.809                |
+| VSCode   | 10.1.0.809                |
 
 ## Optimizing the execution of sensors
 
