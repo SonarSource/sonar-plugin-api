@@ -3,6 +3,7 @@
 ## 10.7
 
 * Add new metrics `org.sonar.api.measures.CoreMetrics.NEW_SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.NEW_MAINTAINABILITY_ISSUES` and `org.sonar.api.measures.CoreMetrics.NEW_RELIABILITY_ISSUES`.
+* Deprecate metrics `org.sonar.api.measures.CoreMetrics.BLOCKER_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.CRITICAL_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.MAJOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.MINOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.INFO_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_BLOCKER_VIOLATIONS`, , `org.sonar.api.measures.CoreMetrics.NEW_CRITICAL_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_MAJOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_MINOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_INFO_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.CODE_SMELLS`, `org.sonar.api.measures.CoreMetrics.NEW_CODE_SMELLS`, `org.sonar.api.measures.CoreMetrics.BUGS`, `org.sonar.api.measures.CoreMetrics.NEW_BUGS`, `org.sonar.api.measures.CoreMetrics.VULNERABILITIES`, `org.sonar.api.measures.CoreMetrics.NEW_VULNERABILITIES`.  Use `org.sonar.api.measures.CoreMetrics.SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.MAINTAINABILITY_ISSUES` and `org.sonar.api.measures.CoreMetrics.RELIABILITY_ISSUES` instead.
 
 ## 10.6
 

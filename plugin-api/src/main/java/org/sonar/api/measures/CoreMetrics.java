@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.sonar.api.Beta;
+import org.sonar.api.rule.Severity;
 import org.sonar.api.utils.SonarException;
 
 import static org.sonar.api.measures.Metric.ValueType.BOOL;
@@ -797,7 +798,15 @@ public final class CoreMetrics {
     .setOptimizedBestValue(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String BLOCKER_VIOLATIONS_KEY = "blocker_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> BLOCKER_VIOLATIONS = new Metric.Builder(BLOCKER_VIOLATIONS_KEY, "Blocker Issues", Metric.ValueType.INT)
     .setDescription("Blocker issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -807,7 +816,15 @@ public final class CoreMetrics {
     .setOptimizedBestValue(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String CRITICAL_VIOLATIONS_KEY = "critical_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> CRITICAL_VIOLATIONS = new Metric.Builder(CRITICAL_VIOLATIONS_KEY, "Critical Issues", Metric.ValueType.INT)
     .setDescription("Critical issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -817,7 +834,15 @@ public final class CoreMetrics {
     .setOptimizedBestValue(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String MAJOR_VIOLATIONS_KEY = "major_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> MAJOR_VIOLATIONS = new Metric.Builder(MAJOR_VIOLATIONS_KEY, "Major Issues", Metric.ValueType.INT)
     .setDescription("Major issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -827,7 +852,15 @@ public final class CoreMetrics {
     .setOptimizedBestValue(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String MINOR_VIOLATIONS_KEY = "minor_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> MINOR_VIOLATIONS = new Metric.Builder(MINOR_VIOLATIONS_KEY, "Minor Issues", Metric.ValueType.INT)
     .setDescription("Minor issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -837,7 +870,15 @@ public final class CoreMetrics {
     .setOptimizedBestValue(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String INFO_VIOLATIONS_KEY = "info_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> INFO_VIOLATIONS = new Metric.Builder(INFO_VIOLATIONS_KEY, "Info Issues", Metric.ValueType.INT)
     .setDescription("Info issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -858,7 +899,15 @@ public final class CoreMetrics {
     .setDeleteHistoricalData(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String NEW_BLOCKER_VIOLATIONS_KEY = "new_blocker_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_BLOCKER_VIOLATIONS = new Metric.Builder(NEW_BLOCKER_VIOLATIONS_KEY, "New Blocker Issues", Metric.ValueType.INT)
     .setDescription("New Blocker issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -869,7 +918,15 @@ public final class CoreMetrics {
     .setDeleteHistoricalData(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String NEW_CRITICAL_VIOLATIONS_KEY = "new_critical_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_CRITICAL_VIOLATIONS = new Metric.Builder(NEW_CRITICAL_VIOLATIONS_KEY, "New Critical Issues", Metric.ValueType.INT)
     .setDescription("New Critical issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -880,7 +937,15 @@ public final class CoreMetrics {
     .setDeleteHistoricalData(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String NEW_MAJOR_VIOLATIONS_KEY = "new_major_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_MAJOR_VIOLATIONS = new Metric.Builder(NEW_MAJOR_VIOLATIONS_KEY, "New Major Issues", Metric.ValueType.INT)
     .setDescription("New Major issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -891,7 +956,15 @@ public final class CoreMetrics {
     .setDeleteHistoricalData(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String NEW_MINOR_VIOLATIONS_KEY = "new_minor_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_MINOR_VIOLATIONS = new Metric.Builder(NEW_MINOR_VIOLATIONS_KEY, "New Minor Issues", Metric.ValueType.INT)
     .setDescription("New Minor issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -902,7 +975,15 @@ public final class CoreMetrics {
     .setDeleteHistoricalData(true)
     .create();
 
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final String NEW_INFO_VIOLATIONS_KEY = "new_info_violations";
+  /**
+   * @deprecated since 10.7 as {@link Severity} is deprecated. No replacement.
+   */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_INFO_VIOLATIONS = new Metric.Builder(NEW_INFO_VIOLATIONS_KEY, "New Info Issues", Metric.ValueType.INT)
     .setDescription("New Info issues")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1223,14 +1304,18 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #MAINTAINABILITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String CODE_SMELLS_KEY = "code_smells";
 
   /**
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #MAINTAINABILITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> CODE_SMELLS = new Metric.Builder(CODE_SMELLS_KEY, "Code Smells", Metric.ValueType.INT)
     .setDescription("Code Smells")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1244,14 +1329,18 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_MAINTAINABILITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String NEW_CODE_SMELLS_KEY = "new_code_smells";
 
   /**
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_MAINTAINABILITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_CODE_SMELLS = new Metric.Builder(NEW_CODE_SMELLS_KEY, "New Code Smells", Metric.ValueType.INT)
     .setDescription("New Code Smells")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1266,14 +1355,18 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #RELIABILITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String BUGS_KEY = "bugs";
 
   /**
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #RELIABILITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> BUGS = new Metric.Builder(BUGS_KEY, "Bugs", Metric.ValueType.INT)
     .setDescription("Bugs")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1287,14 +1380,18 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_RELIABILITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String NEW_BUGS_KEY = "new_bugs";
 
   /**
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_RELIABILITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_BUGS = new Metric.Builder(NEW_BUGS_KEY, "New Bugs", Metric.ValueType.INT)
     .setDescription("New Bugs")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1309,14 +1406,18 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #SECURITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String VULNERABILITIES_KEY = "vulnerabilities";
 
   /**
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #SECURITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> VULNERABILITIES = new Metric.Builder(VULNERABILITIES_KEY, "Vulnerabilities", Metric.ValueType.INT)
     .setDescription("Vulnerabilities")
     .setDirection(Metric.DIRECTION_WORST)
@@ -1330,14 +1431,17 @@ public final class CoreMetrics {
    * SonarQube Quality Model
    *
    * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_SECURITY_ISSUES_KEY} instead.
    */
+  @Deprecated(since = "10.7")
   public static final String NEW_VULNERABILITIES_KEY = "new_vulnerabilities";
 
   /**
    * SonarQube Quality Model
    *
-   * @since 5.5
+   * @deprecated since 10.7. Use {@link #NEW_SECURITY_ISSUES} instead.
    */
+  @Deprecated(since = "10.7")
   public static final Metric<Integer> NEW_VULNERABILITIES = new Metric.Builder(NEW_VULNERABILITIES_KEY, "New Vulnerabilities", Metric.ValueType.INT)
     .setDescription("New Vulnerabilities")
     .setDirection(Metric.DIRECTION_WORST)
