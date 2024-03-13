@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.7
+
+* Add new metrics `org.sonar.api.measures.CoreMetrics.NEW_SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.NEW_MAINTAINABILITY_ISSUES` and `org.sonar.api.measures.CoreMetrics.NEW_RELIABILITY_ISSUES`.
+
 ## 10.6
 
 * Deprecate metric `org.sonar.api.measures.CoreMetrics.HIGH_IMPACT_ACCEPTED_ISSUES`.

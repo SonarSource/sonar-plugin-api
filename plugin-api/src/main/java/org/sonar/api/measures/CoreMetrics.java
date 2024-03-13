@@ -1028,6 +1028,33 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 10.7
+   */
+  @Beta
+  public static final String NEW_MAINTAINABILITY_ISSUES_KEY = "new_maintainability_issues";
+
+  /**
+   * This metric relates to new issues with the software quality set as 'Maintainability'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   * "total": 3,
+   * "HIGH": 1,
+   * "MEDIUM": 1,
+   * "LOW": 1
+   * }
+   *
+   * @since 10.7
+   */
+  @Beta
+  public static final Metric<String> NEW_MAINTAINABILITY_ISSUES = new Metric.Builder(NEW_MAINTAINABILITY_ISSUES_KEY, "New Maintainability Issues",
+    Metric.ValueType.DATA)
+    .setDescription("New maintainability issues")
+    .setDomain(DOMAIN_ISSUES)
+    .setDeleteHistoricalData(true)
+    .create();
+
+  /**
    * @since 10.6
    */
   @Beta
@@ -1053,6 +1080,33 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 10.7
+   */
+  @Beta
+  public static final String NEW_RELIABILITY_ISSUES_KEY = "new_reliability_issues";
+
+  /**
+   * This metric relates to new issues with the software quality set as 'Reliability'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   * "total": 3,
+   * "HIGH": 1,
+   * "MEDIUM": 1,
+   * "LOW": 1
+   * }
+   *
+   * @since 10.7
+   */
+  @Beta
+  public static final Metric<String> NEW_RELIABILITY_ISSUES = new Metric.Builder(NEW_RELIABILITY_ISSUES_KEY, "New Reliability Issues",
+    Metric.ValueType.DATA)
+    .setDescription("New reliability issues")
+    .setDomain(DOMAIN_ISSUES)
+    .setDeleteHistoricalData(true)
+    .create();
+
+  /**
    * @since 10.6
    */
   @Beta
@@ -1074,6 +1128,33 @@ public final class CoreMetrics {
   public static final Metric<String> SECURITY_ISSUES = new Metric.Builder(SECURITY_ISSUES_KEY, "Security Issues", Metric.ValueType.DATA)
     .setDescription("Security issues")
     .setDomain(DOMAIN_ISSUES)
+    .create();
+
+  /**
+   * @since 10.7
+   */
+  @Beta
+  public static final String NEW_SECURITY_ISSUES_KEY = "new_security_issues";
+
+  /**
+   * This metric relates to new issues with the software quality set as 'Security'. It contains information about total number of
+   * these issues as well as their distribution based on the severity within the impact.
+   * Example of the format:
+   * {
+   * "total": 3,
+   * "HIGH": 1,
+   * "MEDIUM": 1,
+   * "LOW": 1
+   * }
+   *
+   * @since 10.7
+   */
+  @Beta
+  public static final Metric<String> NEW_SECURITY_ISSUES = new Metric.Builder(NEW_SECURITY_ISSUES_KEY, "New Security Issues",
+    Metric.ValueType.DATA)
+    .setDescription("New security issues")
+    .setDomain(DOMAIN_ISSUES)
+    .setDeleteHistoricalData(true)
     .create();
 
   /**
