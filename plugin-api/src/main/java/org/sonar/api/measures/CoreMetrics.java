@@ -1105,7 +1105,7 @@ public final class CoreMetrics {
   @Beta
   public static final Metric<String> MAINTAINABILITY_ISSUES = new Metric.Builder(MAINTAINABILITY_ISSUES_KEY, "Maintainability Issues", Metric.ValueType.DATA)
     .setDescription("Maintainability issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_MAINTAINABILITY)
     .create();
 
   /**
@@ -1131,7 +1131,7 @@ public final class CoreMetrics {
   public static final Metric<String> NEW_MAINTAINABILITY_ISSUES = new Metric.Builder(NEW_MAINTAINABILITY_ISSUES_KEY, "New Maintainability Issues",
     Metric.ValueType.DATA)
     .setDescription("New maintainability issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_MAINTAINABILITY)
     .setDeleteHistoricalData(true)
     .create();
 
@@ -1157,7 +1157,7 @@ public final class CoreMetrics {
   @Beta
   public static final Metric<String> RELIABILITY_ISSUES = new Metric.Builder(RELIABILITY_ISSUES_KEY, "Reliability Issues", Metric.ValueType.DATA)
     .setDescription("Reliability issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_RELIABILITY)
     .create();
 
   /**
@@ -1183,7 +1183,7 @@ public final class CoreMetrics {
   public static final Metric<String> NEW_RELIABILITY_ISSUES = new Metric.Builder(NEW_RELIABILITY_ISSUES_KEY, "New Reliability Issues",
     Metric.ValueType.DATA)
     .setDescription("New reliability issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_RELIABILITY)
     .setDeleteHistoricalData(true)
     .create();
 
@@ -1208,7 +1208,7 @@ public final class CoreMetrics {
   @Beta
   public static final Metric<String> SECURITY_ISSUES = new Metric.Builder(SECURITY_ISSUES_KEY, "Security Issues", Metric.ValueType.DATA)
     .setDescription("Security issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_SECURITY)
     .create();
 
   /**
@@ -1234,7 +1234,7 @@ public final class CoreMetrics {
   public static final Metric<String> NEW_SECURITY_ISSUES = new Metric.Builder(NEW_SECURITY_ISSUES_KEY, "New Security Issues",
     Metric.ValueType.DATA)
     .setDescription("New security issues")
-    .setDomain(DOMAIN_ISSUES)
+    .setDomain(DOMAIN_SECURITY)
     .setDeleteHistoricalData(true)
     .create();
 
