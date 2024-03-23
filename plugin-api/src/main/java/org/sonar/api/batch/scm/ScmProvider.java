@@ -120,6 +120,14 @@ public abstract class ScmProvider {
     throw new UnsupportedOperationException(formatUnsupportedMessage("Getting revision id"));
   }
 
+  /**
+   * The remote URL of the associated repository
+   * @since 10.8
+   */
+  public String getRemoteOriginUrl() {
+    throw new UnsupportedOperationException(formatUnsupportedMessage("Getting revision id"));
+  }
+
   private String formatUnsupportedMessage(String prefix) {
     return prefix + " is not supported by " + key() + " provider";
   }
