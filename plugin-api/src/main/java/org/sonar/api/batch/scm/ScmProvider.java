@@ -124,7 +124,7 @@ public abstract class ScmProvider {
    * The remote URL of the associated repository
    * @since 10.8
    */
-  public String getRemoteOriginUrl() {
+  public String getRemoteOriginUrl(Path rootBaseDir) {
     throw new UnsupportedOperationException(formatUnsupportedMessage("Getting revision id"));
   }
 
