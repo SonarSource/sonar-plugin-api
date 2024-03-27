@@ -19,10 +19,9 @@
  */
 package org.sonar.api.utils.text;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import java.io.IOException;
 import java.io.Writer;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  * @since 4.2

@@ -19,7 +19,7 @@
  */
 package org.sonar.api.rules;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class RuleParam {
@@ -61,7 +61,7 @@ public class RuleParam {
   }
 
   public RuleParam setDescription(String s) {
-    this.description = StringUtils.defaultString(s, "");
+    this.description = Objects.toString(s, "");
     return this;
   }
 

@@ -49,7 +49,7 @@ public final class AnnotationUtils {
       }
     }
 
-    for (Class<?> anInterface : (List<Class<?>>) ClassUtils.getAllInterfaces(initialClass)) {
+    for (Class<?> anInterface : ClassUtils.getAllInterfaces(initialClass)) {
       A result = anInterface.getAnnotation(annotationClass);
       if (result != null) {
         return result;

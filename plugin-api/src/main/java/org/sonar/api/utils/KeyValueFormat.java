@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
@@ -313,7 +314,7 @@ public final class KeyValueFormat {
         if (key == null) {
           end = true;
         } else {
-          String val = StringUtils.defaultString(reader.nextVal(), "");
+          String val = Objects.toString(reader.nextVal(), "");
           map.put(keyConverter.parse(key), valueConverter.parse(val));
         }
       }

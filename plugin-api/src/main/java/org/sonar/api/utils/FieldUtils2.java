@@ -61,8 +61,8 @@ public final class FieldUtils2 {
       c = c.getSuperclass();
     }
 
-    for (Object anInterface : ClassUtils.getAllInterfaces(clazz)) {
-      Collections.addAll(result, ((Class) anInterface).getDeclaredFields());
+    for (Class<?> anInterface : ClassUtils.getAllInterfaces(clazz)) {
+      Collections.addAll(result, anInterface.getDeclaredFields());
     }
 
     return result;
