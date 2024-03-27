@@ -19,7 +19,7 @@
  */
 package org.sonar.api.utils;
 
-import org.apache.commons.lang.ClassUtils;
+import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Add features missing in {@code org.apache.commons.lang.reflect.FieldUtils}.
+ * Add features missing in {@code org.apache.commons.lang3.reflect.FieldUtils}.
  *
  * @since 2.14
  */

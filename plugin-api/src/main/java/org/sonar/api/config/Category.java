@@ -19,7 +19,7 @@
  */
 package org.sonar.api.config;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 

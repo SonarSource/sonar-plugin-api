@@ -19,7 +19,7 @@
  */
 package org.sonar.api.user;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;

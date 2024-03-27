@@ -35,8 +35,8 @@ public class BlameLineTest {
     assertThat(line1.author()).isEqualTo("foo");
     assertThat(line1.date()).isEqualTo(date);
     assertThat(line1.revision()).isEqualTo("1");
-    assertThat(line1.toString()).isNotEqualTo("foo");
-    assertThat(line1.toString()).contains("revision=1,author=foo");
+    assertThat(line1.toString()).contains("author=foo");
+    assertThat(line1.toString()).contains("revision=1");
   }
 
   @Test

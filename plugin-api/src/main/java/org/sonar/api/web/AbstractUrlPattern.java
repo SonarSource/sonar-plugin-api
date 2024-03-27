@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
-import static org.apache.commons.lang.StringUtils.substringBeforeLast;
+import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**

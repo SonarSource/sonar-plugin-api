@@ -21,7 +21,7 @@ package org.sonar.api.scan.filesystem;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.CoreProperties;
 import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.config.Configuration;

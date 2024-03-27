@@ -22,7 +22,7 @@ package org.sonar.api.server.authentication;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**

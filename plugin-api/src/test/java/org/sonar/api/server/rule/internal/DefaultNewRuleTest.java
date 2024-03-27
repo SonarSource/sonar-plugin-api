@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.rule.internal;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.issue.impact.Severity;

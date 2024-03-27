@@ -22,7 +22,7 @@ package org.sonar.api.config;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.PropertyField;
 import org.sonar.api.PropertyType;
 

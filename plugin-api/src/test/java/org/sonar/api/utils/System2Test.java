@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Test;
 
 import static java.util.UUID.randomUUID;
