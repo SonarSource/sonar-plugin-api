@@ -9,6 +9,7 @@ dependencyResolutionManagement {
       version('slf4j', '1.7.30')
       library('commons-io', 'commons-io:commons-io:2.11.0')
       library('commons-lang3', 'org.apache.commons:commons-lang3:3.14.0')
+      library('commons-text', 'org.apache.commons:commons-text:1.11.0')
       library('commons-validator', 'commons-validator:commons-validator:1.7')
       library('guava', 'com.google.guava:guava:31.1-jre')
       library('gson', 'com.google.code.gson:gson:2.9.0')

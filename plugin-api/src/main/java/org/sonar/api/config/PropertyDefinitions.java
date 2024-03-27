@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
@@ -150,7 +151,7 @@ public final class PropertyDefinitions {
   public String validKey(String key) {
     requireNonNull(key, "key can't be null");
     String trimmedKey = key.trim();
-    return StringUtils.defaultString(deprecatedKeys.get(trimmedKey), trimmedKey);
+    return Objects.toString(deprecatedKeys.get(trimmedKey), trimmedKey);
   }
 
   /**

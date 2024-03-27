@@ -170,7 +170,7 @@ public class ProjectDefinition {
   }
 
   private void appendProperty(String key, String value) {
-    String current = (String) ObjectUtils.defaultIfNull(properties.get(key), "");
+    String current = ObjectUtils.defaultIfNull(properties.get(key), "");
     if (StringUtils.isBlank(current)) {
       properties.put(key, value);
     } else {
@@ -182,7 +182,7 @@ public class ProjectDefinition {
    * @return Source files and folders.
    */
   public List<String> sources() {
-    String sources = (String) ObjectUtils.defaultIfNull(properties.get(SOURCES_PROPERTY), "");
+    String sources = ObjectUtils.defaultIfNull(properties.get(SOURCES_PROPERTY), "");
     return trim(StringUtils.split(sources, SEPARATOR));
   }
 
@@ -223,7 +223,7 @@ public class ProjectDefinition {
   }
 
   public List<String> tests() {
-    String sources = (String) ObjectUtils.defaultIfNull(properties.get(TESTS_PROPERTY), "");
+    String sources = ObjectUtils.defaultIfNull(properties.get(TESTS_PROPERTY), "");
     return trim(StringUtils.split(sources, SEPARATOR));
   }
 
