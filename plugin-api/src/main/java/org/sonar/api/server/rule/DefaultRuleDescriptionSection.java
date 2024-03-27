@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.rule;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 class DefaultRuleDescriptionSection implements RuleDescriptionSection {
 

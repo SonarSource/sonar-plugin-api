@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.utils.log.Logger;

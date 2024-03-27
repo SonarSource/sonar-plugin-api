@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.rule;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.sonar.api.server.rule.StringPatternValidator.validatorWithCommonPatternForKeys;
 
 /**

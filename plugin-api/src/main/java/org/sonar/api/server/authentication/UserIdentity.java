@@ -27,7 +27,7 @@ import javax.annotation.concurrent.Immutable;
 import org.sonar.api.user.UserGroupValidation;
 
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**

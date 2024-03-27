@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**

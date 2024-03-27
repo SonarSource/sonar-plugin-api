@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.sonar.api.utils.Preconditions.checkArgument;

@@ -21,8 +21,8 @@ package org.sonar.api.server.rule;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.PropertyType;
 
 import static java.util.Arrays.asList;

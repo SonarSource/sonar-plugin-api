@@ -19,7 +19,7 @@
  */
 package org.sonar.api.rules;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.utils.AnnotationUtils;
 
 /**

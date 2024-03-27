@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.profile;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.rules.RuleAnnotationUtils;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition.NewBuiltInActiveRule;

@@ -19,7 +19,7 @@
  */
 package org.sonar.api.resources;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;

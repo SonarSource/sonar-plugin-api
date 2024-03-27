@@ -25,9 +25,9 @@ import javax.annotation.concurrent.Immutable;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang.StringUtils.substringBefore;
-import static org.apache.commons.lang.StringUtils.trimToEmpty;
+import static org.apache.commons.lang3.StringUtils.substringAfter;
+import static org.apache.commons.lang3.StringUtils.substringBefore;
+import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 
 /**
  * Version composed of maximum four fields (major, minor, patch and build ID numbers) and optionally a qualifier.

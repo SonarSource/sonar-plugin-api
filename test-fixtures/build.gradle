@@ -1,7 +1,7 @@
 dependencies {
   api project(':plugin-api')
 
-  implementation libs.commons.lang
+  implementation libs.commons.lang3
   implementation libs.logback.classic
 
   compileOnly libs.jsr305

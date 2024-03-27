@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.8
+
+* Replace internal library `commons-lang:commons-lang` by `org.apache.commons:commons-lang3`.
+
 ## 10.7
 
 * Change domain of metrics `org.sonar.api.measures.CoreMetrics.SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.MAINTAINABILITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.RELIABILITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.NEW_SECURITY_ISSUES`, `org.sonar.api.measures.CoreMetrics.NEW_MAINTAINABILITY_ISSUES` and `org.sonar.api.measures.CoreMetrics.NEW_RELIABILITY_ISSUES` to `SECURITY`, `MAINTAINABILITY` and `RELIABILITY` domains instead of `ISSUES` domain.

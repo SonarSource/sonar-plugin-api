@@ -22,7 +22,7 @@ package org.sonar.api.server.rule;
 import java.util.Collection;
 import java.util.Set;
 import javax.annotation.Nullable;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import static java.lang.String.format;
 import static java.lang.String.join;

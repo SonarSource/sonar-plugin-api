@@ -19,7 +19,7 @@
  */
 package org.sonar.api.resources;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Resource scopes are used to group some types of resources. For example Java methods, Flex methods, C functions

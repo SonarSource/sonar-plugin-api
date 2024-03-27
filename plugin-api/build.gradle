@@ -5,7 +5,7 @@ dependencies {
 
   // please keep the list grouped by configuration and ordered by name
   implementation libs.commons.io
-  implementation libs.commons.lang
+  implementation libs.commons.lang3
   implementation libs.commons.validator
   implementation libs.gson
 
