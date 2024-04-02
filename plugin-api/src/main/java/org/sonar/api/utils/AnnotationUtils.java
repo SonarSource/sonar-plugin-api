@@ -22,7 +22,6 @@ package org.sonar.api.utils;
 import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
 
 /**
  * A utility class for annotations
