@@ -3,6 +3,7 @@
 ## 10.8
 
 * Replace internal library `commons-lang:commons-lang` by `org.apache.commons:commons-lang3`.
+* Do not throw an exception when a rule parameter is not known in `org.sonar.api.batch.rule.Checks`
 
 ## 10.7
 

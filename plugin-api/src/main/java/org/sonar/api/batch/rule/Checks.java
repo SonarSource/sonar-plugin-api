@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.FieldUtils2;
@@ -79,6 +81,8 @@ import org.sonar.check.RuleProperty;
  * @since 4.2
  */
 public class Checks<C> {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Checks.class);
+
   private final ActiveRules activeRules;
   private final String repository;
   private final Map<RuleKey, C> checkByRule = new HashMap<>();
@@ -166,10 +170,10 @@ public class Checks<C> {
     for (Map.Entry<String, String> param : activeRule.params().entrySet()) {
       Field field = getField(check, param.getKey());
       if (field == null) {
-        throw new IllegalStateException(
-          String.format("The field '%s' does not exist or is not annotated with @RuleProperty in the class %s", param.getKey(), check.getClass().getName()));
-      }
-      if (StringUtils.isNotBlank(param.getValue())) {
+        // an unknown parameter can ben caused by the rule data coming from a newer version of the plugin.
+        // It is ignored to do not fail the analysis for something the end-user can't act on.
+        LOGGER.debug("The field '{}' does not exist or is not annotated with @RuleProperty in the class {}", param.getKey(), check.getClass().getName());
+      } else if (StringUtils.isNotBlank(param.getValue())) {
         configureField(check, field, param.getValue());
       }
     }
