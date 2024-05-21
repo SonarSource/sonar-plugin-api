@@ -2152,6 +2152,22 @@ public final class CoreMetrics {
     .setHidden(true)
     .create();
 
+  /**
+   * @since 10.9
+   *
+   * This metric shows how many issues have a flag Prioritized Rule.
+   */
+  public static final String PRIORITIZED_RULE_ISSUES_KEY = "prioritized_rule_issues";
+  public static final Metric<Integer> PRIORITIZED_RULE_ISSUES = new Metric.Builder(
+    PRIORITIZED_RULE_ISSUES_KEY, "Prioritized rule issues", Metric.ValueType.INT)
+    .setDescription("Count of issues that have a flag Prioritized Rule.")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setQualitative(true)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .create();
+
   private static final List<Metric> METRICS;
 
   static {

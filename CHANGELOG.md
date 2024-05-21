@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.9
+
+* Add new metric `org.sonar.api.measures.CoreMetrics.PRIORITIZED_RULE_ISSUES`
+
 ## 10.8
 
 * Replace internal library `commons-lang:commons-lang` by `org.apache.commons:commons-lang3`.
