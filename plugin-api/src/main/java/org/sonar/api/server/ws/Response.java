@@ -65,4 +65,13 @@ public interface Response {
 
   Stream stream();
 
+  /**
+   * The list of content types doesn't necessarily need to correspond to the ones defined in RFC2046.
+   */
+  enum ContentType {
+    NO_CONTENT,
+    BINARY,
+    TEXT
+  }
+
 }
