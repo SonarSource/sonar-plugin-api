@@ -243,6 +243,7 @@ public interface WebService extends Definable<WebService.Context> {
   class NewAction {
     private final String key;
     private static final String PAGE_PARAM_DESCRIPTION = "1-based page number";
+    private Enum<Response.ContentType> contentType;
     private String deprecatedKey;
     private String description;
     private String since;
@@ -309,6 +310,15 @@ public interface WebService extends Definable<WebService.Context> {
 
     public NewAction setHandler(RequestHandler h) {
       this.handler = h;
+      return this;
+    }
+
+    /**
+     * Sets content type of the response. This is optional to do.
+     * @since 10.8
+     */
+    public NewAction setContentType(Enum<Response.ContentType> contentType) {
+      this.contentType = contentType;
       return this;
     }
 
@@ -503,6 +513,7 @@ public interface WebService extends Definable<WebService.Context> {
     private final Map<String, Param> params;
     private final URL responseExample;
     private final List<Change> changelog;
+    private final Enum<Response.ContentType> contentType;
 
     private Action(Controller controller, NewAction newAction) {
       this.key = newAction.key;
@@ -516,17 +527,22 @@ public interface WebService extends Definable<WebService.Context> {
       this.responseExample = newAction.responseExample;
       this.handler = newAction.handler;
       this.changelog = newAction.changelog;
+      this.contentType = newAction.contentType;
 
       checkState(this.handler != null, "RequestHandler is not set on action %s", path);
       logWarningIf(this.description == null || this.description.isEmpty(), "Description is not set on action " + path);
       logWarningIf(this.since == null || this.since.isEmpty(), "Since is not set on action " + path);
-      logWarningIf(!this.post && this.responseExample == null, "The response example is not set on action " + path);
+      logWarningIf(this.responseExample == null && isResponseExampleNeeded(), "The response example is not set on action " + path);
 
       Map<String, Param> paramsBuilder = new HashMap<>();
       for (NewParam newParam : newAction.newParams.values()) {
         paramsBuilder.put(newParam.key, new Param(this, newParam));
       }
       this.params = Collections.unmodifiableMap(paramsBuilder);
+    }
+
+    private boolean isResponseExampleNeeded() {
+      return !(this.post || this.contentType == Response.ContentType.BINARY || this.contentType == Response.ContentType.NO_CONTENT);
     }
 
     private static void logWarningIf(boolean condition, String message) {

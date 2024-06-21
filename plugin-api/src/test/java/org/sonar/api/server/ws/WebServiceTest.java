@@ -26,6 +26,7 @@ import java.util.Collections;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.event.Level;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.server.ws.WebService.NewAction;
 import org.sonar.api.server.ws.WebService.NewController;
@@ -109,6 +110,21 @@ public class WebServiceTest {
       .containsOnly(
         tuple("1.0", "change1"),
         tuple("2.0", "change2"));
+  }
+
+  @Test
+  public void dont_display_warning_if_response_example_is_not_set_on_no_content_endpoint() {
+    WebService webService = ctx -> {
+      NewController newController = ctx.createController("api/custom_action");
+      newDefaultAction(newController, "list")
+        .setResponseExample(null)
+        .setContentType(Response.ContentType.NO_CONTENT);
+      newController.done();
+    };
+
+    webService.define(context);
+
+    assertThat(logTester.getLogs(Level.WARN)).isEmpty();
   }
 
   @Test
