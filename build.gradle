@@ -50,10 +50,10 @@ allprojects {
         properties = [
                 'build.name': 'sonar-plugin-api',
                 'build.number': System.getenv('BUILD_NUMBER'),
-                'pr.branch.target': System.getenv('GITHUB_BASE_BRANCH'),
-                'pr.number': System.getenv('PULL_REQUEST'),
+                'pr.branch.target': System.getenv('PULL_REQUEST_BRANCH_TARGET'),
+                'pr.number': System.getenv('PULL_REQUEST_NUMBER'),
                 'vcs.branch': System.getenv('GITHUB_BRANCH'),
-                'vcs.revision': System.getenv('GIT_SHA1'),
+                'vcs.revision': System.getenv('GIT_COMMIT'),
                 'version': version
         ]
         publications('mavenJava')
