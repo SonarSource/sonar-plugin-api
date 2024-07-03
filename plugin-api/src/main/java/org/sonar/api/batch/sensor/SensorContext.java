@@ -263,4 +263,16 @@ public interface SensorContext {
    */
   @Beta
   boolean isCacheEnabled();
+
+  /**
+   * Add a property to the Sensor telemetry. Telemetry stats are collected by Sonar products for each sensors (like Sensor duration).
+   * <br/>
+   * Sensors can attach additional properties to the telemetry to provide more context to the stats.
+   * For performance reason, the telemetry properties should be limited to a small set of key-value pairs.
+   * For GDPR compliance, the telemetry properties should not contain any personal or identifying data.
+   *
+   * @throws IllegalArgumentException if key or value parameter is null
+   * @since 10.9
+   */
+  void addTelemetryProperty(String key, String value);
 }
