@@ -1,9 +1,12 @@
 # Changelog
 
+## 10.10
+* Introduce `org.sonar.api.server.rule.RulesDefinition.addStig` to support STIG security standards
+
 ## 10.8
 
 * Fixed an issue where WebService which was not meant to return any response still showed the warning in the logs when response example was not set.
-* Introduced 'org.sonar.api.server.ws.WebService.NewAction.setContentType' for optionally setting a response type of Action.
+* Introduce 'org.sonar.api.server.ws.WebService.NewAction.setContentType' for optionally setting a response type of Action.
 * Replace internal library `commons-lang:commons-lang` by `org.apache.commons:commons-lang3`.
 * Do not throw an exception when a rule parameter is not known in `org.sonar.api.batch.rule.Checks`
 
