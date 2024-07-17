@@ -320,6 +320,26 @@ public interface RulesDefinition {
     }
   }
 
+  enum StigVersion {
+    ASD_V5R3("ASD_V5R3", "stig-ASD_V5R3");
+
+    private final String label;
+    private final String prefix;
+
+    StigVersion(String label, String prefix) {
+      this.label = label;
+      this.prefix = prefix;
+    }
+
+    public String label() {
+      return label;
+    }
+
+    public String prefix() {
+      return prefix;
+    }
+  }
+
   interface ExtendedRepository {
     String key();
 
@@ -565,6 +585,11 @@ public interface RulesDefinition {
      * @since 7.3
      */
     public abstract NewRule addCwe(int... nums);
+
+    /**
+     * @since 10.10
+     */
+    public abstract NewRule addStig(StigVersion version, String... requirements);
 
     /**
      * Optional key that can be used by the rule engine. Not displayed

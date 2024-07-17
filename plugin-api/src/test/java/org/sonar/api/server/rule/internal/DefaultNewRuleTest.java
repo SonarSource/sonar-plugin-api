@@ -40,12 +40,12 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 
 import static java.lang.String.format;
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.HOW_TO_FIX_SECTION_KEY;
 import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.RESOURCES_SECTION_KEY;
+import static org.sonar.api.server.rule.RulesDefinition.StigVersion.ASD_V5R3;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.CONTEXT_KEY_NOT_UNIQUE;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT;
@@ -53,7 +53,8 @@ import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_KEY_NOT_
 
 public class DefaultNewRuleTest {
 
-  private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
+  private static final RuleDescriptionSection RULE_DESCRIPTION_SECTION =
+    new RuleDescriptionSectionBuilder().sectionKey("section_key").htmlContent("html desc").build();
   private static final Context CONTEXT_WITH_KEY_1 = new Context("ctx1", "DISPLAY_1");
   private static final Context CONTEXT_WITH_KEY_2 = new Context("ctx2", "DISPLAY_2");
   private static final RuleDescriptionSection CONTEXT_AWARE_RULE_DESCRIPTION_SECTION = new RuleDescriptionSectionBuilder().sectionKey(
@@ -155,6 +156,12 @@ public class DefaultNewRuleTest {
 
     assertThat(rule.securityStandards())
       .contains("owaspAsvs-4.0:1.10.1", "owaspAsvs-4.0:1.11.3", "owaspAsvs-4.0:1.11.4", "owaspAsvs-4.0:1.11.5");
+
+    rule.addStig(ASD_V5R3, "V-222585");
+    rule.addStig(ASD_V5R3, "V-222456");
+    rule.addStig(ASD_V5R3, "V-222457", "V-222455", "V-222454");
+    assertThat(rule.securityStandards())
+      .contains("stig-ASD_V5R3:V-222585", "stig-ASD_V5R3:V-222456", "stig-ASD_V5R3:V-222457", "stig-ASD_V5R3:V-222454", "stig-ASD_V5R3:V-222455");
   }
 
   @Test
@@ -248,6 +255,20 @@ public class DefaultNewRuleTest {
   }
 
   @Test
+  public void fail_if_null_stig_version() {
+    assertThatThrownBy(() -> rule.addStig(null, "V-222585"))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("STIG version must not be null");
+  }
+
+  @Test
+  public void fail_if_null_stig_array() {
+    assertThatThrownBy(() -> rule.addStig(ASD_V5R3, (String[]) null))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("Requirements for STIG standard must not be null");
+  }
+
+  @Test
   public void fail_if_trying_to_insert_two_sections_with_same_keys() {
     rule.addDescriptionSection(new RuleDescriptionSectionBuilder().sectionKey(RULE_DESCRIPTION_SECTION.getKey()).htmlContent("Html desc").build());
     assertThatThrownBy(() -> rule.addDescriptionSection(RULE_DESCRIPTION_SECTION))
@@ -258,9 +279,11 @@ public class DefaultNewRuleTest {
   @Test
   public void succeed_if_trying_to_insert_two_sections_with_different_keys() {
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
-    RuleDescriptionSection ruleDescriptionSection2 = new RuleDescriptionSectionBuilder().sectionKey("key2").htmlContent("Html desc").build();
+    RuleDescriptionSection ruleDescriptionSection2 =
+      new RuleDescriptionSectionBuilder().sectionKey("key2").htmlContent("Html desc").build();
     rule.addDescriptionSection(ruleDescriptionSection2);
-    RuleDescriptionSection ruleDescriptionSection3 = new RuleDescriptionSectionBuilder().sectionKey("key3").htmlContent("Html desc").build();
+    RuleDescriptionSection ruleDescriptionSection3 =
+      new RuleDescriptionSectionBuilder().sectionKey("key3").htmlContent("Html desc").build();
     rule.addDescriptionSection(ruleDescriptionSection3);
 
     assertThat(rule.getRuleDescriptionSections()).containsOnly(RULE_DESCRIPTION_SECTION, ruleDescriptionSection2, ruleDescriptionSection3);
@@ -363,7 +386,8 @@ public class DefaultNewRuleTest {
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx3"));
 
     assertThatThrownBy(rule::validate)
-      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx3, ctx1]", RESOURCES_SECTION_KEY, "[ctx1, ctx2]")
+      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx3, ctx1]", RESOURCES_SECTION_KEY,
+        "[ctx1, ctx2]")
       .isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -375,7 +399,8 @@ public class DefaultNewRuleTest {
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
 
     assertThatThrownBy(rule::validate)
-      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx1, ctx2]", RESOURCES_SECTION_KEY, "[ctx1]")
+      .hasMessage(MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE, HOW_TO_FIX_SECTION_KEY, "[ctx1, ctx2]", RESOURCES_SECTION_KEY,
+        "[ctx1]")
       .isInstanceOf(IllegalArgumentException.class);
   }
 

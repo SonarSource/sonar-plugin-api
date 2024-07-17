@@ -52,6 +52,7 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
+import org.sonar.api.server.rule.RulesDefinition.StigVersion;
 import org.sonar.api.server.rule.StringPatternValidator;
 
 import static java.lang.String.format;
@@ -359,6 +360,18 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   public DefaultNewRule addCwe(int... nums) {
     for (int num : nums) {
       String standard = "cwe:" + num;
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
+  public DefaultNewRule addStig(StigVersion stigVersion, String... requirements) {
+    requireNonNull(stigVersion, "STIG version must not be null");
+    requireNonNull(requirements, "Requirements for STIG standard must not be null");
+
+    for (String requirement : requirements) {
+      String standard = stigVersion.prefix() + ":" + requirement;
       securityStandards.add(standard);
     }
     return this;
