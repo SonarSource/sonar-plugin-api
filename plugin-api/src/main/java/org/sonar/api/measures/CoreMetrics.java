@@ -1094,10 +1094,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   *   "total": 3,
+   *   "total": 5,
+   *   "BLOCKER": 1,
    *   "HIGH": 1,
    *   "MEDIUM": 1,
-   *   "LOW": 1
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    *
    * @since 10.6
@@ -1119,10 +1121,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   * "total": 3,
-   * "HIGH": 1,
-   * "MEDIUM": 1,
-   * "LOW": 1
+   *   "total": 5,
+   *   "BLOCKER": 1,
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    *
    * @since 10.7
@@ -1146,10 +1150,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   *   "total": 3,
+   *   "total": 5,
+   *   "BLOCKER": 1,
    *   "HIGH": 1,
    *   "MEDIUM": 1,
-   *   "LOW": 1
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    *
    * @since 10.6
@@ -1171,10 +1177,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   * "total": 3,
-   * "HIGH": 1,
-   * "MEDIUM": 1,
-   * "LOW": 1
+   *   "total": 5,
+   *   "BLOCKER": 1,
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    *
    * @since 10.7
@@ -1198,10 +1206,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   *   "total": 3,
+   *   "total": 5,
+   *   "BLOCKER": 1,
    *   "HIGH": 1,
    *   "MEDIUM": 1,
-   *   "LOW": 1
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    * @since 10.6
    */
@@ -1222,10 +1232,12 @@ public final class CoreMetrics {
    * these issues as well as their distribution based on the severity within the impact.
    * Example of the format:
    * {
-   * "total": 3,
-   * "HIGH": 1,
-   * "MEDIUM": 1,
-   * "LOW": 1
+   *   "total": 5,
+   *   "BLOCKER": 1,
+   *   "HIGH": 1,
+   *   "MEDIUM": 1,
+   *   "LOW": 1,
+   *   "INFO": 1
    * }
    *
    * @since 10.7

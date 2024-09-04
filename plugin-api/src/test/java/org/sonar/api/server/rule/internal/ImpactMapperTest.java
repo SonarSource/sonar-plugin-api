@@ -31,7 +31,9 @@ import org.sonar.api.rules.RuleType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.sonar.api.issue.impact.Severity.BLOCKER;
 import static org.sonar.api.issue.impact.Severity.HIGH;
+import static org.sonar.api.issue.impact.Severity.INFO;
 import static org.sonar.api.issue.impact.Severity.LOW;
 import static org.sonar.api.issue.impact.Severity.MEDIUM;
 
@@ -108,6 +110,20 @@ public class ImpactMapperTest {
   }
 
   @Test
+  public void convertToDeprecatedSeverity_givenInfo_returnInfo() {
+    String oldSeverity = ImpactMapper.convertToDeprecatedSeverity(INFO);
+
+    assertThat(oldSeverity).isEqualTo("INFO");
+  }
+
+  @Test
+  public void convertToDeprecatedSeverity_givenBlocker_returnBlocker() {
+    String oldSeverity = ImpactMapper.convertToDeprecatedSeverity(BLOCKER);
+
+    assertThat(oldSeverity).isEqualTo("BLOCKER");
+  }
+
+  @Test
   public void convertToDeprecatedSeverity_givenNull_throwException() {
     ThrowableAssert.ThrowingCallable methodUnderTest = () -> ImpactMapper.convertToDeprecatedSeverity(null);
 
@@ -129,10 +145,24 @@ public class ImpactMapperTest {
   }
 
   @Test
+  public void convertToSeverity_givenMinor_returnLow() {
+    Severity severity = ImpactMapper.convertToImpactSeverity("MINOR");
+
+    assertThat(severity).isEqualTo(LOW);
+  }
+
+  @Test
   public void convertToSeverity_givenInfo_returnLow() {
     Severity severity = ImpactMapper.convertToImpactSeverity("INFO");
 
     assertThat(severity).isEqualTo(LOW);
+  }
+
+  @Test
+  public void convertToSeverity_givenBlocker_returnHigh() {
+    Severity severity = ImpactMapper.convertToImpactSeverity("BLOCKER");
+
+    assertThat(severity).isEqualTo(HIGH);
   }
 
   @Test
