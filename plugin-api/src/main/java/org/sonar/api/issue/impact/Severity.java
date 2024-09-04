@@ -20,7 +20,9 @@
 package org.sonar.api.issue.impact;
 
 public enum Severity {
+  INFO,
   LOW,
   MEDIUM,
-  HIGH
+  HIGH,
+  BLOCKER
 }

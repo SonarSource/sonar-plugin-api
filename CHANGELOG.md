@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.11
+* Introduce new impact severities `org.sonar.api.issue.impact.Severity.INFO` and `org.sonar.api.issue.impact.Severity.BLOCKER`
+
 ## 10.10
 * Introduce `org.sonar.api.server.rule.RulesDefinition.addStig` to support STIG security standards
 

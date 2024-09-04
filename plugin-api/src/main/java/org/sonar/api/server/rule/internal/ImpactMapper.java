@@ -75,12 +75,16 @@ public class ImpactMapper {
 
   public static String convertToDeprecatedSeverity(Severity severity) {
     switch (severity) {
+      case BLOCKER:
+        return BLOCKER;
       case HIGH:
         return CRITICAL;
       case MEDIUM:
         return MAJOR;
       case LOW:
         return MINOR;
+      case INFO:
+        return INFO;
       default:
         throw new IllegalStateException("This severity value " + severity + " is illegal.");
     }
@@ -88,8 +92,8 @@ public class ImpactMapper {
 
   public static Severity convertToImpactSeverity(String deprecatedSeverity) {
     switch (deprecatedSeverity) {
-      case CRITICAL:
       case BLOCKER:
+      case CRITICAL:
         return Severity.HIGH;
       case MAJOR:
         return Severity.MEDIUM;
