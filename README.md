@@ -58,11 +58,11 @@ The following tables indicate which API versions plugins can find at runtime:
 Current version: 10.6.0.2114
 
 ### SonarLint
-| Flavor   | Plugin API                |
-|----------|---------------------------|
-| IntelliJ | 10.1.0.809                |
-| Eclipse  | 10.1.0.809                |
-| VSCode   | 10.1.0.809                |
+| Flavor   | Plugin API   |
+|----------|--------------|
+| IntelliJ | 10.11.0.2468 |
+| Eclipse  | 10.11.0.2468 |
+| VSCode   | 10.11.0.2468 |
 
 ## Optimizing the execution of sensors
 
