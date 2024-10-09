@@ -23,11 +23,14 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
 public class LoadedActiveRule {
   private RuleKey ruleKey;
   private String severity;
+  private Map<SoftwareQuality, Severity> impacts;
   private String name;
   private String language;
   private Map<String, String> params;
@@ -63,6 +66,14 @@ public class LoadedActiveRule {
 
   public void setSeverity(String severity) {
     this.severity = severity;
+  }
+
+  public Map<SoftwareQuality, Severity> getImpacts() {
+    return impacts;
+  }
+
+  public void setImpacts(Map<SoftwareQuality, Severity> impacts) {
+    this.impacts = impacts;
   }
 
   public String getLanguage() {

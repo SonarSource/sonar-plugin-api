@@ -23,6 +23,8 @@ import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
 
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
 /**
@@ -39,6 +41,11 @@ public interface ActiveRule {
    * @see org.sonar.api.rule.Severity
    */
   String severity();
+
+  /**
+   * Overridden impact severities from the rule.
+   */
+  Map<SoftwareQuality, Severity> impacts();
 
   /**
    * Language of rule, for example <code>java</code>

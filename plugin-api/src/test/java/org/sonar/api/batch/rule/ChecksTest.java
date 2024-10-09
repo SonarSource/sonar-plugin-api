@@ -26,6 +26,8 @@ import javax.annotation.CheckForNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.event.Level;
+import org.sonar.api.issue.impact.Severity;
+import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.testfixtures.log.LogTesterJUnit5;
 
@@ -148,6 +150,11 @@ class ChecksTest {
     @Override
     public String severity() {
       return null;
+    }
+
+    @Override
+    public Map<SoftwareQuality, Severity> impacts() {
+      return Map.of();
     }
 
     @Override
