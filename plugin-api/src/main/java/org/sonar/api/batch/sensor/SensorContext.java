@@ -270,8 +270,11 @@ public interface SensorContext {
    * Sensors can attach additional properties to the telemetry to provide more context to the stats.
    * For performance reason, the telemetry properties should be limited to a small set of key-value pairs.
    * For GDPR compliance, the telemetry properties should not contain any personal or identifying data.
+   * <br/>
+   * This method can not be used by plugins not developed by SonarSource SA.
    *
    * @throws IllegalArgumentException if key or value parameter is null
+   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
    * @since 10.9
    */
   void addTelemetryProperty(String key, String value);
