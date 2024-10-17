@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.13
+* Deprecate `org.sonar.api.resources.Qualifiers` and `org.sonar.api.resources.Scopes`
+* Add a specialized `ConfigScope` enum on `org.sonar.api.config.PropertyDefinition`, and provide replacements for all `onQualifiers` methods accordingly
+
 ## 10.12
 * Introduce impacts on `org.sonar.api.batch.rule.ActiveRule`
 

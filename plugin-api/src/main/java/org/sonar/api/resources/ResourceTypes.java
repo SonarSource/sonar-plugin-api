@@ -35,7 +35,9 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * @since 2.14
+ * @deprecated since 10.13. We don't support custom resource types contributed by plugins anymore.
  */
+@Deprecated(since = "10.13", forRemoval = true)
 @ServerSide
 @ComputeEngineSide
 public class ResourceTypes {

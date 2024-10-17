@@ -30,7 +30,9 @@ import org.apache.commons.lang3.ArrayUtils;
  * Scopes are not extensible by plugins.
  *
  * @since 2.6
+ * @deprecated since 10.13. Scopes are not used when developing plugins. This is exposed in some web APIs, but it doesn't make sense to make it part of the plugin API.
  */
+@Deprecated(since = "10.13", forRemoval = true)
 public final class Scopes {
 
   /**
