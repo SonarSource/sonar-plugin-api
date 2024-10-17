@@ -194,6 +194,7 @@ public class DefaultNewRuleTest {
   }
 
   @Test
+  @SuppressWarnings({"removal"})
   public void set_markdown_description() {
     rule.setMarkdownDescription("markdown");
     assertThat(rule.markdownDescription()).isEqualTo("markdown");
@@ -206,6 +207,7 @@ public class DefaultNewRuleTest {
   }
 
   @Test
+  @SuppressWarnings({"removal"})
   public void fail_setting_markdown_if_html_is_set() {
     rule.setHtmlDescription("html");
 
