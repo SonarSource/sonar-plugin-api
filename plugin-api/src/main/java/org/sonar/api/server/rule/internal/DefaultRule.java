@@ -71,6 +71,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   private final List<RuleDescriptionSection> ruleDescriptionSections;
   private final Set<String> educationPrincipleKeys;
 
+  @SuppressWarnings({"removal"})
   DefaultRule(DefaultRepository repository, DefaultNewRule newRule) {
     this.pluginKey = newRule.pluginKey();
     this.repository = repository;
@@ -214,7 +215,7 @@ public class DefaultRule extends RulesDefinition.Rule {
   @Override
   @CheckForNull
   @Deprecated(since = "9.6", forRemoval = true)
-
+  @SuppressWarnings({"removal"})
   public String markdownDescription() {
     return markdownDescription;
   }

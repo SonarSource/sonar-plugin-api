@@ -40,6 +40,7 @@ import static java.util.Objects.requireNonNull;
 @Deprecated(since = "10.13", forRemoval = true)
 @ServerSide
 @ComputeEngineSide
+@SuppressWarnings({"removal"})
 public class ResourceTypes {
 
   private final Map<String, ResourceTypeTree> treeByQualifier;

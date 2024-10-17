@@ -227,6 +227,7 @@ public class RulesDefinitionXmlLoaderTest {
   }
 
   @Test
+  @SuppressWarnings({"removal"})
   public void markdown_description() {
     String xml = "" +
       "<rules>" +

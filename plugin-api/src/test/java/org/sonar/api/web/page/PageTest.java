@@ -20,19 +20,18 @@
 package org.sonar.api.web.page;
 
 import org.junit.Test;
-import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.web.page.Page.Qualifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.web.page.Page.Qualifier.APP;
-import static org.sonar.api.web.page.Page.Qualifier.MODULE;
 import static org.sonar.api.web.page.Page.Qualifier.PROJECT;
 import static org.sonar.api.web.page.Page.Qualifier.SUB_VIEW;
 import static org.sonar.api.web.page.Page.Qualifier.VIEW;
 import static org.sonar.api.web.page.Page.Scope.COMPONENT;
 import static org.sonar.api.web.page.Page.Scope.GLOBAL;
 
+@SuppressWarnings({"removal"})
 public class PageTest {
 
   private Page.Builder underTest = Page.builder("governance/project_dump").setName("Project Dump");

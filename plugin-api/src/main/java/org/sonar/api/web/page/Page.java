@@ -82,6 +82,7 @@ public final class Page {
     GLOBAL, ORGANIZATION, COMPONENT
   }
 
+  @SuppressWarnings({"removal"})
   public enum Qualifier {
     PROJECT(org.sonar.api.resources.Qualifiers.PROJECT),
     /**
