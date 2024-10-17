@@ -43,6 +43,7 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 @ScannerSide
 @ServerSide
 @ComputeEngineSide
+@SuppressWarnings({"removal"})
 public class ResourceTypeTree {
 
   private final List<ResourceType> types;

@@ -368,6 +368,7 @@ public class RulesDefinitionXmlLoader {
     }
   }
 
+  @SuppressWarnings({"removal"})
   private static void fillDescription(RulesDefinition.NewRule rule, String descriptionFormat, @Nullable String description) {
     if (isNotBlank(description)) {
       switch (DescriptionFormat.valueOf(descriptionFormat)) {

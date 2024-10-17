@@ -28,6 +28,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings({"removal"})
 public class ServletFilterTest {
 
   @Test

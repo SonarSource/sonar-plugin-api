@@ -46,6 +46,7 @@ public class DefaultRuleTest {
   private DefaultRepository repo = mock(DefaultRepository.class);
 
   @Test
+  @SuppressWarnings({"removal"})
   public void getters() {
     DefaultNewRule rule = new DefaultNewRule("plugin", "repo", "key");
 
