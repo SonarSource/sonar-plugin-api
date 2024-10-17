@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"removal"})
 class ScopesTest {
   @Test
   void it_should_order_scopes() {

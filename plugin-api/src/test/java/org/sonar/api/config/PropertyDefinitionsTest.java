@@ -28,7 +28,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
-import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.utils.System2;
 
 import static java.util.Collections.singletonList;
@@ -37,6 +36,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings({"removal"})
 public class PropertyDefinitionsTest {
 
   @Test
@@ -128,16 +128,16 @@ public class PropertyDefinitionsTest {
       PropertyDefinition.builder("global1").name("Global1").category("catGlobal1").build(),
       PropertyDefinition.builder("global2").name("Global2").category("catGlobal1").build(),
       PropertyDefinition.builder("global3").name("Global3").category("catGlobal2").build(),
-      PropertyDefinition.builder("project").name("Project").category("catProject").onlyOnQualifiers(Qualifiers.PROJECT).build(),
-      PropertyDefinition.builder("module").name("Module").category("catModule").onlyOnQualifiers(Qualifiers.MODULE).build(),
-      PropertyDefinition.builder("view").name("View").category("catView").onlyOnQualifiers(Qualifiers.VIEW).build(),
-      PropertyDefinition.builder("app").name("Application").category("catApp").onlyOnQualifiers(Qualifiers.APP).build());
+      PropertyDefinition.builder("project").name("Project").category("catProject").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.PROJECT).build(),
+      PropertyDefinition.builder("module").name("Module").category("catModule").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.MODULE).build(),
+      PropertyDefinition.builder("view").name("View").category("catView").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.VIEW).build(),
+      PropertyDefinition.builder("app").name("Application").category("catApp").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.APP).build());
 
     assertThat(def.propertiesByCategory(null).keySet()).contains(new Category("catGlobal1"), new Category("catGlobal2"));
-    assertThat(def.propertiesByCategory(Qualifiers.PROJECT)).containsOnlyKeys(new Category("catProject"));
-    assertThat(def.propertiesByCategory(Qualifiers.MODULE)).containsOnlyKeys(new Category("catModule"));
-    assertThat(def.propertiesByCategory(Qualifiers.VIEW)).containsOnlyKeys(new Category("catView"));
-    assertThat(def.propertiesByCategory(Qualifiers.APP)).containsOnlyKeys(new Category("catApp"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.PROJECT)).containsOnlyKeys(new Category("catProject"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.MODULE)).containsOnlyKeys(new Category("catModule"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.VIEW)).containsOnlyKeys(new Category("catView"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.APP)).containsOnlyKeys(new Category("catApp"));
     assertThat(def.propertiesByCategory("Unkown").keySet()).isEmpty();
   }
 
@@ -159,8 +159,8 @@ public class PropertyDefinitionsTest {
     PropertyDefinitions def = new PropertyDefinitions(System2.INSTANCE, ByCategory.class);
 
     assertThat(def.propertiesByCategory(null).keySet()).contains(new Category("catglobal1"), new Category("catglobal2"));
-    assertThat(def.propertiesByCategory(Qualifiers.PROJECT)).containsOnlyKeys(new Category("catproject"));
-    assertThat(def.propertiesByCategory(Qualifiers.MODULE)).containsOnlyKeys(new Category("catmodule"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.PROJECT)).containsOnlyKeys(new Category("catproject"));
+    assertThat(def.propertiesByCategory(org.sonar.api.resources.Qualifiers.MODULE)).containsOnlyKeys(new Category("catmodule"));
   }
 
   private void assertProperties(PropertyDefinitions definitions) {

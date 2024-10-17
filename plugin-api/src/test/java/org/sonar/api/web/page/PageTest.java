@@ -20,19 +20,18 @@
 package org.sonar.api.web.page;
 
 import org.junit.Test;
-import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.web.page.Page.Qualifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.web.page.Page.Qualifier.APP;
-import static org.sonar.api.web.page.Page.Qualifier.MODULE;
 import static org.sonar.api.web.page.Page.Qualifier.PROJECT;
 import static org.sonar.api.web.page.Page.Qualifier.SUB_VIEW;
 import static org.sonar.api.web.page.Page.Qualifier.VIEW;
 import static org.sonar.api.web.page.Page.Scope.COMPONENT;
 import static org.sonar.api.web.page.Page.Scope.GLOBAL;
 
+@SuppressWarnings({"removal"})
 public class PageTest {
 
   private Page.Builder underTest = Page.builder("governance/project_dump").setName("Project Dump");
@@ -40,7 +39,7 @@ public class PageTest {
   @Test
   public void full_test() {
     Page result = underTest
-      .setComponentQualifiers(PROJECT, MODULE)
+      .setComponentQualifiers(PROJECT, Qualifier.MODULE)
       .setScope(COMPONENT)
       .setAdmin(true)
       .build();
@@ -48,7 +47,7 @@ public class PageTest {
     assertThat(result.getKey()).isEqualTo("governance/project_dump");
     assertThat(result.getPluginKey()).isEqualTo("governance");
     assertThat(result.getName()).isEqualTo("Project Dump");
-    assertThat(result.getComponentQualifiers()).containsOnly(PROJECT, MODULE);
+    assertThat(result.getComponentQualifiers()).containsOnly(PROJECT, Qualifier.MODULE);
     assertThat(result.getScope()).isEqualTo(COMPONENT);
     assertThat(result.isAdmin()).isTrue();
   }
@@ -66,7 +65,7 @@ public class PageTest {
   public void authorized_qualifiers() {
     Qualifier[] qualifiers = Qualifier.values();
 
-    assertThat(qualifiers).containsExactlyInAnyOrder(PROJECT, MODULE, VIEW, SUB_VIEW, APP);
+    assertThat(qualifiers).containsExactlyInAnyOrder(PROJECT, Qualifier.MODULE, VIEW, SUB_VIEW, APP);
   }
 
   @Test
@@ -87,7 +86,7 @@ public class PageTest {
 
   @Test
   public void qualifiers_from_key() {
-    assertThat(Qualifier.fromKey(Qualifiers.PROJECT)).isEqualTo(Qualifier.PROJECT);
+    assertThat(Qualifier.fromKey(org.sonar.api.resources.Qualifiers.PROJECT)).isEqualTo(Qualifier.PROJECT);
     assertThat(Qualifier.fromKey("42")).isNull();
   }
 

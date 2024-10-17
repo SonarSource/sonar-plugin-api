@@ -24,6 +24,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.sonar.api.resources.ResourceTypesTest.qualifiers;
 
+@SuppressWarnings({"removal"})
 public class ResourceTypeTreeTest {
   private final ResourceTypeTree tree = ResourceTypeTree.builder()
     .addType(ResourceType.builder("TRK").build())

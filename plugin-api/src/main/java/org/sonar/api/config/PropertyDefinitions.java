@@ -157,6 +157,7 @@ public final class PropertyDefinitions {
   /**
    * @since 3.7
    */
+  @SuppressWarnings({"removal"})
   public Map<Category, Map<SubCategory, Collection<PropertyDefinition>>> propertiesByCategory(@Nullable String qualifier) {
     Map<Category, Map<SubCategory, Collection<PropertyDefinition>>> byCategory = new HashMap<>();
     if (qualifier == null) {

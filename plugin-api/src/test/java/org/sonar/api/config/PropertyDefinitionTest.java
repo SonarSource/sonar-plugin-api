@@ -31,7 +31,7 @@ import org.sonar.api.Property;
 import org.sonar.api.PropertyField;
 import org.sonar.api.PropertyType;
 import org.sonar.api.config.PropertyDefinition.Builder;
-import org.sonar.api.resources.Qualifiers;
+import org.sonar.api.config.PropertyDefinition.ConfigScope;
 import org.sonar.api.utils.AnnotationUtils;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -40,6 +40,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
+
+@SuppressWarnings({"removal"})
 public class PropertyDefinitionTest {
 
   @Test
@@ -57,7 +59,7 @@ public class PropertyDefinitionTest {
       .options("de", "en")
       .description("desc")
       .type(PropertyType.FLOAT)
-      .onlyOnQualifiers(Qualifiers.MODULE)
+      .onlyOnQualifiers(org.sonar.api.resources.Qualifiers.MODULE)
       .multiValues(true)
       .build();
 
@@ -69,7 +71,8 @@ public class PropertyDefinitionTest {
     assertThat(def.description()).isEqualTo("desc");
     assertThat(def.type()).isEqualTo(PropertyType.FLOAT);
     assertThat(def.global()).isFalse();
-    assertThat(def.qualifiers()).containsOnly(Qualifiers.MODULE);
+    assertThat(def.qualifiers()).containsOnly(org.sonar.api.resources.Qualifiers.MODULE);
+    assertThat(def.configScopes()).containsOnly(ConfigScope.MODULE);
     assertThat(def.multiValues()).isTrue();
     assertThat(def.fields()).isEmpty();
   }
@@ -89,7 +92,8 @@ public class PropertyDefinitionTest {
     assertThat(def.description()).isEqualTo("desc");
     assertThat(def.type()).isEqualTo(PropertyType.FLOAT);
     assertThat(def.global()).isFalse();
-    assertThat(def.qualifiers()).containsOnly(Qualifiers.PROJECT, Qualifiers.MODULE);
+    assertThat(def.qualifiers()).containsOnly(org.sonar.api.resources.Qualifiers.PROJECT, org.sonar.api.resources.Qualifiers.MODULE);
+    assertThat(def.configScopes()).containsOnly(ConfigScope.PROJECT, ConfigScope.MODULE);
     assertThat(def.multiValues()).isTrue();
     assertThat(def.fields()).isEmpty();
   }
@@ -103,6 +107,7 @@ public class PropertyDefinitionTest {
 
     assertThat(def.key()).isEqualTo("hello");
     assertThat(def.qualifiers()).isEmpty();
+    assertThat(def.configScopes()).isEmpty();
     assertThat(def.global()).isFalse();
   }
 
@@ -121,6 +126,7 @@ public class PropertyDefinitionTest {
     assertThat(def.type()).isEqualTo(PropertyType.STRING);
     assertThat(def.global()).isTrue();
     assertThat(def.qualifiers()).isEmpty();
+    assertThat(def.configScopes()).isEmpty();
     assertThat(def.multiValues()).isFalse();
     assertThat(def.fields()).isEmpty();
   }
@@ -141,6 +147,7 @@ public class PropertyDefinitionTest {
     assertThat(def.type()).isEqualTo(PropertyType.STRING);
     assertThat(def.global()).isTrue();
     assertThat(def.qualifiers()).isEmpty();
+    assertThat(def.configScopes()).isEmpty();
     assertThat(def.multiValues()).isFalse();
     assertThat(def.fields()).isEmpty();
   }
@@ -315,7 +322,7 @@ public class PropertyDefinitionTest {
 
   @Test
   public void should_not_authorize_defining_on_qualifiers_and_hidden() {
-    Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(Qualifiers.PROJECT).hidden();
+    Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(org.sonar.api.resources.Qualifiers.PROJECT).hidden();
     assertThatThrownBy(builder::build)
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Cannot be hidden and defining qualifiers on which to display");
@@ -323,7 +330,7 @@ public class PropertyDefinitionTest {
 
   @Test
   public void should_not_authorize_defining_ony_on_qualifiers_and_hidden() {
-    Builder builder = PropertyDefinition.builder("foo").name("foo").onlyOnQualifiers(Qualifiers.PROJECT).hidden();
+    Builder builder = PropertyDefinition.builder("foo").name("foo").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.PROJECT).hidden();
     assertThatThrownBy(builder::build)
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Cannot be hidden and defining qualifiers on which to display");
@@ -331,14 +338,15 @@ public class PropertyDefinitionTest {
 
   @Test
   public void should_not_authorize_defining_on_qualifiers_and_only_on_qualifiers() {
-    Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(Qualifiers.MODULE)
-      .onlyOnQualifiers(Qualifiers.PROJECT);
+    Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(org.sonar.api.resources.Qualifiers.MODULE)
+      .onlyOnQualifiers(org.sonar.api.resources.Qualifiers.PROJECT);
     assertThatThrownBy(builder::build)
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Cannot define both onQualifiers and onlyOnQualifiers");
+      .hasMessage("Cannot use both forQualifiers and onlyForQualifiers");
   }
 
-  private static final Set<String> ALLOWED_QUALIFIERS = ImmutableSet.of("TRK", "VW", "BRC", "SVW");
+  private static final Set<ConfigScope> ALLOWED_CONFIG_SCOPES = ImmutableSet.copyOf(ConfigScope.values());
+  private static final Set<String> OLD_ALLOWED_QUALIFIERS = ImmutableSet.of("TRK", "VW", "BRC", "SVW");
   private static final Set<String> NOT_ALLOWED_QUALIFIERS = ImmutableSet.of("FIL", "DIR", "UTS", "", randomAlphabetic(3));
 
   @Test
@@ -367,46 +375,50 @@ public class PropertyDefinitionTest {
 
   @Test
   public void onQualifiers_with_varargs_parameter_fails_with_NPE_when_qualifier_is_null() {
-    failsWithNPEForNullQualifiers(builder -> builder.onQualifiers((String) null));
-    failsWithNPEForNullQualifiers(builder -> builder.onQualifiers("TRK", null, "BRC"));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onQualifiers((String) null));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onQualifiers("TRK", null, "BRC"));
   }
 
   @Test
   public void onQualifiers_with_list_parameter_fails_with_NPE_when_qualifier_is_null() {
-    failsWithNPEForNullQualifiers(builder -> builder.onQualifiers(Collections.singletonList(null)));
-    failsWithNPEForNullQualifiers(builder -> builder.onlyOnQualifiers("TRK", null, "BRC"));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onQualifiers(Collections.singletonList(null)));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onlyOnQualifiers("TRK", null, "BRC"));
   }
 
   @Test
   public void onlyOnQualifiers_with_varargs_parameter_fails_with_NPE_when_qualifier_is_null() {
-    failsWithNPEForNullQualifiers(builder -> builder.onlyOnQualifiers((String) null));
-    failsWithNPEForNullQualifiers(builder -> builder.onlyOnQualifiers("TRK", null, "BRC"));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onlyOnQualifiers((String) null));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onlyOnQualifiers("TRK", null, "BRC"));
   }
 
   @Test
   public void onlyOnQualifiers_with_list_parameter_fails_with_NPE_when_qualifier_is_null() {
-    failsWithNPEForNullQualifiers(builder -> builder.onlyOnQualifiers(Collections.singletonList(null)));
-    failsWithNPEForNullQualifiers(builder -> builder.onlyOnQualifiers(Arrays.asList("TRK", null, "BRC")));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onlyOnQualifiers(Collections.singletonList(null)));
+    failsWithNPEForNullDeprecatedQualifiers(builder -> builder.onlyOnQualifiers(Arrays.asList("TRK", null, "BRC")));
   }
 
   @Test
   public void onQualifiers_with_varargs_parameter_accepts_supported_qualifiers() {
-    acceptsSupportedQualifiers((builder, qualifier) -> builder.onQualifiers(qualifier));
+    acceptsSupportedDeprecatedQualifiers(Builder::onQualifiers);
+    acceptsSupportedQualifiers(Builder::onConfigScopes);
   }
 
   @Test
   public void onQualifiers_with_list_parameter_accepts_supported_qualifiers() {
-    acceptsSupportedQualifiers((builder, qualifier) -> builder.onQualifiers(Collections.singletonList(qualifier)));
+    acceptsSupportedDeprecatedQualifiers((builder, qualifier) -> builder.onQualifiers(Collections.singletonList(qualifier)));
+    acceptsSupportedQualifiers((builder, configScope) -> builder.onConfigScopes(Collections.singletonList(configScope)));
   }
 
   @Test
   public void onlyOnQualifiers_with_varargs_parameter_accepts_supported_qualifiers() {
-    acceptsSupportedQualifiers((builder, qualifier) -> builder.onlyOnQualifiers(qualifier));
+    acceptsSupportedDeprecatedQualifiers(Builder::onlyOnQualifiers);
+    acceptsSupportedQualifiers(Builder::onlyOnConfigScopes);
   }
 
   @Test
   public void onlyOnQualifiers_with_list_parameter_accepts_supported_qualifiers() {
-    acceptsSupportedQualifiers((builder, qualifier) -> builder.onlyOnQualifiers(Collections.singletonList(qualifier)));
+    acceptsSupportedDeprecatedQualifiers((builder, qualifier) -> builder.onlyOnQualifiers(Collections.singletonList(qualifier)));
+    acceptsSupportedQualifiers((builder, configScope) -> builder.onlyOnConfigScopes(Collections.singletonList(configScope)));
   }
 
   private static void failsWithIAEForUnsupportedQualifiers(BiConsumer<PropertyDefinition.Builder, String> biConsumer) {
@@ -421,12 +433,17 @@ public class PropertyDefinitionTest {
     });
   }
 
-  private static void acceptsSupportedQualifiers(BiConsumer<PropertyDefinition.Builder, String> biConsumer) {
+  private static void acceptsSupportedDeprecatedQualifiers(BiConsumer<PropertyDefinition.Builder, String> biConsumer) {
     PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
-    ALLOWED_QUALIFIERS.forEach(qualifier -> biConsumer.accept(builder, qualifier));
+    OLD_ALLOWED_QUALIFIERS.forEach(qualifier -> biConsumer.accept(builder, qualifier));
   }
 
-  private static void failsWithNPEForNullQualifiers(Consumer<PropertyDefinition.Builder> consumer) {
+  private static void acceptsSupportedQualifiers(BiConsumer<PropertyDefinition.Builder, ConfigScope> biConsumer) {
+    PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
+    ALLOWED_CONFIG_SCOPES.forEach(configScope -> biConsumer.accept(builder, configScope));
+  }
+
+  private static void failsWithNPEForNullDeprecatedQualifiers(Consumer<PropertyDefinition.Builder> consumer) {
     PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
     NOT_ALLOWED_QUALIFIERS.forEach(qualifier -> {
       try {
