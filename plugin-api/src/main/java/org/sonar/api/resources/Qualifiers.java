@@ -29,7 +29,9 @@ import static java.util.Collections.unmodifiableList;
  * Plugins can define their own qualifiers.
  *
  * @since 2.6
+ * @deprecated since 10.13. Qualifiers are not used when developing plugins. This is exposed in some web APIs, but it doesn't make sense to make it part of the plugin API.
  */
+@Deprecated(since = "10.13", forRemoval = true)
 public final class Qualifiers {
 
   /**
