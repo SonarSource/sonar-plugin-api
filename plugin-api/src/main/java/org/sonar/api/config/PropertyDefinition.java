@@ -90,6 +90,7 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 @ComputeEngineSide
 @SonarLintSide
 @ExtensionPoint
+@SuppressWarnings({"removal"})
 public final class PropertyDefinition {
 
   public enum ConfigScope {

@@ -40,6 +40,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
+
+@SuppressWarnings({"removal"})
 public class PropertyDefinitionTest {
 
   @Test
@@ -57,7 +59,7 @@ public class PropertyDefinitionTest {
       .options("de", "en")
       .description("desc")
       .type(PropertyType.FLOAT)
-      .onlyOnQualifiers(Qualifiers.MODULE)
+      .onlyOnQualifiers(org.sonar.api.resources.Qualifiers.MODULE)
       .multiValues(true)
       .build();
 
