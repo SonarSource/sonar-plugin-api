@@ -68,7 +68,9 @@ public @interface Property {
 
   /**
    * Is the property displayed in module settings page ? A module is a maven sub-project.
+   * @deprecated since 10.13. Modules are not used anymore.
    */
+  @Deprecated(since = "10.13", forRemoval = true)
   boolean module() default false;
 
   /**
