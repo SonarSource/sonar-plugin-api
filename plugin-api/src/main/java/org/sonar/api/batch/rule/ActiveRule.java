@@ -22,13 +22,11 @@ package org.sonar.api.batch.rule;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
-
-import org.sonar.api.issue.impact.Severity;
-import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
 /**
  * Configuration of a rule activated on a Quality profile
+ *
  * @since 4.2
  */
 @Immutable
@@ -38,14 +36,10 @@ public interface ActiveRule {
 
   /**
    * Non-null severity.
+   *
    * @see org.sonar.api.rule.Severity
    */
   String severity();
-
-  /**
-   * Overridden impact severities from the rule.
-   */
-  Map<SoftwareQuality, Severity> impacts();
 
   /**
    * Language of rule, for example <code>java</code>
@@ -74,6 +68,7 @@ public interface ActiveRule {
 
   /**
    * Optional rule key of the template rule.
+   *
    * @since 4.5.3
    */
   @CheckForNull
@@ -81,6 +76,7 @@ public interface ActiveRule {
 
   /**
    * Key of the quality profile the rule belongs to.
+   *
    * @since 7.5
    */
   String qpKey();
