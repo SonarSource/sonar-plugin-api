@@ -27,6 +27,10 @@ import org.sonar.api.issue.impact.Severity;
 import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
+/**
+ * @deprecated since 10.13. Internal implementation
+ */
+@Deprecated(since = "10.13", forRemoval = true)
 public class LoadedActiveRule {
   private RuleKey ruleKey;
   private String severity;

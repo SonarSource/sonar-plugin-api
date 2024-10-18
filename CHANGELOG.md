@@ -1,8 +1,5 @@
 # Changelog
 
-## 10.12
-* Introduce impacts on `org.sonar.api.batch.rule.ActiveRule`
-
 ## 10.11
 * Introduce new impact severities `org.sonar.api.issue.impact.Severity.INFO` and `org.sonar.api.issue.impact.Severity.BLOCKER`
 
