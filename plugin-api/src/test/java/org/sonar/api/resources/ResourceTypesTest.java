@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"removal"})
 public class ResourceTypesTest {
 
   private ResourceTypeTree viewsTree = ResourceTypeTree.builder()

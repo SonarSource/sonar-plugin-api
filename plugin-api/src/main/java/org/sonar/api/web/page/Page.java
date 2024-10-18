@@ -82,8 +82,13 @@ public final class Page {
     GLOBAL, ORGANIZATION, COMPONENT
   }
 
+  @SuppressWarnings({"removal"})
   public enum Qualifier {
     PROJECT(org.sonar.api.resources.Qualifiers.PROJECT),
+    /**
+     * @deprecated since 10.13. No more modules on the server side
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
     MODULE(org.sonar.api.resources.Qualifiers.MODULE),
     APP(org.sonar.api.resources.Qualifiers.APP),
     VIEW(org.sonar.api.resources.Qualifiers.VIEW),
@@ -95,6 +100,10 @@ public final class Page {
       this.key = key;
     }
 
+    /**
+     * @deprecated since 10.13. Should not be exposed in the plugin API.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
     @CheckForNull
     public static Qualifier fromKey(String key) {
       return Arrays.stream(values())
@@ -103,6 +112,10 @@ public final class Page {
         .orElse(null);
     }
 
+    /**
+     * @deprecated since 10.13. Should not be exposed in the plugin API.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
     public String getKey() {
       return key;
     }
@@ -113,7 +126,7 @@ public final class Page {
     private String name;
     private boolean isAdmin = false;
     private Scope scope = GLOBAL;
-    private Qualifier[] qualifiers = new Qualifier[] {};
+    private Qualifier[] qualifiers = new Qualifier[]{};
 
     /**
      * @param key It must respect the format plugin_key/page_identifier. Example: <code>my_plugin/my_page</code>
@@ -144,6 +157,7 @@ public final class Page {
 
     /**
      * Define where the page is displayed, either in the global menu or in a component page
+     *
      * @param scope - default is GLOBAL
      */
     public Builder setScope(Scope scope) {
@@ -153,6 +167,7 @@ public final class Page {
 
     /**
      * Define the components where the page is displayed. If set, {@link #setScope(Scope)} must be set to COMPONENT
+     *
      * @see Qualifier
      */
     public Builder setComponentQualifiers(Qualifier... qualifiers) {

@@ -69,6 +69,7 @@ public interface Issue extends Serializable {
   /**
    * @deprecated since 10.4 in favor of {@link IssueStatus}
    */
+  @Deprecated(since = "10.4")
   String STATUS_CLOSED = "CLOSED";
   /**
    * @deprecated since 10.4 in favor of {@link IssueStatus}

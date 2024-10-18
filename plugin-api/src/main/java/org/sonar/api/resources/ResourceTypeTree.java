@@ -37,10 +37,13 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 
 /**
  * @since 2.14
+ * @deprecated since 10.13. We don't support custom resource types contributed by plugins anymore.
  */
+@Deprecated(since = "10.13", forRemoval = true)
 @ScannerSide
 @ServerSide
 @ComputeEngineSide
+@SuppressWarnings({"removal"})
 public class ResourceTypeTree {
 
   private final List<ResourceType> types;

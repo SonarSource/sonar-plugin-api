@@ -21,13 +21,14 @@ package org.sonar.api.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -36,13 +37,11 @@ import org.sonar.api.ExtensionPoint;
 import org.sonar.api.Property;
 import org.sonar.api.PropertyType;
 import org.sonar.api.ce.ComputeEngineSide;
-import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableSet;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -91,31 +90,59 @@ import static org.sonar.api.utils.Preconditions.checkArgument;
 @ComputeEngineSide
 @SonarLintSide
 @ExtensionPoint
+@SuppressWarnings({"removal"})
 public final class PropertyDefinition {
 
-  private static final Set<String> SUPPORTED_QUALIFIERS = unmodifiableSet(new LinkedHashSet<>(
-    asList(Qualifiers.PROJECT, Qualifiers.VIEW, Qualifiers.MODULE, Qualifiers.SUBVIEW, Qualifiers.APP)));
+  public enum ConfigScope {
+    PROJECT(org.sonar.api.resources.Qualifiers.PROJECT),
+    VIEW(org.sonar.api.resources.Qualifiers.VIEW),
+    /**
+     * @deprecated since 10.13. No more modules on the server side.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
+    MODULE(org.sonar.api.resources.Qualifiers.MODULE),
+    SUB_VIEW(org.sonar.api.resources.Qualifiers.SUBVIEW),
+    APP(org.sonar.api.resources.Qualifiers.APP);
 
-  private String key;
-  private String defaultValue;
-  private String name;
-  private PropertyType type;
-  private List<String> options;
-  private String description;
+    private final String key;
+
+    ConfigScope(String key) {
+      this.key = key;
+    }
+
+    @CheckForNull
+    private static ConfigScope fromKey(String key) {
+      return Arrays.stream(values())
+        .filter(configScope -> configScope.key.equals(key))
+        .findAny()
+        .orElse(null);
+    }
+
+    private String getKey() {
+      return key;
+    }
+  }
+
+  private final String key;
+  private final String defaultValue;
+  private final String name;
+  private final PropertyType type;
+  private final List<String> options;
+  private final String description;
   /**
    * @see org.sonar.api.config.PropertyDefinition.Builder#category(String)
    */
-  private String category;
-  private List<String> qualifiers;
-  private boolean global;
-  private boolean multiValues;
-  private String deprecatedKey;
-  private List<PropertyFieldDefinition> fields;
+  private final String category;
+  private final List<ConfigScope> configScopes;
+  private final boolean global;
+  private final boolean multiValues;
+  private final String deprecatedKey;
+  private final List<PropertyFieldDefinition> fields;
   /**
    * @see org.sonar.api.config.PropertyDefinition.Builder#subCategory(String)
    */
-  private String subCategory;
-  private int index;
+  private final String subCategory;
+  private final int index;
 
   private PropertyDefinition(Builder builder) {
     this.key = builder.key;
@@ -130,8 +157,8 @@ public final class PropertyDefinition {
     this.multiValues = builder.multiValues;
     this.fields = builder.fields;
     this.deprecatedKey = builder.deprecatedKey;
-    this.qualifiers = builder.onQualifiers;
-    this.qualifiers.addAll(builder.onlyOnQualifiers);
+    this.configScopes = new ArrayList<>(builder.onConfigScopes);
+    this.configScopes.addAll(builder.onlyOnConfigScopes);
     this.index = builder.index;
   }
 
@@ -154,17 +181,17 @@ public final class PropertyDefinition {
       .multiValues(annotation.multiValues())
       .fields(PropertyFieldDefinition.create(annotation.fields()))
       .deprecatedKey(annotation.deprecatedKey());
-    List<String> qualifiers = new ArrayList<>();
+    List<ConfigScope> configScopes = new ArrayList<>();
     if (annotation.project()) {
-      qualifiers.add(Qualifiers.PROJECT);
+      configScopes.add(ConfigScope.PROJECT);
     }
     if (annotation.module()) {
-      qualifiers.add(Qualifiers.MODULE);
+      configScopes.add(ConfigScope.MODULE);
     }
     if (annotation.global()) {
-      builder.onQualifiers(qualifiers);
+      builder.onConfigScopes(configScopes);
     } else {
-      builder.onlyOnQualifiers(qualifiers);
+      builder.onlyOnConfigScopes(configScopes);
     }
     return builder.build();
   }
@@ -279,24 +306,34 @@ public final class PropertyDefinition {
   }
 
   /**
-   * Category where the property appears in settings pages. By default equal to plugin name.
+   * Category where the property appears in settings pages. By default, equal to plugin name.
    */
   public String category() {
     return category;
   }
 
   /**
-   * Sub-category where property appears in settings pages. By default sub-category is the category.
+   * Sub-category where property appears in settings pages. By default, sub-category is the category.
    */
   public String subCategory() {
     return subCategory;
   }
 
   /**
-   * Qualifiers that can display this property
+   * @deprecated since 10.13. Use {@link #configScopes()} instead.
    */
+  @Deprecated(since = "10.13", forRemoval = true)
   public List<String> qualifiers() {
-    return qualifiers;
+    return configScopes.stream().map(ConfigScope::getKey).collect(Collectors.toList());
+  }
+
+  /**
+   * Qualifiers that can display this property
+   *
+   * @since 10.13
+   */
+  public List<ConfigScope> configScopes() {
+    return configScopes;
   }
 
   /**
@@ -333,9 +370,8 @@ public final class PropertyDefinition {
 
   public static final class Result {
     private static final Result SUCCESS = new Result(null);
-    private String errorKey;
+    private final String errorKey;
 
-    @Nullable
     private Result(@Nullable String errorKey) {
       this.errorKey = errorKey;
     }
@@ -367,13 +403,13 @@ public final class PropertyDefinition {
      * @see PropertyDefinition.Builder#subCategory(String)
      */
     private String subCategory = "";
-    private List<String> onQualifiers = new ArrayList<>();
-    private List<String> onlyOnQualifiers = new ArrayList<>();
+    private final List<ConfigScope> onConfigScopes = new ArrayList<>();
+    private final List<ConfigScope> onlyOnConfigScopes = new ArrayList<>();
     private boolean global = true;
     private PropertyType type = PropertyType.STRING;
-    private List<String> options = new ArrayList<>();
+    private final List<String> options = new ArrayList<>();
     private boolean multiValues = false;
-    private List<PropertyFieldDefinition> fields = new ArrayList<>();
+    private final List<PropertyFieldDefinition> fields = new ArrayList<>();
     private String deprecatedKey = "";
     private boolean hidden = false;
     private int index = 999;
@@ -420,98 +456,152 @@ public final class PropertyDefinition {
     }
 
     /**
-     * The property will be available in General Settings AND in the components
-     * with the given qualifiers.
+     * The property will be available in the General Settings AND in the given scopes.
      * <br>
-     * For example @{code onQualifiers(Qualifiers.PROJECT)} allows to configure the
-     * property in General Settings and in Project Settings.
+     * For example @{code onConfigScopes(ConfigScope.PROJECT)} allows to configure the
+     * property in the General Settings and in the Project Settings.
      * <br>
-     * See supported constant values in {@link Qualifiers}. By default property is available
-     * only in General Settings.
+     * See supported constant values in {@link ConfigScope}. By default, a property is available
+     * only in the General Settings.
      *
-     * @throws IllegalArgumentException only qualifiers {@link Qualifiers#PROJECT PROJECT}, {@link Qualifiers#MODULE MODULE}, {@link Qualifiers#APP APP},
-     *                                  {@link Qualifiers#VIEW VIEW} and {@link Qualifiers#SUBVIEW SVW} are allowed.
+     * @throws IllegalArgumentException only qualifiers {@link ConfigScope#PROJECT}, {@link ConfigScope#APP},
+     *                                  {@link ConfigScope#VIEW} and {@link ConfigScope#SUB_VIEW} are allowed.
+     * @since 10.13
      */
+    public Builder onConfigScopes(ConfigScope first, ConfigScope... rest) {
+      addQualifiers(this.onConfigScopes, first, rest);
+      this.global = true;
+      return this;
+    }
+
+    /**
+     * @deprecated since 10.13. Use {@link #onConfigScopes(ConfigScope, ConfigScope...)} instead.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
     public Builder onQualifiers(String first, String... rest) {
-      addQualifiers(this.onQualifiers, first, rest);
+      addQualifiers(this.onConfigScopes, first, rest);
       this.global = true;
       return this;
     }
 
     /**
-     * The property will be available in General Settings AND in the components
-     * with the given qualifiers.
+     * The property will be available in the General Settings AND in the given scopes.
      * <br>
-     * For example @{code onQualifiers(Arrays.asList(Qualifiers.PROJECT))} allows to configure the
-     * property in General Settings and in Project Settings.
+     * For example @{code onConfigScopes(Arrays.asList(ConfigScope.PROJECT))} allows to configure the
+     * property in the General Settings and in the Project Settings.
      * <br>
-     * See supported constant values in {@link Qualifiers}. By default property is available
-     * only in General Settings.
+     * See supported constant values in {@link ConfigScope}. By default, a property is available
+     * only in the General Settings.
      *
-     * @throws IllegalArgumentException only qualifiers {@link Qualifiers#PROJECT PROJECT}, {@link Qualifiers#MODULE MODULE}, {@link Qualifiers#APP APP},
-     *                                  {@link Qualifiers#VIEW VIEW} and {@link Qualifiers#SUBVIEW SVW} are allowed.
-     * @throws IllegalArgumentException only qualifiers {@link Qualifiers#PROJECT PROJECT}, {@link Qualifiers#MODULE MODULE},
-     *                                  {@link Qualifiers#VIEW VIEW} and {@link Qualifiers#SUBVIEW SVW} are allowed.
+     * @throws IllegalArgumentException only qualifiers {@link ConfigScope#PROJECT}, {@link ConfigScope#APP},
+     *                                  {@link ConfigScope#VIEW} and {@link ConfigScope#SUB_VIEW} are allowed.
+     * @since 10.13
      */
+    public Builder onConfigScopes(Collection<ConfigScope> configScopes) {
+      addQualifiers(this.onConfigScopes, configScopes);
+      this.global = true;
+      return this;
+    }
+
+    /**
+     * @deprecated since 10.13. Use {@link #onConfigScopes(Collection)} instead.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
     public Builder onQualifiers(List<String> qualifiers) {
-      addQualifiers(this.onQualifiers, qualifiers);
+      addQualifiers(this.onConfigScopes, qualifiers);
       this.global = true;
       return this;
     }
 
     /**
-     * The property will be available in the components
-     * with the given qualifiers, but NOT in General Settings.
+     * The property will be configurable in the given scopes, but NOT in General Settings.
      * <br>
-     * For example @{code onlyOnQualifiers(Qualifiers.PROJECT)} allows to configure the
+     * For example @{code onlyOnConfigScopes(ConfigScope.PROJECT)} allows to configure the
      * property in Project Settings only.
      * <br>
-     * See supported constant values in {@link Qualifiers}. By default property is available
-     * only in General Settings.
+     * See supported constant values in {@link ConfigScope}. By default, a property is available
+     * only in the General Settings.
      *
-     * @throws IllegalArgumentException only qualifiers {@link Qualifiers#PROJECT PROJECT}, {@link Qualifiers#MODULE MODULE}, {@link Qualifiers#APP APP},
-     *                                  {@link Qualifiers#VIEW VIEW} and {@link Qualifiers#SUBVIEW SVW} are allowed.
+     * @throws IllegalArgumentException only qualifiers {@link ConfigScope#PROJECT}, {@link ConfigScope#APP},
+     *                                  {@link ConfigScope#VIEW} and {@link ConfigScope#SUB_VIEW} are allowed.
+     * @since 10.13
      */
-    public Builder onlyOnQualifiers(String first, String... rest) {
-      addQualifiers(this.onlyOnQualifiers, first, rest);
+    public Builder onlyOnConfigScopes(ConfigScope first, ConfigScope... rest) {
+      addQualifiers(this.onlyOnConfigScopes, first, rest);
       this.global = false;
       return this;
     }
 
     /**
-     * The property will be available in the components
-     * with the given qualifiers, but NOT in General Settings.
-     * <br>
-     * For example @{code onlyOnQualifiers(Arrays.asList(Qualifiers.PROJECT))} allows to configure the
-     * property in Project Settings only.
-     * <br>
-     * See supported constant values in {@link Qualifiers}. By default property is available
-     * only in General Settings.
-     *
-     * @throws IllegalArgumentException only qualifiers {@link Qualifiers#PROJECT PROJECT}, {@link Qualifiers#MODULE MODULE}, {@link Qualifiers#APP APP},
-     *                                  {@link Qualifiers#VIEW VIEW} and {@link Qualifiers#SUBVIEW SVW} are allowed.
+     * @deprecated since 10.13. Use {@link #onlyOnConfigScopes(ConfigScope, ConfigScope...)} instead.
      */
-    public Builder onlyOnQualifiers(List<String> qualifiers) {
-      addQualifiers(this.onlyOnQualifiers, qualifiers);
+    @Deprecated(since = "10.13", forRemoval = true)
+    public Builder onlyOnQualifiers(String first, String... rest) {
+      addQualifiers(this.onlyOnConfigScopes, first, rest);
       this.global = false;
       return this;
     }
 
-    private static void addQualifiers(List<String> target, String first, String... rest) {
-      List<String> qualifiers = new ArrayList<>();
-      qualifiers.add(first);
-      qualifiers.addAll(Arrays.asList(rest));
-      addQualifiers(target, qualifiers);
+    /**
+     * The property will be configurable in the given scopes, but NOT in General Settings.
+     * <br>
+     * For example @{code onlyOnConfigScopes(Arrays.asList(ConfigScope.PROJECT))} allows to configure the
+     * property in Project Settings only.
+     * <br>
+     * See supported constant values in {@link ConfigScope}. By default, a property is available
+     * only in the General Settings.
+     *
+     * @throws IllegalArgumentException only qualifiers {@link ConfigScope#PROJECT PROJECT}, {@link ConfigScope#APP APP},
+     *                                  {@link ConfigScope#VIEW VIEW} and {@link ConfigScope#SUB_VIEW SVW} are allowed.
+     * @since 10.13
+     */
+    public Builder onlyOnConfigScopes(Collection<ConfigScope> configScopes) {
+      addQualifiers(this.onlyOnConfigScopes, configScopes);
+      this.global = false;
+      return this;
     }
 
-    private static void addQualifiers(List<String> target, List<String> qualifiers) {
-      qualifiers.forEach(PropertyDefinition.Builder::validateQualifier);
-      target.addAll(qualifiers);
+    /**
+     * @deprecated since 10.13. Use {@link #onlyOnConfigScopes(Collection)} instead.
+     */
+    @Deprecated(since = "10.13", forRemoval = true)
+    public Builder onlyOnQualifiers(List<String> qualifiers) {
+      addQualifiers(this.onlyOnConfigScopes, qualifiers);
+      this.global = false;
+      return this;
     }
 
-    private static void validateQualifier(@Nullable String qualifier) {
-      requireNonNull(qualifier, "Qualifier cannot be null");
-      checkArgument(SUPPORTED_QUALIFIERS.contains(qualifier), "Qualifier must be one of %s", SUPPORTED_QUALIFIERS);
+    private static void addQualifiers(List<ConfigScope> target, ConfigScope first, ConfigScope... rest) {
+      List<ConfigScope> configScopes = new ArrayList<>();
+      configScopes.add(first);
+      configScopes.addAll(Arrays.asList(rest));
+      addQualifiers(target, configScopes);
+    }
+
+    private static void addQualifiers(List<ConfigScope> target, String first, String... rest) {
+      List<ConfigScope> configScopes = new ArrayList<>();
+      configScopes.add(validateQualifier(first));
+      for (String qualifier : rest) {
+        configScopes.add(validateQualifier(qualifier));
+      }
+      addQualifiers(target, configScopes);
+    }
+
+    private static void addQualifiers(List<ConfigScope> target, List<String> qualifiers) {
+      for (String qualifier : qualifiers) {
+        target.add(validateQualifier(qualifier));
+      }
+    }
+
+    private static void addQualifiers(List<ConfigScope> target, Collection<ConfigScope> configScopes) {
+      target.addAll(configScopes);
+    }
+
+    private static ConfigScope validateQualifier(@Nullable String qualifierStr) {
+      requireNonNull(qualifierStr, "Qualifier cannot be null");
+      var qualifier = ConfigScope.fromKey(qualifierStr);
+      checkArgument(qualifier != null, "Qualifier must be one of %s", Arrays.stream(ConfigScope.values()).map(ConfigScope::getKey).collect(Collectors.toList()));
+      return qualifier;
     }
 
     /**
@@ -575,8 +665,8 @@ public final class PropertyDefinition {
     public PropertyDefinition build() {
       checkArgument(!isEmpty(key), "Key must be set");
       fixType(key, type);
-      checkArgument(onQualifiers.isEmpty() || onlyOnQualifiers.isEmpty(), "Cannot define both onQualifiers and onlyOnQualifiers");
-      checkArgument(!hidden || (onQualifiers.isEmpty() && onlyOnQualifiers.isEmpty()), "Cannot be hidden and defining qualifiers on which to display");
+      checkArgument(onConfigScopes.isEmpty() || onlyOnConfigScopes.isEmpty(), "Cannot use both forQualifiers and onlyForQualifiers");
+      checkArgument(!hidden || (onConfigScopes.isEmpty() && onlyOnConfigScopes.isEmpty()), "Cannot be hidden and defining qualifiers on which to display");
       checkArgument(!JSON.equals(type) || !multiValues, "Multivalues are not allowed to be defined for JSON-type property.");
       if (hidden) {
         global = false;

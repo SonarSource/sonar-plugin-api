@@ -24,11 +24,11 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.sonar.api.server.impl.RulesDefinitionContext;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
+import org.sonar.api.server.impl.RulesDefinitionContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -227,6 +227,7 @@ public class RulesDefinitionXmlLoaderTest {
   }
 
   @Test
+  @SuppressWarnings({"removal"})
   public void markdown_description() {
     String xml = "" +
       "<rules>" +
