@@ -1075,8 +1075,9 @@ public final class CoreMetrics {
    * @deprecated since 10.6
    */
   @Deprecated(since = "10.6")
-  public static final Metric<Integer> HIGH_IMPACT_ACCEPTED_ISSUES = new Metric.Builder(HIGH_IMPACT_ACCEPTED_ISSUES_KEY, "High Impact Accepted Issues", Metric.ValueType.INT)
-    .setDescription("Accepted issues with high impact")
+  public static final Metric<Integer> HIGH_IMPACT_ACCEPTED_ISSUES =
+    new Metric.Builder(HIGH_IMPACT_ACCEPTED_ISSUES_KEY, "Blocker and High Severity Accepted Issues", Metric.ValueType.INT)
+    .setDescription("Accepted issues with blocker or high impact")
     .setDirection(Metric.DIRECTION_WORST)
     .setDomain(DOMAIN_ISSUES)
     .setBestValue(0.0)

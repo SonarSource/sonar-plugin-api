@@ -3,6 +3,7 @@
 ## 10.13
 * Deprecate `org.sonar.api.resources.Qualifiers` and `org.sonar.api.resources.Scopes`
 * Add a specialized `ConfigScope` enum on `org.sonar.api.config.PropertyDefinition`, and provide replacements for all `onQualifiers` methods accordingly
+* Change the name of `high_impact_accepted_issues` to `Blocker and High Severity Accepted Issues`
 
 ## 10.11
 * Introduce new impact severities `org.sonar.api.issue.impact.Severity.INFO` and `org.sonar.api.issue.impact.Severity.BLOCKER`
