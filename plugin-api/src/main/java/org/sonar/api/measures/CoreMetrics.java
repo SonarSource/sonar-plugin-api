@@ -1086,8 +1086,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String MAINTAINABILITY_ISSUES_KEY = "maintainability_issues";
 
   /**
@@ -1104,8 +1105,9 @@ public final class CoreMetrics {
    * }
    *
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> MAINTAINABILITY_ISSUES = new Metric.Builder(MAINTAINABILITY_ISSUES_KEY, "Maintainability Issues", Metric.ValueType.DATA)
     .setDescription("Maintainability issues")
     .setDomain(DOMAIN_MAINTAINABILITY)
@@ -1113,8 +1115,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String NEW_MAINTAINABILITY_ISSUES_KEY = "new_maintainability_issues";
 
   /**
@@ -1131,8 +1134,9 @@ public final class CoreMetrics {
    * }
    *
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> NEW_MAINTAINABILITY_ISSUES = new Metric.Builder(NEW_MAINTAINABILITY_ISSUES_KEY, "New Maintainability Issues",
     Metric.ValueType.DATA)
     .setDescription("New maintainability issues")
@@ -1142,8 +1146,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String RELIABILITY_ISSUES_KEY = "reliability_issues";
 
   /**
@@ -1160,8 +1165,9 @@ public final class CoreMetrics {
    * }
    *
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> RELIABILITY_ISSUES = new Metric.Builder(RELIABILITY_ISSUES_KEY, "Reliability Issues", Metric.ValueType.DATA)
     .setDescription("Reliability issues")
     .setDomain(DOMAIN_RELIABILITY)
@@ -1169,8 +1175,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String NEW_RELIABILITY_ISSUES_KEY = "new_reliability_issues";
 
   /**
@@ -1187,8 +1194,9 @@ public final class CoreMetrics {
    * }
    *
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> NEW_RELIABILITY_ISSUES = new Metric.Builder(NEW_RELIABILITY_ISSUES_KEY, "New Reliability Issues",
     Metric.ValueType.DATA)
     .setDescription("New reliability issues")
@@ -1198,8 +1206,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String SECURITY_ISSUES_KEY = "security_issues";
 
   /**
@@ -1215,8 +1224,9 @@ public final class CoreMetrics {
    *   "INFO": 1
    * }
    * @since 10.6
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> SECURITY_ISSUES = new Metric.Builder(SECURITY_ISSUES_KEY, "Security Issues", Metric.ValueType.DATA)
     .setDescription("Security issues")
     .setDomain(DOMAIN_SECURITY)
@@ -1224,8 +1234,9 @@ public final class CoreMetrics {
 
   /**
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final String NEW_SECURITY_ISSUES_KEY = "new_security_issues";
 
   /**
@@ -1242,8 +1253,9 @@ public final class CoreMetrics {
    * }
    *
    * @since 10.7
+   * @deprecated since 10.13
    */
-  @Beta
+  @Deprecated(since = "10.13")
   public static final Metric<String> NEW_SECURITY_ISSUES = new Metric.Builder(NEW_SECURITY_ISSUES_KEY, "New Security Issues",
     Metric.ValueType.DATA)
     .setDescription("New security issues")
