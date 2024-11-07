@@ -273,6 +273,8 @@ public interface SensorContext {
    * <br/>
    * This method can not be used by plugins not developed by SonarSource SA.
    *
+   * @param key The key must follow this convention: <pluginKey>.<entryKey>. Example: cfamily.qualityIndex
+   *
    * @throws IllegalArgumentException if key or value parameter is null
    * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
    * @since 10.9
