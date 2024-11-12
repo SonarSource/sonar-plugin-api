@@ -44,10 +44,6 @@ public interface ExternalIssue extends IIssue {
    */
   String ruleId();
 
-  /**
-   * @deprecated since 10.1, use {@link #impacts()} instead
-   */
-  @Deprecated(since = "10.1")
   @CheckForNull
   Severity severity();
 
@@ -59,9 +55,7 @@ public interface ExternalIssue extends IIssue {
 
   /**
    * Type of the issue.
-   * @deprecated since 10.1, use {@link #impacts()} instead
    */
-  @Deprecated(since = "10.1")
   @CheckForNull
   RuleType type();
 

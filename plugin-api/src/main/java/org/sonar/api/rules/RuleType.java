@@ -28,10 +28,6 @@ import static java.util.Arrays.stream;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toList;
 
-/**
- * @deprecated since 10.1, use impacts with {@link org.sonar.api.issue.impact.SoftwareQuality} instead
- */
-@Deprecated(since = "10.1")
 public enum RuleType {
   CODE_SMELL(1), BUG(2), VULNERABILITY(3), SECURITY_HOTSPOT(4);
 

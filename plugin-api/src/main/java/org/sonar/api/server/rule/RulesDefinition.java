@@ -429,10 +429,6 @@ public interface RulesDefinition {
     public abstract NewRule setActivatedByDefault(boolean activatedByDefault);
 
 
-    /**
-     * @deprecated since 10.1. Use {@link #addDefaultImpact(SoftwareQuality, Severity)} instead
-     */
-    @Deprecated(since = "10.1")
     public abstract NewRule setSeverity(String s);
 
     /**
@@ -459,9 +455,7 @@ public interface RulesDefinition {
      * are silently removed from the final state of definition.
      *
      * @since 5.5
-     * @deprecated since 10.1. Use {@link #addDefaultImpact(SoftwareQuality, Severity)} instead
      */
-    @Deprecated(since = "10.1")
     public abstract NewRule setType(RuleType t);
 
     /**
@@ -641,9 +635,7 @@ public interface RulesDefinition {
     /**
      * @see NewRule#setType(RuleType)
      * @since 5.5
-     * @deprecated since 10.1, use {@link #defaultImpacts()} instead
      */
-    @Deprecated(since = "10.1")
     public abstract RuleType type();
 
     /**
@@ -653,10 +645,6 @@ public interface RulesDefinition {
     @CheckForNull
     public abstract CleanCodeAttribute cleanCodeAttribute();
 
-    /**
-     * @deprecated since 10.1, use {@link #defaultImpacts()} instead
-     */
-    @Deprecated(since = "10.1")
     public abstract String severity();
 
     /**

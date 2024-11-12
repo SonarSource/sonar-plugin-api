@@ -55,9 +55,7 @@ public interface NewIssue {
   /**
    * Override severity of the issue.
    * Setting a null value or not calling this method means to use severity configured in quality profile.
-   * @deprecated since 10.1, use {@link #overrideImpact(SoftwareQuality, org.sonar.api.issue.impact.Severity)} instead
    */
-  @Deprecated(since = "10.1")
   NewIssue overrideSeverity(@Nullable Severity severity);
 
   /**

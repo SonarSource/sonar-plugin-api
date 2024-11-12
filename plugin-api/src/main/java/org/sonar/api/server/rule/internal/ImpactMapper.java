@@ -32,10 +32,6 @@ import static org.sonar.api.rule.Severity.INFO;
 import static org.sonar.api.rule.Severity.MAJOR;
 import static org.sonar.api.rule.Severity.MINOR;
 
-/**
- * @deprecated since 10.1 This is only used for mapping deprecated types and severities until they are removed
- */
-@Deprecated(since = "10.1")
 public class ImpactMapper {
 
   static final List<SoftwareQuality> ORDERED_SOFTWARE_QUALITIES = List.of(SoftwareQuality.SECURITY,

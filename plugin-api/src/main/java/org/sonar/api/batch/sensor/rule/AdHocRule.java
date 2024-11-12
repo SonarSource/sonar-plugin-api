@@ -56,17 +56,13 @@ public interface AdHocRule {
 
   /**
    * Default severity of the rule.
-   * @deprecated since 10.1, use {@link #defaultImpacts()} instead
    */
-  @Deprecated(since = "10.1")
   @CheckForNull
   Severity severity();
 
   /**
    * Type of the rule.
-   * @deprecated since 10.1, use {@link #defaultImpacts()} instead
    */
-  @Deprecated(since = "10.1")
   @CheckForNull
   RuleType type();
 

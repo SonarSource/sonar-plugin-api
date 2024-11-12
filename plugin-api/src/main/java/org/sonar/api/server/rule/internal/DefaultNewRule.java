@@ -444,10 +444,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return repoKey;
   }
 
-  /**
-   * @deprecated since 10.1, use {@link #defaultImpacts()}
-   */
-  @Deprecated(since = "10.1")
   @CheckForNull
   RuleType type() {
     return type;
@@ -483,10 +479,6 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     return internalKey;
   }
 
-  /**
-   * @deprecated since 10.1, use {@link #defaultImpacts()}
-   */
-  @Deprecated(since = "10.1")
   @CheckForNull
   String severity() {
     return severity;

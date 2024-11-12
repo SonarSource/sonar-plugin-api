@@ -139,10 +139,6 @@ public class TestIssue implements Issue {
       return this;
     }
 
-    /**
-     * @deprecated since 10.1, use {@link #addImpact(SoftwareQuality, org.sonar.api.issue.impact.Severity)}
-     */
-    @Deprecated(since = "10.1")
     public Builder setSeverity(String severity) {
       this.severity = validateSeverity(severity);
       return this;
@@ -174,9 +170,7 @@ public class TestIssue implements Issue {
 
     /**
      * @since 5.5
-     * @deprecated since 10.1, use {@link #addImpact(SoftwareQuality, org.sonar.api.issue.impact.Severity)}
      */
-    @Deprecated(since = "10.1")
     public Builder setType(RuleType type) {
       this.type = validateType(type);
       return this;

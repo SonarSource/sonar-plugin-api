@@ -64,9 +64,7 @@ public interface Issue {
 
   /**
    * See constants in {@link org.sonar.api.rule.Severity}.
-   * @deprecated since 10.1, use {@link #impacts()} instead
    */
-  @Deprecated(since = "10.1")
   String severity();
 
   /**
@@ -77,9 +75,7 @@ public interface Issue {
 
   /**
    * @since 5.5
-   * @deprecated since 10.1, use {@link #impacts()} instead
    */
-  @Deprecated(since = "10.1")
   RuleType type();
 
   /**
