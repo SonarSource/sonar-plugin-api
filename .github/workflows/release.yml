@@ -15,4 +15,4 @@ jobs:
       publishToBinaries: true
       mavenCentralSync: true
       slackChannel: team-sonarqube-build
-      publishJavadoc: false
+      publishJavadoc: true
