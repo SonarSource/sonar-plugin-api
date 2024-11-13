@@ -26,9 +26,7 @@ import static java.util.Collections.unmodifiableList;
 
 /**
  * @since 3.6
- * @deprecated since 10.1, use impacts with {@link org.sonar.api.issue.impact.Severity} instead
  */
-@Deprecated(since = "10.1")
 public final class Severity {
 
   public static final String INFO = "INFO";

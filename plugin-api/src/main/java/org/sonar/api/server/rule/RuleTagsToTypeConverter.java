@@ -32,7 +32,6 @@ import static java.util.Collections.unmodifiableSet;
  * @since 5.5
  * @deprecated since 10.1.
  */
-@Deprecated(since = "10.1")
 public class RuleTagsToTypeConverter {
 
   public static final String TAG_BUG = "bug";

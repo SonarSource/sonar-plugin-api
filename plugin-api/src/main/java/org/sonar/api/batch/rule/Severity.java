@@ -21,9 +21,7 @@ package org.sonar.api.batch.rule;
 
 /**
  * @since 5.2
- * @deprecated since 10.1, use impacts with {@link org.sonar.api.issue.impact.Severity} instead
  */
-@Deprecated(since = "10.1")
 public enum Severity {
   INFO,
   MINOR,

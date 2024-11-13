@@ -56,9 +56,7 @@ public interface NewExternalIssue {
 
   /**
    * Type of issue.
-   * @deprecated since 10.1, use {@link #addImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity)()} instead
    */
-  @Deprecated(since = "10.1")
   NewExternalIssue type(RuleType type);
 
   /**
@@ -77,9 +75,7 @@ public interface NewExternalIssue {
 
   /**
    * Set the severity of the issue.
-   * @deprecated since 10.1, use {@link #addImpact(SoftwareQuality softwareQuality, org.sonar.api.issue.impact.Severity severity)()} instead
    */
-  @Deprecated(since = "10.1")
   NewExternalIssue severity(Severity severity);
 
   /**

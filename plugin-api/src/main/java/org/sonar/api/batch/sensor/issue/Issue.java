@@ -64,9 +64,7 @@ public interface Issue extends IIssue {
 
   /**
    * Overridden severity.
-   * @deprecated since 10.1, use {@link #overridenImpacts()} instead
    */
-  @Deprecated(since = "10.1")
   @CheckForNull
   Severity overriddenSeverity();
 

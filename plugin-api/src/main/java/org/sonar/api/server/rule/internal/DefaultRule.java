@@ -127,7 +127,7 @@ public class DefaultRule extends RulesDefinition.Rule {
 
     if (shouldUseBackmapping(newRule)) {
       Severity impactSeverity = ImpactMapper.getBestImpactForBackmapping(newRule.defaultImpacts()).getValue();
-      return ImpactMapper.convertToDeprecatedSeverity(impactSeverity);
+      return ImpactMapper.convertToRuleSeverity(impactSeverity);
     }
     return MAJOR;
   }

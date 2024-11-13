@@ -57,9 +57,7 @@ public interface NewAdHocRule {
 
   /**
    * Type of the rule.
-   * @deprecated since 10.1, use impacts with {@link #addDefaultImpact(SoftwareQuality, org.sonar.api.issue.impact.Severity)} instead
    */
-  @Deprecated(since="10.1")
   NewAdHocRule type(RuleType type);
 
   /**
@@ -71,9 +69,7 @@ public interface NewAdHocRule {
 
   /**
    * Set the severity of the rule.
-   * @deprecated since 10.1, use impacts with {@link #addDefaultImpact(SoftwareQuality, org.sonar.api.issue.impact.Severity)} instead
    */
-  @Deprecated(since="10.1")
   NewAdHocRule severity(Severity severity);
 
   /**

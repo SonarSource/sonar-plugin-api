@@ -32,10 +32,6 @@ import static org.sonar.api.rule.Severity.INFO;
 import static org.sonar.api.rule.Severity.MAJOR;
 import static org.sonar.api.rule.Severity.MINOR;
 
-/**
- * @deprecated since 10.1 This is only used for mapping deprecated types and severities until they are removed
- */
-@Deprecated(since = "10.1")
 public class ImpactMapper {
 
   static final List<SoftwareQuality> ORDERED_SOFTWARE_QUALITIES = List.of(SoftwareQuality.SECURITY,
@@ -73,7 +69,7 @@ public class ImpactMapper {
     }
   }
 
-  public static String convertToDeprecatedSeverity(Severity severity) {
+  public static String convertToRuleSeverity(Severity severity) {
     switch (severity) {
       case BLOCKER:
         return BLOCKER;
@@ -90,8 +86,16 @@ public class ImpactMapper {
     }
   }
 
-  public static Severity convertToImpactSeverity(String deprecatedSeverity) {
-    switch (deprecatedSeverity) {
+  /**
+   * @deprecated since 10.14, use {@link ImpactMapper#convertToRuleSeverity(Severity)} instead.
+   */
+  @Deprecated(since = "10.14")
+  public static String convertToDeprecatedSeverity(Severity severity) {
+    return ImpactMapper.convertToRuleSeverity(severity);
+  }
+
+  public static Severity convertToImpactSeverity(String ruleSeverity) {
+    switch (ruleSeverity) {
       case BLOCKER:
       case CRITICAL:
         return Severity.HIGH;
@@ -101,7 +105,7 @@ public class ImpactMapper {
       case INFO:
         return Severity.LOW;
       default:
-        throw new IllegalStateException("This old severity value " + deprecatedSeverity + " is illegal.");
+        throw new IllegalStateException("This severity value " + ruleSeverity + " is illegal.");
     }
   }
 
