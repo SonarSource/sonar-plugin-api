@@ -5,6 +5,7 @@
 * Remove deprecation on  `org.sonar.api.rules.RuleType`, `org.sonar.api.batch.rule.Severity`, `org.sonar.api.rule.Severity` and related usages.
 * Remove deprecation on `org.sonar.api.server.rule.internal.ImpactMapper` and `org.sonar.api.server.rule.RuleTagsToTypeConverter`.
 * Remove deprecation on metrics `org.sonar.api.measures.CoreMetrics.BLOCKER_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.CRITICAL_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.MAJOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.MINOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.INFO_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_BLOCKER_VIOLATIONS`, , `org.sonar.api.measures.CoreMetrics.NEW_CRITICAL_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_MAJOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_MINOR_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.NEW_INFO_VIOLATIONS`, `org.sonar.api.measures.CoreMetrics.CODE_SMELLS`, `org.sonar.api.measures.CoreMetrics.NEW_CODE_SMELLS`, `org.sonar.api.measures.CoreMetrics.BUGS`, `org.sonar.api.measures.CoreMetrics.NEW_BUGS`, `org.sonar.api.measures.CoreMetrics.VULNERABILITIES`, `org.sonar.api.measures.CoreMetrics.NEW_VULNERABILITIES`.
+* Deprecate `org.sonar.api.server.rule.internal.ImpactMapper.convertToDeprecatedSeverity`. Use `org.sonar.api.server.rule.internal.ImpactMapper.convertToRuleSeverity` instead.
 
 ## 10.13
 * Deprecate `org.sonar.api.resources.Qualifiers` and `org.sonar.api.resources.Scopes`

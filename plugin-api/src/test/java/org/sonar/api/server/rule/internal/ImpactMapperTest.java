@@ -103,29 +103,29 @@ public class ImpactMapperTest {
   }
 
   @Test
-  public void convertToDeprecatedSeverity_givenHigh_returnCritical() {
-    String oldSeverity = ImpactMapper.convertToDeprecatedSeverity(HIGH);
+  public void convertToRuleSeverity_givenHigh_returnCritical() {
+    String oldSeverity = ImpactMapper.convertToRuleSeverity(HIGH);
 
     assertThat(oldSeverity).isEqualTo("CRITICAL");
   }
 
   @Test
-  public void convertToDeprecatedSeverity_givenInfo_returnInfo() {
-    String oldSeverity = ImpactMapper.convertToDeprecatedSeverity(INFO);
+  public void convertToRuleSeverity_givenInfo_returnInfo() {
+    String oldSeverity = ImpactMapper.convertToRuleSeverity(INFO);
 
     assertThat(oldSeverity).isEqualTo("INFO");
   }
 
   @Test
-  public void convertToDeprecatedSeverity_givenBlocker_returnBlocker() {
-    String oldSeverity = ImpactMapper.convertToDeprecatedSeverity(BLOCKER);
+  public void convertToRuleSeverity_givenBlocker_returnBlocker() {
+    String oldSeverity = ImpactMapper.convertToRuleSeverity(BLOCKER);
 
     assertThat(oldSeverity).isEqualTo("BLOCKER");
   }
 
   @Test
-  public void convertToDeprecatedSeverity_givenNull_throwException() {
-    ThrowableAssert.ThrowingCallable methodUnderTest = () -> ImpactMapper.convertToDeprecatedSeverity(null);
+  public void convertToRuleSeverity_givenNull_throwException() {
+    ThrowableAssert.ThrowingCallable methodUnderTest = () -> ImpactMapper.convertToRuleSeverity(null);
 
     assertThatThrownBy(methodUnderTest).isInstanceOf(Throwable.class);
   }
