@@ -1,7 +1,7 @@
 # sonar-plugin-api
 
-Java API to develop plugins for SonarQube, SonarCloud and SonarLint.
-This component was extracted out of SonarQube, and is released independently since v9.5.
+Java API to develop plugins for SonarQube (Server, Cloud) and SonarQube for IDE.
+This component was extracted out of SonarQube and has been released independently since v9.5.
 
 The API is built with JDK 11.
 
@@ -18,7 +18,7 @@ org.sonarsource.api.plugin:sonar-plugin-api:<version>
 ```
 
 You can find it in [maven central](https://mvnrepository.com/artifact/org.sonarsource.api.plugin/sonar-plugin-api).
-Also note that the version no longer follows SonarQube's versions. The `sonar-plugin-api` is now released separately.
+Also note that the version no longer follows SonarQube Server's versions. The `sonar-plugin-api` is now released separately.
 
 ## Changelogs
 
@@ -36,9 +36,9 @@ New APIs can be introduced in any release of the API, and plugins may want to do
 
 The following tables indicate which API versions plugins can find at runtime: 
 
-### SonarQube
+### SonarQube Server
 
-| SonarQube              | Plugin API                |
+| SonarQube Server       | Plugin API                |
 |------------------------|---------------------------|
 | 10.7.0.96327           | 10.11.0.2468              |
 | 10.6.0.92116           | 10.7.0.2191               |
@@ -57,10 +57,10 @@ The following tables indicate which API versions plugins can find at runtime:
 | 9.5.0.56709            | 9.6.1.114                 |
 | 9.4.0.54424 or earlier | Matches sonarqube version |
 
-### SonarCloud
+### SonarQube Cloud
 Current version: 10.6.0.2114
 
-### SonarLint
+### SonarQube for IDE
 | Flavor   | Plugin API   |
 |----------|--------------|
 | IntelliJ | 10.11.0.2468 |
@@ -71,7 +71,7 @@ Current version: 10.6.0.2114
 
 See [here](docs/optimize-sensors.md) how to leverage APIs introduced recently to help optimize sensors in order to achieve faster analysis.
 
-## Have Question or Feedback?
+## Have Questions or Feedback?
 
 For support questions ("How do I?", "I got this error, why?", ...), please head to the [SonarSource forum](https://community.sonarsource.com/c/help). There are chances that a question similar to yours has already been answered.
 
