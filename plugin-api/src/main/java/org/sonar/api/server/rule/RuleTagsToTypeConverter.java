@@ -30,7 +30,6 @@ import static java.util.Collections.unmodifiableSet;
 /**
  * @see org.sonar.api.server.rule.RulesDefinition.NewRule#setType(RuleType)
  * @since 5.5
- * @deprecated since 10.1.
  */
 public class RuleTagsToTypeConverter {
 
