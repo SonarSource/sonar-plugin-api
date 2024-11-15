@@ -16,3 +16,4 @@ jobs:
       mavenCentralSync: true
       slackChannel: team-sonarqube-build
       publishJavadoc: true
+      publicRelease: true
