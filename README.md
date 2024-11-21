@@ -58,7 +58,7 @@ The following tables indicate which API versions plugins can find at runtime:
 | 9.4.0.54424 or earlier | Matches sonarqube version |
 
 ### SonarQube Cloud
-Current version: 10.6.0.2114
+Current version: 10.11.0.2468
 
 ### SonarQube for IDE
 | Flavor   | Plugin API   |
