@@ -71,10 +71,7 @@ public interface Issue extends Serializable {
    */
   @Deprecated(since = "10.4")
   String STATUS_CLOSED = "CLOSED";
-  /**
-   * @deprecated since 10.4 in favor of {@link IssueStatus}
-   */
-  @Deprecated(since = "10.4")
+
   String RESOLUTION_FIXED = "FIXED";
 
   /**
@@ -103,18 +100,14 @@ public interface Issue extends Serializable {
 
   /**
    * Security Hotspot has been reviewed and resolved as safe.
-   * @deprecated since 10.4 as Security Hotspot are deprecated.
    * @since 8.1
    */
-  @Deprecated(since = "10.4")
   String RESOLUTION_SAFE = "SAFE";
 
   /**
    * Security Hotspot has been reviewed and acknowledged that it poses a risk.
-   * @deprecated since 10.4 as Security Hotspot are deprecated.
    * @since 9.4
    */
-  @Deprecated(since = "10.4")
   String RESOLUTION_ACKNOWLEDGED = "ACKNOWLEDGED";
 
   /**
@@ -124,16 +117,8 @@ public interface Issue extends Serializable {
   List<String> RESOLUTIONS = List.of(RESOLUTION_FALSE_POSITIVE, RESOLUTION_WONT_FIX, RESOLUTION_FIXED,
     RESOLUTION_REMOVED);
 
-  /**
-   * @deprecated since 10.4 as Security Hotspot are deprecated
-   */
-  @Deprecated(since = "10.4")
   List<String> SECURITY_HOTSPOT_RESOLUTIONS = List.of(RESOLUTION_FIXED, RESOLUTION_SAFE, RESOLUTION_ACKNOWLEDGED);
 
-  /**
-   * @deprecated since 10.4 as Security Hotspot are deprecated
-   */
-  @Deprecated(since = "10.4")
   String STATUS_TO_REVIEW = "TO_REVIEW";
 
   /**
@@ -142,10 +127,6 @@ public interface Issue extends Serializable {
   @Deprecated(since = "8.1")
   String STATUS_IN_REVIEW = "IN_REVIEW";
 
-  /**
-   * @deprecated since 10.4 as Security Hotspot are deprecated
-   */
-  @Deprecated(since = "10.4")
   String STATUS_REVIEWED = "REVIEWED";
 
   /**
@@ -205,14 +186,14 @@ public interface Issue extends Serializable {
 
   /**
    * See constant values in {@link Issue}.
-   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   * @deprecated since 10.4 in favor of {@link IssueStatus}. Not deprecated for hotspots
    */
   @Deprecated(since = "10.4")
   String status();
 
   /**
    * The type of resolution, or null if the issue is not resolved. See constant values in {@link Issue}.
-   * @deprecated since 10.4 in favor of {@link IssueStatus}
+   * @deprecated since 10.4 in favor of {@link IssueStatus}. Not deprecated for hotspots
    */
   @CheckForNull
   @Deprecated(since = "10.4")

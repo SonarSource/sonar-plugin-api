@@ -60,7 +60,7 @@ public enum IssueStatus {
         return IssueStatus.CONFIRMED;
       case Issue.STATUS_CLOSED:
         return IssueStatus.FIXED;
-      // Security hotspot should not return issue status as they are deprecated.
+      // Security hotspot should not return issue status.
       case Issue.STATUS_REVIEWED:
       case Issue.STATUS_TO_REVIEW:
         return null;
