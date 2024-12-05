@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.1
+* Remove deprecation on `status` values `TO_REVIEW`, `REVIEWED` and related usages
+* Remove deprecation on `resolution` values `FIXED`, `SAFE`, `ACKNOWLEDGED` and related usages
+* Indicate that `status` and `resolution` are not deprecated for hotspots
+
 ## 11.0
 * Remove usage of `javax-servlet-api`:
   * Remove ~~`org.sonar.api.web.ServletFilter`~~
