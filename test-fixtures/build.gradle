@@ -52,8 +52,10 @@ publishing {
       artifact javadocJar
     }
   }
-  test {
-    // Enabling the JUnit Platform (see https://github.com/junit-team/junit5-samples/tree/master/junit5-migration-gradle)
-    useJUnitPlatform()
-  }
+}
+
+test {
+  dependsOn ':plugin-api:shadowJar'
+  // Enabling the JUnit Platform (see https://github.com/junit-team/junit5-samples/tree/master/junit5-migration-gradle)
+  useJUnitPlatform()
 }
