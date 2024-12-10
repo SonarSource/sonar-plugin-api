@@ -20,7 +20,6 @@
 package org.sonar.api.security;
 
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.http.HttpRequest;
@@ -44,18 +43,16 @@ public abstract class Authenticator {
   public static final class Context {
     private String username;
     private String password;
-    private HttpServletRequest request;
     private HttpRequest httpRequest;
 
     /**
      * This class is not meant to be instantiated by plugins, except for tests.
      */
-    public Context(@Nullable String username, @Nullable String password, HttpRequest httpRequest, HttpServletRequest request) {
-      requireNonNull(request);
+    public Context(@Nullable String username, @Nullable String password, HttpRequest httpRequest) {
+      requireNonNull(httpRequest);
       this.username = username;
       this.password = password;
       this.httpRequest = httpRequest;
-      this.request = request;
     }
 
     /**
@@ -70,14 +67,6 @@ public abstract class Authenticator {
      */
     public String getPassword() {
       return password;
-    }
-
-    /**
-     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
-     */
-    @Deprecated(since = "9.16", forRemoval = true)
-    public HttpServletRequest getRequest() {
-      return request;
     }
 
     /**

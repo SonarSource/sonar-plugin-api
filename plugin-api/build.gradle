@@ -14,7 +14,6 @@ dependencies {
   implementation project(':check-api')
 
   compileOnly libs.jsr305
-  compileOnly libs.javax.servlet.api
 
   testImplementation libs.junit4
   testImplementation libs.junit5

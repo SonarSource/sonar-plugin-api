@@ -20,7 +20,6 @@
 package org.sonar.api.security;
 
 import com.google.common.base.Preconditions;
-import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
 import org.sonar.api.server.http.HttpRequest;
 
@@ -42,7 +41,7 @@ public class ExternalUsersProviderTest {
         return user;
       }
     };
-    UserDetails user = provider.doGetUserDetails(new ExternalUsersProvider.Context("foo", mock(HttpRequest.class), mock(HttpServletRequest.class)));
+    UserDetails user = provider.doGetUserDetails(new ExternalUsersProvider.Context("foo", mock(HttpRequest.class)));
 
     assertThat(user.getName()).isEqualTo("foo");
     assertThat(user.getEmail()).isEqualTo("foo@bar.com");
