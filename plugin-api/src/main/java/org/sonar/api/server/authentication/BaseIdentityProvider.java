@@ -19,8 +19,6 @@
  */
 package org.sonar.api.server.authentication;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.sonar.api.server.http.HttpRequest;
 import org.sonar.api.server.http.HttpResponse;
 
@@ -50,24 +48,6 @@ public interface BaseIdentityProvider extends IdentityProvider {
      * @since 9.16
      */
     HttpResponse getHttpResponse();
-
-    /**
-     * Get the received HTTP request.
-     * Note - {@code getRequest().getSession()} must not be used in order to support
-     * future clustering of web servers without stateful server sessions.
-     *
-     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
-     */
-    @Deprecated(since = "9.16", forRemoval = true)
-    HttpServletRequest getRequest();
-
-    /**
-     * Get the HTTP response to send
-     *
-     * @deprecated since 9.16. Use {@link #getHttpResponse()} instead.
-     */
-    @Deprecated(since = "9.16", forRemoval = true)
-    HttpServletResponse getResponse();
 
     /**
      * Return the server base URL

@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.0
+* Remove usage of `javax-servlet-api`:
+  * Remove ~~`org.sonar.api.web.ServletFilter`~~
+  * Remove ~~`javax.servlet.http.HttpServletRequest`~~
+  * Remove ~~`javax.servlet.http.HttpServletResponse`~~
+
 ## 10.14
 
 * Remove deprecation on  `org.sonar.api.rules.RuleType`, `org.sonar.api.batch.rule.Severity`, `org.sonar.api.rule.Severity` and related usages.

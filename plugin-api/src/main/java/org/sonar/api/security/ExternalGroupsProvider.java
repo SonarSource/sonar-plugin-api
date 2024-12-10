@@ -21,7 +21,6 @@ package org.sonar.api.security;
 
 import java.util.Collection;
 import javax.annotation.CheckForNull;
-import javax.servlet.http.HttpServletRequest;
 import org.sonar.api.server.http.HttpRequest;
 
 /**
@@ -46,28 +45,18 @@ public abstract class ExternalGroupsProvider {
 
   public static final class Context {
     private String username;
-    private HttpServletRequest request;
     private HttpRequest httpRequest;
 
     /**
      * This class is not meant to be instantiated by plugins, except for tests.
      */
-    public Context(String username, HttpRequest httpRequest, HttpServletRequest request) {
+    public Context(String username, HttpRequest httpRequest) {
       this.username = username;
       this.httpRequest = httpRequest;
-      this.request = request;
     }
 
     public String getUsername() {
       return username;
-    }
-
-    /**
-     * @deprecated since 9.16. Use {@link #getHttpRequest()} instead.
-     */
-    @Deprecated(since = "9.16", forRemoval = true)
-    public HttpServletRequest getRequest() {
-      return request;
     }
 
     /**
