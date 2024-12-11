@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.rule.Severity;
+import org.sonar.api.issue.impact.Severity;
 import org.sonar.api.server.ServerSide;
 
 import static java.lang.String.format;
