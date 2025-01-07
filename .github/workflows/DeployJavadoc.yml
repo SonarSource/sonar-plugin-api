@@ -40,41 +40,41 @@ jobs:
 
       - name: List artifacts
         run: ls ${{ steps.local_repo.outputs.dir }}
-#      - name: Create javadoc dir
-#        run: mkdir -p ${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}
-#      - name: Extract javadoc.jar
-#        run: cd ${{ steps.local_repo.outputs.dir }} && mv *javadoc.jar javadoc.zip && unzip javadoc.zip -d javadoc/${{ github.event.release.tag_name }}
-#      - name: List javadoc files
-#        run: ls "${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}"
-#      - name: Publish javadoc files to S3
-#        uses: SonarSource/gh-action_release/aws-s3@master
-#        with:
-#          command: cp
-#          flags: --recursive
-#          source: ${{ steps.local_repo.outputs.dir }}/javadoc
-#          destination: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}
-#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
-#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
-#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
-#          aws_region: eu-central-1
-#      - name: Delete dir named latest in S3
-#        uses: SonarSource/gh-action_release/aws-s3@master
-#        with:
-#          command: rm
-#          source: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}/latest
-#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
-#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
-#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
-#          aws_region: eu-central-1
-#        continue-on-error: true # the first time a project publish javadoc, there is no latest dir available
-#      - name: Upload to dir named latest in S3
-#        uses: SonarSource/gh-action_release/aws-s3@master
-#        with:
-#          command: cp
-#          flags: --recursive
-#          source: ${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}/
-#          destination: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}/latest
-#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
-#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
-#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
-#          aws_region: eu-central-1
+      - name: Create javadoc dir
+        run: mkdir -p ${{ steps.local_repo.outputs.dir }}/javadoc/11.1.0.2693
+      - name: Extract javadoc.jar
+        run: cd ${{ steps.local_repo.outputs.dir }} && mv *javadoc.jar javadoc.zip && unzip javadoc.zip -d javadoc/11.1.0.2693
+      - name: List javadoc files
+        run: ls "${{ steps.local_repo.outputs.dir }}/javadoc/11.1.0.2693"
+      - name: Publish javadoc files to S3
+        uses: SonarSource/gh-action_release/aws-s3@master
+        with:
+          command: cp
+          flags: --recursive
+          source: ${{ steps.local_repo.outputs.dir }}/javadoc
+          destination: s3://javadocs-cdn-eu-central-1-prod
+          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+          aws_region: eu-central-1
+      - name: Delete dir named latest in S3
+        uses: SonarSource/gh-action_release/aws-s3@master
+        with:
+          command: rm
+          source: s3://javadocs-cdn-eu-central-1-prod/latest
+          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+          aws_region: eu-central-1
+        continue-on-error: true # the first time a project publish javadoc, there is no latest dir available
+      - name: Upload to dir named latest in S3
+        uses: SonarSource/gh-action_release/aws-s3@master
+        with:
+          command: cp
+          flags: --recursive
+          source: ${{ steps.local_repo.outputs.dir }}/javadoc/11.1.0.2693/
+          destination: s3://javadocs-cdn-eu-central-1-prod/latest
+          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+          aws_region: eu-central-1
