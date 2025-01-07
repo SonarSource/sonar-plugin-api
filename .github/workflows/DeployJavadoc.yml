@@ -1,6 +1,7 @@
 on:
   pull_request:
-
+    branches:
+      - feat/EREQ-148
 jobs:
   javadoc-publication:
     name: Publish javadoc
