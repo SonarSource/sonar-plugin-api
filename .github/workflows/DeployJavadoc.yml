@@ -35,27 +35,9 @@ jobs:
             development/aws/sts/javadocs secret_key | javadoc_aws_secret_access_key;
             development/aws/sts/javadocs security_token | javadoc_aws_security_token;
             development/kv/data/repox url | artifactory_url;
-      - name: Setup JFrog
-        uses: SonarSource/jfrog-setup-wrapper@58546d2106f9d38c37590b7f125f85b0d1fa4cee # 3.5.0
-        with:
-          jfrogAccessToken: ${{ fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
-      - name: Create a path filter from the groupId for artifactory build search
-        id: filter
-        run: |
-          jfrog rt curl -X GET "/api/build/sonar-plugin-api/${{ steps.get_version.outputs.build }}" > build-info.json
-          groupIdPath=$(jq -r '.buildInfo.modules[0].id' build-info.json | cut -d':' -f1 | tr '.' '/')
-          echo "path: $groupIdPath"
-          echo "groupIdPath=${groupIdPath}" >> $GITHUB_OUTPUT
-      - name: Download Artifacts
-        uses: SonarSource/gh-action_release/download-build@master
-        with:
-          flat-download: true
-          build-number: ${{ steps.get_version.outputs.build }}
-          local-repo-dir: ${{ steps.local_repo.outputs.dir }}
-          filter: ${{ steps.filter.outputs.groupIdPath }}
-          remote-repo:  ${{ inputs.publicRelease == true && 'sonarsource-public-releases' || 'sonarsource-private-releases'}}
-      - name: Keep only javadoc.jar
-        run: find ${{ steps.local_repo.outputs.dir }} -type f ! -name "*-javadoc.jar" -delete
+      - name: Download javadoc
+        run: cd ${{ steps.local_repo.outputs.dir }} && wget https://repo1.maven.org/maven2/org/sonarsource/api/plugin/sonar-plugin-api/11.1.0.2693/sonar-plugin-api-11.1.0.2693-javadoc.jar
+
       - name: List artifacts
         run: ls ${{ steps.local_repo.outputs.dir }}
 #      - name: Create javadoc dir
