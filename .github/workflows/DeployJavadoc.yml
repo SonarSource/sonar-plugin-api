@@ -1,0 +1,106 @@
+on:
+  pull_request:
+
+jobs:
+  javadoc-publication:
+    name: Publish javadoc
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # to authenticate via OIDC
+      contents: read  # to revert a github release
+    timeout-minutes: 5
+    outputs:
+      javadoc-publication: ${{ steps.javadoc-publication-output.outcome }}
+    steps:
+      - name: Get the version
+        id: get_version
+        run: |
+          echo "build=2693" >> $GITHUB_OUTPUT
+          echo "patch=0" >> $GITHUB_OUTPUT
+          echo "minor=1" >> $GITHUB_OUTPUT
+          echo "major=11" >> $GITHUB_OUTPUT
+      - name: Vault Secrets
+        id: secrets
+        uses: SonarSource/vault-action-wrapper@d6d745ffdbc82b040df839b903bc33b5592cd6b0 # 3.0.2
+        with:
+          url: https://vault.sonar.build:8200
+          secrets: |
+            development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
+            development/kv/data/slack token | slack_api_token;
+            development/kv/data/slack webhook | slack_webhook;
+            development/kv/data/repox url | artifactory_url;
+      - name: Create local repository directory
+        id: local_repo
+        run: echo "dir=$(mktemp -d repo.XXXXXXXX)" >> $GITHUB_OUTPUT
+      - name: Vault
+        id: secrets
+        uses: SonarSource/vault-action-wrapper@d6d745ffdbc82b040df839b903bc33b5592cd6b0 # 3.0.2
+        with:
+          url: https://vault.sonar.build:8200
+          secrets:
+            development/artifactory/token/{REPO_OWNER_NAME_DASH}-promoter access_token  | artifactory_access_token;
+            development/kv/data/slack webhook | slack_webhook;
+            development/aws/sts/javadocs access_key | javadoc_aws_access_key_id;
+            development/aws/sts/javadocs secret_key | javadoc_aws_secret_access_key;
+            development/aws/sts/javadocs security_token | javadoc_aws_security_token;
+      - name: Setup JFrog
+        uses: SonarSource/jfrog-setup-wrapper@58546d2106f9d38c37590b7f125f85b0d1fa4cee # 3.5.0
+        with:
+          jfrogAccessToken: ${{ fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
+      - name: Create a path filter from the groupId for artifactory build search
+        id: filter
+        run: |
+          jfrog rt curl -X GET "/api/build/${{ github.event.repository.name }}/${{ steps.get_version.outputs.build }}" > build-info.json
+          groupIdPath=$(jq -r '.buildInfo.modules[0].id' build-info.json | cut -d':' -f1 | tr '.' '/')
+          echo "path: $groupIdPath"
+          echo "groupIdPath=${groupIdPath}" >> $GITHUB_OUTPUT
+      - name: Download Artifacts
+        uses: SonarSource/gh-action_release/download-build@master
+        with:
+          flat-download: true
+          build-number: ${{ steps.get_version.outputs.build }}
+          local-repo-dir: ${{ steps.local_repo.outputs.dir }}
+          filter: ${{ steps.filter.outputs.groupIdPath }}
+          remote-repo:  ${{ inputs.publicRelease == true && 'sonarsource-public-releases' || 'sonarsource-private-releases'}}
+      - name: Keep only javadoc.jar
+        run: find ${{ steps.local_repo.outputs.dir }} -type f ! -name "*-javadoc.jar" -delete
+      - name: List artifacts
+        run: ls ${{ steps.local_repo.outputs.dir }}
+#      - name: Create javadoc dir
+#        run: mkdir -p ${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}
+#      - name: Extract javadoc.jar
+#        run: cd ${{ steps.local_repo.outputs.dir }} && mv *javadoc.jar javadoc.zip && unzip javadoc.zip -d javadoc/${{ github.event.release.tag_name }}
+#      - name: List javadoc files
+#        run: ls "${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}"
+#      - name: Publish javadoc files to S3
+#        uses: SonarSource/gh-action_release/aws-s3@master
+#        with:
+#          command: cp
+#          flags: --recursive
+#          source: ${{ steps.local_repo.outputs.dir }}/javadoc
+#          destination: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}
+#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+#          aws_region: eu-central-1
+#      - name: Delete dir named latest in S3
+#        uses: SonarSource/gh-action_release/aws-s3@master
+#        with:
+#          command: rm
+#          source: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}/latest
+#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+#          aws_region: eu-central-1
+#        continue-on-error: true # the first time a project publish javadoc, there is no latest dir available
+#      - name: Upload to dir named latest in S3
+#        uses: SonarSource/gh-action_release/aws-s3@master
+#        with:
+#          command: cp
+#          flags: --recursive
+#          source: ${{ steps.local_repo.outputs.dir }}/javadoc/${{ github.event.release.tag_name }}/
+#          destination: s3://javadocs-cdn-eu-central-1-prod/${{ inputs.javadocDestinationDirectory || github.event.repository.name }}/latest
+#          aws_access_key_id: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_access_key_id }}
+#          aws_secret_access_key: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_secret_access_key }}
+#          aws_session_token: ${{ fromJSON(steps.secrets.outputs.vault).javadoc_aws_security_token }}
+#          aws_region: eu-central-1
