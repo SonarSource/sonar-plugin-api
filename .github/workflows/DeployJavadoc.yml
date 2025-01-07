@@ -20,16 +20,6 @@ jobs:
           echo "patch=0" >> $GITHUB_OUTPUT
           echo "minor=1" >> $GITHUB_OUTPUT
           echo "major=11" >> $GITHUB_OUTPUT
-      - name: Vault Secrets
-        id: secrets
-        uses: SonarSource/vault-action-wrapper@d6d745ffdbc82b040df839b903bc33b5592cd6b0 # 3.0.2
-        with:
-          url: https://vault.sonar.build:8200
-          secrets: |
-            development/artifactory/token/{REPO_OWNER_NAME_DASH}-${{ inputs.artifactoryRoleSuffix }} access_token | artifactory_access_token;
-            development/kv/data/slack token | slack_api_token;
-            development/kv/data/slack webhook | slack_webhook;
-            development/kv/data/repox url | artifactory_url;
       - name: Create local repository directory
         id: local_repo
         run: echo "dir=$(mktemp -d repo.XXXXXXXX)" >> $GITHUB_OUTPUT
@@ -44,6 +34,7 @@ jobs:
             development/aws/sts/javadocs access_key | javadoc_aws_access_key_id;
             development/aws/sts/javadocs secret_key | javadoc_aws_secret_access_key;
             development/aws/sts/javadocs security_token | javadoc_aws_security_token;
+            development/kv/data/repox url | artifactory_url;
       - name: Setup JFrog
         uses: SonarSource/jfrog-setup-wrapper@58546d2106f9d38c37590b7f125f85b0d1fa4cee # 3.5.0
         with:
