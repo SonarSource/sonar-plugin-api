@@ -36,7 +36,7 @@ jobs:
             development/aws/sts/javadocs security_token | javadoc_aws_security_token;
             development/kv/data/repox url | artifactory_url;
       - name: Setup JFrog
-        uses: SonarSource/jfrog-setup-wrapper@58546d2106f9d38c37590b7f125f85b0d1fa4cee # 3.5.0
+        uses: SonarSource/jfrog-setup-wrapper@3.3.0
         with:
           jfrogAccessToken: ${{ fromJSON(steps.secrets.outputs.vault).artifactory_access_token }}
       - name: Create a path filter from the groupId for artifactory build search
