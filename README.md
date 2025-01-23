@@ -62,11 +62,12 @@ The following tables indicate which API versions plugins can find at runtime:
 Current version: 10.11.0.2468
 
 ### SonarQube for IDE
-| Flavor   | Plugin API   |
-|----------|--------------|
-| IntelliJ | 10.11.0.2468 |
-| Eclipse  | 10.11.0.2468 |
-| VSCode   | 10.11.0.2468 |
+| Flavor        | Plugin API   |
+|---------------|--------------|
+| Eclipse       | 11.1.0.2693  |
+| IntelliJ      | 11.1.0.2693  |
+| Visual Studio | 11.1.0.2693  |
+| VSCode        | 11.1.0.2693  |
 
 ## Optimizing the execution of sensors
 
