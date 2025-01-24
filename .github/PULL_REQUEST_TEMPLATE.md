@@ -6,7 +6,12 @@
 -->
 
 # For SonarSourcers:
-
+### Check before making the PR ready for review
+<!--
+  Please note that opening the PR will notify all the squad members.
+    Please make sure you keep it in DRAFT and mark it ready, 
+    when all the boxes are checked and you are only missing the review.
+-->
 - [ ] Create a [JIRA](http://jira.sonarsource.com/browse/PLUGINAPI) ticket if the API is impacted
 - [ ] Prefix the commit message with the ticket number
 - [ ] Document the change in CHANGELOG.md
@@ -39,6 +44,9 @@ Please explain your motives to contribute this change: what problem you are tryi
 Use the following formatting style: SonarSource/sonar-developer-toolset
 Provide a unit test for any code you changed
 If there is a JIRA ticket available, please make your commits and pull request start with the ticket ID (PLUGINAPI-XXXX)
+
+Please note that opening the PR will notify all the squad members. Please make sure you keep it in DRAFT and mark it ready, when all the checks are green.
+
 We will try to give you feedback on your contribution as quickly as possible.
 
 Thank You! The SonarSource Team
