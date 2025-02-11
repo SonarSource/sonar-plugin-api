@@ -19,6 +19,8 @@
  */
 package org.sonar.api.batch.sensor.internal;
 
+import java.io.InputStream;
+import org.sonar.api.Beta;
 import org.sonar.api.batch.sensor.code.NewSignificantCode;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
@@ -82,4 +84,14 @@ public interface SensorStorage {
    * @since 7.2
    */
   void store(NewSignificantCode significantCode);
+
+  /**
+   * Internal service to send data for reporting.
+   *
+   * @throws IllegalArgumentException if key is null
+   * @throws IllegalArgumentException if data is null
+   * @since 11.2
+   */
+  @Beta
+  void storeAnalysisData(String key, InputStream data);
 }

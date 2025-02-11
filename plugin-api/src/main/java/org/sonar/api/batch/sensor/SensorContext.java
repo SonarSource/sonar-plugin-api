@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import org.sonar.api.Beta;
 import org.sonar.api.SonarRuntime;
@@ -280,4 +281,16 @@ public interface SensorContext {
    * @since 10.9
    */
   void addTelemetryProperty(String key, String value);
+
+  /**
+   * Internal service to send data for reporting.
+   *
+   * @param key The key must follow this convention: <pluginKey>.<entryKey>. Example: cfamily.qualityIndex
+   *
+   * @throws IllegalArgumentException if key or data parameter is null
+   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
+   * @since 11.2
+   */
+  @Beta
+  void addAnalysisData(String key, InputStream data);
 }
