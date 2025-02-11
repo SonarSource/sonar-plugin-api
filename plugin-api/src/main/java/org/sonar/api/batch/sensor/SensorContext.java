@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import org.sonar.api.Beta;
 import org.sonar.api.SonarRuntime;
@@ -280,4 +281,19 @@ public interface SensorContext {
    * @since 10.9
    */
   void addTelemetryProperty(String key, String value);
+
+  /**
+   * Internal service to send data for reporting.
+   *
+   * @param key The key must follow this convention: <plugin_key>.<entry_key>.
+   *            where the plugin_key is your plugin key. Example: jvm.file_graph
+   * @param mimeType A valid MIME type, usage of custom type and additional parameters is encouraged.
+   * @param data The binary data to be added. The InputStream will be consumed once then closed during the method execution.
+   *
+   * @throws IllegalArgumentException if key, mimeType, or data parameter is null or invalid
+   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
+   * @since 11.3
+   */
+  @Beta
+  void addAnalysisData(String key, String mimeType, InputStream data);
 }
