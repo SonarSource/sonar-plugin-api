@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.2
+* Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData`.
+
 ## 11.1
 * Remove deprecation on `status` values `TO_REVIEW`, `REVIEWED` and related usages
 * Remove deprecation on `resolution` values `FIXED`, `SAFE`, `ACKNOWLEDGED` and related usages
