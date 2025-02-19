@@ -1,7 +1,7 @@
 # Changelog
 
 ## 11.2
-* Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData` and `org.sonar.api.batch.sensor.internal.SensorStorage.storeAnalysisData`.
+* Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData`.
 
 ## 11.1
 * Remove deprecation on `status` values `TO_REVIEW`, `REVIEWED` and related usages
