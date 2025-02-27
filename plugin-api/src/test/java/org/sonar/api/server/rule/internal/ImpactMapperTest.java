@@ -152,17 +152,17 @@ public class ImpactMapperTest {
   }
 
   @Test
-  public void convertToSeverity_givenInfo_returnLow() {
+  public void convertToSeverity_givenInfo_returnInfo() {
     Severity severity = ImpactMapper.convertToImpactSeverity("INFO");
 
-    assertThat(severity).isEqualTo(LOW);
+    assertThat(severity).isEqualTo(INFO);
   }
 
   @Test
-  public void convertToSeverity_givenBlocker_returnHigh() {
+  public void convertToSeverity_givenBlocker_returnBlock() {
     Severity severity = ImpactMapper.convertToImpactSeverity("BLOCKER");
 
-    assertThat(severity).isEqualTo(HIGH);
+    assertThat(severity).isEqualTo(BLOCKER);
   }
 
   @Test

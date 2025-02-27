@@ -1,4 +1,7 @@
 # Changelog
+## 11.2
+* Standard Severity BLOCKER is now mapped to Software Quality Impact Severity BLOCKER
+* Standard Severity INFO is now mapped to Software Quality Impact Severity INFO
 
 ## 11.1
 * Remove deprecation on `status` values `TO_REVIEW`, `REVIEWED` and related usages
