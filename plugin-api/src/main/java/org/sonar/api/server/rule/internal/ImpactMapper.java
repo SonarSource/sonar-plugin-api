@@ -97,13 +97,15 @@ public class ImpactMapper {
   public static Severity convertToImpactSeverity(String ruleSeverity) {
     switch (ruleSeverity) {
       case BLOCKER:
+        return Severity.BLOCKER;
       case CRITICAL:
         return Severity.HIGH;
       case MAJOR:
         return Severity.MEDIUM;
       case MINOR:
-      case INFO:
         return Severity.LOW;
+      case INFO:
+        return Severity.INFO;
       default:
         throw new IllegalStateException("This severity value " + ruleSeverity + " is illegal.");
     }
