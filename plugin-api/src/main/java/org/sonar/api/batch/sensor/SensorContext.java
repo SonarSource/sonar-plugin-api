@@ -274,7 +274,7 @@ public interface SensorContext {
    * <br/>
    * This method can not be used by plugins not developed by SonarSource SA.
    *
-   * @param key The key must follow this convention: <pluginKey>.<entryKey>. Example: cfamily.qualityIndex
+   * @param key The key must follow this convention: &lt;pluginKey&gt;.&lt;entryKey&gt;. Example: cfamily.qualityIndex
    *
    * @throws IllegalArgumentException if key or value parameter is null
    * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
@@ -285,8 +285,8 @@ public interface SensorContext {
   /**
    * Internal service to send data for reporting.
    *
-   * @param key The key must follow this convention: <plugin_key>.<entry_key>.
-   *            where the plugin_key is your plugin key. Example: jvm.file_graph
+   * @param key The key must follow this convention: &lt;plugin_key&gt;.&lt;entry_key&gt;.
+   *            where the plugin_key is your plugin key. Example: architecture.file_graph.jvm
    * @param mimeType A valid MIME type, usage of custom type and additional parameters is encouraged.
    * @param data The binary data to be added. The InputStream will be consumed once then closed during the method execution.
    *
