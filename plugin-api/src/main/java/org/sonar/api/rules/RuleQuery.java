@@ -21,7 +21,9 @@ package org.sonar.api.rules;
 
 /**
  * @since 2.3
+ * @deprecated since 11.4 as ProfileExporter/ProfileImporter got removed
  */
+@Deprecated(since = "11.4", forRemoval = true)
 public final class RuleQuery {
 
   private String repositoryKey = null;
