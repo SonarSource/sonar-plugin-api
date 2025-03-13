@@ -27,12 +27,13 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.server.ServerSide;
 
 /**
- * Used in {@link org.sonar.api.profiles.ProfileExporter} and {@link org.sonar.api.profiles.ProfileImporter}
  * Use {@link ActiveRules} on scanner side.
  * @since 2.3
+ * @deprecated since 11.4 as ProfileExporter/ProfileImporter got removed
  */
 @ServerSide
 @ComputeEngineSide
+@Deprecated(since = "11.4", forRemoval = true)
 public interface RuleFinder {
 
   @CheckForNull

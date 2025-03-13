@@ -2,6 +2,7 @@
 
 ## 11.4
 * Deprecate `org.sonar.api.web.UserRole`
+* Remove deprecated extension points ~~`org.sonar.api.profiles.ProfileExporter`~~ and ~~`org.sonar.api.profiles.ProfileImporter`~~.
 
 ## 11.3
 * Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData`.
