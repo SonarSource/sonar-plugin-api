@@ -22,6 +22,7 @@ package org.sonar.api.rules;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@Deprecated(since = "11.4", forRemoval = true)
 public class RuleParam {
 
   private Integer id;

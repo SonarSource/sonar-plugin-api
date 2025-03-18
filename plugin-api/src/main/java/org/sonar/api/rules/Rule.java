@@ -37,6 +37,7 @@ import org.sonar.check.Cardinality;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 
+@Deprecated(since = "11.4", forRemoval = true)
 public class Rule {
 
   /**
