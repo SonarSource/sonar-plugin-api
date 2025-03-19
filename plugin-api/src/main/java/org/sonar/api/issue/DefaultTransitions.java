@@ -21,9 +21,6 @@ package org.sonar.api.issue;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-
 /**
  * @since 3.6
  */
@@ -58,19 +55,6 @@ public interface DefaultTransitions {
   String ACCEPT = "accept";
 
   /**
-   * @deprecated since 8.1, transition has no effect
-   */
-  @Deprecated
-  String SET_AS_IN_REVIEW = "setinreview";
-
-  /**
-   * @since 7.8
-   * @deprecated since 8.1, security hotspots can no longer be converted to vulnerabilities
-   */
-  @Deprecated
-  String OPEN_AS_VULNERABILITY = "openasvulnerability";
-
-  /**
    * @since 7.8
    */
   String RESOLVE_AS_REVIEWED = "resolveasreviewed";
@@ -94,5 +78,5 @@ public interface DefaultTransitions {
    * @since 4.4
    */
   List<String> ALL = List.of(CONFIRM, UNCONFIRM, REOPEN, RESOLVE, FALSE_POSITIVE, WONT_FIX, CLOSE,
-    SET_AS_IN_REVIEW, RESOLVE_AS_REVIEWED, RESET_AS_TO_REVIEW, ACCEPT);
+    RESOLVE_AS_REVIEWED, RESET_AS_TO_REVIEW, ACCEPT);
 }
