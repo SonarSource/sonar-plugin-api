@@ -121,12 +121,6 @@ public interface Issue extends Serializable {
 
   String STATUS_TO_REVIEW = "TO_REVIEW";
 
-  /**
-   * @deprecated since 8.1, status has been mapped as `TO_REVIEW`
-   */
-  @Deprecated(since = "8.1")
-  String STATUS_IN_REVIEW = "IN_REVIEW";
-
   String STATUS_REVIEWED = "REVIEWED";
 
   /**
@@ -214,23 +208,6 @@ public interface Issue extends Serializable {
    */
   @CheckForNull
   Date closeDate();
-
-  /**
-   * @deprecated since 9.4, attribute was already not returning any element since 5.2
-   */
-  @Deprecated
-  @CheckForNull
-  String attribute(String key);
-
-  /**
-   * Empty on batch side since version 5.2. Attributes are moved to server's Compute Engine. No use-case for keeping them
-   * on batch side for now
-   */
-  /**
-   * @deprecated since 9.4, attribute was already not returning any element since 5.2
-   */
-  @Deprecated
-  Map<String, String> attributes();
 
   /**
    * Login of the SCM account that introduced this issue. Requires the
