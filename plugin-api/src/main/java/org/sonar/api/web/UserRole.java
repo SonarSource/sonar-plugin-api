@@ -30,9 +30,11 @@ import java.util.Set;
 
 /**
  * @since 1.11
+ * @deprecated since 11.4 not used by any extension point anymore
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Deprecated(since = "11.4", forRemoval = true)
 public @interface UserRole {
   /**
    * Permissions which are implicitly available for any user, any group and to group "AnyOne" on public components.

@@ -1,4 +1,8 @@
 # Changelog
+
+## 11.4
+* Deprecate `org.sonar.api.web.UserRole`
+
 ## 11.3
 * Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData`.
 
