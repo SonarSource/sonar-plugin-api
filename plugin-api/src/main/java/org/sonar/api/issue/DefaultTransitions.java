@@ -26,7 +26,9 @@ import static java.util.Collections.unmodifiableList;
 
 /**
  * @since 3.6
+ * @deprecated since 11.4 not used by any extension point anymore
  */
+@Deprecated(since = "11.4", forRemoval = true)
 public interface DefaultTransitions {
 
   /**

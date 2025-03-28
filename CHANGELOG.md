@@ -1,6 +1,7 @@
 # Changelog
 
 ## 11.4
+* Deprecate `org.sonar.api.issue.DefaultTransitions`
 * Deprecate `org.sonar.api.web.UserRole`
 * Remove deprecated extension points ~~`org.sonar.api.profiles.ProfileExporter`~~ and ~~`org.sonar.api.profiles.ProfileImporter`~~.
 
