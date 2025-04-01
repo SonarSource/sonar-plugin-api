@@ -168,7 +168,11 @@ public interface FilePredicates {
   /**
    * Explicitely look for InputFile having any {@link InputFile#status()}
    * @since 6.6
+   * @deprecated since 11.4, use {@link #hasStatus(InputFile.Status)} instead
    */
-  FilePredicate hasAnyStatus();
+  @Deprecated(forRemoval = true, since = "11.4")
+  default FilePredicate hasAnyStatus(){
+    return input -> true;
+  }
 
 }
