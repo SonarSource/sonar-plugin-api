@@ -278,6 +278,11 @@ public interface CoreProperties {
   String PASSWORD = "sonar.password";
 
   /**
+   * @since 2025.1
+   */
+  String TOKEN = "sonar.token";
+
+  /**
    * @since 3.5
    * @deprecated since 7.6
    */
