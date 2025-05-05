@@ -48,6 +48,8 @@ import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10;
+import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
@@ -330,6 +332,17 @@ class DefaultNewRule extends RulesDefinition.NewRule {
 
     for (OwaspTop10 owaspTop10 : standards) {
       String standard = owaspTop10Version.prefix() + ":" + owaspTop10.name().toLowerCase(Locale.ENGLISH);
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
+  public DefaultNewRule addOwaspMobileTop10(OwaspMobileTop10Version owaspMobileTop10Version, OwaspMobileTop10... standards) {
+    requireNonNull(owaspMobileTop10Version, "Owasp mobile version must not be null");
+
+    for (OwaspMobileTop10 owaspMobileTop10 : standards) {
+      String standard = owaspMobileTop10Version.prefix() + ":" + owaspMobileTop10.name().toLowerCase(Locale.ENGLISH);
       securityStandards.add(standard);
     }
     return this;
