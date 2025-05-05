@@ -4,6 +4,7 @@
 * Deprecate `org.sonar.api.issue.DefaultTransitions`
 * Deprecate `org.sonar.api.web.UserRole`
 * Remove deprecated extension points ~~`org.sonar.api.profiles.ProfileExporter`~~ and ~~`org.sonar.api.profiles.ProfileImporter`~~.
+* Introduce new security standards for OWASP Mobile 2024
 
 ## 11.3
 * Introduce `org.sonar.api.batch.sensor.SensorContext.addAnalysisData`.

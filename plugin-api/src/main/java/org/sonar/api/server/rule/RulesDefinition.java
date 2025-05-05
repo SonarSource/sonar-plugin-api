@@ -276,8 +276,32 @@ public interface RulesDefinition {
     }
   }
 
+  enum OwaspMobileTop10Version {
+    Y2024("2024", "owaspMobileTop10-2024");
+
+    private final String label;
+    private final String prefix;
+
+    OwaspMobileTop10Version(String label, String prefix) {
+      this.label = label;
+      this.prefix = prefix;
+    }
+
+    public String label() {
+      return label;
+    }
+
+    public String prefix() {
+      return prefix;
+    }
+  }
+
   enum OwaspTop10 {
     A1, A2, A3, A4, A5, A6, A7, A8, A9, A10
+  }
+
+  enum OwaspMobileTop10 {
+    M1, M2, M3, M4, M5, M6, M7, M8, M9, M10
   }
 
   enum PciDssVersion {
@@ -461,6 +485,7 @@ public interface RulesDefinition {
     /**
      * The Clean Code Attribute of the rule.
      * Providing it is optional for now, but will become mandatory in the future.
+     *
      * @since 10.1
      */
     public abstract NewRule setCleanCodeAttribute(CleanCodeAttribute attribute);
@@ -470,7 +495,8 @@ public interface RulesDefinition {
      * For backward compatibility, one of the old method {@link #setHtmlDescription(String)} or {@link #setHtmlDescription(URL)} still
      * need to be called on top of that one.
      * Each section must have a different section key when they are non-contextual.
-     * As soon as one section is contextual for a section key, all sections with that key must be contextual. The pair "section key, context key" pair must still be unique.
+     * As soon as one section is contextual for a section key, all sections with that key must be contextual. The pair "section key,
+     * context key" pair must still be unique.
      * If several sections provide contexts, the provided context keys must be the same between sections.
      *
      * @since 9.6
@@ -484,7 +510,8 @@ public interface RulesDefinition {
     public abstract NewRule setHtmlDescription(@Nullable String s);
 
     /**
-     * Load description from a file available in classpath. Example : <code>setHtmlDescription(getClass().getResource("/myrepo/Rule1234.html")</code>
+     * Load description from a file available in classpath. Example : <code>setHtmlDescription(getClass().getResource("/myrepo/Rule1234
+     * .html")</code>
      */
     public abstract NewRule setHtmlDescription(@Nullable URL classpathUrl);
 
@@ -498,7 +525,8 @@ public interface RulesDefinition {
     public abstract NewRule setMarkdownDescription(@Nullable String s);
 
     /**
-     * Load description from a file available in classpath. Example : {@code setMarkdownDescription(getClass().getResource("/myrepo/Rule1234.md")}
+     * Load description from a file available in classpath. Example : {@code setMarkdownDescription(getClass().getResource
+     * ("/myrepo/Rule1234.md")}
      *
      * @deprecated since 9.6. Use {@link #addDescriptionSection(RuleDescriptionSection)} instead
      */
@@ -564,6 +592,11 @@ public interface RulesDefinition {
      * @since 9.3
      */
     public abstract NewRule addOwaspTop10(OwaspTop10Version version, OwaspTop10... standards);
+
+    /**
+     * @since 11.4
+     */
+    public abstract NewRule addOwaspMobileTop10(OwaspMobileTop10Version owaspMobileTop10Version, OwaspMobileTop10... standards);
 
     /**
      * @since 9.5
