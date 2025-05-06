@@ -1,6 +1,9 @@
 # Changelog
 
 ## 12.0
+* Introduced support for hidden file analysis:
+  * Introduce `org.sonar.api.batch.fs.IndexedFile.isHidden`.
+  * Introduce `org.sonar.api.batch.sensor.SensorDescriptor.processesHiddenFiles`.
 * Remove `org.sonar.api.issue.DefaultTransitions.SET_AS_IN_REVIEW`.
 * Remove `org.sonar.api.issue.DefaultTransitions.OPEN_AS_VULNERABILITY`.
 * Remove `org.sonar.api.issue.Issue.STATUS_IN_REVIEW`.
