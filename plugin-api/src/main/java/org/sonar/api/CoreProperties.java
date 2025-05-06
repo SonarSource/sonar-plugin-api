@@ -389,4 +389,9 @@ public interface CoreProperties {
    * since 8.9
    */
   String QUALITY_GATE_IGNORE_SMALL_CHANGES = "sonar.qualitygate.ignoreSmallChanges";
+
+  /**
+   * @since 11.5
+   */
+  String SONAR_HIDDEN_FILES_ANALYSIS_DISABLED_PROPERTY = "sonar.analyzeHiddenFiles.disabled";
 }

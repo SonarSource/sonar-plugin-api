@@ -91,4 +91,10 @@ public interface SensorDescriptor {
    * @since 9.3
    */
   SensorDescriptor processesFilesIndependently();
+
+  /**
+   * Advertise that this sensor processes hidden files.
+   * @since 11.4
+   */
+  SensorDescriptor processesHiddenFiles();
 }
