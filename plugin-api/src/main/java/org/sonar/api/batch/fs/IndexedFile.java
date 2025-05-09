@@ -113,4 +113,10 @@ public interface IndexedFile extends InputPath {
    * @since 6.2
    */
   InputStream inputStream() throws IOException;
+
+  /**
+   * Check if the file is hidden by the file system.
+   * @since 11.5
+   */
+  boolean isHidden();
 }

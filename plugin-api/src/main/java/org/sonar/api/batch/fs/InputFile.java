@@ -206,4 +206,11 @@ public interface InputFile extends IndexedFile {
    */
   @Override
   String toString();
+
+  /**
+   * Check if the file is hidden by the file system.
+   * @since 11.5
+   */
+  @Override
+  boolean isHidden();
 }
