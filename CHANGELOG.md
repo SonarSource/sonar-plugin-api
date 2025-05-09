@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.0
+* Remove `org.sonar.api.issue.DefaultTransitions.SET_AS_IN_REVIEW`.
+* Remove `org.sonar.api.issue.DefaultTransitions.OPEN_AS_VULNERABILITY`.
+* Remove `org.sonar.api.issue.Issue.STATUS_IN_REVIEW`.
+* Remove `org.sonar.api.issue.Issue.attribute(String key)`.
+* Remove `org.sonar.api.issue.Issue.attributes()`.
+
 ## 11.4
 * Deprecate `org.sonar.api.issue.DefaultTransitions`
 * Deprecate `org.sonar.api.web.UserRole`
