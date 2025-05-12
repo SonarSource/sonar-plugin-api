@@ -20,6 +20,7 @@
 package org.sonar.api.batch.sensor;
 
 import java.util.function.Predicate;
+import org.sonar.api.batch.fs.IndexedFile;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.scanner.sensor.ProjectSensor;
@@ -91,4 +92,13 @@ public interface SensorDescriptor {
    * @since 9.3
    */
   SensorDescriptor processesFilesIndependently();
+
+  /**
+   * Advertise that this sensor processes hidden files.
+   * By default, sensors will not receive hidden files, specifically where {@link IndexedFile#isHidden()} evaluates to true.
+   * If hidden file processing is activated, the sensor signals that it processes files where {@link IndexedFile#isHidden()} is true.
+   * Depending on the runtime context, the {@link org.sonar.api.batch.fs.FileSystem} will then supply additional hidden files to the sensor.
+   * @since 12.0
+   */
+  SensorDescriptor processesHiddenFiles();
 }
