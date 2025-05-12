@@ -69,10 +69,10 @@ Current version: 10.14.0.2599
 ### SonarQube for IDE
 | Flavor        | Plugin API   |
 |---------------|--------------|
-| Eclipse       | 11.1.0.2693  |
-| IntelliJ      | 11.1.0.2693  |
-| Visual Studio | 11.1.0.2693  |
-| VSCode        | 11.1.0.2693  |
+| Eclipse       | 11.4.0.2922  |
+| IntelliJ      | 11.4.0.2922  |
+| Visual Studio | 11.4.0.2922  |
+| VSCode        | 11.4.0.2922  |
 
 ## Optimizing the execution of sensors
 
