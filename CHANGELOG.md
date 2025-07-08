@@ -1,5 +1,15 @@
 # Changelog
 
+## 13.0
+* Remove deprecated complexity metrics:
+  * `org.sonar.api.measures.CoreMetrics.FILE_COMPLEXITY`.
+  * `org.sonar.api.measures.CoreMetrics.COMPLEXITY_IN_CLASSES`.
+  * `org.sonar.api.measures.CoreMetrics.CLASS_COMPLEXITY`.
+  * `org.sonar.api.measures.CoreMetrics.COMPLEXITY_IN_FUNCTIONS`.
+  * `org.sonar.api.measures.CoreMetrics.FUNCTION_COMPLEXITY`.
+  * `org.sonar.api.measures.CoreMetrics.FUNCTION_COMPLEXITY_DISTRIBUTION`. 
+  * `org.sonar.api.measures.CoreMetrics.FILE_COMPLEXITY_DISTRIBUTION`.
+
 ## 12.0
 * Introduced support for hidden file analysis:
   * Introduce `org.sonar.api.batch.fs.IndexedFile.isHidden`.
