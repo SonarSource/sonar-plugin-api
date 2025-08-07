@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
+import java.util.EnumSet;
 import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
@@ -149,4 +150,5 @@ public interface NewIssue {
    */
   NewIssue setCodeVariants(@Nullable Iterable<String> codeVariants);
 
+  NewIssue setMarkers(EnumSet<Markers> markers);
 }

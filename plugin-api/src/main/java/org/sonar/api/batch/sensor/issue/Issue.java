@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -112,4 +113,7 @@ public interface Issue extends IIssue {
    */
   @CheckForNull
   List<String> codeVariants();
+
+  @CheckForNull
+  EnumSet<Markers> markers();
 }
