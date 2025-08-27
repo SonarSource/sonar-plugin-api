@@ -19,6 +19,7 @@
  */
 package org.sonar.api;
 
+import java.util.EnumSet;
 import javax.annotation.concurrent.Immutable;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -171,4 +172,10 @@ public interface SonarRuntime {
    */
   SonarEdition getEdition();
 
+  /**
+   * The SonarQube/SonarCloud addons that are licensed and enabled at runtime.
+   *
+   * @since 2025.5
+   */
+  EnumSet<SonarAddon> getAddons();
 }
