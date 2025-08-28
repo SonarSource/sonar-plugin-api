@@ -21,7 +21,7 @@ package org.sonar.api;
 
 public enum SonarAddon {
   SCA("Software Composition Analysis"),
-  SQAS("SonarQube Advanced Security");
+  ASAST("Advanced SAST");
 
   private final String label;
 
