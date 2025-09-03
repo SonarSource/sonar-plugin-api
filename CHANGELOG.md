@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.2
+* Add `org.sonar.api.issue.IssueStatus.IN_SANDBOX` enum value
+* Add `org.sonar.api.issue.Issue.STATUS_IN_SANDBOX` constant (deprecated immediately)
+
 ## 11.1
 * Remove deprecation on `status` values `TO_REVIEW`, `REVIEWED` and related usages
 * Remove deprecation on `resolution` values `FIXED`, `SAFE`, `ACKNOWLEDGED` and related usages

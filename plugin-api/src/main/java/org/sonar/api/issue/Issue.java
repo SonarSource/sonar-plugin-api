@@ -71,6 +71,11 @@ public interface Issue extends Serializable {
    */
   @Deprecated(since = "10.4")
   String STATUS_CLOSED = "CLOSED";
+  /**
+   * @deprecated since 11.2 in favor of {@link IssueStatus}
+   */
+  @Deprecated(since = "11.2")
+  String STATUS_IN_SANDBOX = "IN_SANDBOX";
 
   String RESOLUTION_FIXED = "FIXED";
 
@@ -137,7 +142,7 @@ public interface Issue extends Serializable {
    */
   @Deprecated(since = "10.4")
   List<String> STATUSES = List.of(STATUS_OPEN, STATUS_CONFIRMED, STATUS_REOPENED, STATUS_RESOLVED, STATUS_CLOSED,
-    STATUS_TO_REVIEW, STATUS_REVIEWED);
+    STATUS_IN_SANDBOX, STATUS_TO_REVIEW, STATUS_REVIEWED);
 
   /**
    * Unique generated key. It looks like "d2de809c-1512-4ae2-9f34-f5345c9f1a13".
