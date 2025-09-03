@@ -39,7 +39,8 @@ public enum IssueStatus {
   CONFIRMED,
   FALSE_POSITIVE,
   ACCEPTED,
-  FIXED;
+  FIXED,
+  IN_SANDBOX;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(IssueStatus.class);
 
@@ -60,6 +61,8 @@ public enum IssueStatus {
         return IssueStatus.CONFIRMED;
       case Issue.STATUS_CLOSED:
         return IssueStatus.FIXED;
+      case Issue.STATUS_IN_SANDBOX:
+        return IssueStatus.IN_SANDBOX;
       // Security hotspot should not return issue status.
       case Issue.STATUS_REVIEWED:
       case Issue.STATUS_TO_REVIEW:

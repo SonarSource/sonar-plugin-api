@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2
+* Add `org.sonar.api.issue.IssueStatus.IN_SANDBOX` enum value
+* Add `org.sonar.api.issue.Issue.STATUS_IN_SANDBOX` constant (deprecated immediately)
+
 ## 13.1
 * Introduce support for internal tags on issues:
   * Introduce `org.sonar.api.batch.sensor.issue.Issue.internalTags()`
