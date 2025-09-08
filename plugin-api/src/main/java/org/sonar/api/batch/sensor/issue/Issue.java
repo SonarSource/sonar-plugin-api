@@ -19,10 +19,12 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
+import org.sonar.api.Beta;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.issue.NewIssue.FlowType;
@@ -112,4 +114,13 @@ public interface Issue extends IIssue {
    */
   @CheckForNull
   List<String> codeVariants();
+
+  /**
+   * Technical tags for the issue - for internal use only.
+   * This API is experimental and can be changed or dropped at any time.
+   *
+   * @since 14.0
+   */
+  @Beta
+  Collection<String> internalTags();
 }
