@@ -1,5 +1,12 @@
 # Changelog
 
+## 13.1
+* Introduce support for internal tags on issues:
+  * Introduce `org.sonar.api.batch.sensor.issue.Issue.internalTags()`
+  * Introduce `org.sonar.api.batch.sensor.issue.NewIssue.addInternalTag(String tag)`
+  * Introduce `org.sonar.api.batch.sensor.issue.NewIssue.addInternalTags(Collection<String> tags)`
+  * Introduce `org.sonar.api.batch.sensor.issue.NewIssue.setInternalTags(@Nullable Collection<String> tags)`
+
 ## 13.0
 * Remove deprecated complexity metrics:
   * `org.sonar.api.measures.CoreMetrics.FILE_COMPLEXITY`.
