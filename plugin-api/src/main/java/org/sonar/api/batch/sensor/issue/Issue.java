@@ -122,5 +122,5 @@ public interface Issue extends IIssue {
    * @since 13.1
    */
   @Beta
-  Collection<String> internalTags();
+  List<String> internalTags();
 }
