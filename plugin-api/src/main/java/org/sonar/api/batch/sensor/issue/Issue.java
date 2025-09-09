@@ -119,7 +119,7 @@ public interface Issue extends IIssue {
    * Technical tags for the issue - for internal use only.
    * This API is experimental and can be changed or dropped at any time.
    *
-   * @since 14.0
+   * @since 13.1
    */
   @Beta
   Collection<String> internalTags();
