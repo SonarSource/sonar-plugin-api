@@ -1,6 +1,8 @@
 # Changelog
 
 ## 13.3
+* Introduce support for feature availability checks:
+  * Introduce `org.sonar.api.batch.sensor.SensorContext.isFeatureAvailable`.
 * Introduce new security standards for OWASP LLM Top 10 2025, OWASP Top 10 2025, ASVS 5, STIG ASD_V6, and MASVS 2
 
 ## 13.2
