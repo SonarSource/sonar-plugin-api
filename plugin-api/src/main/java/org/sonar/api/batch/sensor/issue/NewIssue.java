@@ -19,6 +19,7 @@
  */
 package org.sonar.api.batch.sensor.issue;
 
+import java.util.Collection;
 import javax.annotation.Nullable;
 import org.sonar.api.batch.rule.Severity;
 import org.sonar.api.batch.sensor.Sensor;
@@ -148,5 +149,30 @@ public interface NewIssue {
    * @since 9.17
    */
   NewIssue setCodeVariants(@Nullable Iterable<String> codeVariants);
+
+  /**
+   * Register an internal tag for this issue.
+   *
+   * @param tag a String tag
+   * @since 13.1
+   */
+  NewIssue addInternalTag(String tag);
+
+  /**
+   * Register a collection of internal tags for this issue.
+   *
+   * @param tag a Collection of String tags
+   * @since 13.1
+   */
+  NewIssue addInternalTags(Collection<String> tags);
+
+  /**
+   * Set the internal tags for this issue.
+   * This will override any previously set internal tags.
+   *
+   * @param tags a Collection of String tags
+   * @since 13.1
+   */
+  NewIssue setInternalTags(@Nullable Collection<String> tags);
 
 }
