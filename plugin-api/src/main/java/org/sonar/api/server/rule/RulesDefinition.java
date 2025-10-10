@@ -296,12 +296,36 @@ public interface RulesDefinition {
     }
   }
 
+  enum OwaspLlmTop10Version {
+    Y2025("2025", "owaspLlmTop10-2025");
+
+    private final String label;
+    private final String prefix;
+
+    OwaspLlmTop10Version(String label, String prefix) {
+      this.label = label;
+      this.prefix = prefix;
+    }
+
+    public String label() {
+      return label;
+    }
+
+    public String prefix() {
+      return prefix;
+    }
+  }
+
   enum OwaspTop10 {
     A1, A2, A3, A4, A5, A6, A7, A8, A9, A10
   }
 
   enum OwaspMobileTop10 {
     M1, M2, M3, M4, M5, M6, M7, M8, M9, M10
+  }
+
+  enum OwaspLlmTop10 {
+    LLM01, LLM02, LLM03, LLM04, LLM05, LLM06, LLM07, LLM08, LLM09, LLM10
   }
 
   enum PciDssVersion {
@@ -597,6 +621,11 @@ public interface RulesDefinition {
      * @since 11.4
      */
     public abstract NewRule addOwaspMobileTop10(OwaspMobileTop10Version owaspMobileTop10Version, OwaspMobileTop10... standards);
+
+    /**
+     * @since 13.2
+     */
+    public abstract NewRule addOwaspLlmTop10(OwaspLlmTop10Version owaspLlmTop10Version, OwaspLlmTop10... standards);
 
     /**
      * @since 9.5
