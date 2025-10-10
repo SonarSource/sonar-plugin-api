@@ -35,6 +35,8 @@ import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
+import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10;
+import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
@@ -149,6 +151,10 @@ public class DefaultNewRuleTest {
     rule.addOwaspMobileTop10(OwaspMobileTop10Version.Y2024, OwaspMobileTop10.M5);
     assertThat(rule.securityStandards()).contains("owaspMobileTop10-2024:m2", "owaspMobileTop10-2024:m3", "owaspMobileTop10-2024:m5");
 
+    rule.addOwaspLlmTop10(OwaspLlmTop10Version.Y2025, OwaspLlmTop10.LLM01, OwaspLlmTop10.LLM10);
+    rule.addOwaspLlmTop10(OwaspLlmTop10Version.Y2025, OwaspLlmTop10.LLM02);
+    assertThat(rule.securityStandards()).contains("owaspLlmTop10-2025:llm01", "owaspLlmTop10-2025:llm02", "owaspLlmTop10-2025:llm10");
+
     rule.addPciDss(PciDssVersion.V3_2, "6.5.1");
     rule.addPciDss(PciDssVersion.V3_2, "6.5");
     rule.addPciDss(PciDssVersion.V4_0, "6.5.2", "6.5.10");
@@ -239,6 +245,13 @@ public class DefaultNewRuleTest {
     assertThatThrownBy(() -> rule.addOwaspMobileTop10(null, OwaspMobileTop10.M5))
       .isInstanceOf(NullPointerException.class)
       .hasMessage("Owasp mobile version must not be null");
+  }
+
+  @Test
+  public void fail_if_null_owasp_llm_version() {
+    assertThatThrownBy(() -> rule.addOwaspLlmTop10(null, OwaspLlmTop10.LLM03))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("Owasp LLM version must not be null");
   }
 
   @Test
