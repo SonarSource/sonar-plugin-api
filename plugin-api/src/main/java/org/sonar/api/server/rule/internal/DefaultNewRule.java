@@ -48,6 +48,7 @@ import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.MasvsVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10;
@@ -367,6 +368,17 @@ class DefaultNewRule extends RulesDefinition.NewRule {
     requireNonNull(requirements, "Requirements for OWASP ASVS standard must not be null");
     for (String requirement : requirements) {
       String standard = owaspAsvsVersion.prefix() + ":" + requirement;
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
+  public DefaultNewRule addMasvs(MasvsVersion masvsVersion, String... requirements) {
+    requireNonNull(masvsVersion, "MASVS version must not be null");
+    requireNonNull(requirements, "Requirements for OWASP ASVS standard must not be null");
+    for (String requirement : requirements) {
+      String standard = masvsVersion.prefix() + ":" + requirement;
       securityStandards.add(standard);
     }
     return this;

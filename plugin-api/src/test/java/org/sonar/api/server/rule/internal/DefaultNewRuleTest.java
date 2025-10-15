@@ -34,6 +34,7 @@ import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleDescriptionSectionBuilder;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.MasvsVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspAsvsVersion;
 import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10Version;
@@ -50,6 +51,7 @@ import static org.mockito.Mockito.mock;
 import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.HOW_TO_FIX_SECTION_KEY;
 import static org.sonar.api.server.rule.RuleDescriptionSection.RuleDescriptionSectionKeys.RESOURCES_SECTION_KEY;
 import static org.sonar.api.server.rule.RulesDefinition.StigVersion.ASD_V5R3;
+import static org.sonar.api.server.rule.RulesDefinition.StigVersion.ASD_V6;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.CONTEXT_KEY_NOT_UNIQUE;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.MIXTURE_OF_CONTEXT_KEYS_BETWEEN_SECTIONS_ERROR_MESSAGE;
 import static org.sonar.api.server.rule.internal.DefaultNewRule.SECTION_ALREADY_CONTAINS_DESCRIPTION_WITHOUT_CONTEXT;
@@ -141,11 +143,16 @@ public class DefaultNewRuleTest {
     rule.addCwe(10);
     assertThat(rule.securityStandards()).containsOnly("cwe:10", "cwe:12");
 
+    rule.addMasvs(MasvsVersion.V1, "MSTG-STORAGE-14");
+    rule.addMasvs(MasvsVersion.V2, "MASVS-ABC-12");
+    assertThat(rule.securityStandards()).contains("masvs-1:MSTG-STORAGE-14", "masvs-2:MASVS-ABC-12");
+
     rule.addOwaspTop10(OwaspTop10.A1, OwaspTop10.A2);
     rule.addOwaspTop10(OwaspTop10Version.Y2017, OwaspTop10.A4);
     rule.addOwaspTop10(OwaspTop10Version.Y2021, OwaspTop10.A5, OwaspTop10.A3);
+    rule.addOwaspTop10(OwaspTop10Version.Y2025, OwaspTop10.A5);
     assertThat(rule.securityStandards())
-      .contains("owaspTop10:a1", "owaspTop10:a2", "owaspTop10:a4", "owaspTop10-2021:a3", "owaspTop10-2021:a5");
+      .contains("owaspTop10:a1", "owaspTop10:a2", "owaspTop10:a4", "owaspTop10-2021:a3", "owaspTop10-2021:a5", "owaspTop10-2025:a5");
 
     rule.addOwaspMobileTop10(OwaspMobileTop10Version.Y2024, OwaspMobileTop10.M2, OwaspMobileTop10.M3);
     rule.addOwaspMobileTop10(OwaspMobileTop10Version.Y2024, OwaspMobileTop10.M5);
@@ -165,6 +172,7 @@ public class DefaultNewRuleTest {
     rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.10.1");
     rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.11.3");
     rule.addOwaspAsvs(OwaspAsvsVersion.V4_0, "1.11.4", "1.11.5");
+    rule.addOwaspAsvs(OwaspAsvsVersion.V5, "1.2.3");
 
     assertThat(rule.securityStandards())
       .contains("owaspAsvs-4.0:1.10.1", "owaspAsvs-4.0:1.11.3", "owaspAsvs-4.0:1.11.4", "owaspAsvs-4.0:1.11.5");
@@ -172,8 +180,9 @@ public class DefaultNewRuleTest {
     rule.addStig(ASD_V5R3, "V-222585");
     rule.addStig(ASD_V5R3, "V-222456");
     rule.addStig(ASD_V5R3, "V-222457", "V-222455", "V-222454");
+    rule.addStig(ASD_V6, "V-123456");
     assertThat(rule.securityStandards())
-      .contains("stig-ASD_V5R3:V-222585", "stig-ASD_V5R3:V-222456", "stig-ASD_V5R3:V-222457", "stig-ASD_V5R3:V-222454", "stig-ASD_V5R3:V-222455");
+      .contains("stig-ASD_V5R3:V-222585", "stig-ASD_V5R3:V-222456", "stig-ASD_V5R3:V-222457", "stig-ASD_V5R3:V-222454", "stig-ASD_V5R3:V-222455", "stig-ASD_V6:V-123456");
   }
 
   @Test
@@ -231,6 +240,13 @@ public class DefaultNewRuleTest {
   public void fail_if_set_status_to_removed() {
     assertThatThrownBy(() -> rule.setStatus(RuleStatus.REMOVED))
       .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  public void fail_if_null_masvs_version() {
+    assertThatThrownBy(() -> rule.addMasvs(null, "MSTG-STORAGE-14"))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("MASVS version must not be null");
   }
 
   @Test

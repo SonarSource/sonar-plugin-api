@@ -256,8 +256,31 @@ public interface RulesDefinition {
     }
   }
 
+  enum MasvsVersion {
+    V1("MASVS", "masvs-1"),
+    V2("MASVS 2", "masvs-2"),;
+
+    private final String label;
+    private final String prefix;
+
+    MasvsVersion(String label, String prefix) {
+      this.label = label;
+      this.prefix = prefix;
+    }
+
+    public String label() {
+      return label;
+    }
+
+    public String prefix() {
+      return prefix;
+    }
+  }
+
   enum OwaspTop10Version {
-    Y2017("2017", "owaspTop10"), Y2021("2021", "owaspTop10-2021");
+    Y2017("2017", "owaspTop10"),
+    Y2021("2021", "owaspTop10-2021"),
+    Y2025("OWASP Top 10 2025", "owaspTop10-2025");
 
     private final String label;
     private final String prefix;
@@ -349,7 +372,8 @@ public interface RulesDefinition {
   }
 
   enum OwaspAsvsVersion {
-    V4_0("4.0", "owaspAsvs-4.0");
+    V4_0("4.0", "owaspAsvs-4.0"),
+    V5("5", "owaspAsvs-5"),;
 
     private final String label;
     private final String prefix;
@@ -369,7 +393,8 @@ public interface RulesDefinition {
   }
 
   enum StigVersion {
-    ASD_V5R3("ASD_V5R3", "stig-ASD_V5R3");
+    ASD_V5R3("ASD_V5R3", "stig-ASD_V5R3"),
+    ASD_V6("ASD_V6", "stig-ASD_V6"),;
 
     private final String label;
     private final String prefix;
@@ -636,6 +661,11 @@ public interface RulesDefinition {
      * @since 9.9
      */
     public abstract NewRule addOwaspAsvs(OwaspAsvsVersion version, String... requirements);
+
+    /**
+     * @since 13.2
+     */
+    public abstract NewRule addMasvs(MasvsVersion version, String... requirements);
 
     /**
      * @since 7.3
