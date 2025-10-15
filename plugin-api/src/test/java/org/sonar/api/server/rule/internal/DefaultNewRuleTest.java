@@ -250,6 +250,13 @@ public class DefaultNewRuleTest {
   }
 
   @Test
+  public void fail_if_null_masvs_requirements() {
+    assertThatThrownBy(() -> rule.addMasvs(MasvsVersion.V2, null))
+      .isInstanceOf(NullPointerException.class)
+      .hasMessage("Requirements for MASVS standard must not be null");
+  }
+
+  @Test
   public void fail_if_null_owasp_version() {
     assertThatThrownBy(() -> rule.addOwaspTop10((OwaspTop10Version) null, OwaspTop10.A1))
       .isInstanceOf(NullPointerException.class)

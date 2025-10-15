@@ -376,7 +376,7 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   @Override
   public DefaultNewRule addMasvs(MasvsVersion masvsVersion, String... requirements) {
     requireNonNull(masvsVersion, "MASVS version must not be null");
-    requireNonNull(requirements, "Requirements for OWASP ASVS standard must not be null");
+    requireNonNull(requirements, "Requirements for MASVS standard must not be null");
     for (String requirement : requirements) {
       String standard = masvsVersion.prefix() + ":" + requirement;
       securityStandards.add(standard);
