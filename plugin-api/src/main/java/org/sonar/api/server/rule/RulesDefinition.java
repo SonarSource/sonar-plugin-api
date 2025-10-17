@@ -280,7 +280,7 @@ public interface RulesDefinition {
   enum OwaspTop10Version {
     Y2017("2017", "owaspTop10"),
     Y2021("2021", "owaspTop10-2021"),
-    Y2025("OWASP Top 10 2025", "owaspTop10-2025");
+    Y2025("2025", "owaspTop10-2025");
 
     private final String label;
     private final String prefix;
@@ -320,7 +320,7 @@ public interface RulesDefinition {
   }
 
   enum OwaspLlmTop10Version {
-    Y2025("OWASP LLM Top 10 2025", "owaspLlmTop10-2025");
+    Y2025("2025", "owaspLlmTop10-2025");
 
     private final String label;
     private final String prefix;
