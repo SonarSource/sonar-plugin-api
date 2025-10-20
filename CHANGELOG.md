@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.4
+* Add `org.sonar.api.a3s.A3SContextCollector` (internal SonarSource usage)
+
 ## 13.3
 * Introduce support for feature availability checks:
   * Introduce `org.sonar.api.batch.sensor.SensorContext.isFeatureAvailable`.
