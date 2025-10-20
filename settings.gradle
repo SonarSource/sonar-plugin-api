@@ -10,7 +10,7 @@ dependencyResolutionManagement {
       library('commons-io', 'commons-io:commons-io:2.16.1')
       library('commons-lang3', 'org.apache.commons:commons-lang3:3.14.0')
       library('commons-text', 'org.apache.commons:commons-text:1.12.0')
-      library('commons-validator', 'commons-validator:commons-validator:1.9.0')
+      library('commons-validator', 'commons-validator:commons-validator:1.10.0')
       library('guava', 'com.google.guava:guava:31.1-jre')
       library('gson', 'com.google.code.gson:gson:2.11.0')
       library('jsr305', 'com.google.code.findbugs:jsr305:3.0.2')
