@@ -48,6 +48,9 @@ import org.sonar.api.server.rule.Context;
 import org.sonar.api.server.rule.RuleDescriptionSection;
 import org.sonar.api.server.rule.RuleTagFormat;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinition.MasvsVersion;
+import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10;
+import org.sonar.api.server.rule.RulesDefinition.OwaspLlmTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10;
 import org.sonar.api.server.rule.RulesDefinition.OwaspMobileTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.OwaspTop10;
@@ -349,11 +352,33 @@ class DefaultNewRule extends RulesDefinition.NewRule {
   }
 
   @Override
+  public DefaultNewRule addOwaspLlmTop10(OwaspLlmTop10Version owaspLlmTop10Version, RulesDefinition.OwaspLlmTop10... standards) {
+    requireNonNull(owaspLlmTop10Version, "Owasp LLM version must not be null");
+
+    for (OwaspLlmTop10 owaspLlmTop10 : standards) {
+      String standard = owaspLlmTop10Version.prefix() + ":" + owaspLlmTop10.name().toLowerCase(Locale.ENGLISH);
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
   public DefaultNewRule addOwaspAsvs(OwaspAsvsVersion owaspAsvsVersion, String... requirements) {
     requireNonNull(owaspAsvsVersion, "OWASP ASVS version must not be null");
     requireNonNull(requirements, "Requirements for OWASP ASVS standard must not be null");
     for (String requirement : requirements) {
       String standard = owaspAsvsVersion.prefix() + ":" + requirement;
+      securityStandards.add(standard);
+    }
+    return this;
+  }
+
+  @Override
+  public DefaultNewRule addMasvs(MasvsVersion masvsVersion, String... requirements) {
+    requireNonNull(masvsVersion, "MASVS version must not be null");
+    requireNonNull(requirements, "Requirements for MASVS standard must not be null");
+    for (String requirement : requirements) {
+      String standard = masvsVersion.prefix() + ":" + requirement;
       securityStandards.add(standard);
     }
     return this;
