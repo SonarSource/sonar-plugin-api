@@ -296,4 +296,13 @@ public interface SensorContext {
    */
   @Beta
   void addAnalysisData(String key, String mimeType, InputStream data);
+
+
+  /**
+   * Returns true if the feature is available in the current SonarQube instance, false otherwise.
+   * This API is experimental and can be changed or dropped at any time.
+   * @since 13.3
+   */
+  @Beta
+  boolean isFeatureAvailable(String featureName);
 }
