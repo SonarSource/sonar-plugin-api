@@ -1,9 +1,11 @@
 # Changelog
 
+## 13.3
+* Introduce new security standards for OWASP LLM Top 10 2025, OWASP Top 10 2025, ASVS 5, STIG ASD_V6, and MASVS 2
+
 ## 13.2
 * Add `org.sonar.api.issue.IssueStatus.IN_SANDBOX` enum value
 * Add `org.sonar.api.issue.Issue.STATUS_IN_SANDBOX` constant (deprecated immediately)
-* Introduce new security standards for OWASP LLM Top 10 2025, OWASP Top 10 2025, ASVS 5, STIG ASD_V6, and MASVS 2
 
 ## 13.1
 * Introduce support for internal tags on issues:
