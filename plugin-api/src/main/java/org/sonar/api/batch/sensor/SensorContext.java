@@ -1,6 +1,6 @@
 /*
  * Sonar Plugin API
- * Copyright (C) 2009-2025 SonarSource SA
+ * Copyright (C) 2009-2025 SonarSource Sàrl
  * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
@@ -272,12 +272,12 @@ public interface SensorContext {
    * For performance reason, the telemetry properties should be limited to a small set of key-value pairs.
    * For GDPR compliance, the telemetry properties should not contain any personal or identifying data.
    * <br/>
-   * This method can not be used by plugins not developed by SonarSource SA.
+   * This method can not be used by plugins not developed by SonarSource Sàrl.
    *
    * @param key The key must follow this convention: &lt;pluginKey&gt;.&lt;entryKey&gt;. Example: cfamily.qualityIndex
    *
    * @throws IllegalArgumentException if key or value parameter is null
-   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
+   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource Sàrl
    * @since 10.9
    */
   void addTelemetryProperty(String key, String value);
@@ -291,7 +291,7 @@ public interface SensorContext {
    * @param data The binary data to be added. The InputStream will be consumed once then closed during the method execution.
    *
    * @throws IllegalArgumentException if key, mimeType, or data parameter is null or invalid
-   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource SA
+   * @throws IllegalStateException if the method is called by a plugin not developed by SonarSource Sàrl
    * @since 11.3
    */
   @Beta
