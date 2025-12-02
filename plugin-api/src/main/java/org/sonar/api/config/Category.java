@@ -19,9 +19,9 @@
  */
 package org.sonar.api.config;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Locale;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * @since 3.7
@@ -62,7 +62,7 @@ public class Category {
     if (!(obj instanceof Category)) {
       return false;
     }
-    return StringUtils.equalsIgnoreCase(((Category) obj).originalKey, this.originalKey);
+    return Strings.CI.equals(((Category) obj).originalKey, this.originalKey);
   }
 
   @Override

@@ -24,13 +24,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
 import org.sonar.api.utils.System2;
 
 import static java.util.Collections.singletonList;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -196,8 +196,8 @@ public class PropertyDefinitionsTest {
   @Test
   public void get_trims_key_before_looking_for_replacement() {
     Random random = new Random();
-    String key = RandomStringUtils.randomAlphanumeric(4);
-    String deprecatedKey = RandomStringUtils.randomAlphanumeric(4);
+    String key = secure().nextAlphanumeric(4);
+    String deprecatedKey = secure().nextAlphanumeric(4);
     PropertyDefinitions underTest = new PropertyDefinitions(System2.INSTANCE, singletonList(
       PropertyDefinition.builder(key)
         .deprecatedKey(deprecatedKey)

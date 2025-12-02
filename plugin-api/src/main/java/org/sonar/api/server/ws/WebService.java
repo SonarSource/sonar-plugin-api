@@ -39,6 +39,7 @@ import javax.annotation.concurrent.Immutable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.utils.log.Logger;
@@ -140,7 +141,7 @@ public interface WebService extends Definable<WebService.Context> {
       if (StringUtils.isBlank(path)) {
         throw new IllegalArgumentException("WS controller path must not be empty");
       }
-      if (StringUtils.startsWith(path, "/") || StringUtils.endsWith(path, "/")) {
+      if (Strings.CS.startsWith(path, "/") || Strings.CS.endsWith(path, "/")) {
         throw new IllegalArgumentException("WS controller path must not start or end with slash: " + path);
       }
       this.context = context;
@@ -315,6 +316,7 @@ public interface WebService extends Definable<WebService.Context> {
 
     /**
      * Sets content type of the response. This is optional to do.
+     *
      * @since 10.8
      */
     public NewAction setContentType(Enum<Response.ContentType> contentType) {

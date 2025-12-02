@@ -24,10 +24,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.BiFunction;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfigurationTest {
@@ -101,7 +101,7 @@ public class ConfigurationTest {
   }
 
   private <T> void verifySupportHeadAndOrTrailingWhitespaces(T value, BiFunction<Configuration, String, Optional<T>> t) {
-    String randomKey = RandomStringUtils.randomAlphabetic(3);
+    String randomKey = secure().nextAlphabetic(3);
     String randomNumberOfWhitespaces = StringUtils.repeat(" ", 1 + new Random().nextInt(10));
 
     assertThat(t.apply(underTest.put(randomKey, randomNumberOfWhitespaces + value), randomKey)).isEqualTo(Optional.of(value));

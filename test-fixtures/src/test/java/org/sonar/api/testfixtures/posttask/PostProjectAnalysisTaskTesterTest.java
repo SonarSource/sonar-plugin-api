@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.ce.posttask.Branch;
 import org.sonar.api.ce.posttask.CeTask;
@@ -31,6 +30,7 @@ import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
 import org.sonar.api.ce.posttask.Project;
 import org.sonar.api.ce.posttask.QualityGate;
 
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -45,7 +45,7 @@ class PostProjectAnalysisTaskTesterTest {
   private final Project project = mock(Project.class);
   private final long someDateAsLong = 846351351684351L;
   private final Date someDate = new Date(someDateAsLong);
-  private final String analysisUuid = RandomStringUtils.randomAlphanumeric(40);
+  private final String analysisUuid = secure().nextAlphanumeric(40);
   private final QualityGate qualityGate = mock(QualityGate.class);
   private final CaptorPostProjectAnalysisTask captorPostProjectAnalysisTask = new CaptorPostProjectAnalysisTask();
   private final PostProjectAnalysisTaskTester underTest = PostProjectAnalysisTaskTester.of(captorPostProjectAnalysisTask);
