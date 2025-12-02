@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.rule.RuleKey;
@@ -184,7 +185,7 @@ public class Checks<C> {
     List<Field> fields = FieldUtils2.getFields(check.getClass(), true);
     for (Field field : fields) {
       RuleProperty propertyAnnotation = field.getAnnotation(RuleProperty.class);
-      if (propertyAnnotation != null && (StringUtils.equals(key, field.getName()) || StringUtils.equals(key, propertyAnnotation.key()))) {
+      if (propertyAnnotation != null && (Strings.CS.equals(key, field.getName()) || Strings.CS.equals(key, propertyAnnotation.key()))) {
         return field;
       }
     }

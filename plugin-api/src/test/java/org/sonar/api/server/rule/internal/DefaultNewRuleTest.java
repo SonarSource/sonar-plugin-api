@@ -19,7 +19,6 @@
  */
 package org.sonar.api.server.rule.internal;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.issue.impact.Severity;
@@ -45,6 +44,7 @@ import org.sonar.api.server.rule.RulesDefinition.OwaspTop10Version;
 import org.sonar.api.server.rule.RulesDefinition.PciDssVersion;
 
 import static java.lang.String.format;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -401,7 +401,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void validate_succeeds_when_several_contextualized_section_not_mixing_different_context_keys() {
-    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.setHtmlDescription(secure().nextAlphanumeric(500));
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
     rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx2"));
@@ -412,7 +412,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void validate_succeeds_when_single_contextualized_section_not_mixing_different_context_keys() {
-    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.setHtmlDescription(secure().nextAlphanumeric(500));
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
@@ -421,7 +421,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void validate_succeeds_when_no_contextualized_section() {
-    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.setHtmlDescription(secure().nextAlphanumeric(500));
     rule.addDescriptionSection(RULE_DESCRIPTION_SECTION);
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
@@ -430,7 +430,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void validate_fails_when_mixing_different_context_keys() {
-    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.setHtmlDescription(secure().nextAlphanumeric(500));
     rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx2"));
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
@@ -444,7 +444,7 @@ public class DefaultNewRuleTest {
 
   @Test
   public void validate_fails_when_more_contexts_available_for_one_section() {
-    rule.setHtmlDescription(RandomStringUtils.randomAlphanumeric(500));
+    rule.setHtmlDescription(secure().nextAlphanumeric(500));
     rule.addDescriptionSection(createSectionWithContext(RESOURCES_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx1"));
     rule.addDescriptionSection(createSectionWithContext(HOW_TO_FIX_SECTION_KEY, "ctx2"));
@@ -458,8 +458,8 @@ public class DefaultNewRuleTest {
   private static RuleDescriptionSection createSectionWithContext(String sectionKey, String contextKey) {
     return RuleDescriptionSection.builder()
       .sectionKey(sectionKey)
-      .htmlContent(RandomStringUtils.randomAlphabetic(100))
-      .context(new Context(contextKey, contextKey + RandomStringUtils.randomAlphanumeric(10)))
+      .htmlContent(secure().nextAlphabetic(100))
+      .context(new Context(contextKey, contextKey + secure().nextAlphanumeric(10)))
       .build();
   }
 

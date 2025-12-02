@@ -19,7 +19,7 @@
  */
 package org.sonar.api.server.profile;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.sonar.api.rules.RuleAnnotationUtils;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition.NewBuiltInActiveRule;
@@ -43,7 +43,7 @@ public class BuiltInQualityProfileAnnotationLoader {
 
   void loadActiveRule(BuiltInQualityProfilesDefinition.NewBuiltInQualityProfile profile, String repositoryKey, Class<?> clazz) {
     BelongsToProfile belongsToProfile = clazz.getAnnotation(BelongsToProfile.class);
-    if ((belongsToProfile != null) && StringUtils.equals(belongsToProfile.title(), profile.name())) {
+    if ((belongsToProfile != null) && Strings.CS.equals(belongsToProfile.title(), profile.name())) {
       String ruleKey = RuleAnnotationUtils.getRuleKey(clazz);
       NewBuiltInActiveRule activeRule = profile.activateRule(repositoryKey, ruleKey);
       activeRule.overrideSeverity(belongsToProfile.priority().name());

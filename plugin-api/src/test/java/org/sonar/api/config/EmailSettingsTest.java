@@ -19,10 +19,10 @@
  */
 package org.sonar.api.config;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.sonar.api.platform.Server;
 
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,7 +45,7 @@ public class EmailSettingsTest {
 
   @Test
   public void getServerBaseUrl_returns_server_getPublicRootUrl() {
-    String expected = RandomStringUtils.randomAlphabetic(15);
+    String expected = secure().nextAlphabetic(15);
     when(server.getPublicRootUrl()).thenReturn(expected);
 
     assertThat(underTest.getServerBaseURL()).isEqualTo(expected);
@@ -60,6 +60,6 @@ public class EmailSettingsTest {
   public void definitions_should_have_index() {
     assertThat(EmailSettings.definitions())
       .extracting(PropertyDefinition::index)
-    .isNotEqualTo(999);
+      .isNotEqualTo(999);
   }
 }

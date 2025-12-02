@@ -19,12 +19,12 @@
  */
 package org.sonar.api.user;
 
-import org.apache.commons.lang3.StringUtils;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * @since 3.6
@@ -53,8 +53,8 @@ public class UserQuery {
   private static String searchTextToSql(@Nullable String s) {
     String sql = null;
     if (s != null) {
-      sql = StringUtils.replace(s, "%", "/%");
-      sql = StringUtils.replace(sql, "_", "/_");
+      sql = Strings.CS.replace(s, "%", "/%");
+      sql = Strings.CS.replace(sql, "_", "/_");
       sql = "%" + sql + "%";
     }
     return sql;

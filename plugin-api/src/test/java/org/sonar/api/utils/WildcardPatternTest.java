@@ -38,6 +38,10 @@ public class WildcardPatternTest {
     assertThat(match("org/T?st.java", "org/Test.java")).isTrue();
     assertThat(match("org/T?st.java", "org/Tost.java")).isTrue();
 
+    assertThat(match("org/T?st.java", "/org/Test.java/")).isTrue();
+    assertThat(match("org/T?st.java", "/org/Tost.java")).isTrue();
+    assertThat(match("org/T?st.java", "/org/Tost.java/")).isTrue();
+
     assertThat(match("org/*.java", "org/Foo.java")).isTrue();
     assertThat(match("org/*.java", "org/Bar.java")).isTrue();
 
@@ -171,7 +175,7 @@ public class WildcardPatternTest {
 
   @Test
   public void multiplePatterns() {
-    WildcardPattern[] patterns = WildcardPattern.create(new String[] {"Foo", "Bar"});
+    WildcardPattern[] patterns = WildcardPattern.create(new String[]{"Foo", "Bar"});
     assertThat(WildcardPattern.match(patterns, "Foo")).isTrue();
     assertThat(WildcardPattern.match(patterns, "Bar")).isTrue();
     assertThat(WildcardPattern.match(patterns, "Other")).isFalse();

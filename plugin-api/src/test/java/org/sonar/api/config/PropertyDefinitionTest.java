@@ -34,7 +34,7 @@ import org.sonar.api.config.PropertyDefinition.Builder;
 import org.sonar.api.config.PropertyDefinition.ConfigScope;
 import org.sonar.api.utils.AnnotationUtils;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -347,7 +347,7 @@ public class PropertyDefinitionTest {
 
   private static final Set<ConfigScope> ALLOWED_CONFIG_SCOPES = ImmutableSet.copyOf(ConfigScope.values());
   private static final Set<String> OLD_ALLOWED_QUALIFIERS = ImmutableSet.of("TRK", "VW", "BRC", "SVW");
-  private static final Set<String> NOT_ALLOWED_QUALIFIERS = ImmutableSet.of("FIL", "DIR", "UTS", "", randomAlphabetic(3));
+  private static final Set<String> NOT_ALLOWED_QUALIFIERS = ImmutableSet.of("FIL", "DIR", "UTS", "", secure().nextAlphabetic(3));
 
   @Test
   public void onQualifiers_with_varargs_parameter_fails_with_IAE_when_qualifier_is_not_supported() {
@@ -422,7 +422,7 @@ public class PropertyDefinitionTest {
   }
 
   private static void failsWithIAEForUnsupportedQualifiers(BiConsumer<PropertyDefinition.Builder, String> biConsumer) {
-    PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
+    PropertyDefinition.Builder builder = PropertyDefinition.builder(secure().nextAlphabetic(3));
     NOT_ALLOWED_QUALIFIERS.forEach(qualifier -> {
       try {
         biConsumer.accept(builder, qualifier);
@@ -434,17 +434,17 @@ public class PropertyDefinitionTest {
   }
 
   private static void acceptsSupportedDeprecatedQualifiers(BiConsumer<PropertyDefinition.Builder, String> biConsumer) {
-    PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
+    PropertyDefinition.Builder builder = PropertyDefinition.builder(secure().nextAlphabetic(3));
     OLD_ALLOWED_QUALIFIERS.forEach(qualifier -> biConsumer.accept(builder, qualifier));
   }
 
   private static void acceptsSupportedQualifiers(BiConsumer<PropertyDefinition.Builder, ConfigScope> biConsumer) {
-    PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
+    PropertyDefinition.Builder builder = PropertyDefinition.builder(secure().nextAlphabetic(3));
     ALLOWED_CONFIG_SCOPES.forEach(configScope -> biConsumer.accept(builder, configScope));
   }
 
   private static void failsWithNPEForNullDeprecatedQualifiers(Consumer<PropertyDefinition.Builder> consumer) {
-    PropertyDefinition.Builder builder = PropertyDefinition.builder(randomAlphabetic(3));
+    PropertyDefinition.Builder builder = PropertyDefinition.builder(secure().nextAlphabetic(3));
     NOT_ALLOWED_QUALIFIERS.forEach(qualifier -> {
       try {
         consumer.accept(builder);

@@ -27,6 +27,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.log.Loggers;
 
@@ -48,8 +49,8 @@ public class DefaultRepository implements RulesDefinition.Repository {
     this.isExternal = newRepository.isExternal();
     Map<String, RulesDefinition.Rule> ruleBuilder = new HashMap<>();
     if (mergeInto != null) {
-      if (!StringUtils.equals(newRepository.language(), mergeInto.language()) || !StringUtils.equals(newRepository.key(), mergeInto.key())) {
-        throw new IllegalArgumentException(format("Bug - language and key of the repositories to be merged should be the sames: %s and %s", newRepository, mergeInto));
+      if (!Strings.CS.equals(newRepository.language(), mergeInto.language()) || !Strings.CS.equals(newRepository.key(), mergeInto.key())) {
+        throw new IllegalArgumentException(format("Bug - language and key of the repositories to be merged should be the same: %s and %s", newRepository, mergeInto));
       }
       this.name = StringUtils.defaultIfBlank(mergeInto.name(), newRepository.name());
       for (RulesDefinition.Rule rule : mergeInto.rules()) {

@@ -27,6 +27,7 @@ public class CategoryTest {
 
   @Test
   public void category_key_is_case_insentive() {
+    assertThat(new Category("licenses")).isEqualTo(new Category("licenses"));
     assertThat(new Category("Licenses")).isEqualTo(new Category("licenses"));
 
     // Just to raise coverage

@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.sonar.api.ExtensionPoint;
@@ -219,7 +220,7 @@ public final class PropertyDefinition {
 
   private static Function<String, Result> validateBoolean() {
     return value -> {
-      if (!StringUtils.equalsIgnoreCase(value, "true") && !StringUtils.equalsIgnoreCase(value, "false")) {
+      if (!Strings.CI.equals(value, "true") && !Strings.CI.equals(value, "false")) {
         return Result.newError("notBoolean");
       }
       return Result.SUCCESS;
@@ -680,7 +681,7 @@ public final class PropertyDefinition {
     private void fixType(String key, PropertyType type) {
       // Auto-detect passwords and licenses for old versions of plugins that
       // do not declare property types
-      if (type == PropertyType.STRING && StringUtils.endsWith(key, ".password.secured")) {
+      if (type == PropertyType.STRING && Strings.CS.endsWith(key, ".password.secured")) {
         this.type = PropertyType.PASSWORD;
       }
     }

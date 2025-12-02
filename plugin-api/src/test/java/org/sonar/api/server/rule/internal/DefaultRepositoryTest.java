@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 
 public class DefaultRepositoryTest {
@@ -42,6 +43,17 @@ public class DefaultRepositoryTest {
     assertThat(repo.isExternal()).isFalse();
     assertThat(repo.name()).isEqualTo("name");
     assertThat(repo.rules()).extracting(RulesDefinition.Rule::key).containsOnly("rule1");
+  }
 
+  @Test
+  public void create_with_merge_repo_throws_when_languages_do_not_match() {
+    RulesDefinition.Context ctx = mock(RulesDefinition.Context.class);
+    DefaultNewRepository newRepository = new DefaultNewRepository(ctx, "key", "lang", false);
+    DefaultRepository mergeIntoRepository = new DefaultRepository(new DefaultNewRepository(ctx, "key1", "lang", false), null);
+
+    assertThatExceptionOfType(IllegalArgumentException.class)
+      .isThrownBy(() -> new DefaultRepository(newRepository, mergeIntoRepository))
+      .withMessage("Bug - language and key of the repositories to be merged should be the same: NewRepository{key='key', language='lang'} and Repository{key='key1', " +
+        "language='lang'}");
   }
 }

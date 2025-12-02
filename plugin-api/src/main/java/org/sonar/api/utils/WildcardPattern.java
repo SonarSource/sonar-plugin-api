@@ -25,8 +25,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
-
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * Implementation of Ant-style matching patterns.
@@ -125,7 +124,7 @@ public class WildcardPattern {
 
   /**
    * Returns string representation of this pattern.
-   * 
+   *
    * @since 2.5
    */
   @Override
@@ -137,14 +136,14 @@ public class WildcardPattern {
    * Returns true if specified value matches this pattern.
    */
   public boolean match(String value) {
-    value = StringUtils.removeStart(value, "/");
-    value = StringUtils.removeEnd(value, "/");
+    value = Strings.CS.removeStart(value, "/");
+    value = Strings.CS.removeEnd(value, "/");
     return pattern.matcher(value).matches();
   }
 
   /**
    * Returns true if specified value matches one of specified patterns.
-   * 
+   *
    * @since 2.4
    */
   public static boolean match(WildcardPattern[] patterns, String value) {
@@ -158,7 +157,7 @@ public class WildcardPattern {
 
   /**
    * Creates pattern with "/" as a directory separator.
-   * 
+   *
    * @see #create(String, String)
    */
   public static WildcardPattern create(String pattern) {
@@ -167,7 +166,7 @@ public class WildcardPattern {
 
   /**
    * Creates array of patterns with "/" as a directory separator.
-   * 
+   *
    * @see #create(String, String)
    */
   public static WildcardPattern[] create(@Nullable String[] patterns) {
@@ -187,12 +186,12 @@ public class WildcardPattern {
    * This is used to match Java-classes, i.e. <code>org.foo.Bar</code> against <code>org/**</code>.
    * <b>However usage of character other than "/" as a directory separator is misleading and should be avoided,
    * so method {@link #create(String)} is preferred over this one.</b>
-   * 
+   *
    * <p>
    * Also note that no matter whether forward or backward slashes were used in the <code>antPattern</code>
    * the returned pattern will use <code>directorySeparator</code>.
    * Thus to match Windows-style path "dir\file.ext" against pattern "dir/file.ext" normalization should be performed.
-   * 
+   *
    */
   public static WildcardPattern create(String pattern, String directorySeparator) {
     String key = pattern + directorySeparator;
