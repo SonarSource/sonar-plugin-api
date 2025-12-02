@@ -68,7 +68,7 @@ allprojects {
   }
 }
 
-sonarqube {
+sonar {
   properties {
     property 'sonar.buildString', version
   }
@@ -131,7 +131,7 @@ subprojects {
     from javadoc.destinationDir
   }
 
-  rootProject.tasks["sonarqube"].dependsOn jacocoTestReport
+  rootProject.tasks["sonar"].dependsOn jacocoTestReport
 
   apply plugin: 'signing'
 
