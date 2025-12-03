@@ -150,7 +150,7 @@ subprojects {
 
   tasks.withType(Sign) {
     onlyIf {
-      def branch = System.getenv()["CIRRUS_BRANCH"]
+      def branch = System.getenv()["GITHUB_REF_NAME"]
       return !artifactoryPublish.skip &&
               (branch == 'master' || branch ==~ 'branch-[\\d.]+') &&
               gradle.taskGraph.hasTask(":artifactoryPublish")
