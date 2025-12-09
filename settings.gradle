@@ -19,7 +19,7 @@ dependencyResolutionManagement {
       library('jupiter-engine', 'org.junit.jupiter:junit-jupiter-engine:5.10.3')
       library('jupiter-vintage-engine', 'org.junit.vintage:junit-vintage-engine:5.10.3')
       library('slf4j', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
-      library('logback-classic', 'ch.qos.logback:logback-classic:1.5.21')
+      library('logback-classic', 'ch.qos.logback:logback-classic:1.2.13')
       library('assertj', 'org.assertj:assertj-core:3.26.0')
       library('mockito', 'org.mockito:mockito-core:5.12.0')
       library('junit-dataprovider', 'com.tngtech.java:junit-dataprovider:1.13.1')
