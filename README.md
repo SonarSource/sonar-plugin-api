@@ -85,7 +85,7 @@ Current version: 12.0.0.2960
 |---------------|--------------|
 | Eclipse       | 12.0.0.2960  |
 | IntelliJ      | 12.0.0.2960  |
-| Visual Studio | 12.0.0.2960  |
+| Visual Studio | 13.4.2.4284  |
 | VSCode        | 12.0.0.2960  |
 
 ## Optimizing the execution of sensors
