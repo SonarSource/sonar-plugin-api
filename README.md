@@ -40,10 +40,14 @@ The following tables indicate which API versions plugins can find at runtime:
 
 | SonarQube              | Plugin API                |
 |------------------------|---------------------------|
+| 2025.6.1.117629        | 13.4.2.4284               |
+| 2025.6.0.117042        | 13.4.2.4284               |
 | 2025.5.0.113872        | 13.2.0.3137               |
+| 2025.4.4.119049        | 13.0.0.3026               |
 | 2025.4.0.111749        | 13.0.0.3026               |
 | 2025.3.0.108892        | 12.0.0.2960               |
 | 2025.2.0.105476        | 11.3.0.2824               |
+| 2025.1.5.119025        | 11.2.0.2797               |
 | 2025.1.0.102418        | 11.1.0.2693               |
 | 10.8.0.100206          | 10.14.0.2599              |
 | 10.7.0.96327           | 10.11.0.2468              |
@@ -67,6 +71,8 @@ The following tables indicate which API versions plugins can find at runtime:
 
 | SonarQube              | Plugin API      |
 |------------------------|-----------------|
+| 26.1.0.118079          | 13.4.3.4290     |
+| 25.12.0.117093         | 13.4.2.4284     |
 | 25.11.0.114957         | 13.3.0.3209     |
 | 25.10.0.114319         | 13.2.0.3137     |
 | 25.8.0.111898          | 13.0.0.3026     |
@@ -78,7 +84,7 @@ The following tables indicate which API versions plugins can find at runtime:
 | 25.1.0.102122          | 11.1.0.2693     |
 
 ### SonarQube Cloud
-Current version: 12.0.0.2960
+Current version: 13.2.0.3137
 
 ### SonarQube for IDE
 | Flavor        | Plugin API   |
