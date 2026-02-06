@@ -1,0 +1,28 @@
+description = 'Sonar Plugin API - Manifest'
+
+dependencies {
+  compileOnly libs.jsr305
+
+  implementation libs.commons.lang3
+
+  testImplementation libs.junit5
+  testImplementation libs.assertj
+  testImplementation libs.mockito
+  testRuntimeOnly libs.jupiter.engine
+}
+
+artifactoryPublish.skip = false
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      artifactId = 'sonar-plugin-manifest'
+      artifact sourcesJar
+      artifact javadocJar
+    }
+  }
+}
+
+test {
+  useJUnitPlatform()
+}
