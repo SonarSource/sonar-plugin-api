@@ -1,5 +1,12 @@
 # Changelog
 
+## 13.5
+* Introduce support for issue resolution from sensors:
+  * Introduce `org.sonar.api.batch.sensor.issue.NewIssueResolution`
+  * Introduce `org.sonar.api.batch.sensor.issue.IssueResolution`
+  * Introduce `org.sonar.api.batch.sensor.SensorContext.newIssueResolution()`
+  * Introduce `org.sonar.api.batch.sensor.internal.SensorStorage.store(IssueResolution)`
+
 ## 13.4
 * Add `org.sonar.api.a3s.A3SContextCollector` (internal SonarSource usage)
 

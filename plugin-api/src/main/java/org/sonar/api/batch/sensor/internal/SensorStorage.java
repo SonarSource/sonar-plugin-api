@@ -26,6 +26,7 @@ import org.sonar.api.batch.sensor.error.AnalysisError;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.issue.ExternalIssue;
 import org.sonar.api.batch.sensor.issue.Issue;
+import org.sonar.api.batch.sensor.issue.IssueResolution;
 import org.sonar.api.batch.sensor.measure.Measure;
 import org.sonar.api.batch.sensor.rule.AdHocRule;
 import org.sonar.api.batch.sensor.symbol.NewSymbolTable;
@@ -82,4 +83,9 @@ public interface SensorStorage {
    * @since 7.2
    */
   void store(NewSignificantCode significantCode);
+
+  /**
+   * @since 13.5
+   */
+  void store(IssueResolution issueResolution);
 }
