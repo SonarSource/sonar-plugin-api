@@ -17,6 +17,31 @@ publishing {
   publications {
     mavenJava(MavenPublication) {
       artifactId = 'sonar-plugin-manifest'
+      pom {
+        name = 'Sonar Plugin API - Manifest'
+        description = 'Sonar Plugin API - Manifest'
+        url = 'https://www.sonarsource.com/'
+        organization {
+          name = 'SonarSource'
+          url = 'https://www.sonarsource.com/'
+        }
+        licenses {
+          license {
+            name = 'GNU LGPL 3'
+            url = 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+            distribution = 'repo'
+          }
+        }
+        scm {
+          url = 'https://github.com/SonarSource/sonar-plugin-api'
+        }
+        developers {
+          developer {
+            id = 'sonarsource-team'
+            name = 'SonarSource Team'
+          }
+        }
+      }
       artifact sourcesJar
       artifact javadocJar
     }
