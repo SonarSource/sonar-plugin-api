@@ -36,8 +36,10 @@ import org.sonar.api.batch.sensor.error.NewAnalysisError;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.issue.ExternalIssue;
 import org.sonar.api.batch.sensor.issue.Issue;
+import org.sonar.api.batch.sensor.issue.IssueResolution;
 import org.sonar.api.batch.sensor.issue.NewExternalIssue;
 import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueResolution;
 import org.sonar.api.batch.sensor.measure.Measure;
 import org.sonar.api.batch.sensor.measure.NewMeasure;
 import org.sonar.api.batch.sensor.rule.AdHocRule;
@@ -305,4 +307,11 @@ public interface SensorContext {
    */
   @Beta
   boolean isFeatureAvailable(String featureName);
+
+  /**
+   * Builder to create a new {@link IssueResolution}.
+   * Don't forget to call {@link NewIssueResolution#save()} once all parameters are provided.
+   * @since 13.5
+   */
+  NewIssueResolution newIssueResolution();
 }
