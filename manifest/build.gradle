@@ -17,6 +17,7 @@ publishing {
   publications {
     mavenJava(MavenPublication) {
       artifactId = 'sonar-plugin-manifest'
+      from components.java
       pom {
         name = 'Sonar Plugin API - Manifest'
         description = 'Sonar Plugin API - Manifest'
