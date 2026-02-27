@@ -21,6 +21,7 @@ package org.sonar.plugin.api.manifest;
 
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
+import org.sonar.api.utils.Version;
 
 public class RequiredPlugin {
 

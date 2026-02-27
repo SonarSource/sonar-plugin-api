@@ -2,6 +2,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
   api libs.slf4j
+  api project(':shared')
 
   // please keep the list grouped by configuration and ordered by name
   implementation libs.commons.io

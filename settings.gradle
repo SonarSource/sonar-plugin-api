@@ -3,6 +3,7 @@ include 'plugin-api'
 include 'check-api'
 include 'test-fixtures'
 include 'manifest'
+include 'shared'
 
 dependencyResolutionManagement {
   versionCatalogs {

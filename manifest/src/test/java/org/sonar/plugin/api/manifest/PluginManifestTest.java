@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import org.junit.jupiter.api.Test;
+import org.sonar.api.utils.Version;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
