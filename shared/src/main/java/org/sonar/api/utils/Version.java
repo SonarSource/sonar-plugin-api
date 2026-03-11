@@ -19,31 +19,25 @@
  */
 package org.sonar.api.utils;
 
-import java.util.regex.Pattern;
 import javax.annotation.concurrent.Immutable;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.StringUtils.substringAfter;
-import static org.apache.commons.lang3.StringUtils.substringBefore;
-import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 
 /**
- * Version composed of maximum four fields (major, minor, patch and build ID numbers) and optionally a qualifier.
+ * Version composed of maximum four fields (major, minor, patch and build number) and optionally a qualifier.
  * <p>
  * Examples: 1.0, 1.0.0, 1.2.3, 1.2-beta1, 1.2.1-beta-1, 1.2.3.4567
  * <p>
- * <h3>IMPORTANT NOTE</h3>
- * Qualifier is ignored when comparing objects (methods {@link #equals(Object)}, {@link #hashCode()}
- * and {@link #compareTo(Version)}).
+ * <h3>Qualifier ordering</h3>
+ * When numeric fields are equal, the qualifier determines ordering:
+ * a release (empty qualifier) is greater than any pre-release qualifier,
+ * and pre-release qualifiers are compared lexicographically.
  * <p>
- * <pre>
- *   assertThat(Version.parse("1.2")).isEqualTo(Version.parse("1.2-beta1"));
- *   assertThat(Version.parse("1.2").compareTo(Version.parse("1.2-beta1"))).isZero();
- * </pre>
- *
- * @since 5.5
+ * The default comparison implemented in {@link #compareTo(Version)} ignores the qualifier, so that for example "1.2.3" is considered equal to "1.2.3-beta-1".
+ * <p>
+ * Use {@link #compareToIncludingQualifier(Version)} to compare including qualifier.
  */
 @Immutable
 public class Version implements Comparable<Version> {
@@ -83,8 +77,6 @@ public class Version implements Comparable<Version> {
   /**
    * Build number if the fourth field, for example {@code 12345} for "6.3.0.12345".
    * If absent, then value is zero.
-   *
-   * @since 6.3
    */
   public long buildNumber() {
     return buildNumber;
@@ -115,12 +107,14 @@ public class Version implements Comparable<Version> {
    *                                  if it defines 5 integer-sequences.
    */
   public static Version parse(String text) {
-    String s = trimToEmpty(text);
-    String qualifier = substringAfter(s, QUALIFIER_SEPARATOR);
-    if (!qualifier.isEmpty()) {
-      s = substringBefore(s, QUALIFIER_SEPARATOR);
+    String s = text.trim();
+    String qualifier = DEFAULT_QUALIFIER;
+    int dashIdx = s.indexOf(QUALIFIER_SEPARATOR);
+    if (dashIdx >= 0) {
+      qualifier = s.substring(dashIdx + 1);
+      s = s.substring(0, dashIdx);
     }
-    String[] fields = s.split(Pattern.quote(SEQUENCE_SEPARATOR));
+    String[] fields = s.isEmpty() ? new String[0] : s.split("\\.");
     int major = 0;
     int minor = 0;
     int patch = DEFAULT_PATCH;
@@ -142,6 +136,13 @@ public class Version implements Comparable<Version> {
       }
     }
     return new Version(major, minor, patch, buildNumber, qualifier);
+  }
+
+  /**
+   * Alias for {@link #parse(String)}.
+   */
+  public static Version create(String text) {
+    return parse(text);
   }
 
   public static Version create(int major, int minor) {
@@ -170,6 +171,38 @@ public class Version implements Comparable<Version> {
     return this.compareTo(than) >= 0;
   }
 
+  /**
+   * Returns a new Version with the same numeric fields but an empty qualifier.
+   */
+  public Version removeQualifier() {
+    return new Version(major, minor, patch, buildNumber, DEFAULT_QUALIFIER);
+  }
+
+  /**
+   * Returns true if this version is greater than or equal to the given minimum requirement,
+   * ignoring qualifier.
+   */
+  public boolean satisfiesMinRequirement(Version minRequirement) {
+    return this.compareToIncludingQualifier(minRequirement) >= 0;
+  }
+
+  /**
+   * Compares this version to another, including qualifier.
+   */
+  public int compareToIncludingQualifier(Version other) {
+    int c = compareTo(other);
+    if (c == 0) {
+      if (qualifier.isEmpty()) {
+        c = other.qualifier.isEmpty() ? 0 : 1;
+      } else if (other.qualifier.isEmpty()) {
+        c = -1;
+      } else {
+        c = qualifier.compareTo(other.qualifier);
+      }
+    }
+    return c;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -188,7 +221,10 @@ public class Version implements Comparable<Version> {
     if (patch != version.patch) {
       return false;
     }
-    return buildNumber == version.buildNumber;
+    if (buildNumber != version.buildNumber) {
+      return false;
+    }
+    return qualifier.equals(version.qualifier);
   }
 
   @Override
@@ -196,10 +232,14 @@ public class Version implements Comparable<Version> {
     int result = major;
     result = 31 * result + minor;
     result = 31 * result + patch;
-    result = 31 * result + (int) (buildNumber ^ (buildNumber >>> 32));
+    result = 31 * result + Long.hashCode(buildNumber);
+    result = 31 * result + qualifier.hashCode();
     return result;
   }
 
+  /**
+   * Compares this version to another, ignoring qualifier.
+   */
   @Override
   public int compareTo(Version other) {
     int c = major - other.major;

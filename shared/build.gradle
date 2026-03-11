@@ -1,14 +1,10 @@
-description = 'Sonar Plugin API - Manifest'
+description = 'Sonar Plugin API - Shared'
 
 dependencies {
   compileOnly libs.jsr305
 
-  api project(':shared')
-  implementation libs.commons.lang3
-
   testImplementation libs.junit5
   testImplementation libs.assertj
-  testImplementation libs.mockito
   testRuntimeOnly libs.jupiter.engine
 }
 
@@ -17,11 +13,11 @@ artifactoryPublish.skip = false
 publishing {
   publications {
     mavenJava(MavenPublication) {
-      artifactId = 'sonar-plugin-manifest'
+      artifactId = 'sonar-plugin-api-shared'
       from components.java
       pom {
-        name = 'Sonar Plugin API - Manifest'
-        description = 'Sonar Plugin API - Manifest'
+        name = 'Sonar Plugin API - Shared'
+        description = 'Sonar Plugin API - Shared'
         url = 'https://www.sonarsource.com/'
         organization {
           name = 'SonarSource'

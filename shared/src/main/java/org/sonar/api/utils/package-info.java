@@ -17,22 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.plugin.api.manifest;
+@ParametersAreNonnullByDefault
+package org.sonar.api.utils;
 
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-class RequiredPluginTest {
-
-  @Test
-  void test_RequiredPlugin() {
-    var plugin = RequiredPlugin.parse("java:1.1");
-    assertThat(plugin.getKey()).isEqualTo("java");
-    assertThat(plugin.getMinimalVersion()).hasToString("1.1");
-
-    assertThrows(IllegalArgumentException.class, () -> RequiredPlugin.parse("java"));
-  }
-
-}
+import javax.annotation.ParametersAreNonnullByDefault;

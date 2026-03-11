@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.sonar.api.utils.Version;
 
 /**
  * This class loads Sonar plugin metadata from JAR manifest.
