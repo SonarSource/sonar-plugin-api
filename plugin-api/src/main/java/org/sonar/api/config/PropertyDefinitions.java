@@ -46,7 +46,9 @@ import static java.util.Optional.ofNullable;
  * Metadata of all the properties declared by plugins
  *
  * @since 2.12
+ * @deprecated since 13.6. Use {@link PropertyDefinition#builder(String)} to declare properties instead.
  */
+@Deprecated(since = "13.6", forRemoval = true)
 @ScannerSide
 @ServerSide
 @ComputeEngineSide

@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.6
+* Deprecate `org.sonar.api.config.PropertyDefinitions`. Use `PropertyDefinition.builder(String)` to declare properties instead.
+
 ## 13.5
 * Introduce support for issue resolution from sensors:
   * Introduce `org.sonar.api.batch.sensor.issue.NewIssueResolution`
