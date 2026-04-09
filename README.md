@@ -117,6 +117,6 @@ Be aware that this forum is a community, so the standard pleasantries ("Hi", "Th
 
 ## License
 
-Copyright 2008-2025 SonarSource.
+Copyright SonarSource Sàrl.
 
 Licensed under the [GNU Lesser General Public License, Version 3.0](https://www.gnu.org/licenses/lgpl.txt)
