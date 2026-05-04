@@ -80,6 +80,7 @@ The following tables indicate which API versions plugins can find at runtime:
 
 | SonarQube              | Plugin API      |
 |------------------------|-----------------|
+| 26.5.0.122743          | 13.5.0.4319     |
 | 26.4.0.121862          | 13.5.0.4319     |
 | 26.3.0.120487          | 13.5.0.4319     |
 | 26.2.0.119303          | 13.4.3.4290     |
