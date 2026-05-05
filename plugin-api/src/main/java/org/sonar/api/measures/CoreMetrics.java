@@ -1048,6 +1048,63 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 13.6
+   */
+  public static final String NEW_RELIABILITY_ISSUE_SEVERITY_KEY = "new_reliability_issue_severity";
+
+  /**
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_RELIABILITY_ISSUE_SEVERITY = new Metric.Builder(NEW_RELIABILITY_ISSUE_SEVERITY_KEY,
+    "Reliability Issue Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new reliability issues")
+    .setDomain(DOMAIN_RELIABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
+   * @since 13.6
+   */
+  public static final String NEW_SECURITY_ISSUE_SEVERITY_KEY = "new_security_issue_severity";
+
+  /**
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_SECURITY_ISSUE_SEVERITY = new Metric.Builder(NEW_SECURITY_ISSUE_SEVERITY_KEY,
+    "Security Issue Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new security issues")
+    .setDomain(DOMAIN_SECURITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
+   * @since 13.6
+   */
+  public static final String NEW_MAINTAINABILITY_ISSUE_SEVERITY_KEY = "new_maintainability_issue_severity";
+
+  /**
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_MAINTAINABILITY_ISSUE_SEVERITY = new Metric.Builder(NEW_MAINTAINABILITY_ISSUE_SEVERITY_KEY,
+    "Maintainability Issue Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new maintainability issues")
+    .setDomain(DOMAIN_MAINTAINABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
    * @since 3.6
    * @deprecated since 10.4. Use {@link #VIOLATIONS_KEY} instead.
    */
@@ -1155,6 +1212,29 @@ public final class CoreMetrics {
   /**
    * SonarQube Quality Model
    *
+   * @since 13.6
+   */
+  public static final String NEW_CODE_SMELLS_SEVERITY_KEY = "new_code_smells_severity";
+
+  /**
+   * SonarQube Quality Model
+   *
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_CODE_SMELLS_SEVERITY = new Metric.Builder(NEW_CODE_SMELLS_SEVERITY_KEY,
+    "Code Smells Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new code smell issues")
+    .setDomain(DOMAIN_MAINTAINABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
+   * SonarQube Quality Model
+   *
    * @since 5.5
    */
   public static final String BUGS_KEY = "bugs";
@@ -1198,6 +1278,28 @@ public final class CoreMetrics {
   /**
    * SonarQube Quality Model
    *
+   * @since 13.6
+   */
+  public static final String NEW_BUGS_SEVERITY_KEY = "new_bugs_severity";
+
+  /**
+   * SonarQube Quality Model
+   *
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_BUGS_SEVERITY = new Metric.Builder(NEW_BUGS_SEVERITY_KEY, "Bugs Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new bug issues")
+    .setDomain(DOMAIN_RELIABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
+   * SonarQube Quality Model
+   *
    * @since 5.5
    */
   public static final String VULNERABILITIES_KEY = "vulnerabilities";
@@ -1235,6 +1337,29 @@ public final class CoreMetrics {
     .setBestValue(0.0)
     .setOptimizedBestValue(true)
     .setDeleteHistoricalData(true)
+    .create();
+
+  /**
+   * SonarQube Quality Model
+   *
+   * @since 13.6
+   */
+  public static final String NEW_VULNERABILITIES_SEVERITY_KEY = "new_vulnerabilities_severity";
+
+  /**
+   * SonarQube Quality Model
+   *
+   * @since 13.6
+   */
+  public static final Metric<Integer> NEW_VULNERABILITIES_SEVERITY = new Metric.Builder(NEW_VULNERABILITIES_SEVERITY_KEY,
+    "Vulnerabilities Severity on New Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of new vulnerability issues")
+    .setDomain(DOMAIN_SECURITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
     .create();
 
   /**
