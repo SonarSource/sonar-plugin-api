@@ -2,6 +2,10 @@
 
 ## 13.6
 * Deprecate `org.sonar.api.config.PropertyDefinitions`. Use `PropertyDefinition.builder(String)` to declare properties instead.
+* Add severity metric keys to `org.sonar.api.measures.CoreMetrics`:
+  * MQR mode: `NEW_RELIABILITY_ISSUE_SEVERITY_KEY`, `NEW_SECURITY_ISSUE_SEVERITY_KEY`, `NEW_MAINTAINABILITY_ISSUE_SEVERITY_KEY`
+  * Standard mode: `NEW_BUGS_SEVERITY_KEY`, `NEW_VULNERABILITIES_SEVERITY_KEY`, `NEW_CODE_SMELLS_SEVERITY_KEY`
+* Add `org.sonar.api.measures.SeverityValues` with integer constants for severity-based metric thresholds
 
 ## 13.5
 * Introduce support for issue resolution from sensors:
