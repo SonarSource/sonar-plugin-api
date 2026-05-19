@@ -191,17 +191,20 @@ public final class PropertyDefinition {
     if (annotation.module()) {
       configScopes.add(ConfigScope.MODULE);
     }
-    // Translate the legacy invisibility idiom — @Property(global=false) with no
-    // scope — to the first-class hidden flag, so it survives the eventual removal
-    // of the global=false / empty-scope fallback in the server's settability check.
-    boolean isLegacyHiddenIdiom = !annotation.global() && configScopes.isEmpty();
-    if (annotation.global() || isLegacyHiddenIdiom) {
-      builder.onConfigScopes(configScopes);
+    if (annotation.global()) {
+      if (!configScopes.isEmpty()) {
+        // visible and settable at instance and scope level
+        builder.onConfigScopes(configScopes);
+      }
+      // else default state, visible and settable at instance level only
     } else {
-      builder.onlyOnConfigScopes(configScopes);
-    }
-    if (isLegacyHiddenIdiom) {
-      builder.hidden();
+      if (!configScopes.isEmpty()) {
+        // not visible but settable at scope only
+        builder.onlyOnConfigScopes(configScopes);
+      } else {
+        // legacy pattern for not visible but settable at instance level only
+        builder.hidden();
+      }
     }
     return builder.build();
   }
