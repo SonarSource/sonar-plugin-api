@@ -199,7 +199,7 @@ public final class PropertyDefinition {
       // else default state, visible and settable at instance level only
     } else {
       if (!configScopes.isEmpty()) {
-        // not visible but settable at scope only
+        // visible and settable at scope only
         builder.onlyOnConfigScopes(configScopes);
       } else {
         // legacy pattern for not visible but settable at instance level only
