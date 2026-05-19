@@ -96,6 +96,19 @@ public class PropertyDefinitionTest {
     assertThat(def.configScopes()).containsOnly(ConfigScope.PROJECT, ConfigScope.MODULE);
     assertThat(def.multiValues()).isTrue();
     assertThat(def.fields()).isEmpty();
+    assertThat(def.hidden()).isFalse();
+  }
+
+  @Test
+  public void should_translate_legacy_global_false_idiom_to_hidden() {
+    Properties props = AnnotationUtils.getAnnotation(LegacyHiddenIdiom.class, Properties.class);
+    Property prop = props.value()[0];
+
+    PropertyDefinition def = PropertyDefinition.create(prop);
+
+    assertThat(def.hidden()).isTrue();
+    assertThat(def.global()).isTrue();
+    assertThat(def.configScopes()).isEmpty();
   }
 
   @Test
@@ -108,7 +121,34 @@ public class PropertyDefinitionTest {
     assertThat(def.key()).isEqualTo("hello");
     assertThat(def.qualifiers()).isEmpty();
     assertThat(def.configScopes()).isEmpty();
+    assertThat(def.global()).isTrue();
+    assertThat(def.hidden()).isTrue();
+  }
+
+  @Test
+  public void should_create_hidden_property_with_on_config_scopes() {
+    PropertyDefinition def = PropertyDefinition.builder("hello")
+      .name("Hello")
+      .hidden()
+      .onConfigScopes(ConfigScope.PROJECT)
+      .build();
+
+    assertThat(def.hidden()).isTrue();
+    assertThat(def.global()).isTrue();
+    assertThat(def.configScopes()).containsExactly(ConfigScope.PROJECT);
+  }
+
+  @Test
+  public void should_create_hidden_property_with_only_on_config_scopes() {
+    PropertyDefinition def = PropertyDefinition.builder("hello")
+      .name("Hello")
+      .hidden()
+      .onlyOnConfigScopes(ConfigScope.PROJECT)
+      .build();
+
+    assertThat(def.hidden()).isTrue();
     assertThat(def.global()).isFalse();
+    assertThat(def.configScopes()).containsExactly(ConfigScope.PROJECT);
   }
 
   @Test
@@ -125,6 +165,7 @@ public class PropertyDefinitionTest {
     assertThat(def.description()).isEmpty();
     assertThat(def.type()).isEqualTo(PropertyType.STRING);
     assertThat(def.global()).isTrue();
+    assertThat(def.hidden()).isFalse();
     assertThat(def.qualifiers()).isEmpty();
     assertThat(def.configScopes()).isEmpty();
     assertThat(def.multiValues()).isFalse();
@@ -150,6 +191,7 @@ public class PropertyDefinitionTest {
     assertThat(def.configScopes()).isEmpty();
     assertThat(def.multiValues()).isFalse();
     assertThat(def.fields()).isEmpty();
+    assertThat(def.hidden()).isFalse();
   }
 
   @Test
@@ -321,22 +363,6 @@ public class PropertyDefinitionTest {
   }
 
   @Test
-  public void should_not_authorize_defining_on_qualifiers_and_hidden() {
-    Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(org.sonar.api.resources.Qualifiers.PROJECT).hidden();
-    assertThatThrownBy(builder::build)
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Cannot be hidden and defining qualifiers on which to display");
-  }
-
-  @Test
-  public void should_not_authorize_defining_ony_on_qualifiers_and_hidden() {
-    Builder builder = PropertyDefinition.builder("foo").name("foo").onlyOnQualifiers(org.sonar.api.resources.Qualifiers.PROJECT).hidden();
-    assertThatThrownBy(builder::build)
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Cannot be hidden and defining qualifiers on which to display");
-  }
-
-  @Test
   public void should_not_authorize_defining_on_qualifiers_and_only_on_qualifiers() {
     Builder builder = PropertyDefinition.builder("foo").name("foo").onQualifiers(org.sonar.api.resources.Qualifiers.MODULE)
       .onlyOnQualifiers(org.sonar.api.resources.Qualifiers.PROJECT);
@@ -468,6 +494,10 @@ public class PropertyDefinitionTest {
 
   @Properties(@Property(key = "hello", name = "Hello"))
   static class DefaultValues {
+  }
+
+  @Properties(@Property(key = "hello", name = "Hello", global = false))
+  static class LegacyHiddenIdiom {
   }
 
 }

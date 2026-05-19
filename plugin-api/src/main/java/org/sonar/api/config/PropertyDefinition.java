@@ -136,6 +136,7 @@ public final class PropertyDefinition {
   private final String category;
   private final List<ConfigScope> configScopes;
   private final boolean global;
+  private final boolean hidden;
   private final boolean multiValues;
   private final String deprecatedKey;
   private final List<PropertyFieldDefinition> fields;
@@ -153,6 +154,7 @@ public final class PropertyDefinition {
     this.category = builder.category;
     this.subCategory = builder.subCategory;
     this.global = builder.global;
+    this.hidden = builder.hidden;
     this.type = builder.type;
     this.options = builder.options;
     this.multiValues = builder.multiValues;
@@ -190,9 +192,19 @@ public final class PropertyDefinition {
       configScopes.add(ConfigScope.MODULE);
     }
     if (annotation.global()) {
-      builder.onConfigScopes(configScopes);
+      if (!configScopes.isEmpty()) {
+        // visible and settable at instance and scope level
+        builder.onConfigScopes(configScopes);
+      }
+      // else default state, visible and settable at instance level only
     } else {
-      builder.onlyOnConfigScopes(configScopes);
+      if (!configScopes.isEmpty()) {
+        // visible and settable at scope only
+        builder.onlyOnConfigScopes(configScopes);
+      } else {
+        // legacy pattern for not visible but settable at instance level only
+        builder.hidden();
+      }
     }
     return builder.build();
   }
@@ -342,6 +354,14 @@ public final class PropertyDefinition {
    */
   public boolean global() {
     return global;
+  }
+
+  /**
+   * Hidden properties are not discoverable, and typically don't appear in the UI.
+   * They can only be configured via the API.
+   */
+  public boolean hidden() {
+    return hidden;
   }
 
   public boolean multiValues() {
@@ -667,11 +687,7 @@ public final class PropertyDefinition {
       checkArgument(!isEmpty(key), "Key must be set");
       fixType(key, type);
       checkArgument(onConfigScopes.isEmpty() || onlyOnConfigScopes.isEmpty(), "Cannot use both forQualifiers and onlyForQualifiers");
-      checkArgument(!hidden || (onConfigScopes.isEmpty() && onlyOnConfigScopes.isEmpty()), "Cannot be hidden and defining qualifiers on which to display");
       checkArgument(!JSON.equals(type) || !multiValues, "Multivalues are not allowed to be defined for JSON-type property.");
-      if (hidden) {
-        global = false;
-      }
       if (!fields.isEmpty()) {
         type = PROPERTY_SET;
       }
