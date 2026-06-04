@@ -173,7 +173,12 @@ public final class PropertyDefinition {
     return new Builder(key);
   }
 
-  static PropertyDefinition create(Property annotation) {
+  /**
+   * Creates a {@link PropertyDefinition} from a {@link Property} annotation.
+   *
+   * @since 13.8
+   */
+  public static PropertyDefinition create(Property annotation) {
     Builder builder = PropertyDefinition.builder(annotation.key())
       .name(annotation.name())
       .defaultValue(annotation.defaultValue())
