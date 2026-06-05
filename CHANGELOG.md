@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.8
+* New public API `PropertyDefinition.create(Property)` to create properties from a `@Property` annotations
+
 ## 13.6
 * Deprecate `org.sonar.api.config.PropertyDefinitions`. Use `PropertyDefinition.builder(String)` to declare properties instead.
 * Add severity metric keys to `org.sonar.api.measures.CoreMetrics`:
