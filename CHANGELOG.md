@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.9
+* Add the `NEW_NCLOC` metric to `org.sonar.api.measures.CoreMetrics`.
+
 ## 13.8
 * New public API `PropertyDefinition.create(Property)` to create properties from a `@Property` annotations
 
