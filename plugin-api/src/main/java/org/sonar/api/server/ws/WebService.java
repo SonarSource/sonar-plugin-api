@@ -251,6 +251,7 @@ public interface WebService extends Definable<WebService.Context> {
     private String deprecatedSince;
     private boolean post = false;
     private boolean isInternal = false;
+    private boolean supportsScopedOrganizationTokens = false;
     private RequestHandler handler;
     private Map<String, NewParam> newParams = new HashMap<>();
     private URL responseExample = null;
@@ -306,6 +307,18 @@ public interface WebService extends Definable<WebService.Context> {
      */
     public NewAction setInternal(boolean b) {
       this.isInternal = b;
+      return this;
+    }
+
+    /**
+     * Indicates that the action can be authenticated using a SonarQube Cloud scoped
+     * organization token, in addition to any other supported authentication mechanism.
+     * This is only relevant to SonarQube Cloud. By default an action does not support it.
+     *
+     * @since 13.9
+     */
+    public NewAction setSupportsScopedOrganizationTokens(boolean b) {
+      this.supportsScopedOrganizationTokens = b;
       return this;
     }
 
@@ -511,6 +524,7 @@ public interface WebService extends Definable<WebService.Context> {
     private final String deprecatedSince;
     private final boolean post;
     private final boolean isInternal;
+    private final boolean supportsScopedOrganizationTokens;
     private final RequestHandler handler;
     private final Map<String, Param> params;
     private final URL responseExample;
@@ -526,6 +540,7 @@ public interface WebService extends Definable<WebService.Context> {
       this.deprecatedSince = newAction.deprecatedSince;
       this.post = newAction.post;
       this.isInternal = newAction.isInternal;
+      this.supportsScopedOrganizationTokens = newAction.supportsScopedOrganizationTokens;
       this.responseExample = newAction.responseExample;
       this.handler = newAction.handler;
       this.changelog = newAction.changelog;
@@ -600,6 +615,14 @@ public interface WebService extends Definable<WebService.Context> {
      */
     public boolean isInternal() {
       return isInternal;
+    }
+
+    /**
+     * @see NewAction#setSupportsScopedOrganizationTokens(boolean)
+     * @since 13.9
+     */
+    public boolean isSupportsScopedOrganizationTokens() {
+      return supportsScopedOrganizationTokens;
     }
 
     public RequestHandler handler() {

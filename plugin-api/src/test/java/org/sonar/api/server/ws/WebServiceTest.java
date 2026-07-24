@@ -79,6 +79,7 @@ public class WebServiceTest {
     assertThat(showAction.since()).isEqualTo("4.2");
     assertThat(showAction.isPost()).isFalse();
     assertThat(showAction.isInternal()).isFalse();
+    assertThat(showAction.isSupportsScopedOrganizationTokens()).isFalse();
     assertThat(showAction.path()).isEqualTo("api/metric/show");
     WebService.Action createAction = controller.action("create");
     assertThat(createAction).isNotNull();
@@ -89,6 +90,7 @@ public class WebServiceTest {
     assertThat(createAction.since()).isEqualTo("4.1");
     assertThat(createAction.isPost()).isTrue();
     assertThat(createAction.isInternal()).isTrue();
+    assertThat(createAction.isSupportsScopedOrganizationTokens()).isTrue();
     assertThat(createAction.changelog()).extracting(Change::getVersion, Change::getDescription).containsOnly(
       tuple("6.4", "Last event"), tuple("6.0", "Old event"), tuple("4.5.6", "Very old event"));
   }
@@ -539,6 +541,7 @@ public class WebServiceTest {
         .setDeprecatedSince("5.3")
         .setPost(true)
         .setInternal(true)
+        .setSupportsScopedOrganizationTokens(true)
         .setResponseExample(getClass().getResource("WebServiceTest/response-example.txt"))
         .setChangelog(
           new Change("6.4", "Last event"),
