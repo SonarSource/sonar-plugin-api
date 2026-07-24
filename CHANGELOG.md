@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.9
+* Introduce support for explicit CPD unit boundaries:
+  * Introduce `org.sonar.api.batch.sensor.cpd.NewCpdTokens.withExplicitUnitBoundaries()`
+  * Introduce `org.sonar.api.batch.sensor.cpd.NewCpdTokens.endUnit()`
+
 ## 13.8
 * New public API `PropertyDefinition.create(Property)` to create properties from a `@Property` annotations
 

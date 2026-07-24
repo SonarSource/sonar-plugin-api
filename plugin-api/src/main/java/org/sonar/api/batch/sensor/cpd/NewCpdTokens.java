@@ -24,16 +24,31 @@ import org.sonar.api.batch.fs.TextRange;
 
 /**
  * This builder is used to define tokens used by CPD algorithm on files.
- * 
+ *
  * Example:
- * 
+ *
  * <pre>
  *   sensorContext.newCpdTokens().onFile(inputFile)
  *     .addToken(1, 10, 1, 15, "class")
  *     .addToken(1, 16, 1, 18, "IDENTIFIER")
  *     // Add more tokens
  *     .save;
- *     
+ *
+ * </pre>
+ *
+ * By default, tokens are grouped into CPD units by physical line. A language whose logical units (e.g. statements)
+ * don't map one-to-one to physical lines can instead opt in to {@link #withExplicitUnitBoundaries()} and mark the
+ * end of each unit itself with {@link #endUnit()}:
+ *
+ * <pre>
+ *   NewCpdTokens cpdTokens = sensorContext.newCpdTokens().onFile(inputFile).withExplicitUnitBoundaries();
+ *   for (MyStatement statement : parseStatements(inputFile)) {
+ *     for (MyToken token : statement.tokens()) {
+ *       cpdTokens.addToken(token.line(), token.column(), token.endLine(), token.endColumn(), token.image());
+ *     }
+ *     cpdTokens.endUnit();
+ *   }
+ *   cpdTokens.save();
  * </pre>
  * @since 5.5
  */
@@ -58,7 +73,25 @@ public interface NewCpdTokens {
   NewCpdTokens addToken(int startLine, int startLineOffset, int endLine, int endLineOffset, String image);
 
   /**
-   * Call this method only once when your are done with defining tokens of the file. It is not supported to save CPD tokens twice for the same file.
+   * Call this method only once, when you are done with defining tokens of the file. It is not supported to save CPD tokens twice for the same file.
    */
   void save();
+
+  /**
+   * Opt in to explicit unit boundaries instead of the default per-physical-line grouping. A CPD "unit" then spans from the
+   * first {@link #addToken} after this call (or after the previous {@link #endUnit()}) up to the next {@link #endUnit()} call,
+   * regardless of how many physical lines it covers.
+   * <p>
+   * Must be called before the first {@link #addToken}. Calling it after tokens have already been added throws {@link IllegalStateException}.
+   * Calling it more than once is allowed and has no additional effect.
+   * @since 13.9
+   */
+  NewCpdTokens withExplicitUnitBoundaries();
+
+  /**
+   * Marks the end of the current CPD unit. Requires {@link #withExplicitUnitBoundaries()} to have been called first, otherwise
+   * throws {@link IllegalStateException}. A call with no pending token since the last {@link #addToken}/{@link #endUnit()} is a no-op.
+   * @since 13.9
+   */
+  NewCpdTokens endUnit();
 }
