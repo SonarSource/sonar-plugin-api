@@ -1,6 +1,6 @@
 # Changelog
 
-## 13.9
+## 13.10
 * Add the `NEW_NCLOC` metric to `org.sonar.api.measures.CoreMetrics`.
 
 ## 13.8
