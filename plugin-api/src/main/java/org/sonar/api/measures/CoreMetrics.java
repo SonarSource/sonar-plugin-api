@@ -126,6 +126,21 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 13.10
+   */
+  public static final String NEW_NCLOC_KEY = "new_ncloc";
+  /**
+   * @since 13.10
+   */
+  public static final Metric<Integer> NEW_NCLOC = new Metric.Builder(NEW_NCLOC_KEY, "New Lines of Code", Metric.ValueType.INT)
+    .setDescription("Non commenting lines of code on new code")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setQualitative(false)
+    .setDomain(DOMAIN_SIZE)
+    .setDeleteHistoricalData(true)
+    .create();
+
+  /**
    * @since 4.4
    */
   public static final String NCLOC_LANGUAGE_DISTRIBUTION_KEY = "ncloc_language_distribution";

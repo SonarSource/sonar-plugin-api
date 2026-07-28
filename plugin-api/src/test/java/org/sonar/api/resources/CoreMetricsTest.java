@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.measures.CoreMetrics.ACCEPTED_ISSUES;
 import static org.sonar.api.measures.CoreMetrics.FILES;
 import static org.sonar.api.measures.CoreMetrics.NCLOC;
+import static org.sonar.api.measures.CoreMetrics.NEW_NCLOC;
 import static org.sonar.api.measures.CoreMetrics.getMetric;
 import static org.sonar.api.measures.CoreMetrics.getMetrics;
 
@@ -38,7 +39,12 @@ public class CoreMetricsTest {
   public void read_metrics_from_class_reflection() {
     List<Metric> metrics = getMetrics();
     assertThat(metrics.size()).isGreaterThan(100);
-    assertThat(metrics).contains(NCLOC, FILES, ACCEPTED_ISSUES);
+    assertThat(metrics).contains(NCLOC, NEW_NCLOC, FILES, ACCEPTED_ISSUES);
+  }
+
+  @Test
+  public void new_ncloc_is_registered() {
+    assertThat(getMetric("new_ncloc")).isEqualTo(NEW_NCLOC);
   }
 
   @Test
