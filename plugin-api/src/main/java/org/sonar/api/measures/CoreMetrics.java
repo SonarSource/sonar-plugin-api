@@ -1063,6 +1063,24 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 13.11
+   */
+  public static final String RELIABILITY_ISSUE_SEVERITY_KEY = "reliability_issue_severity";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> RELIABILITY_ISSUE_SEVERITY = new Metric.Builder(RELIABILITY_ISSUE_SEVERITY_KEY,
+    "Reliability Issue Severity on Overall Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of reliability issues")
+    .setDomain(DOMAIN_RELIABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
    * @since 13.6
    */
   public static final String NEW_RELIABILITY_ISSUE_SEVERITY_KEY = "new_reliability_issue_severity";
@@ -1082,6 +1100,24 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 13.11
+   */
+  public static final String SECURITY_ISSUE_SEVERITY_KEY = "security_issue_severity";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> SECURITY_ISSUE_SEVERITY = new Metric.Builder(SECURITY_ISSUE_SEVERITY_KEY,
+    "Security Issue Severity on Overall Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of security issues")
+    .setDomain(DOMAIN_SECURITY)
+    .setDirection(Metric.DIRECTION_WORST)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
    * @since 13.6
    */
   public static final String NEW_SECURITY_ISSUE_SEVERITY_KEY = "new_security_issue_severity";
@@ -1095,6 +1131,24 @@ public final class CoreMetrics {
     .setDomain(DOMAIN_SECURITY)
     .setDirection(Metric.DIRECTION_WORST)
     .setDeleteHistoricalData(true)
+    .setOptimizedBestValue(true)
+    .setBestValue((double) SeverityValues.NO_ISSUES)
+    .setWorstValue((double) SeverityValues.BLOCKER)
+    .create();
+
+  /**
+   * @since 13.11
+   */
+  public static final String MAINTAINABILITY_ISSUE_SEVERITY_KEY = "maintainability_issue_severity";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> MAINTAINABILITY_ISSUE_SEVERITY = new Metric.Builder(MAINTAINABILITY_ISSUE_SEVERITY_KEY,
+    "Maintainability Issue Severity on Overall Code", Metric.ValueType.INT)
+    .setDescription("Worst severity of maintainability issues")
+    .setDomain(DOMAIN_MAINTAINABILITY)
+    .setDirection(Metric.DIRECTION_WORST)
     .setOptimizedBestValue(true)
     .setBestValue((double) SeverityValues.NO_ISSUES)
     .setWorstValue((double) SeverityValues.BLOCKER)

@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.11
+* Add MQR mode metrics for worst issue severity for overall code to `org.sonar.api.measures.CoreMetrics`:
+  * `RELIABILITY_ISSUE_SEVERITY`, `SECURITY_ISSUE_SEVERITY`, `MAINTAINABILITY_ISSUE_SEVERITY`
+
 ## 13.10
 * Add the `NEW_NCLOC` metric to `org.sonar.api.measures.CoreMetrics`.
 
