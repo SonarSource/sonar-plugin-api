@@ -1641,6 +1641,43 @@ public final class CoreMetrics {
       .setOptimizedBestValue(true)
       .create();
 
+  /**
+   * @since 13.11
+   */
+  public static final String SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES_KEY = "software_quality_maintainability_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES =
+    new Metric.Builder(SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES_KEY, "Maintainability Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Maintainability software quality")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(false)
+      .setDomain(DOMAIN_MAINTAINABILITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .create();
+
+  /**
+   * @since 13.11
+   */
+  public static final String NEW_SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES_KEY = "new_software_quality_maintainability_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> NEW_SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES =
+    new Metric.Builder(NEW_SOFTWARE_QUALITY_MAINTAINABILITY_ISSUES_KEY, "New Maintainability Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Maintainability software quality on new code")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(true)
+      .setDomain(DOMAIN_MAINTAINABILITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .setDeleteHistoricalData(true)
+      .create();
+
   // --------------------------------------------------------------------------------------------------------------------
   //
   // RELIABILITY CHARACTERISTIC
@@ -1720,6 +1757,43 @@ public final class CoreMetrics {
     .setWorstValue(5.0)
     .create();
 
+  /**
+   * @since 13.11
+   */
+  public static final String SOFTWARE_QUALITY_RELIABILITY_ISSUES_KEY = "software_quality_reliability_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> SOFTWARE_QUALITY_RELIABILITY_ISSUES =
+    new Metric.Builder(SOFTWARE_QUALITY_RELIABILITY_ISSUES_KEY, "Reliability Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Reliability software quality")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(false)
+      .setDomain(DOMAIN_RELIABILITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .create();
+
+  /**
+   * @since 13.11
+   */
+  public static final String NEW_SOFTWARE_QUALITY_RELIABILITY_ISSUES_KEY = "new_software_quality_reliability_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> NEW_SOFTWARE_QUALITY_RELIABILITY_ISSUES =
+    new Metric.Builder(NEW_SOFTWARE_QUALITY_RELIABILITY_ISSUES_KEY, "New Reliability Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Reliability software quality on new code")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(true)
+      .setDomain(DOMAIN_RELIABILITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .setDeleteHistoricalData(true)
+      .create();
+
   // --------------------------------------------------------------------------------------------------------------------
   //
   // SECURITY CHARACTERISTIC
@@ -1797,6 +1871,43 @@ public final class CoreMetrics {
     .setBestValue(1.0)
     .setWorstValue(5.0)
     .create();
+
+  /**
+   * @since 13.11
+   */
+  public static final String SOFTWARE_QUALITY_SECURITY_ISSUES_KEY = "software_quality_security_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> SOFTWARE_QUALITY_SECURITY_ISSUES =
+    new Metric.Builder(SOFTWARE_QUALITY_SECURITY_ISSUES_KEY, "Security Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Security software quality")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(false)
+      .setDomain(DOMAIN_SECURITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .create();
+
+  /**
+   * @since 13.11
+   */
+  public static final String NEW_SOFTWARE_QUALITY_SECURITY_ISSUES_KEY = "new_software_quality_security_issues";
+
+  /**
+   * @since 13.11
+   */
+  public static final Metric<Integer> NEW_SOFTWARE_QUALITY_SECURITY_ISSUES =
+    new Metric.Builder(NEW_SOFTWARE_QUALITY_SECURITY_ISSUES_KEY, "New Security Issues", Metric.ValueType.INT)
+      .setDescription("Number of open issues impacting the Security software quality on new code")
+      .setDirection(Metric.DIRECTION_WORST)
+      .setQualitative(true)
+      .setDomain(DOMAIN_SECURITY)
+      .setBestValue(0.0)
+      .setOptimizedBestValue(true)
+      .setDeleteHistoricalData(true)
+      .create();
 
   // --------------------------------------------------------------------------------------------------------------------
   //
