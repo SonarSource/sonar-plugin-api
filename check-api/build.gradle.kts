@@ -1,0 +1,7 @@
+plugins {
+  id("sonar-plugin-api.artifactory-conventions")
+}
+
+dependencies {
+  compileOnly(libs.jsr305)
+}
