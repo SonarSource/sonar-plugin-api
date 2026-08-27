@@ -133,12 +133,16 @@ subprojects {
 
   val mainSourceSet = the<SourceSetContainer>()["main"]
   tasks.register<Jar>("sourcesJar") {
+    group = "build"
+    description = "Assembles a jar archive containing the main sources of this project."
     dependsOn("classes")
     archiveClassifier.set("sources")
     from(mainSourceSet.allSource)
   }
 
   tasks.register<Jar>("javadocJar") {
+    group = "build"
+    description = "Assembles a jar archive containing the javadoc of this project."
     dependsOn("javadoc")
     archiveClassifier.set("javadoc")
     from(tasks.named<Javadoc>("javadoc").map { it.destinationDir!! })
