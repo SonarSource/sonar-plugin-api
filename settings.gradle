@@ -20,28 +20,3 @@ include 'check-api'
 include 'test-fixtures'
 include 'manifest'
 include 'shared'
-
-dependencyResolutionManagement {
-  versionCatalogs {
-    libs {
-      version('slf4j', '1.7.30')
-      library('commons-io', 'commons-io:commons-io:2.16.1')
-      library('commons-lang3', 'org.apache.commons:commons-lang3:3.20.0')
-      library('commons-text', 'org.apache.commons:commons-text:1.12.0')
-      library('commons-validator', 'commons-validator:commons-validator:1.10.0')
-      library('guava', 'com.google.guava:guava:33.5.0-jre')
-      library('gson', 'com.google.code.gson:gson:2.11.0')
-      library('jsr305', 'com.google.code.findbugs:jsr305:3.0.2')
-      library('junit4', 'junit:junit:4.13.2')
-      library('junit5', 'org.junit.jupiter:junit-jupiter-api:5.10.3')
-      library('jupiter-engine', 'org.junit.jupiter:junit-jupiter-engine:5.10.3')
-      library('jupiter-vintage-engine', 'org.junit.vintage:junit-vintage-engine:5.10.3')
-      library('junit-platform-launcher', 'org.junit.platform:junit-platform-launcher:1.10.3')
-      library('slf4j', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
-      library('logback-classic', 'ch.qos.logback:logback-classic:1.2.13')
-      library('assertj', 'org.assertj:assertj-core:3.26.0')
-      library('mockito', 'org.mockito:mockito-core:5.12.0')
-      library('junit-dataprovider', 'com.tngtech.java:junit-dataprovider:1.13.1')
-    }
-  }
-}
