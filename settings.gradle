@@ -1,3 +1,19 @@
+pluginManagement {
+  repositories {
+    maven {
+      url 'https://repox.jfrog.io/repox/plugins.gradle.org/'
+      def artifactoryUsername = System.env.'ARTIFACTORY_PRIVATE_USERNAME' ?: (settings.hasProperty('artifactoryUsername') ? settings.getProperty('artifactoryUsername') : '')
+      def artifactoryPassword = System.env.'ARTIFACTORY_PRIVATE_PASSWORD' ?: (settings.hasProperty('artifactoryPassword') ? settings.getProperty('artifactoryPassword') : '')
+      if (artifactoryUsername && artifactoryPassword) {
+        credentials {
+          username = artifactoryUsername
+          password = artifactoryPassword
+        }
+      }
+    }
+  }
+}
+
 rootProject.name='sonar-plugin-api'
 include 'plugin-api'
 include 'check-api'
