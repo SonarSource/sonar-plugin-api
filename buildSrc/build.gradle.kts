@@ -9,5 +9,5 @@ repositories {
 }
 
 dependencies {
-  implementation("com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:6.0.4")
+  implementation(libs.artifactory.plugin)
 }

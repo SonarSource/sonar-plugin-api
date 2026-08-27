@@ -1,9 +1,14 @@
 [versions]
 slf4j = "1.7.30"
 junit = "5.14.4"
-# org.junit.platform artifacts (e.g. junit-platform-launcher) use their own version line,
-# offset by -4 from the org.junit.jupiter/org.junit.vintage "junit" version above.
+# org.junit.platform artifacts (e.g. junit-platform-launcher) have their own major version:
+# Platform 1.x.y is released together with Jupiter 5.x.y (same minor/patch).
 junit-platform = "1.14.4"
+jacoco = "0.8.15"
+license-plugin = "0.16.1"
+shadow-plugin = "9.6.1"
+sonarqube-plugin = "7.4.0.8496"
+artifactory-plugin = "6.0.4"
 
 [libraries]
 commons-io = { module = "commons-io:commons-io", version = "2.22.0" }
@@ -23,3 +28,9 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.2.13
 assertj = { module = "org.assertj:assertj-core", version = "3.27.7" }
 mockito = { module = "org.mockito:mockito-core", version = "5.23.0" }
 junit-dataprovider = { module = "com.tngtech.java:junit-dataprovider", version = "1.13.1" }
+artifactory-plugin = { module = "com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin", version.ref = "artifactory-plugin" }
+
+[plugins]
+license = { id = "com.github.hierynomus.license", version.ref = "license-plugin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow-plugin" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube-plugin" }
