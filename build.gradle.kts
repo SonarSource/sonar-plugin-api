@@ -5,8 +5,8 @@ import nl.javadude.gradle.plugins.license.LicenseExtension
 
 plugins {
   id("com.github.hierynomus.license") version "0.16.1"
-  id("com.gradleup.shadow") version "9.0.0" apply false
-  id("org.sonarqube") version "7.1.0.6387"
+  id("com.gradleup.shadow") version "9.6.1" apply false
+  id("org.sonarqube") version "7.4.0.8496"
   id("sonar-plugin-api.artifactory-conventions")
 }
 
