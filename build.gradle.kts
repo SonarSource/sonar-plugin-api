@@ -1,20 +1,16 @@
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.plugins.signing.Sign
-import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
 import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 import nl.javadude.gradle.plugins.license.LicenseExtension
 
 plugins {
   id("com.github.hierynomus.license") version "0.16.1"
   id("com.gradleup.shadow") version "9.0.0" apply false
-  id("com.jfrog.artifactory") version "6.0.4"
   id("org.sonarqube") version "7.1.0.6387"
+  id("sonar-plugin-api.artifactory-conventions")
 }
 
 allprojects {
-  apply(plugin = "com.jfrog.artifactory")
-  apply(plugin = "maven-publish")
-
   val buildNumber = System.getProperty("buildNumber")
   // Replaces the version defined in sources, usually x.y-SNAPSHOT, by a version identifying the build.
   if (version.toString().endsWith("-SNAPSHOT") && buildNumber != null) {
@@ -40,37 +36,6 @@ allprojects {
       }
     }
   }
-
-  configure<ArtifactoryPluginConvention> {
-    clientConfig.isIncludeEnvVars = true
-    clientConfig.setEnvVarsExcludePatterns("*password*,*PASSWORD*,*secret*,*MAVEN_CMD_LINE_ARGS*,sun.java.command,*token*,*TOKEN*,*LOGIN*,*login*,*key*,*KEY*,*signing*")
-    setContextUrl(System.getenv("ARTIFACTORY_URL"))
-    publish {
-      repository {
-        repoKey = System.getenv("ARTIFACTORY_DEPLOY_REPO")
-        username = System.getenv("ARTIFACTORY_DEPLOY_USERNAME") ?: project.findProperty("artifactoryUsername") as String?
-        password = System.getenv("ARTIFACTORY_DEPLOY_PASSWORD") ?: project.findProperty("artifactoryPaswword") as String?
-      }
-      defaults {
-        setProperties(mapOf<String, String?>(
-          "build.name" to "sonar-plugin-api",
-          "build.number" to System.getenv("BUILD_NUMBER"),
-          "pr.branch.target" to System.getenv("PULL_REQUEST_BRANCH_TARGET"),
-          "pr.number" to System.getenv("PULL_REQUEST_NUMBER"),
-          "vcs.branch" to System.getenv("GITHUB_BRANCH"),
-          "vcs.revision" to System.getenv("GIT_COMMIT"),
-          "version" to version.toString()
-        ))
-        publications("mavenJava")
-        setPublishPom(true)
-        setPublishIvy(false)
-      }
-    }
-    clientConfig.info.buildName = "sonar-plugin-api"
-    clientConfig.info.buildNumber = System.getenv("BUILD_NUMBER")
-    // The name of this variable is important because it's used by the delivery process when extracting version from Artifactory build info.
-    clientConfig.info.addEnvironmentProperty("PROJECT_VERSION", "$version")
-  }
 }
 
 sonar {
@@ -81,10 +46,8 @@ sonar {
 
 subprojects {
   apply(plugin = "com.github.hierynomus.license")
-  apply(plugin = "com.jfrog.artifactory")
   apply(plugin = "jacoco")
   apply(plugin = "java-library")
-  apply(plugin = "maven-publish")
 
   configure<JavaPluginExtension> {
     toolchain {
@@ -162,7 +125,14 @@ subprojects {
       (branch == "master" || (branch != null && branch.matches(Regex("branch-[\\d.]+")))) &&
         gradle.taskGraph.hasTask(":artifactoryPublish")
     })
-    sign(the<PublishingExtension>().publications)
+  }
+
+  // Deferred to afterEvaluate: this project's own plugins {} block (applying maven-publish via
+  // the artifactory-conventions convention plugin) runs after this subprojects {} configuration.
+  afterEvaluate {
+    configure<SigningExtension> {
+      sign(the<PublishingExtension>().publications)
+    }
   }
 
   tasks.withType<Sign> {
