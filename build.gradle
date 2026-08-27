@@ -87,6 +87,10 @@ subprojects {
     }
   }
 
+  dependencies {
+    testRuntimeOnly libs.junit.platform.launcher
+  }
+
   jacoco {
     toolVersion = "0.8.7"
   }

@@ -46,8 +46,11 @@ processResources {
   ]
 }
 
+base {
+  archivesName = 'sonar-plugin-api'
+}
+
 shadowJar {
-  archiveBaseName = 'sonar-plugin-api'
   archiveClassifier = ''
   configurations = [project.configurations.runtimeClasspath]
   minimize {

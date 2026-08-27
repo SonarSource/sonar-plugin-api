@@ -20,6 +20,7 @@ dependencyResolutionManagement {
       library('junit5', 'org.junit.jupiter:junit-jupiter-api:5.10.3')
       library('jupiter-engine', 'org.junit.jupiter:junit-jupiter-engine:5.10.3')
       library('jupiter-vintage-engine', 'org.junit.vintage:junit-vintage-engine:5.10.3')
+      library('junit-platform-launcher', 'org.junit.platform:junit-platform-launcher:1.10.3')
       library('slf4j', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
       library('logback-classic', 'ch.qos.logback:logback-classic:1.2.13')
       library('assertj', 'org.assertj:assertj-core:3.26.0')
