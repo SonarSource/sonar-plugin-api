@@ -1,4 +1,4 @@
-apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.gradleup.shadow'
 
 dependencies {
   api libs.slf4j
@@ -47,7 +47,7 @@ processResources {
 }
 
 shadowJar {
-  archivesBaseName = 'sonar-plugin-api'
+  archiveBaseName = 'sonar-plugin-api'
   archiveClassifier = ''
   configurations = [project.configurations.runtimeClasspath]
   minimize {
