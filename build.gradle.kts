@@ -4,9 +4,9 @@ import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 import nl.javadude.gradle.plugins.license.LicenseExtension
 
 plugins {
-  id("com.github.hierynomus.license") version "0.16.1"
-  id("com.gradleup.shadow") version "9.0.0" apply false
-  id("org.sonarqube") version "7.1.0.6387"
+  alias(libs.plugins.license)
+  alias(libs.plugins.shadow) apply false
+  alias(libs.plugins.sonarqube)
   id("sonar-plugin-api.artifactory-conventions")
 }
 
@@ -61,7 +61,7 @@ subprojects {
   }
 
   configure<JacocoPluginExtension> {
-    toolVersion = "0.8.7"
+    toolVersion = libs.findVersion("jacoco").get().requiredVersion
   }
 
   tasks.named<JacocoReport>("jacocoTestReport") {
