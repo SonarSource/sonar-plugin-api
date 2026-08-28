@@ -1,5 +1,5 @@
 [versions]
-slf4j = "1.7.30"
+slf4j = "2.0.18"
 junit = "5.14.4"
 # org.junit.platform artifacts (e.g. junit-platform-launcher) have their own major version:
 # Platform 1.x.y is released together with Jupiter 5.x.y (same minor/patch).
@@ -24,7 +24,7 @@ jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.re
 jupiter-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
-logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.2.13" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.6.3" }
 assertj = { module = "org.assertj:assertj-core", version = "3.27.7" }
 mockito = { module = "org.mockito:mockito-core", version = "5.23.0" }
 junit-dataprovider = { module = "com.tngtech.java:junit-dataprovider", version = "1.13.1" }
