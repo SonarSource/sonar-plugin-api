@@ -1,5 +1,8 @@
 # Changelog
 
+## 14.0
+* Upgrade the provided `slf4j-api` from 1.7.30 to 2.0.18.
+
 ## 13.11
 * Add MQR mode metrics for worst issue severity for overall code to `org.sonar.api.measures.CoreMetrics`:
   * `RELIABILITY_ISSUE_SEVERITY`, `SECURITY_ISSUE_SEVERITY`, `MAINTAINABILITY_ISSUE_SEVERITY`
