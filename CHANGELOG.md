@@ -2,6 +2,8 @@
 
 ## 14.0
 * Upgrade the provided `slf4j-api` from 1.7.30 to 2.0.18.
+* Raise the minimum required Java version from 11 to 17.
+* Upgrade JUnit from 5.x to 6.x for consumers using the test-fixtures module.
 
 ## 13.11
 * Add MQR mode metrics for worst issue severity for overall code to `org.sonar.api.measures.CoreMetrics`:

@@ -51,7 +51,7 @@ subprojects {
 
   configure<JavaPluginExtension> {
     toolchain {
-      languageVersion.set(JavaLanguageVersion.of(11))
+      languageVersion.set(JavaLanguageVersion.of(17))
     }
   }
 
@@ -89,9 +89,6 @@ subprojects {
   tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
     (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
-    doFirst {
-      (options as StandardJavadocDocletOptions).addBooleanOption("-no-module-directories", true)
-    }
   }
 
   val mainSourceSet = the<SourceSetContainer>()["main"]

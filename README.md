@@ -3,7 +3,7 @@
 Java API to develop plugins for SonarQube (Server, Cloud) and SonarQube for IDE.
 This component was extracted out of SonarQube and has been released independently since v9.5.
 
-The API is built with JDK 11.
+The API is built with JDK 17.
 
 ## Developing plugins
 
