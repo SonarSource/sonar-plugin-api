@@ -1,5 +1,8 @@
 # Changelog
 
+## 14.1
+* Remove deprecation on `org.sonar.api.issue.IssueStatus.CONFIRMED`. The decision to deprecate it in favor of `org.sonar.api.issue.IssueStatus.ACCEPTED` has been rolled back.
+
 ## 14.0
 * Upgrade the provided `slf4j-api` from 1.7.30 to 2.0.18.
 * Raise the minimum required Java version from 11 to 17.
