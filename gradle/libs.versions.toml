@@ -4,7 +4,7 @@ junit = "6.1.3"
 jacoco = "0.8.15"
 license-plugin = "0.16.1"
 shadow-plugin = "9.6.1"
-sonarqube-plugin = "7.4.0.8496"
+sonarqube-plugin = "7.5.0.8588"
 artifactory-plugin = "6.0.4"
 
 [libraries]
