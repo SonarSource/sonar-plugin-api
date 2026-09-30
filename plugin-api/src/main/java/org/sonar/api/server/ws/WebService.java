@@ -244,7 +244,7 @@ public interface WebService extends Definable<WebService.Context> {
   class NewAction {
     private final String key;
     private static final String PAGE_PARAM_DESCRIPTION = "1-based page number";
-    private Enum<Response.ContentType> contentType;
+    private Response.ContentType contentType;
     private String deprecatedKey;
     private String description;
     private String since;
@@ -332,7 +332,7 @@ public interface WebService extends Definable<WebService.Context> {
      *
      * @since 10.8
      */
-    public NewAction setContentType(Enum<Response.ContentType> contentType) {
+    public NewAction setContentType(Response.ContentType contentType) {
       this.contentType = contentType;
       return this;
     }
@@ -529,7 +529,7 @@ public interface WebService extends Definable<WebService.Context> {
     private final Map<String, Param> params;
     private final URL responseExample;
     private final List<Change> changelog;
-    private final Enum<Response.ContentType> contentType;
+    private final Response.ContentType contentType;
 
     private Action(Controller controller, NewAction newAction) {
       this.key = newAction.key;
@@ -628,15 +628,12 @@ public interface WebService extends Definable<WebService.Context> {
     /**
      * Content type of the response, when the action defines one.
      *
-     * @see NewAction#setContentType(Enum)
+     * @see NewAction#setContentType(Response.ContentType)
      * @since 14.1
      */
     @CheckForNull
     public Response.ContentType contentType() {
-      if (contentType == null) {
-        return null;
-      }
-      return Response.ContentType.valueOf(contentType.name());
+      return contentType;
     }
 
     public RequestHandler handler() {
