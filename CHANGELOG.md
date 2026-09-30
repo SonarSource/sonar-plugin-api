@@ -1,6 +1,8 @@
 # Changelog
 
 ## 14.1
+* Add `WebService.Action.contentType()` to read the response content type set on an action.
+* Modify `WebService.NewAction.setContentType` to take `Response.ContentType` instead of `Enum<Response.ContentType>`.
 * Remove deprecation on `org.sonar.api.issue.IssueStatus.CONFIRMED`.
 
 ## 14.0
