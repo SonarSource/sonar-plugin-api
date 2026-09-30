@@ -80,6 +80,7 @@ public class WebServiceTest {
     assertThat(showAction.isPost()).isFalse();
     assertThat(showAction.isInternal()).isFalse();
     assertThat(showAction.isSupportsScopedOrganizationTokens()).isFalse();
+    assertThat(showAction.contentType()).isNull();
     assertThat(showAction.path()).isEqualTo("api/metric/show");
     WebService.Action createAction = controller.action("create");
     assertThat(createAction).isNotNull();
@@ -127,6 +128,7 @@ public class WebServiceTest {
     webService.define(context);
 
     assertThat(logTester.getLogs(Level.WARN)).isEmpty();
+    assertThat(context.controller("api/custom_action").action("list").contentType()).isEqualTo(Response.ContentType.NO_CONTENT);
   }
 
   @Test
