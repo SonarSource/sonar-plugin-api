@@ -626,6 +626,8 @@ public interface WebService extends Definable<WebService.Context> {
     }
 
     /**
+     * Content type of the response, when the action defines one.
+     *
      * @see NewAction#setContentType(Enum)
      * @since 14.1
      */
