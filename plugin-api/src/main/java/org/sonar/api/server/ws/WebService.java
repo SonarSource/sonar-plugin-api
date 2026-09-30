@@ -625,6 +625,20 @@ public interface WebService extends Definable<WebService.Context> {
       return supportsScopedOrganizationTokens;
     }
 
+    /**
+     * Content type of the response, when the action defines one.
+     *
+     * @see NewAction#setContentType(Enum)
+     * @since 14.1
+     */
+    @CheckForNull
+    public Response.ContentType contentType() {
+      if (contentType == null) {
+        return null;
+      }
+      return Response.ContentType.valueOf(contentType.name());
+    }
+
     public RequestHandler handler() {
       return handler;
     }
