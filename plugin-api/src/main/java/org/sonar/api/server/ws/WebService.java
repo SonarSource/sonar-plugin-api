@@ -331,6 +331,17 @@ public interface WebService extends Definable<WebService.Context> {
      * Sets content type of the response. This is optional to do.
      *
      * @since 10.8
+     * @deprecated since 14.1, use {@link #setContentType(Response.ContentType)}
+     */
+    @Deprecated(since = "14.1")
+    public NewAction setContentType(Enum<Response.ContentType> contentType) {
+      return setContentType((Response.ContentType) contentType);
+    }
+
+    /**
+     * Sets content type of the response. This is optional to do.
+     *
+     * @since 14.1
      */
     public NewAction setContentType(Response.ContentType contentType) {
       this.contentType = contentType;
