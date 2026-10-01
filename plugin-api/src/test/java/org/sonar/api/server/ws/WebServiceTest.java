@@ -132,6 +132,22 @@ public class WebServiceTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
+  public void read_content_type_set_with_the_deprecated_overload() {
+    WebService webService = ctx -> {
+      NewController newController = ctx.createController("api/custom_action");
+      Enum<Response.ContentType> contentType = Response.ContentType.TEXT;
+      newDefaultAction(newController, "list")
+        .setContentType(contentType);
+      newController.done();
+    };
+
+    webService.define(context);
+
+    assertThat(context.controller("api/custom_action").action("list").contentType()).isEqualTo(Response.ContentType.TEXT);
+  }
+
+  @Test
   public void fail_if_duplicated_ws_keys() {
     MetricWs metricWs = new MetricWs();
     metricWs.define(context);
