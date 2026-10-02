@@ -47,6 +47,7 @@ import org.sonar.api.batch.sensor.rule.NewAdHocRule;
 import org.sonar.api.batch.sensor.symbol.NewSymbolTable;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.config.Settings;
+import org.sonar.api.scanner.HostPlatform;
 import org.sonar.api.scanner.fs.InputProject;
 import org.sonar.api.scanner.sensor.ProjectSensor;
 import org.sonar.api.utils.Version;
@@ -123,6 +124,25 @@ public interface SensorContext {
    * @since 6.0
    */
   SonarRuntime runtime();
+
+  /**
+   * Information about the machine running the Sensor, mainly to select the platform-specific flavour of a resource
+   * to download through {@link org.sonar.api.scanner.ResourceFetcher}.
+   * <p>
+   * Implementations that do not provide this information, such as test doubles of this interface, return
+   * {@link HostPlatform#UNKNOWN}. Sensors must handle that case, for example by skipping the platform-specific
+   * feature.
+   * </p>
+   * This API is experimental and can be changed or dropped at any time.
+   *
+   * @return never {@code null}
+   * @see org.sonar.api.SonarRuntime
+   * @since 14.2
+   */
+  @Beta
+  default HostPlatform hostPlatform() {
+    return HostPlatform.UNKNOWN;
+  }
 
   /**
    * Test if a cancellation of the analysis was requested. Sensors should periodically test this flag
