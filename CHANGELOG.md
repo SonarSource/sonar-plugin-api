@@ -3,6 +3,10 @@
 ## 14.2
 * Deprecate `org.sonar.api.platform.Server.getStartedAt()`. There is no replacement.
 * Deprecate `org.sonar.api.CoreProperties.SERVER_STARTTIME`. There is no replacement.
+* Introduce host platform and static resource fetching APIs (experimental, `@Beta`):
+  * Introduce `org.sonar.api.scanner.HostPlatform`, `org.sonar.api.scanner.Os` and `org.sonar.api.scanner.Arch`
+  * Introduce `org.sonar.api.batch.sensor.SensorContext.hostPlatform()`
+  * Introduce `org.sonar.api.scanner.ResourceFetcher`
 
 ## 14.1
 * Add `WebService.Action.contentType()` to read the response content type set on an action.
