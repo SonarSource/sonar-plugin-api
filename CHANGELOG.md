@@ -1,5 +1,11 @@
 # Changelog
 
+## 14.2
+* Introduce scanner runtime and static resource fetching APIs (experimental, `@Beta`):
+  * Introduce `org.sonar.api.scanner.ScannerRuntime`, `org.sonar.api.scanner.Os` and `org.sonar.api.scanner.Arch`
+  * Introduce `org.sonar.api.batch.sensor.SensorContext.scannerRuntime()`
+  * Introduce `org.sonar.api.scanner.ResourceFetcher`
+
 ## 14.1
 * Add `WebService.Action.contentType()` to read the response content type set on an action.
 * Add `WebService.NewAction.setContentType(Response.ContentType)` and deprecate `setContentType(Enum)`.

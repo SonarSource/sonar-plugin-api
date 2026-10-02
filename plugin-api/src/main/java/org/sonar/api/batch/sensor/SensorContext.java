@@ -47,6 +47,7 @@ import org.sonar.api.batch.sensor.rule.NewAdHocRule;
 import org.sonar.api.batch.sensor.symbol.NewSymbolTable;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.config.Settings;
+import org.sonar.api.scanner.ScannerRuntime;
 import org.sonar.api.scanner.fs.InputProject;
 import org.sonar.api.scanner.sensor.ProjectSensor;
 import org.sonar.api.utils.Version;
@@ -123,6 +124,24 @@ public interface SensorContext {
    * @since 6.0
    */
   SonarRuntime runtime();
+
+  /**
+   * Information about the machine running the scanner, mainly to select the platform-specific flavour of a resource
+   * to download through {@link org.sonar.api.scanner.ResourceFetcher}.
+   * <p>
+   * This information is not available on every runtime: sensors must be prepared for this method to throw
+   * {@link UnsupportedOperationException}, for example when running against an older product version or against a
+   * test double of this interface.
+   * </p>
+   * This API is experimental and can be changed or dropped at any time.
+   *
+   * @throws UnsupportedOperationException if the runtime does not provide this information
+   * @since 14.2
+   */
+  @Beta
+  default ScannerRuntime scannerRuntime() {
+    throw new UnsupportedOperationException("scannerRuntime() is not supported by this implementation of SensorContext");
+  }
 
   /**
    * Test if a cancellation of the analysis was requested. Sensors should periodically test this flag
