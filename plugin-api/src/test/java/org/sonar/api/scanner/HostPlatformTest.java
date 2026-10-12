@@ -23,11 +23,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScannerRuntimeTest {
+class HostPlatformTest {
 
   @Test
   void unknown_shouldReportNoPlatform() {
-    assertThat(ScannerRuntime.UNKNOWN.getOs()).isEqualTo(Os.UNKNOWN);
-    assertThat(ScannerRuntime.UNKNOWN.getArch()).isEqualTo(Arch.UNKNOWN);
+    assertThat(HostPlatform.UNKNOWN.getOs()).isEqualTo(Os.UNKNOWN);
+    assertThat(HostPlatform.UNKNOWN.getArch()).isEqualTo(Arch.UNKNOWN);
   }
 }

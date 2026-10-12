@@ -20,14 +20,15 @@
 package org.sonar.api.scanner;
 
 import org.sonar.api.Beta;
+import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
  * Information about the machine running the analysis, so that analyzers do not have to implement their own
  * platform detection.
  *
  * <p>
- * It can be injected in the constructor of any scanner-side extension, and {@link org.sonar.api.batch.sensor.Sensor}
- * extensions can also get it from {@link org.sonar.api.batch.sensor.SensorContext#scannerRuntime()}. A typical usage
+ * It can be injected in the constructor of any scanner-side or sonarlint-side extension, and {@link org.sonar.api.batch.sensor.Sensor}
+ * extensions can also get it from {@link org.sonar.api.batch.sensor.SensorContext#hostPlatform()}. A typical usage
  * is to select the platform-specific flavour of a resource to download through {@link ResourceFetcher}. Such code
  * must map {@link Os#ALPINE} to the Linux artifact, and must cope with a platform that was not detected, since
  * {@link #getOs()} and {@link #getArch()} then return their {@code UNKNOWN} constant.
@@ -42,7 +43,7 @@ import org.sonar.api.Beta;
  *   }
  *
  *   public void execute(SensorContext context) {
- *     ScannerRuntime scannerRuntime = context.scannerRuntime();
+ *     HostPlatform scannerRuntime = context.scannerRuntime();
  *     String osDir = switch (scannerRuntime.getOs()) {
  *       case LINUX, ALPINE -&gt; "linux";
  *       case WINDOWS -&gt; "windows";
@@ -65,15 +66,16 @@ import org.sonar.api.Beta;
  */
 @Beta
 @ScannerSide
-public interface ScannerRuntime {
+@SonarLintSide
+public interface HostPlatform {
 
   /**
-   * A {@link ScannerRuntime} that reports no information: {@link #getOs()} returns {@link Os#UNKNOWN} and
+   * A {@link HostPlatform} that reports no information: {@link #getOs()} returns {@link Os#UNKNOWN} and
    * {@link #getArch()} returns {@link Arch#UNKNOWN}. It is returned by
-   * {@link org.sonar.api.batch.sensor.SensorContext#scannerRuntime()} when the implementation does not provide
+   * {@link org.sonar.api.batch.sensor.SensorContext#hostPlatform()} when the implementation does not provide
    * this information.
    */
-  ScannerRuntime UNKNOWN = new ScannerRuntime() {
+  HostPlatform UNKNOWN = new HostPlatform() {
     @Override
     public Os getOs() {
       return Os.UNKNOWN;

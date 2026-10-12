@@ -29,7 +29,7 @@ import org.sonar.api.Beta;
  * Operating system of the machine running the scanner, as detected while provisioning the Java runtime.
  * This API is experimental and can be changed or dropped at any time.
  *
- * @see ScannerRuntime#getOs()
+ * @see HostPlatform#getOs()
  * @since 14.2
  */
 @Beta
