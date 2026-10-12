@@ -224,7 +224,12 @@ public interface CoreProperties {
 
   String SERVER_ID = "sonar.core.id";
 
-  // format is yyyy-MM-dd'T'HH:mm:ssZ
+  /**
+   * Date when server started. Format is {@code yyyy-MM-dd'T'HH:mm:ssZ}.
+   *
+   * @deprecated since 14.2 the start time is no longer recorded by SonarQube Cloud. There is no replacement.
+   */
+  @Deprecated(since = "14.2", forRemoval = true)
   String SERVER_STARTTIME = "sonar.core.startTime";
 
   /**
