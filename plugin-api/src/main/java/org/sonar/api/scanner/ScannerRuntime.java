@@ -22,7 +22,7 @@ package org.sonar.api.scanner;
 import org.sonar.api.Beta;
 
 /**
- * Information about the machine running the scanner. It exposes the operating system and the CPU architecture that
+ * Information about the machine running the analysis. It exposes the operating system and the CPU architecture that
  * were already detected while provisioning the Java runtime, so that analyzers do not have to implement their own
  * platform detection.
  *
