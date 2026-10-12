@@ -21,8 +21,8 @@ package org.sonar.api.batch.sensor;
 
 import org.junit.jupiter.api.Test;
 import org.sonar.api.scanner.Arch;
+import org.sonar.api.scanner.HostPlatform;
 import org.sonar.api.scanner.Os;
-import org.sonar.api.scanner.ScannerRuntime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
@@ -35,23 +35,23 @@ class SensorContextTest {
   void scannerRuntime_shouldReturnUnknown_whenNotImplemented() {
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
 
-    assertThat(underTest.scannerRuntime()).isSameAs(ScannerRuntime.UNKNOWN);
-    assertThat(underTest.scannerRuntime().getOs()).isEqualTo(Os.UNKNOWN);
-    assertThat(underTest.scannerRuntime().getArch()).isEqualTo(Arch.UNKNOWN);
+    assertThat(underTest.hostPlatform()).isSameAs(HostPlatform.UNKNOWN);
+    assertThat(underTest.hostPlatform().getOs()).isEqualTo(Os.UNKNOWN);
+    assertThat(underTest.hostPlatform().getArch()).isEqualTo(Arch.UNKNOWN);
   }
 
   @Test
   void scannerRuntime_shouldReturnValue_whenImplemented() {
-    ScannerRuntime scannerRuntime = new TestScannerRuntime();
+    HostPlatform hostPlatform = new TestHostPlatform();
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
-    doReturn(scannerRuntime).when(underTest).scannerRuntime();
+    doReturn(hostPlatform).when(underTest).hostPlatform();
 
-    assertThat(underTest.scannerRuntime()).isSameAs(scannerRuntime);
-    assertThat(underTest.scannerRuntime().getOs()).isEqualTo(Os.LINUX);
-    assertThat(underTest.scannerRuntime().getArch()).isEqualTo(Arch.AARCH64);
+    assertThat(underTest.hostPlatform()).isSameAs(hostPlatform);
+    assertThat(underTest.hostPlatform().getOs()).isEqualTo(Os.LINUX);
+    assertThat(underTest.hostPlatform().getArch()).isEqualTo(Arch.AARCH64);
   }
 
-  private static class TestScannerRuntime implements ScannerRuntime {
+  private static class TestHostPlatform implements HostPlatform {
     @Override
     public Os getOs() {
       return Os.LINUX;

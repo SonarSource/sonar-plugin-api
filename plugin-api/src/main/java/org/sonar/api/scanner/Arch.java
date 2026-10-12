@@ -29,7 +29,7 @@ import org.sonar.api.Beta;
  * CPU architecture of the machine running the scanner, as detected while provisioning the Java runtime.
  * This API is experimental and can be changed or dropped at any time.
  *
- * @see ScannerRuntime#getArch()
+ * @see HostPlatform#getArch()
  * @since 14.2
  */
 @Beta

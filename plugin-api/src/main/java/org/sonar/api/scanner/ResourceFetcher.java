@@ -28,7 +28,7 @@ import org.sonar.api.Beta;
  * artifact and fetch only the ones it actually needs for a given analysis.
  *
  * <p>
- * It can be injected in the constructor of any scanner-side extension. Use {@link ScannerRuntime} to resolve the
+ * It can be injected in the constructor of any scanner-side extension. Use {@link HostPlatform} to resolve the
  * operating system and the architecture when the resource to fetch is platform-specific.
  * </p>
  *
