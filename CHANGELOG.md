@@ -1,8 +1,8 @@
 # Changelog
 
 ## 14.2
-* Introduce scanner runtime and static resource fetching APIs (experimental, `@Beta`):
-  * Introduce `org.sonar.api.scanner.ScannerRuntime`, `org.sonar.api.scanner.Os` and `org.sonar.api.scanner.Arch`
+* Introduce host platform and static resource fetching APIs (experimental, `@Beta`):
+  * Introduce `org.sonar.api.scanner.HostPlatform`, `org.sonar.api.scanner.Os` and `org.sonar.api.scanner.Arch`
   * Introduce `org.sonar.api.batch.sensor.SensorContext.hostPlatform()`
   * Introduce `org.sonar.api.scanner.ResourceFetcher`
 
