@@ -133,10 +133,6 @@ public interface SensorContext {
    * {@link ScannerRuntime#UNKNOWN}. Sensors must handle that case, for example by skipping the platform-specific
    * feature.
    * </p>
-   * <p>
-   * This method does not exist on products bundling an API older than 14.2, where calling it fails with
-   * {@link NoSuchMethodError}: guard the call as described in {@link org.sonar.api.SonarRuntime}.
-   * </p>
    * This API is experimental and can be changed or dropped at any time.
    *
    * @return never {@code null}

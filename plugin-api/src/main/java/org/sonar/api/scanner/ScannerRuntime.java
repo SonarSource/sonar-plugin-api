@@ -22,8 +22,7 @@ package org.sonar.api.scanner;
 import org.sonar.api.Beta;
 
 /**
- * Information about the machine running the analysis. It exposes the operating system and the CPU architecture that
- * were already detected while provisioning the Java runtime, so that analyzers do not have to implement their own
+ * Information about the machine running the analysis, so that analyzers do not have to implement their own
  * platform detection.
  *
  * <p>
@@ -32,12 +31,6 @@ import org.sonar.api.Beta;
  * is to select the platform-specific flavour of a resource to download through {@link ResourceFetcher}. Such code
  * must map {@link Os#ALPINE} to the Linux artifact, and must cope with a platform that was not detected, since
  * {@link #getOs()} and {@link #getArch()} then return their {@code UNKNOWN} constant.
- * </p>
- * <p>
- * The example below requires API 14.2 or later. It injects {@link ResourceFetcher}, a type that does not exist on
- * earlier products, so the extension cannot be loaded there at all and no version check inside the sensor would
- * help. A plugin that must also run on earlier products has to keep such extensions in a separate class and
- * register it only when {@link org.sonar.api.SonarRuntime#getApiVersion()} is 14.2 or later.
  * </p>
  * <pre>
  * public class MySensor implements Sensor {
