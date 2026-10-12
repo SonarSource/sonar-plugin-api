@@ -19,10 +19,6 @@
  */
 package org.sonar.api.scanner;
 
-import java.util.Locale;
-import javax.annotation.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonar.api.Beta;
 
 /**
@@ -51,43 +47,4 @@ public enum Os {
    * reported a value this version of the API does not know about.
    */
   UNKNOWN;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(Os.class);
-
-  /**
-   * Maps a raw operating system name, typically the value of the {@code sonar.scanner.os} property, to an {@link Os}.
-   * The comparison is case-insensitive and ignores surrounding whitespace. The accepted values are the ones of the
-   * scanner bootstrapping contract: {@code win}, {@code windows} and {@code win32} map to {@link #WINDOWS},
-   * {@code linux} to {@link #LINUX}, {@code alpine} to {@link #ALPINE}, {@code mac}, {@code macos} and
-   * {@code darwin} to {@link #MACOS}, and {@code zos} to {@link #ZOS}.
-   * <p>
-   * The property is not validated by the scanner, so this method never fails: any other value, including
-   * {@code null} and blank values, is mapped to {@link #UNKNOWN}.
-   * </p>
-   *
-   * @param os the raw operating system name, may be {@code null}
-   * @return the matching operating system, or {@link #UNKNOWN} if the value is not recognized
-   */
-  public static Os of(@Nullable String os) {
-    if (os == null || os.isBlank()) {
-      return UNKNOWN;
-    }
-    switch (os.trim().toLowerCase(Locale.ROOT)) {
-      case "win", "windows", "win32":
-        return WINDOWS;
-      case "linux":
-        return LINUX;
-      case "alpine":
-        return ALPINE;
-      case "mac", "macos", "darwin":
-        return MACOS;
-      case "zos":
-        return ZOS;
-      case "unknown":
-        return UNKNOWN;
-      default:
-        LOGGER.warn("Unrecognized operating system '{}', falling back to {}", os, UNKNOWN);
-        return UNKNOWN;
-    }
-  }
 }
