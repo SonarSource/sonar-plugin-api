@@ -126,7 +126,7 @@ public interface SensorContext {
   SonarRuntime runtime();
 
   /**
-   * Information about the machine running the scanner, mainly to select the platform-specific flavour of a resource
+   * Information about the machine running the Sensor, mainly to select the platform-specific flavour of a resource
    * to download through {@link org.sonar.api.scanner.ResourceFetcher}.
    * <p>
    * Implementations that do not provide this information, such as test doubles of this interface, return
