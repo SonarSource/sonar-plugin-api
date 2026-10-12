@@ -43,17 +43,17 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
  *   }
  *
  *   public void execute(SensorContext context) {
- *     HostPlatform scannerRuntime = context.scannerRuntime();
- *     String osDir = switch (scannerRuntime.getOs()) {
+ *     HostPlatform hostPlatform = context.hostPlatform();
+ *     String osDir = switch (hostPlatform.getOs()) {
  *       case LINUX, ALPINE -&gt; "linux";
  *       case WINDOWS -&gt; "windows";
  *       case MACOS -&gt; "macos";
  *       case ZOS, UNKNOWN -&gt; null;
  *     };
- *     if (osDir == null || scannerRuntime.getArch() == Arch.UNKNOWN) {
+ *     if (osDir == null || hostPlatform.getArch() == Arch.UNKNOWN) {
  *       return;
  *     }
- *     String path = osDir + "-" + scannerRuntime.getArch().name().toLowerCase(Locale.ROOT) + "/native-tool";
+ *     String path = osDir + "-" + hostPlatform.getArch().name().toLowerCase(Locale.ROOT) + "/native-tool";
  *     Path binary = resourceFetcher.fetch("mypluginkey", path);
  *     // ... run binary
  *   }

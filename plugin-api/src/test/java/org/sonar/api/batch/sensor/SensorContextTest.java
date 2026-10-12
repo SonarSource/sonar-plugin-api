@@ -32,7 +32,7 @@ import static org.mockito.Mockito.mock;
 class SensorContextTest {
 
   @Test
-  void scannerRuntime_shouldReturnUnknown_whenNotImplemented() {
+  void hostPlatform_shouldReturnUnknown_whenNotImplemented() {
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
 
     assertThat(underTest.hostPlatform()).isSameAs(HostPlatform.UNKNOWN);
@@ -41,7 +41,7 @@ class SensorContextTest {
   }
 
   @Test
-  void scannerRuntime_shouldReturnValue_whenImplemented() {
+  void hostPlatform_shouldReturnValue_whenImplemented() {
     HostPlatform hostPlatform = new TestHostPlatform();
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
     doReturn(hostPlatform).when(underTest).hostPlatform();
