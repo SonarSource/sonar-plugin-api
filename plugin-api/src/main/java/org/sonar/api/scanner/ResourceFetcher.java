@@ -62,7 +62,7 @@ public interface ResourceFetcher {
 
   /**
    * Downloads a static resource that is an archive, extracts it, and returns the path to the directory holding the
-   * extracted content. Only the ZIP and gzipped TAR ({@code .tar.gz}) formats are supported.
+   * extracted content. ZIP and gzipped TAR ({@code .tar.gz}) formats are supported, other may be added later.
    *
    * @param pluginKey the key of the plugin the resource belongs to
    * @param resourcePath the path of the resource, relative to the resources directory of the plugin, for example
