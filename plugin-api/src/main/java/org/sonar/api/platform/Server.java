@@ -54,7 +54,10 @@ public abstract class Server {
    * Date when server started. In the context of cluster, this is the
    * date of the startup of the first node. Value is the same on all
    * cluster nodes.
+   *
+   * @deprecated since 14.2 the server start time will be removed. There is no replacement.
    */
+  @Deprecated(since = "14.2", forRemoval = true)
   public abstract Date getStartedAt();
 
   /**
