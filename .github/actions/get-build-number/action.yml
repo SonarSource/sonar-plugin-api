@@ -1,0 +1,32 @@
+name: Allocate build number
+description: Run the released allocator against the PR head while leaving the build commit unchanged
+outputs:
+  BUILD_NUMBER:
+    description: The build number claimed or reused for this workflow run
+    value: ${{ steps.allocate.outputs.BUILD_NUMBER }}
+runs:
+  using: composite
+  steps:
+    - uses: SonarSource/vault-action-wrapper@881045d830534a70ec3c7c275fa3714412c8ff6e # 3.6.1
+      id: legacy-token
+      continue-on-error: true
+      with:
+        secrets: development/github/token/{REPO_OWNER_NAME_DASH}-build-number token | github_token;
+    - name: Allocate against the PR head
+      id: allocate
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        BUILD_NUMBER_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        LEGACY_PROPERTY_TOKEN: ${{ steps.legacy-token.outputs.vault && fromJSON(steps.legacy-token.outputs.vault).github_token || '' }}
+      run: |
+        allocator_dir=$(mktemp -d "$RUNNER_TEMP/build-number.XXXXXX")
+        trap 'rm -rf "$allocator_dir"' EXIT
+        # Use the released v2 implementation; only its process receives the alternate SHA.
+        gh api 'repos/SonarSource/ci-github-actions/contents/get-build-number/get_build_number.sh?ref=62463382a24f2004ffa20adbe9985f6459e031e6' \
+          --jq .content | base64 --decode > "$allocator_dir/allocate.sh"
+        GITHUB_SHA="$BUILD_NUMBER_SHA" BUILD_NUMBER_FILE="$allocator_dir/number" \
+          bash "$allocator_dir/allocate.sh"
+        build_number=$(cat "$allocator_dir/number")
+        [[ "$build_number" =~ ^[0-9]+$ ]] || { echo 'Invalid build number' >&2; exit 1; }
+        echo "BUILD_NUMBER=$build_number" >> "$GITHUB_OUTPUT"

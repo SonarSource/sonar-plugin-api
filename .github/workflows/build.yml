@@ -32,9 +32,7 @@ jobs:
           version: 2026.10.10
       - name: Allocate build number
         id: build-number
-        uses: SonarSource/ci-github-actions/get-build-number@cf2fe6f1f61c0ba87a28f7f907fbad7703747299 # PR #362: PR-head bookkeeping refs
-        with:
-          ref-sha: ${{ github.event.pull_request.head.sha || github.sha }}
+        uses: ./.github/actions/get-build-number
       - uses: SonarSource/ci-github-actions/build-gradle@v2
         env:
           BUILD_NUMBER: ${{ steps.build-number.outputs.BUILD_NUMBER }}
