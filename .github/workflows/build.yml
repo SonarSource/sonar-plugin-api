@@ -21,14 +21,23 @@ jobs:
     name: Build
     runs-on: github-ubuntu-latest-s
     timeout-minutes: 30
+    outputs:
+      BUILD_NUMBER: ${{ steps.build-number.outputs.BUILD_NUMBER }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
           version: 2026.10.10
+      - name: Allocate build number
+        id: build-number
+        uses: SonarSource/ci-github-actions/get-build-number@cf2fe6f1f61c0ba87a28f7f907fbad7703747299 # PR #362: PR-head bookkeeping refs
+        with:
+          ref-sha: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: SonarSource/ci-github-actions/build-gradle@v2
+        env:
+          BUILD_NUMBER: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         with:
           artifactory-reader-role: private-reader
           artifactory-deployer-role: qa-deployer
@@ -55,11 +64,12 @@ jobs:
     name: Promote
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
           cache_save: false
           version: 2026.10.10
-      - uses: SonarSource/ci-github-actions/get-build-number@v2
       - uses: SonarSource/ci-github-actions/promote@v2
+        env:
+          BUILD_NUMBER: ${{ needs.build.outputs.BUILD_NUMBER }}
         with:
           promote-pull-request: true

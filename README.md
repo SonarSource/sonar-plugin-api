@@ -40,6 +40,20 @@ Also note that the version no longer follows SonarQube Server's versions. The `s
 
 See the [releases](https://github.com/SonarSource/sonar-plugin-api/releases) for changelogs.
 
+## Releasing
+
+After the build and promotion succeed for the commit to release, go to **Actions → sonar-release → Run workflow**.
+Select the branch containing that commit and enter the full version including the build number (for example, `14.1.0.5543`).
+You can also start the workflow from the CLI:
+
+```sh
+gh workflow run release.yml --repo SonarSource/sonar-plugin-api --ref <branch> -f version=<full-version>
+```
+
+The workflow creates or reuses a draft GitHub release, publishes the artifacts and Javadoc, and publishes the release after all publication steps succeed.
+Start releases through this workflow; do not manually publish the GitHub release.
+If a release fails, fix the cause and re-run the failed workflow from GitHub Actions using the same version. The draft remains available for the retry.
+
 
 ## Deprecation Policy
 
