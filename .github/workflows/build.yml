@@ -21,44 +21,24 @@ jobs:
     name: Build
     runs-on: github-ubuntu-latest-s
     timeout-minutes: 30
+    outputs:
+      BUILD_NUMBER: ${{ steps.build-number.outputs.BUILD_NUMBER }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - name: Diagnose build-number ref permissions
-        env:
-          GH_TOKEN: ${{ github.token }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: |
-          refs=()
-          cleanup() {
-            for ref in "${refs[@]}"; do
-              gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/$ref" || true
-            done
-          }
-          trap cleanup EXIT
-          probe() {
-            local label="$1" sha="$2" ref response
-            ref="build-number-diagnostic/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$label"
-            echo "Testing $label ($sha)"
-            if response=$(gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
-                -f "ref=refs/$ref" -f "sha=$sha" 2>&1); then
-              refs+=("$ref")
-              echo "SUCCESS: $label"
-            else
-              echo "FAILED: $label: $response"
-            fi
-          }
-          probe base "$BASE_SHA"
-          probe previous-success 02153736bea4975eece9de735ec59b995e57062f
-          probe previous-failure e82a37e5ee03c101502b0861c0f07034f7ce6852
-          probe head "$HEAD_SHA"
-          probe merge "$GITHUB_SHA"
       - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
           version: 2026.10.9
+      - name: Allocate build number
+        id: build-number
+        uses: SonarSource/ci-github-actions/get-build-number@v2
+        env:
+          # Ref creation accepts the PR head; the build still uses the merge commit.
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: SonarSource/ci-github-actions/build-gradle@v2
+        env:
+          BUILD_NUMBER: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         with:
           artifactory-reader-role: private-reader
           artifactory-deployer-role: qa-deployer
@@ -89,7 +69,8 @@ jobs:
         with:
           cache_save: false
           version: 2026.10.9
-      - uses: SonarSource/ci-github-actions/get-build-number@v2
       - uses: SonarSource/ci-github-actions/promote@v2
+        env:
+          BUILD_NUMBER: ${{ needs.build.outputs.BUILD_NUMBER }}
         with:
           promote-pull-request: true
