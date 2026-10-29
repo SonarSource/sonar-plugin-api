@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
       - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
-          version: 2026.10.10
+          version: 2026.10.19
       - name: Allocate build number
         id: build-number
         uses: SonarSource/ci-github-actions/get-build-number@cf2fe6f1f61c0ba87a28f7f907fbad7703747299 # PR #362: PR-head bookkeeping refs
@@ -67,7 +67,7 @@ jobs:
       - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
           cache_save: false
-          version: 2026.10.10
+          version: 2026.10.19
       - uses: SonarSource/ci-github-actions/promote@v2
         env:
           BUILD_NUMBER: ${{ needs.build.outputs.BUILD_NUMBER }}
