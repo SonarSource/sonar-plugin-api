@@ -31,8 +31,10 @@ public class IssueTest {
   }
 
   @Test
-  public void RESOLUTIONSfield_shouldNotBeEmpty() {
-    assertThat(Issue.RESOLUTIONS).isNotEmpty();
+  public void RESOLUTIONSfield_shouldKeepLegacyValues() {
+    assertThat(Issue.RESOLUTIONS)
+      .containsExactly("FALSE-POSITIVE", "WONTFIX", "FIXED", "REMOVED")
+      .doesNotContain(Issue.RESOLUTION_DEFERRED);
   }
 
   @Test

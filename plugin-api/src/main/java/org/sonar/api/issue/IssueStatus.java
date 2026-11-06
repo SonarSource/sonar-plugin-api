@@ -36,7 +36,11 @@ public enum IssueStatus {
   FALSE_POSITIVE,
   ACCEPTED,
   FIXED,
-  IN_SANDBOX;
+  IN_SANDBOX,
+  /**
+   * @since 14.3
+   */
+  DEFERRED;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(IssueStatus.class);
 
@@ -71,6 +75,8 @@ public enum IssueStatus {
           return IssueStatus.FALSE_POSITIVE;
         case Issue.RESOLUTION_WONT_FIX:
           return IssueStatus.ACCEPTED;
+        case Issue.RESOLUTION_DEFERRED:
+          return IssueStatus.DEFERRED;
         case Issue.RESOLUTION_FIXED:
           return IssueStatus.FIXED;
         default:

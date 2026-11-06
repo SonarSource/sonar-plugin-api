@@ -104,6 +104,14 @@ public interface Issue extends Serializable {
   String RESOLUTION_WONT_FIX = "WONTFIX";
 
   /**
+   * Issue is deferred until a later date.
+   * @deprecated since 14.3 in favor of {@link IssueStatus#DEFERRED}
+   * @since 14.3
+   */
+  @Deprecated(since = "14.3")
+  String RESOLUTION_DEFERRED = "DEFERRED";
+
+  /**
    * Security Hotspot has been reviewed and resolved as safe.
    * @since 8.1
    */
