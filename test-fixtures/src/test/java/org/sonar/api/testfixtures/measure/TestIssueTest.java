@@ -57,6 +57,21 @@ class TestIssueTest {
   }
 
   @Test
+  void create_deferred_issue() {
+    Issue issue = new TestIssue.Builder()
+      .setKey("ABCD")
+      .setRuleKey(RuleKey.of("xoo", "S01"))
+      .setSeverity(Severity.BLOCKER)
+      .setStatus(org.sonar.api.issue.Issue.STATUS_RESOLVED)
+      .setResolution(org.sonar.api.issue.Issue.RESOLUTION_DEFERRED)
+      .setType(RuleType.BUG)
+      .build();
+
+    assertThat(issue.resolution()).isEqualTo(org.sonar.api.issue.Issue.RESOLUTION_DEFERRED);
+    assertThat(issue.issueStatus()).isEqualTo(IssueStatus.DEFERRED);
+  }
+
+  @Test
   void create_issue_with_minimal_fields() {
     Issue issue = new TestIssue.Builder()
       .setKey("ABCD")
