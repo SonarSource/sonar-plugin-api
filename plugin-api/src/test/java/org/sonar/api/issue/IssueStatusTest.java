@@ -44,11 +44,21 @@ public class IssueStatusTest {
     assertThat(IssueStatus.of(Issue.STATUS_RESOLVED, Issue.RESOLUTION_WONT_FIX))
       .isEqualTo(IssueStatus.ACCEPTED);
 
+    assertThat(IssueStatus.of(Issue.STATUS_RESOLVED, Issue.RESOLUTION_DEFERRED))
+      .isEqualTo(IssueStatus.DEFERRED);
+
     assertThat(IssueStatus.of(Issue.STATUS_REOPENED, null))
       .isEqualTo(IssueStatus.OPEN);
 
     assertThat(IssueStatus.of(Issue.STATUS_CLOSED, null))
       .isEqualTo(IssueStatus.FIXED);
+  }
+
+  @Test
+  public void values_shouldPreserveExistingOrdinals() {
+    assertThat(IssueStatus.values()).containsExactly(
+      IssueStatus.OPEN, IssueStatus.CONFIRMED, IssueStatus.FALSE_POSITIVE,
+      IssueStatus.ACCEPTED, IssueStatus.FIXED, IssueStatus.IN_SANDBOX, IssueStatus.DEFERRED);
   }
 
   @Test
