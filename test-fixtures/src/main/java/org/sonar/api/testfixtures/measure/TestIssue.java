@@ -187,7 +187,8 @@ public class TestIssue implements Issue {
     }
 
     private static String validateResolution(@Nullable String resolution) {
-      checkArgument(resolution == null || org.sonar.api.issue.Issue.RESOLUTIONS.contains(resolution), String.format("resolution '%s' is invalid", resolution));
+      checkArgument(resolution == null || org.sonar.api.issue.Issue.RESOLUTIONS.contains(resolution)
+        || org.sonar.api.issue.Issue.RESOLUTION_DEFERRED.equals(resolution), String.format("resolution '%s' is invalid", resolution));
       return resolution;
     }
 

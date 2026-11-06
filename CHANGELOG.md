@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.3
+* Add `org.sonar.api.issue.IssueStatus.DEFERRED` enum value and map `RESOLVED` with resolution `DEFERRED` to it.
+* Add `org.sonar.api.issue.Issue.RESOLUTION_DEFERRED` constant (deprecated immediately), without changing `Issue.RESOLUTIONS`.
+
 ## 14.2
 * Deprecate `org.sonar.api.platform.Server.getStartedAt()`. There is no replacement.
 * Deprecate `org.sonar.api.CoreProperties.SERVER_STARTTIME`. There is no replacement.
