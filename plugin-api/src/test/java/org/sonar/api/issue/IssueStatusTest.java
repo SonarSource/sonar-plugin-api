@@ -44,6 +44,9 @@ public class IssueStatusTest {
     assertThat(IssueStatus.of(Issue.STATUS_RESOLVED, Issue.RESOLUTION_WONT_FIX))
       .isEqualTo(IssueStatus.ACCEPTED);
 
+    assertThat(IssueStatus.of(Issue.STATUS_RESOLVED, Issue.RESOLUTION_DEFERRED))
+      .isEqualTo(IssueStatus.DEFERRED);
+
     assertThat(IssueStatus.of(Issue.STATUS_REOPENED, null))
       .isEqualTo(IssueStatus.OPEN);
 

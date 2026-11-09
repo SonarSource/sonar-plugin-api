@@ -48,7 +48,8 @@ public interface Issue {
   String status();
 
   /**
-   * Available list of resolutions can be found in {@link org.sonar.api.issue.Issue#RESOLUTIONS}
+   * The resolution, or {@code null} if the issue is unresolved. Legacy resolutions are listed in
+   * {@link org.sonar.api.issue.Issue#RESOLUTIONS}; deferred issues use {@link org.sonar.api.issue.Issue#RESOLUTION_DEFERRED}.
    *
    * @deprecated since 10.4 in favor of {@link Issue#issueStatus()}
    */
