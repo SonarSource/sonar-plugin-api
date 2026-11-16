@@ -5,11 +5,11 @@ jacoco = "0.8.15"
 license-plugin = "0.16.1"
 shadow-plugin = "9.6.1"
 sonarqube-plugin = "7.5.0.8588"
-artifactory-plugin = "6.0.4"
+artifactory-plugin = "6.0.5"
 
 [libraries]
 commons-io = { module = "commons-io:commons-io", version = "2.22.0" }
-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.21.0" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.22.0" }
 commons-text = { module = "org.apache.commons:commons-text", version = "1.15.0" }
 commons-validator = { module = "commons-validator:commons-validator", version = "1.11.0" }
 guava = { module = "com.google.guava:guava", version = "33.7.2-jre" }
