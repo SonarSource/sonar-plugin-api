@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
       - uses: SonarSource/mise-action-wrapper@65aa289d3f408f4999d13a52a14cde4f54b48442 # 2.0.0
         with:
-          version: 2026.10.10
+          version: 2026.11.8
           persist_github_token: false
       - name: Allocate build number
         id: build-number
@@ -68,7 +68,7 @@ jobs:
       - uses: step-security/mise-action@a225bbd7c202ddf57dd76dff22bb7992f6314173 # v5.1.2
         with:
           cache_save: false
-          version: 2026.10.10
+          version: 2026.11.8
       - uses: SonarSource/ci-github-actions/promote@v2
         env:
           BUILD_NUMBER: ${{ needs.build.outputs.BUILD_NUMBER }}
