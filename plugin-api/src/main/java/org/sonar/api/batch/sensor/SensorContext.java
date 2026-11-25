@@ -32,6 +32,8 @@ import org.sonar.api.batch.sensor.cache.WriteCache;
 import org.sonar.api.batch.sensor.code.NewSignificantCode;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
+import org.sonar.api.batch.sensor.decision.NewIssueCandidate;
+import org.sonar.api.batch.sensor.decision.internal.FallbackIssueCandidate;
 import org.sonar.api.batch.sensor.error.NewAnalysisError;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.issue.ExternalIssue;
@@ -164,6 +166,30 @@ public interface SensorContext {
    * Fluent builder to create a new {@link Issue}. Don't forget to call {@link NewIssue#save()} once all parameters are provided.
    */
   NewIssue newIssue();
+
+  /**
+   * Creates a candidate that is reported as an ordinary issue if a decision is unavailable.
+   * Use it to filter the false positives of an existing rule.
+   * <p>
+   * This API is experimental and can be changed or dropped at any time.
+   * @since 14.4
+   */
+  @Beta
+  default NewIssueCandidate newOptionalDecisionCandidate() {
+    return new FallbackIssueCandidate(newIssue(), false);
+  }
+
+  /**
+   * Creates a candidate that is dropped if a decision is unavailable.
+   * Use it for a rule whose findings are only issues once decided.
+   * <p>
+   * This API is experimental and can be changed or dropped at any time.
+   * @since 14.4
+   */
+  @Beta
+  default NewIssueCandidate newRequiredDecisionCandidate() {
+    return new FallbackIssueCandidate(newIssue(), true);
+  }
 
   /**
    * Fluent builder to create a new {@link ExternalIssue}. Don't forget to call {@link NewExternalIssue#save()} once all parameters are provided.
