@@ -32,6 +32,7 @@ import org.sonar.api.batch.sensor.cache.WriteCache;
 import org.sonar.api.batch.sensor.code.NewSignificantCode;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
+import org.sonar.api.batch.sensor.decision.NewIssueCandidate;
 import org.sonar.api.batch.sensor.error.NewAnalysisError;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.issue.ExternalIssue;
@@ -334,4 +335,36 @@ public interface SensorContext {
    * @since 13.5
    */
   NewIssueResolution newIssueResolution();
+
+  // ----------- ISSUE CANDIDATES --------------
+
+  /**
+   * Builder to create an optional issue candidate: an issue that a decision may suppress, and that is reported when no decision can be
+   * made. Add the facts, then build and save {@link NewIssueCandidate#issue()} as any issue.
+   * <p>
+   * On engines that do not support decisions, the issue is saved as an ordinary issue and the facts are discarded.
+   * </p>
+   * This API is experimental and can be changed or dropped at any time.
+   *
+   * @since 14.3
+   */
+  @Beta
+  default NewIssueCandidate newOptionalDecisionCandidate() {
+    return FallbackIssueCandidate.optional(newIssue());
+  }
+
+  /**
+   * Builder to create a required issue candidate: an issue that is reported only when a decision confirms it. Add the facts, then build
+   * and save {@link NewIssueCandidate#issue()} as any issue.
+   * <p>
+   * On engines that do not support decisions, the issue is dropped.
+   * </p>
+   * This API is experimental and can be changed or dropped at any time.
+   *
+   * @since 14.3
+   */
+  @Beta
+  default NewIssueCandidate newRequiredDecisionCandidate() {
+    return FallbackIssueCandidate.required(newIssue());
+  }
 }

@@ -20,6 +20,8 @@
 package org.sonar.api.batch.sensor;
 
 import org.junit.jupiter.api.Test;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.rule.RuleKey;
 import org.sonar.api.scanner.Arch;
 import org.sonar.api.scanner.HostPlatform;
 import org.sonar.api.scanner.Os;
@@ -28,6 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 class SensorContextTest {
 
@@ -49,6 +53,31 @@ class SensorContextTest {
     assertThat(underTest.hostPlatform()).isSameAs(hostPlatform);
     assertThat(underTest.hostPlatform().getOs()).isEqualTo(Os.LINUX);
     assertThat(underTest.hostPlatform().getArch()).isEqualTo(Arch.AARCH64);
+  }
+
+  @Test
+  void newOptionalDecisionCandidate_shouldReturnAnOrdinaryIssue_whenNotImplemented() {
+    NewIssue issue = mock(NewIssue.class);
+    SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
+    doReturn(issue).when(underTest).newIssue();
+
+    var candidate = underTest.newOptionalDecisionCandidate();
+
+    assertThat(candidate.addFact("name", "value")).isSameAs(candidate);
+    assertThat(candidate.issue()).isSameAs(issue);
+  }
+
+  @Test
+  void newRequiredDecisionCandidate_shouldSaveNothing_whenNotImplemented() {
+    NewIssue issue = mock(NewIssue.class);
+    SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
+    doReturn(issue).when(underTest).newIssue();
+
+    var candidate = underTest.newRequiredDecisionCandidate().addFact("name", "value");
+    candidate.issue().forRule(RuleKey.of("repo", "rule")).save();
+
+    assertThat(candidate.issue()).isInstanceOf(FallbackIssueCandidate.DroppedIssue.class);
+    verify(issue, never()).save();
   }
 
   private static class TestHostPlatform implements HostPlatform {
