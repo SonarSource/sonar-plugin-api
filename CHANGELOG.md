@@ -1,6 +1,9 @@
 # Changelog
 
 ## 14.3
+* Introduce issue candidates for decision-model rules (experimental, `@Beta`):
+  * Introduce `org.sonar.api.batch.sensor.decision.NewIssueCandidate` and `org.sonar.api.batch.sensor.decision.IssueCandidate`
+  * Introduce `org.sonar.api.batch.sensor.SensorContext.newOptionalDecisionCandidate()` and `newRequiredDecisionCandidate()`. Engines that do not support decisions report optional candidates as ordinary issues and drop required ones.
 * Add `org.sonar.api.issue.IssueStatus.DEFERRED` enum value and map `RESOLVED` with resolution `DEFERRED` to it.
 * Add `org.sonar.api.issue.Issue.RESOLUTION_DEFERRED` constant (deprecated immediately), without changing `Issue.RESOLUTIONS`.
 
