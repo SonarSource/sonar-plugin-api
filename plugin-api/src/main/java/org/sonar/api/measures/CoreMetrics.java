@@ -863,6 +863,39 @@ public final class CoreMetrics {
     .create();
 
   /**
+   * @since 14.4
+   */
+  public static final String DEFERRED_ISSUES_KEY = "deferred_issues";
+
+  /**
+   * @since 14.4
+   */
+  public static final Metric<Integer> DEFERRED_ISSUES = new Metric.Builder(DEFERRED_ISSUES_KEY, "Deferred Issues", Metric.ValueType.INT)
+    .setDescription("Deferred issues")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .create();
+
+  /**
+   * @since 14.4
+   */
+  public static final String NEW_DEFERRED_ISSUES_KEY = "new_deferred_issues";
+
+  /**
+   * @since 14.4
+   */
+  public static final Metric<Integer> NEW_DEFERRED_ISSUES = new Metric.Builder(NEW_DEFERRED_ISSUES_KEY, "New Deferred Issues", Metric.ValueType.INT)
+    .setDescription("New deferred issues")
+    .setDirection(Metric.DIRECTION_WORST)
+    .setDomain(DOMAIN_ISSUES)
+    .setBestValue(0.0)
+    .setOptimizedBestValue(true)
+    .setDeleteHistoricalData(true)
+    .create();
+
+  /**
    * @since 10.4
    * @deprecated since 10.6
    */
