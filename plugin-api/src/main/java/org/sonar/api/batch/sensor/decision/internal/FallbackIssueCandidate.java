@@ -23,8 +23,11 @@ import java.util.Map;
 import org.sonar.api.batch.sensor.decision.NewIssueCandidate;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 
+import static java.util.Objects.requireNonNull;
+import static org.sonar.api.utils.Preconditions.checkArgument;
+
 /**
- * Implementation of the {@code SensorContext} defaults for engines without decision support: the facts are ignored, and
+ * Implementation of the {@code SensorContext} defaults for engines without decision support: the facts are validated and ignored, and
  * {@link #save()} saves the wrapped issue unless the candidate is required.
  */
 public final class FallbackIssueCandidate implements NewIssueCandidate {
@@ -38,11 +41,15 @@ public final class FallbackIssueCandidate implements NewIssueCandidate {
 
   @Override
   public NewIssueCandidate addFact(String name, String value) {
+    checkArgument(name != null && !name.isBlank(), "Fact name can't be blank");
+    requireNonNull(value, () -> "Value of fact '" + name + "' can't be null");
     return this;
   }
 
   @Override
   public NewIssueCandidate setFacts(Map<String, String> facts) {
+    requireNonNull(facts, "Facts can't be null");
+    facts.forEach(this::addFact);
     return this;
   }
 

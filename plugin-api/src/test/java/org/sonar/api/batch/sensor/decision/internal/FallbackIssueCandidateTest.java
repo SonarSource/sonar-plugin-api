@@ -19,11 +19,13 @@
  */
 package org.sonar.api.batch.sensor.decision.internal;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -54,6 +56,20 @@ class FallbackIssueCandidateTest {
       .save();
 
     verify(issue, never()).save();
+  }
+
+  @Test
+  void invalid_facts_are_rejected_as_by_the_engine() {
+    var candidate = new FallbackIssueCandidate(mock(NewIssue.class), false);
+    Map<String, String> nullValue = new HashMap<>();
+    nullValue.put("testName", null);
+
+    assertThatThrownBy(() -> candidate.addFact(" ", "value")).isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> candidate.addFact(null, "value")).isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> candidate.addFact("testName", null)).isInstanceOf(NullPointerException.class);
+    assertThatThrownBy(() -> candidate.setFacts(Map.of("", "value"))).isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> candidate.setFacts(nullValue)).isInstanceOf(NullPointerException.class);
+    assertThatThrownBy(() -> candidate.setFacts(null)).isInstanceOf(NullPointerException.class);
   }
 
   @Test

@@ -20,6 +20,7 @@
 package org.sonar.api.batch.sensor.decision;
 
 import java.net.URL;
+import javax.annotation.Nullable;
 import org.sonar.api.Beta;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.scanner.ScannerSide;
@@ -51,6 +52,6 @@ public interface DecisionRulesDefinition {
      * @param ruleKey the key of the rule, including its repository
      * @param decisionJson the {@code <rule>_decision.json} resource of the plugin; {@code null} is reported as a missing specification
      */
-    void addDecisionRule(RuleKey ruleKey, URL decisionJson);
+    void addDecisionRule(RuleKey ruleKey, @Nullable URL decisionJson);
   }
 }
