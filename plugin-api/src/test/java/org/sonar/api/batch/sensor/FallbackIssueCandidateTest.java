@@ -29,6 +29,7 @@ import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.never;
@@ -45,6 +46,16 @@ class FallbackIssueCandidateTest {
 
     assertThat(underTest.addFact("name", "value")).isSameAs(underTest);
     assertThat(underTest.issue()).isSameAs(issue);
+  }
+
+  @Test
+  void addFact_shouldFail_afterIssueWasRequested() {
+    var underTest = FallbackIssueCandidate.optional(issue);
+    underTest.issue();
+
+    assertThatThrownBy(() -> underTest.addFact("name", "value"))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessage("Facts must be added before issue() is called");
   }
 
   @Test

@@ -36,6 +36,7 @@ import org.sonar.api.rule.RuleKey;
 final class FallbackIssueCandidate implements NewIssueCandidate {
 
   private final NewIssue issue;
+  private boolean issueRequested;
 
   private FallbackIssueCandidate(NewIssue issue) {
     this.issue = issue;
@@ -51,11 +52,15 @@ final class FallbackIssueCandidate implements NewIssueCandidate {
 
   @Override
   public NewIssueCandidate addFact(String name, String value) {
+    if (issueRequested) {
+      throw new IllegalStateException("Facts must be added before issue() is called");
+    }
     return this;
   }
 
   @Override
   public NewIssue issue() {
+    issueRequested = true;
     return issue;
   }
 
