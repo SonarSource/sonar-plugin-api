@@ -347,7 +347,7 @@ public interface SensorContext {
    * </p>
    * This API is experimental and can be changed or dropped at any time.
    *
-   * @since 14.3
+   * @since 14.4
    */
   @Beta
   default NewIssueCandidate newOptionalDecisionCandidate() {
@@ -362,7 +362,7 @@ public interface SensorContext {
    * </p>
    * This API is experimental and can be changed or dropped at any time.
    *
-   * @since 14.3
+   * @since 14.4
    */
   @Beta
   default NewIssueCandidate newRequiredDecisionCandidate() {
