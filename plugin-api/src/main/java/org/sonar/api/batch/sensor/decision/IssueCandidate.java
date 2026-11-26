@@ -24,8 +24,8 @@ import org.sonar.api.Beta;
 import org.sonar.api.batch.sensor.issue.Issue;
 
 /**
- * An issue candidate saved by a sensor through a {@link NewIssueCandidate}: the issue, the facts its decision needs, and whether the issue
- * may be reported without a decision.
+ * An issue candidate saved through a {@link NewIssueCandidate}, as read by the engine: the issue, the facts its decision needs, and whether
+ * it requires a decision to be reported.
  * <p>
  * This API is experimental and can be changed or dropped at any time.
  * </p>
@@ -41,13 +41,13 @@ public interface IssueCandidate {
   Issue issue();
 
   /**
-   * The facts of the candidate, by name. Never null.
+   * The facts of the candidate, by name.
    */
   Map<String, String> facts();
 
   /**
-   * {@code true} if the issue is reported only when a decision confirms it (a required candidate), {@code false} if it is reported when no
-   * decision can be made (an optional candidate).
+   * {@code true} for a required candidate, reported only if a decision confirms it; {@code false} for an optional candidate, reported
+   * unless a decision suppresses it.
    */
   boolean requiresDecision();
 }

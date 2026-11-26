@@ -24,12 +24,10 @@ import org.sonar.api.batch.sensor.issue.NewIssue;
 
 /**
  * Builder for an issue candidate: an issue whose reporting depends on a decision made after the analysis, together with the facts that
- * decision needs. Use {@link org.sonar.api.batch.sensor.SensorContext#newOptionalDecisionCandidate()} or
- * {@link org.sonar.api.batch.sensor.SensorContext#newRequiredDecisionCandidate()} to create one.
+ * decision needs. Created by {@link org.sonar.api.batch.sensor.SensorContext#newOptionalDecisionCandidate()} or
+ * {@link org.sonar.api.batch.sensor.SensorContext#newRequiredDecisionCandidate()}.
  * <p>
- * Add the facts first, then call {@link #issue()} and build and save the issue as any issue. Saving the issue saves the candidate: what
- * happens to it then depends on the engine. Engines that do not support decisions report an optional candidate as an ordinary issue and
- * drop a required one. In both cases the facts are discarded.
+ * Add the facts first, then build and save {@link #issue()} as any issue. Saving the issue saves the candidate.
  * </p>
  * This API is experimental and can be changed or dropped at any time.
  *
@@ -39,7 +37,7 @@ import org.sonar.api.batch.sensor.issue.NewIssue;
 public interface NewIssueCandidate {
 
   /**
-   * Add a fact for the decision. A fact added again with the same name replaces the previous value.
+   * Adds a fact for the decision. Adding a fact with the same name again replaces its value.
    *
    * @param name the name of the fact, as declared in the decision specification of the rule
    * @param value the value of the fact
@@ -48,8 +46,7 @@ public interface NewIssueCandidate {
   NewIssueCandidate addFact(String name, String value);
 
   /**
-   * The issue of the candidate. Build it and call {@link NewIssue#save()} as for any issue. Calling this method again returns the same
-   * issue.
+   * The issue of the candidate, to build and save as any issue. Always returns the same instance.
    */
   NewIssue issue();
 }

@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.batch.sensor;
+package org.sonar.api.batch.sensor.decision.internal;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -41,7 +41,7 @@ class FallbackIssueCandidateTest {
   private final NewIssue issue = mock(NewIssue.class);
 
   @Test
-  void optional_shouldDiscardTheFacts_andReturnTheIssue() {
+  void optional_shouldReturnTheIssue() {
     var underTest = FallbackIssueCandidate.optional(issue);
 
     assertThat(underTest.addFact("name", "value")).isSameAs(underTest);
@@ -49,7 +49,16 @@ class FallbackIssueCandidateTest {
   }
 
   @Test
-  void addFact_shouldFail_afterIssueWasRequested() {
+  void issue_shouldAlwaysReturnTheSameInstance() {
+    var optional = FallbackIssueCandidate.optional(issue);
+    var required = FallbackIssueCandidate.required(issue);
+
+    assertThat(optional.issue()).isSameAs(optional.issue());
+    assertThat(required.issue()).isSameAs(required.issue());
+  }
+
+  @Test
+  void addFact_shouldThrow_whenIssueWasRequested() {
     var underTest = FallbackIssueCandidate.optional(issue);
     underTest.issue();
 

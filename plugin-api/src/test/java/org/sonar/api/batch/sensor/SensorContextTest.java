@@ -21,7 +21,6 @@ package org.sonar.api.batch.sensor;
 
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.issue.NewIssue;
-import org.sonar.api.rule.RuleKey;
 import org.sonar.api.scanner.Arch;
 import org.sonar.api.scanner.HostPlatform;
 import org.sonar.api.scanner.Os;
@@ -56,15 +55,14 @@ class SensorContextTest {
   }
 
   @Test
-  void newOptionalDecisionCandidate_shouldReturnAnOrdinaryIssue_whenNotImplemented() {
+  void newOptionalDecisionCandidate_shouldSaveAnOrdinaryIssue_whenNotImplemented() {
     NewIssue issue = mock(NewIssue.class);
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
     doReturn(issue).when(underTest).newIssue();
 
-    var candidate = underTest.newOptionalDecisionCandidate();
+    underTest.newOptionalDecisionCandidate().issue().save();
 
-    assertThat(candidate.addFact("name", "value")).isSameAs(candidate);
-    assertThat(candidate.issue()).isSameAs(issue);
+    verify(issue).save();
   }
 
   @Test
@@ -73,10 +71,8 @@ class SensorContextTest {
     SensorContext underTest = mock(SensorContext.class, CALLS_REAL_METHODS);
     doReturn(issue).when(underTest).newIssue();
 
-    var candidate = underTest.newRequiredDecisionCandidate().addFact("name", "value");
-    candidate.issue().forRule(RuleKey.of("repo", "rule")).save();
+    underTest.newRequiredDecisionCandidate().issue().save();
 
-    assertThat(candidate.issue()).isInstanceOf(FallbackIssueCandidate.DroppedIssue.class);
     verify(issue, never()).save();
   }
 

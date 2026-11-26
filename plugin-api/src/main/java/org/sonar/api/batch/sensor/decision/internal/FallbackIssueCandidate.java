@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.sonar.api.batch.sensor;
+package org.sonar.api.batch.sensor.decision.internal;
 
 import java.util.Collection;
 import javax.annotation.Nullable;
@@ -30,10 +30,11 @@ import org.sonar.api.issue.impact.SoftwareQuality;
 import org.sonar.api.rule.RuleKey;
 
 /**
- * The candidate returned by the default {@link SensorContext} methods, on engines that do not support decisions. The facts are discarded.
- * The issue of an optional candidate is an ordinary issue; the issue of a required candidate is a {@link DroppedIssue}.
+ * The candidate returned by the default {@link org.sonar.api.batch.sensor.SensorContext} factories, on engines that do not support
+ * decisions. The facts are discarded; the issue of an optional candidate is an ordinary issue, the one of a required candidate is a
+ * {@link DroppedIssue}.
  */
-final class FallbackIssueCandidate implements NewIssueCandidate {
+public final class FallbackIssueCandidate implements NewIssueCandidate {
 
   private final NewIssue issue;
   private boolean issueRequested;
@@ -42,11 +43,11 @@ final class FallbackIssueCandidate implements NewIssueCandidate {
     this.issue = issue;
   }
 
-  static NewIssueCandidate optional(NewIssue issue) {
+  public static NewIssueCandidate optional(NewIssue issue) {
     return new FallbackIssueCandidate(issue);
   }
 
-  static NewIssueCandidate required(NewIssue issue) {
+  public static NewIssueCandidate required(NewIssue issue) {
     return new FallbackIssueCandidate(new DroppedIssue(issue));
   }
 
@@ -65,9 +66,9 @@ final class FallbackIssueCandidate implements NewIssueCandidate {
   }
 
   /**
-   * The issue of a required candidate: it forwards every call to a real issue, so that sensors get the same checks as on any engine, but
-   * {@link #save()} does nothing. Every forwarded method returns this issue, never the real one, so that a chain ending in {@code save()}
-   * never saves the real issue.
+   * The issue of a required candidate. It forwards every call to a real issue, so that sensors get the same checks as on any engine,
+   * except {@link #save()}, which does nothing. Forwarded methods return this issue, so that a chain ending in {@code save()} never saves
+   * the real issue.
    */
   static final class DroppedIssue implements NewIssue {
 
