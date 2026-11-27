@@ -27,8 +27,13 @@ import org.sonar.api.measures.Metric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.sonar.api.measures.CoreMetrics.ACCEPTED_ISSUES;
+import static org.sonar.api.measures.CoreMetrics.DEFERRED_ISSUES;
+import static org.sonar.api.measures.CoreMetrics.DEFERRED_ISSUES_KEY;
+import static org.sonar.api.measures.CoreMetrics.DOMAIN_ISSUES;
 import static org.sonar.api.measures.CoreMetrics.FILES;
 import static org.sonar.api.measures.CoreMetrics.NCLOC;
+import static org.sonar.api.measures.CoreMetrics.NEW_DEFERRED_ISSUES;
+import static org.sonar.api.measures.CoreMetrics.NEW_DEFERRED_ISSUES_KEY;
 import static org.sonar.api.measures.CoreMetrics.NEW_NCLOC;
 import static org.sonar.api.measures.CoreMetrics.getMetric;
 import static org.sonar.api.measures.CoreMetrics.getMetrics;
@@ -39,12 +44,31 @@ public class CoreMetricsTest {
   public void read_metrics_from_class_reflection() {
     List<Metric> metrics = getMetrics();
     assertThat(metrics.size()).isGreaterThan(100);
-    assertThat(metrics).contains(NCLOC, NEW_NCLOC, FILES, ACCEPTED_ISSUES);
+    assertThat(metrics).contains(NCLOC, NEW_NCLOC, FILES, ACCEPTED_ISSUES, DEFERRED_ISSUES, NEW_DEFERRED_ISSUES);
   }
 
   @Test
   public void new_ncloc_is_registered() {
     assertThat(getMetric("new_ncloc")).isEqualTo(NEW_NCLOC);
+  }
+
+  @Test
+  public void deferred_metrics_are_registered_with_issue_count_properties() {
+    assertThat(DEFERRED_ISSUES_KEY).isEqualTo("deferred_issues");
+    assertThat(NEW_DEFERRED_ISSUES_KEY).isEqualTo("new_deferred_issues");
+    assertThat(getMetric(DEFERRED_ISSUES_KEY)).isSameAs(DEFERRED_ISSUES);
+    assertThat(getMetric(NEW_DEFERRED_ISSUES_KEY)).isSameAs(NEW_DEFERRED_ISSUES);
+    assertThat(DEFERRED_ISSUES.getName()).isEqualTo("Deferred Issues");
+    assertThat(NEW_DEFERRED_ISSUES.getName()).isEqualTo("New Deferred Issues");
+    for (Metric<Integer> metric : List.of(DEFERRED_ISSUES, NEW_DEFERRED_ISSUES)) {
+      assertThat(metric.getType()).isEqualTo(Metric.ValueType.INT);
+      assertThat(metric.getDirection()).isEqualTo(Metric.DIRECTION_WORST);
+      assertThat(metric.getDomain()).isEqualTo(DOMAIN_ISSUES);
+      assertThat(metric.getBestValue()).isZero();
+      assertThat(metric.isOptimizedBestValue()).isTrue();
+    }
+    assertThat(DEFERRED_ISSUES.getDeleteHistoricalData()).isFalse();
+    assertThat(NEW_DEFERRED_ISSUES.getDeleteHistoricalData()).isTrue();
   }
 
   @Test

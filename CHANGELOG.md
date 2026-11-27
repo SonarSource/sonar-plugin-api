@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.4
+* Add `DEFERRED_ISSUES_KEY`, `DEFERRED_ISSUES`, `NEW_DEFERRED_ISSUES_KEY` and `NEW_DEFERRED_ISSUES` to `org.sonar.api.measures.CoreMetrics`. The metrics count deferred issues on overall and new code.
+* `CoreMetrics.getMetrics()` now includes `deferred_issues` and `new_deferred_issues`. Platforms registering core metrics reserve these keys; plugins must not declare metrics with the same keys.
+
 ## 14.3
 * Add `org.sonar.api.issue.IssueStatus.DEFERRED` enum value and map `RESOLVED` with resolution `DEFERRED` to it.
 * Add `org.sonar.api.issue.Issue.RESOLUTION_DEFERRED` constant (deprecated immediately), without changing `Issue.RESOLUTIONS`.
