@@ -30,7 +30,7 @@ import org.sonar.api.batch.sensor.issue.Issue;
  * This API is experimental and can be changed or dropped at any time.
  * </p>
  *
- * @since 14.3
+ * @since 14.4
  */
 @Beta
 public interface IssueCandidate {
