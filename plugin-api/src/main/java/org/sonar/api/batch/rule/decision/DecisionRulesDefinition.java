@@ -48,7 +48,11 @@ import org.sonar.api.scanner.ScannerSide;
  *   }
  * }
  * </pre>
+ * The interface does not exist on older engines: register the extension only if
+ * {@code SonarRuntime.getApiVersion().isGreaterThanOrEqual(Version.create(14, 3))}.
+ * <p>
  * This API is experimental and can be changed or dropped at any time.
+ * </p>
  *
  * @since 14.3
  */
@@ -84,7 +88,7 @@ public interface DecisionRulesDefinition {
     NewDecisionRule createRule(String ruleKey);
 
     /**
-     * Registers this repository. The engine ignores invalid specifications, with a warning.
+     * Registers this repository. The engine ignores incomplete or inconsistent specifications, with a warning.
      */
     void done();
   }
@@ -113,7 +117,7 @@ public interface DecisionRulesDefinition {
      * Declares a fact that the issue candidates of the rule provide. Facts are kept in declaration order.
      *
      * @param name the name of the fact, as used in {@link org.sonar.api.batch.sensor.decision.NewIssueCandidate#addFact(String, String)}
-     * @param description the description of the fact for the decision
+     * @param description the description of the fact for the decision. Must not be blank.
      */
     NewDecisionRule addFact(String name, String description);
 
@@ -123,7 +127,7 @@ public interface DecisionRulesDefinition {
     NewDecisionRule setPolicy(Policy policy);
 
     /**
-     * The facts that identify an instance of the decision. Must be declared facts.
+     * The facts that identify an instance of the decision. Must be declared facts, at least one. By default, all the facts.
      */
     NewDecisionRule setKeyFacts(String... factNames);
 
