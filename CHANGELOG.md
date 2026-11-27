@@ -4,7 +4,7 @@
 * Introduce the API for decision-model rules (experimental, `@Beta`):
   * Introduce `org.sonar.api.batch.sensor.decision.NewIssueCandidate` and `org.sonar.api.batch.sensor.decision.IssueCandidate`
   * Introduce `org.sonar.api.batch.sensor.SensorContext.newOptionalDecisionCandidate()` and `newRequiredDecisionCandidate()`. Engines that do not support decisions report optional candidates as ordinary issues and drop required ones.
-  * Introduce `org.sonar.api.batch.rule.DecisionRulesDefinition`, the scanner-side extension point that declares the decision specifications of rules. Engines that do not support decisions ignore it.
+  * Introduce `org.sonar.api.batch.rule.decision.DecisionRulesDefinition`, the scanner-side extension point that declares the decision specifications of rules. Engines that do not support decisions ignore it.
 * Add `org.sonar.api.issue.IssueStatus.DEFERRED` enum value and map `RESOLVED` with resolution `DEFERRED` to it.
 * Add `org.sonar.api.issue.Issue.RESOLUTION_DEFERRED` constant (deprecated immediately), without changing `Issue.RESOLUTIONS`.
 
